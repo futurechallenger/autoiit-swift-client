@@ -18,6 +18,7 @@
 		EFB28D20293BAE6600917DC4 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D1F293BAE6600917DC4 /* ExploreView.swift */; };
 		EFB28D24293BB00D00917DC4 /* ServiceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D23293BB00D00917DC4 /* ServiceInfo.swift */; };
 		EFB28D26293BB37B00917DC4 /* ServiceInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D25293BB37B00917DC4 /* ServiceInfoRow.swift */; };
+		EFB28D29293BB64300917DC4 /* IntroductionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D28293BB64300917DC4 /* IntroductionRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		EFB28D1F293BAE6600917DC4 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		EFB28D23293BB00D00917DC4 /* ServiceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInfo.swift; sourceTree = "<group>"; };
 		EFB28D25293BB37B00917DC4 /* ServiceInfoRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceInfoRow.swift; sourceTree = "<group>"; };
+		EFB28D28293BB64300917DC4 /* IntroductionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 		EFB28CF2293BAB7600917DC4 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				EFB28D27293BB61D00917DC4 /* CommonView */,
 				EFB28D22293BAFCF00917DC4 /* model */,
 				EFB28D21293BAF3E00917DC4 /* MyFlow */,
 				EFB28CF3293BAB7600917DC4 /* iosApp.swift */,
@@ -153,6 +156,14 @@
 				EFB28D23293BB00D00917DC4 /* ServiceInfo.swift */,
 			);
 			path = model;
+			sourceTree = "<group>";
+		};
+		EFB28D27293BB61D00917DC4 /* CommonView */ = {
+			isa = PBXGroup;
+			children = (
+				EFB28D28293BB64300917DC4 /* IntroductionRow.swift */,
+			);
+			path = CommonView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,6 +301,7 @@
 				EFB28CF6293BAB7600917DC4 /* MainView.swift in Sources */,
 				EFB28D20293BAE6600917DC4 /* ExploreView.swift in Sources */,
 				EFB28D24293BB00D00917DC4 /* ServiceInfo.swift in Sources */,
+				EFB28D29293BB64300917DC4 /* IntroductionRow.swift in Sources */,
 				EFB28CF4293BAB7600917DC4 /* iosApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
