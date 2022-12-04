@@ -19,6 +19,8 @@
 		EFB28D24293BB00D00917DC4 /* ServiceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D23293BB00D00917DC4 /* ServiceInfo.swift */; };
 		EFB28D26293BB37B00917DC4 /* ServiceInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D25293BB37B00917DC4 /* ServiceInfoRow.swift */; };
 		EFB28D29293BB64300917DC4 /* IntroductionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D28293BB64300917DC4 /* IntroductionRow.swift */; };
+		EFB28D2B293C19B300917DC4 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D2A293C19B300917DC4 /* CreateView.swift */; };
+		EFB28D2D293C1B2400917DC4 /* ServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D2C293C1B2400917DC4 /* ServiceDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		EFB28D23293BB00D00917DC4 /* ServiceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInfo.swift; sourceTree = "<group>"; };
 		EFB28D25293BB37B00917DC4 /* ServiceInfoRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceInfoRow.swift; sourceTree = "<group>"; };
 		EFB28D28293BB64300917DC4 /* IntroductionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionRow.swift; sourceTree = "<group>"; };
+		EFB28D2A293C19B300917DC4 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
+		EFB28D2C293C1B2400917DC4 /* ServiceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,8 @@
 				EFB28CF7293BAB7700917DC4 /* Assets.xcassets */,
 				EFB28CF9293BAB7700917DC4 /* Preview Content */,
 				EFB28D1F293BAE6600917DC4 /* ExploreView.swift */,
+				EFB28D2A293C19B300917DC4 /* CreateView.swift */,
+				EFB28D2C293C1B2400917DC4 /* ServiceDetailView.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -298,10 +304,12 @@
 			files = (
 				EFB28D26293BB37B00917DC4 /* ServiceInfoRow.swift in Sources */,
 				EFB28D1E293BAE3F00917DC4 /* HomeView.swift in Sources */,
+				EFB28D2B293C19B300917DC4 /* CreateView.swift in Sources */,
 				EFB28CF6293BAB7600917DC4 /* MainView.swift in Sources */,
 				EFB28D20293BAE6600917DC4 /* ExploreView.swift in Sources */,
 				EFB28D24293BB00D00917DC4 /* ServiceInfo.swift in Sources */,
 				EFB28D29293BB64300917DC4 /* IntroductionRow.swift in Sources */,
+				EFB28D2D293C1B2400917DC4 /* ServiceDetailView.swift in Sources */,
 				EFB28CF4293BAB7600917DC4 /* iosApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

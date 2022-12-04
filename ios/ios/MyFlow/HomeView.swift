@@ -9,10 +9,25 @@ import SwiftUI
 
 struct HomeView: View {
   var body: some View {
-    List {
-      IntroductionRow()
-      ServiceInfoRow(text: "Hello World!")
-      ServiceInfoRow(text: "Autoiiiiiiiiiiiiiit!")
+    NavigationView {
+      List {
+        NavigationLink {
+          ServiceDetailView()
+        } label: {
+          IntroductionRow()
+        }
+        NavigationLink {
+          ServiceDetailView()
+        } label: {
+          IntroductionRow()
+        }
+        NavigationLink {
+          ServiceDetailView()
+        } label: {
+          ServiceInfoRow(text: "Autoiiiiiiiiiiiiiit!")
+        }
+      }
+      .navigationTitle("Flows")
     }
   }
 }
