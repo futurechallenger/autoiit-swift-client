@@ -24,6 +24,7 @@
 		EFF56BA6293F5E36006633E8 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF56BA5293F5E36006633E8 /* ActivityView.swift */; };
 		EFF56BA8293F5E8F006633E8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF56BA7293F5E8F006633E8 /* ProfileView.swift */; };
 		EFF56BB0293F92D4006633E8 /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF56BAF293F92D4006633E8 /* HttpService.swift */; };
+		EFF56BB3293FA6CC006633E8 /* ServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF56BB2293FA6CC006633E8 /* ServiceViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		EFF56BA5293F5E36006633E8 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		EFF56BA7293F5E8F006633E8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		EFF56BAF293F92D4006633E8 /* HttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
+		EFF56BB2293FA6CC006633E8 /* ServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 		EFB28CF2293BAB7600917DC4 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				EFF56BB1293FA6B5006633E8 /* ViewModel */,
 				EFF56BAE293F92BE006633E8 /* Lib */,
 				EFF56BA9293F7A0A006633E8 /* Tabs */,
 				EFB28D27293BB61D00917DC4 /* CommonView */,
@@ -227,6 +230,14 @@
 				EFF56BAF293F92D4006633E8 /* HttpService.swift */,
 			);
 			path = Lib;
+			sourceTree = "<group>";
+		};
+		EFF56BB1293FA6B5006633E8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				EFF56BB2293FA6CC006633E8 /* ServiceViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,6 +380,7 @@
 				EFB28D24293BB00D00917DC4 /* ServiceInfo.swift in Sources */,
 				EFB28D29293BB64300917DC4 /* IntroductionRow.swift in Sources */,
 				EFB28D2D293C1B2400917DC4 /* ServiceDetailView.swift in Sources */,
+				EFF56BB3293FA6CC006633E8 /* ServiceViewModel.swift in Sources */,
 				EFF56BA8293F5E8F006633E8 /* ProfileView.swift in Sources */,
 				EFB28CF4293BAB7600917DC4 /* iosApp.swift in Sources */,
 			);

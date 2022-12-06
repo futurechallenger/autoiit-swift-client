@@ -8,12 +8,19 @@
 import Foundation
 
 class HTTPService {
-  let BACKEND_URL = "http://127.0.0.1:5050"
+  static let BACKEND_URL = "http://127.0.0.1:5050"
   
-  func request<ResType:Decodable>(method: String?, headers: Dictionary<String, String>) async -> ResType? {
+  static func request<ResType:Decodable>(of type: ResType.Type, method: String? = "GET",
+                                         headers: Dictionary<String, String>? = ["Content-Type": "application/json"],
+                                         body: Dictionary<String, String>? = nil) async -> ResType? {
     var req = URLRequest(url: URL(string: BACKEND_URL)!)
     req.httpMethod = method ?? "GET"
-    req.allHTTPHeaderFields = headers
+    req.allHTTPHeaderFields = headers ?? ["Content-Type": "application/json"]
+    
+    // set request body
+    if let body = body {
+      req.httpBody = try? JSONEncoder().encode(body)
+    }
     
     do {
       let (data, response) = try await URLSession.shared.data(for: req)
@@ -28,4 +35,5 @@ class HTTPService {
     }
   }
 }
+
 
