@@ -14,13 +14,13 @@ struct MainView: View {
         .tabItem {
           Label("My flow", systemImage: "list.dash")
         }
-      CreateView()
-        .tabItem {
-          Label("Create", systemImage: "cross")
-        }
       ExploreView()
         .tabItem {
           Label("Explore", systemImage: "square.and.pencil")
+        }
+      CreateView()
+        .tabItem {
+          Label("Create", systemImage: "plus.circle")
         }
       ActivityView()
         .tabItem {
