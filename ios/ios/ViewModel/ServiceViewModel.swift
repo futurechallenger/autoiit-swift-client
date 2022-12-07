@@ -35,7 +35,7 @@ class ServiceViewModel: ObservableObject {
   // TODO: implement this method
   func loadList(serviceType: LoadSeviceType) async -> [ServiceInfo]? {
     
-    let res = await HTTPService.request(of: ServiceInfo.self,
+    let res = await HTTPService.request(of: [ServiceInfo.self],
                                                 method: "GET",
                                                 headers: nil,
                                                 body: ["query": """
