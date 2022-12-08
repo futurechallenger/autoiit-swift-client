@@ -7,12 +7,12 @@
 
 import Foundation
 
-class HTTPService {
+struct HTTPService {
   static let BACKEND_URL = "http://127.0.0.1:5050"
   
-  static func request<ResType:Decodable>(of type: ResType.Type, method: String? = "GET",
-                                         headers: Dictionary<String, String>? = ["Content-Type": "application/json"],
-                                         body: Dictionary<String, String>? = nil) async -> [String: Any]? {
+  static func request( method: String? = "GET",
+                       headers: Dictionary<String, String>? = ["Content-Type": "application/json"],
+                       body: Dictionary<String, String>? = nil) async -> [String: Any]? {
     var req = URLRequest(url: URL(string: BACKEND_URL)!)
     req.httpMethod = method ?? "GET"
     req.allHTTPHeaderFields = headers ?? ["Content-Type": "application/json"]
@@ -28,7 +28,7 @@ class HTTPService {
         return nil
       }
       
-      guard let resJson = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any], resJson != nil else {
+      guard let resJson = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any] else {
         return nil
       }
       
@@ -37,6 +37,31 @@ class HTTPService {
       return nil
     }
   }
+  
+  static func requestGQL(query: String, retriveKey: String, variables: [String:Any]?, operationName: String? ) async -> Any? {
+    var gql = NSMutableDictionary(dictionary: ["query": query])
+    
+    // Set variables of query
+    if let variables = variables {
+      gql["variables"] = variables
+    }
+    
+    // Set operation name of query
+    if let operationName = operationName {
+      gql["operationName"] = operationName
+    }
+    
+    guard let ret = await HTTPService.request(method: "POST", headers: ["Content-Type": "application/json"], body: ["query": query]) else {
+      return nil
+    }
+    
+    guard let data = ret["data"] as? [String: Any], let retrived = data[retriveKey] as? [String: Any] else {
+      return nil
+    }
+    
+    return retrived
+  }
 }
+
 
 
