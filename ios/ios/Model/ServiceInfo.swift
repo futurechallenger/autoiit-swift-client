@@ -10,6 +10,5 @@ import Foundation
 struct ServiceInfo: Hashable, Codable {
   var id: Int
   var name: String
-  var deleted: Int
 }
 

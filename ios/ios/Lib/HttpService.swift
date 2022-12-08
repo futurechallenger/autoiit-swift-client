@@ -10,16 +10,18 @@ import Foundation
 struct HTTPService {
   static let BACKEND_URL = "http://127.0.0.1:5050"
   
-  static func request( method: String? = "GET",
+  static func request( serverURL: String = BACKEND_URL,
+                       method: String? = "GET",
                        headers: Dictionary<String, String>? = ["Content-Type": "application/json"],
-                       body: Dictionary<String, String>? = nil) async -> [String: Any]? {
-    var req = URLRequest(url: URL(string: BACKEND_URL)!)
+//                       body: Dictionary<String, AnyCodable>? = nil) async -> [String: Any]? {
+                       body: NSMutableDictionary? = nil) async -> [String: Any]? {
+    var req = URLRequest(url: URL(string: serverURL)!)
     req.httpMethod = method ?? "GET"
     req.allHTTPHeaderFields = headers ?? ["Content-Type": "application/json"]
     
     // set request body
     if let body = body {
-      req.httpBody = try? JSONEncoder().encode(body)
+      req.httpBody = try? JSONSerialization.data(withJSONObject: body)
     }
     
     do {
@@ -40,6 +42,7 @@ struct HTTPService {
   
   static func requestGQL(query: String, retriveKey: String, variables: [String:Any]?, operationName: String? ) async -> Any? {
     var gql = NSMutableDictionary(dictionary: ["query": query])
+//    var gql: [String: Any] = ["query": query]
     
     // Set variables of query
     if let variables = variables {
@@ -51,15 +54,25 @@ struct HTTPService {
       gql["operationName"] = operationName
     }
     
-    guard let ret = await HTTPService.request(method: "POST", headers: ["Content-Type": "application/json"], body: ["query": query]) else {
+    guard let ret = await HTTPService.request(
+      serverURL: "\(BACKEND_URL)/graphql",
+      method: "POST",
+      headers: ["Content-Type": "application/json"],
+      body: gql) else {
       return nil
     }
     
-    guard let data = ret["data"] as? [String: Any], let retrived = data[retriveKey] as? [String: Any] else {
+    if let errors = ret["errors"] {
+      print("ERRORS: \(errors)")
       return nil
     }
     
-    return retrived
+    guard let data = ret["data"] as? [String: Any] else {
+      print("ERROR: No data can be found")
+      return nil
+    }
+    
+    return data[retriveKey]
   }
 }
 

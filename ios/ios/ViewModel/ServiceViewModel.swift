@@ -29,7 +29,7 @@ class ServiceViewModel: ObservableObject {
       return nil
     }
     
-    serviceInfo = ServiceInfo(id: serviceDict["id"] as! Int, name: serviceDict["name"] as! String, deleted: serviceDict["deleted"] as! Int)
+    serviceInfo = ServiceInfo(id: serviceDict["id"] as! Int, name: serviceDict["name"] as! String)
     
     return serviceInfo
   }
@@ -45,6 +45,7 @@ class ServiceViewModel: ObservableObject {
             id
             name
           }
+        }
       """,
       retriveKey: "servicesByType",
       variables: ["type": "RECOMMENDED"],
@@ -59,8 +60,8 @@ class ServiceViewModel: ObservableObject {
       serviceInfoList.append(
         ServiceInfo(
           id: serv["id"] as! Int,
-          name: serv["name"] as! String,
-          deleted: serv["deleted"] as! Int)
+          name: serv["name"] as! String
+        )
       )
     }
     
@@ -70,8 +71,6 @@ class ServiceViewModel: ObservableObject {
   }
   
   enum LoadSeviceType {
-    case Favorite, All
+    case All, Favorite, Recommended
   }
 }
-
-
