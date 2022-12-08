@@ -8,31 +8,21 @@
 import SwiftUI
 
 struct HomeView: View {
-  @StateObject private var serviceInfo = ServiceInfo()
+  @State private var recommendedServices: [ServiceInfo] = []
   
   var body: some View {
     NavigationView {
-      List {
+      List (self.recommendedServices) { service in
         NavigationLink {
-          ServiceDetailView(recommendedServices:  servicesViewModel.serviceInfoList)
+          ServiceDetailView(service: service)
         } label: {
-          IntroductionRow()
-        }
-        NavigationLink {
-          ServiceDetailView(recommendedServices: [ServiceInfo(id: 2, name: "Service 2")])
-        } label: {
-          IntroductionRow()
-        }
-        NavigationLink {
-          ServiceDetailView(recommendedServices: [ServiceInfo(id: 2, name: "Service 2")])
-        } label: {
-          ServiceInfoRow(text: "Autoiiiiiiiiiiiiiit!")
+          ServiceInfoRow(text: service.name)
         }
       }
       .navigationTitle("Flows")
     }
     .task {
-        await self.servicesViewModel.loadList(serviceType: .Recommended)
+      self.recommendedServices = await ServiceInfo.loadList(serviceType: .Recommended) ?? []
     }
   }
 }

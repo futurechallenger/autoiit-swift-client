@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ServiceInfo: Hashable, Codable {
+struct ServiceInfo: Hashable, Codable, Identifiable {
   var id: Int
   var name: String
   
@@ -45,8 +45,7 @@ struct ServiceInfo: Hashable, Codable {
   }
   
   // TODO: implement this method
-  func loadList(serviceType: LoadSeviceType) async -> [ServiceInfo]? {
-    
+  static func loadList(serviceType: LoadSeviceType) async -> [ServiceInfo]? {
     let res = await HTTPService.requestGQL(
       query:
       """

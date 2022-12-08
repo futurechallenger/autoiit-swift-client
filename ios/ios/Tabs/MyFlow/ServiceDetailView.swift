@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct ServiceDetailView: View {
-  var recommendedServices: [ServiceInfo]?
+  var service: ServiceInfo
   
     var body: some View {
-      let firstEl = (self.recommendedServices ?? [ServiceInfo(id:-1, name: "Empty Service")])[0]
-      Text(firstEl.name)
+      Text(self.service.name)
     }
 }
 
 struct ServiceDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ServiceDetailView(recommendedServices: [ServiceInfo(id: 1, name: "Sample Service")])
+        ServiceDetailView(service: ServiceInfo(id: 1, name: "Sample Service"))
     }
 }
