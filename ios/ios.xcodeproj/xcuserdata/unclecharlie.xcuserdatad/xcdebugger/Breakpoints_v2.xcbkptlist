@@ -7,85 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AF8AC10F-F625-4146-A1EE-C872DED834DC"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ios/Tabs/MyFlow/HomeView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "AF8AC10F-F625-4146-A1EE-C872DED834DC - f32840898f2f1b8b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; Swift.Optional&lt;Swift.Array&lt;ios.ServiceInfo&gt;&gt; in closure #2 () -&gt; () in ios.HomeView.body.getter : some"
-                  moduleName = "ios"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/unclecharlie/Documents/dev/client/autoiit-swift-client/ios/ios/Tabs/MyFlow/HomeView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "35"
-                  endingLineNumber = "35"
-                  offsetFromSymbolStart = "76">
-               </Location>
-               <Location
-                  uuid = "AF8AC10F-F625-4146-A1EE-C872DED834DC - c51ae9a94be467ae"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for closure #1 @Sendable () async -&gt; Swift.Optional&lt;Swift.Array&lt;ios.ServiceInfo&gt;&gt; in closure #2 () -&gt; () in ios.HomeView.body.getter : some"
-                  moduleName = "ios"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/unclecharlie/Documents/dev/client/autoiit-swift-client/ios/ios/Tabs/MyFlow/HomeView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "35"
-                  endingLineNumber = "35"
-                  offsetFromSymbolStart = "44">
-               </Location>
-               <Location
-                  uuid = "AF8AC10F-F625-4146-A1EE-C872DED834DC - 1af29fc047f7df89"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; Swift.Optional&lt;Swift.Array&lt;ios.ServiceInfo&gt;&gt; in closure #2 () -&gt; () in ios.HomeView.body.getter : some"
-                  moduleName = "ios"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/unclecharlie/Documents/dev/client/autoiit-swift-client/ios/ios/Tabs/MyFlow/HomeView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "35"
-                  endingLineNumber = "35"
-                  offsetFromSymbolStart = "28">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5D955FF7-DB28-445A-853E-4655FDDD4F84"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ios/ViewModel/ServiceViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "loadList(serviceType:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "CE3223EA-9A40-473A-9A93-6593C695FC38"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -270,22 +191,6 @@
             startingLineNumber = "76"
             endingLineNumber = "76"
             landmarkName = "requestGQL(query:retriveKey:variables:operationName:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "99EEF3CA-0BE9-4D0F-8D9E-FD3F8010565B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ios/ViewModel/ServiceViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "loadList(serviceType:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

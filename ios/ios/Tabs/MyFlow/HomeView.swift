@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-  @StateObject private var servicesViewModel = ServiceViewModel()
+  @StateObject private var serviceInfo = ServiceInfo()
   
   var body: some View {
     NavigationView {
@@ -30,10 +30,9 @@ struct HomeView: View {
         }
       }
       .navigationTitle("Flows")
-    }.onAppear {
-      Task {
+    }
+    .task {
         await self.servicesViewModel.loadList(serviceType: .Recommended)
-      }
     }
   }
 }

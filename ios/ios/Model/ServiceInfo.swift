@@ -10,5 +10,76 @@ import Foundation
 struct ServiceInfo: Hashable, Codable {
   var id: Int
   var name: String
+  
+  init() {
+    self.id = -1
+    self.name = ""
+  }
+  
+  init(id: Int, name: String) {
+    self.id = id
+    self.name = name
+  }
+  
+  func load(serviceId: Int) async -> ServiceInfo? {
+    let ret = await HTTPService.requestGQL(
+      query: """
+            query getService($serviceId: Int!) {
+              service(id: $serviceId) {
+                id
+                name
+              }
+            }
+      """,
+      retriveKey: "service",
+      variables: ["serviceId": serviceId],
+      operationName: nil) as? [String: Any]
+    
+    guard let serviceDict = ret else {
+      return nil
+    }
+    
+    let serviceInfo = ServiceInfo(id: serviceDict["id"] as! Int, name: serviceDict["name"] as! String)
+    
+    return serviceInfo
+  }
+  
+  // TODO: implement this method
+  func loadList(serviceType: LoadSeviceType) async -> [ServiceInfo]? {
+    
+    let res = await HTTPService.requestGQL(
+      query:
+      """
+        query getServices($type: String!) {
+          servicesByType(serviceType: $type, userId:1) {
+            id
+            name
+          }
+        }
+      """,
+      retriveKey: "servicesByType",
+      variables: ["type": "RECOMMENDED"],
+      operationName: nil) as? [[String: Any]]
+    
+    guard let serviceList = res else  {
+      return nil
+    }
+    
+    var serviceInfoList: [ServiceInfo] = []
+    for serv in serviceList {
+      serviceInfoList.append(
+        ServiceInfo(
+          id: serv["id"] as! Int,
+          name: serv["name"] as! String
+        )
+      )
+    }
+    
+    return serviceInfoList
+  }
+  
+  enum LoadSeviceType {
+    case All, Favorite, Recommended
+  }
 }
 
