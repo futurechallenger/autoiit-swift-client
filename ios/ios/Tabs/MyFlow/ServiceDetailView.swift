@@ -8,15 +8,41 @@
 import SwiftUI
 
 struct ServiceDetailView: View {
+  @State private var showPopover = false
   var service: ServiceInfo
   
-    var body: some View {
-      Text(self.service.name)
+  var body: some View {
+    VStack {
+      Group {
+        Text(self.service.name)
+        
+        Divider()
+        
+        Button  {
+          if !showPopover {
+            showPopover = true
+          }
+        } label: {
+          Text("Connect")
+        }
+        .buttonStyle(.borderedProminent)
+        .buttonBorderShape(.roundedRectangle(radius: 30))
+        .popover(isPresented: self.$showPopover) {
+          Link(destination: URL(string: "https://www.apple.cn")!, label: {
+            Text("Link").foregroundColor(.yellow)
+          })
+        }
+      }
+      .padding(.top, 20)
+      Spacer()
     }
+    .frame(alignment: .top)
+  }
 }
 
 struct ServiceDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        ServiceDetailView(service: ServiceInfo(id: 1, name: "Sample Service"))
-    }
+  static var previews: some View {
+    ServiceDetailView(service: ServiceInfo(id: 1, name: "Sample Service"))
+  }
 }
+
