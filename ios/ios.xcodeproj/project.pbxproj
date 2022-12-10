@@ -18,6 +18,14 @@
 		EFB28D20293BAE6600917DC4 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D1F293BAE6600917DC4 /* ExploreView.swift */; };
 		EFB28D24293BB00D00917DC4 /* ServiceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D23293BB00D00917DC4 /* ServiceInfo.swift */; };
 		EFB28D26293BB37B00917DC4 /* ServiceInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D25293BB37B00917DC4 /* ServiceInfoRow.swift */; };
+		EFB28D29293BB64300917DC4 /* IntroductionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D28293BB64300917DC4 /* IntroductionRow.swift */; };
+		EFB28D2B293C19B300917DC4 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D2A293C19B300917DC4 /* CreateView.swift */; };
+		EFB28D2D293C1B2400917DC4 /* ServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB28D2C293C1B2400917DC4 /* ServiceDetailView.swift */; };
+		EFF56BA6293F5E36006633E8 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF56BA5293F5E36006633E8 /* ActivityView.swift */; };
+		EFF56BA8293F5E8F006633E8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF56BA7293F5E8F006633E8 /* ProfileView.swift */; };
+		EFF56BB0293F92D4006633E8 /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF56BAF293F92D4006633E8 /* HttpService.swift */; };
+		EFF56BB529438E91006633E8 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF56BB429438E91006633E8 /* WebView.swift */; };
+		EFF56BB7294441F3006633E8 /* ServiceAuthInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF56BB6294441F3006633E8 /* ServiceAuthInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +60,14 @@
 		EFB28D1F293BAE6600917DC4 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		EFB28D23293BB00D00917DC4 /* ServiceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInfo.swift; sourceTree = "<group>"; };
 		EFB28D25293BB37B00917DC4 /* ServiceInfoRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceInfoRow.swift; sourceTree = "<group>"; };
+		EFB28D28293BB64300917DC4 /* IntroductionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionRow.swift; sourceTree = "<group>"; };
+		EFB28D2A293C19B300917DC4 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
+		EFB28D2C293C1B2400917DC4 /* ServiceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailView.swift; sourceTree = "<group>"; };
+		EFF56BA5293F5E36006633E8 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		EFF56BA7293F5E8F006633E8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		EFF56BAF293F92D4006633E8 /* HttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
+		EFF56BB429438E91006633E8 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		EFF56BB6294441F3006633E8 /* ServiceAuthInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAuthInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,13 +118,13 @@
 		EFB28CF2293BAB7600917DC4 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				EFB28D22293BAFCF00917DC4 /* model */,
-				EFB28D21293BAF3E00917DC4 /* MyFlow */,
+				EFF56BAE293F92BE006633E8 /* Lib */,
+				EFF56BA9293F7A0A006633E8 /* Tabs */,
+				EFB28D27293BB61D00917DC4 /* CommonView */,
+				EFB28D22293BAFCF00917DC4 /* Model */,
 				EFB28CF3293BAB7600917DC4 /* iosApp.swift */,
-				EFB28CF5293BAB7600917DC4 /* MainView.swift */,
 				EFB28CF7293BAB7700917DC4 /* Assets.xcassets */,
 				EFB28CF9293BAB7700917DC4 /* Preview Content */,
-				EFB28D1F293BAE6600917DC4 /* ExploreView.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -141,18 +157,82 @@
 		EFB28D21293BAF3E00917DC4 /* MyFlow */ = {
 			isa = PBXGroup;
 			children = (
+				EFB28D2C293C1B2400917DC4 /* ServiceDetailView.swift */,
 				EFB28D25293BB37B00917DC4 /* ServiceInfoRow.swift */,
 				EFB28D1D293BAE3F00917DC4 /* HomeView.swift */,
 			);
 			path = MyFlow;
 			sourceTree = "<group>";
 		};
-		EFB28D22293BAFCF00917DC4 /* model */ = {
+		EFB28D22293BAFCF00917DC4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				EFB28D23293BB00D00917DC4 /* ServiceInfo.swift */,
+				EFF56BB6294441F3006633E8 /* ServiceAuthInfo.swift */,
 			);
-			path = model;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EFB28D27293BB61D00917DC4 /* CommonView */ = {
+			isa = PBXGroup;
+			children = (
+				EFB28D28293BB64300917DC4 /* IntroductionRow.swift */,
+			);
+			path = CommonView;
+			sourceTree = "<group>";
+		};
+		EFF56BA9293F7A0A006633E8 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				EFB28CF5293BAB7600917DC4 /* MainView.swift */,
+				EFF56BAD293F7A55006633E8 /* Profile */,
+				EFF56BAC293F7A49006633E8 /* Activity */,
+				EFF56BAB293F7A39006633E8 /* Explore */,
+				EFF56BAA293F7A22006633E8 /* Create */,
+				EFB28D21293BAF3E00917DC4 /* MyFlow */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		EFF56BAA293F7A22006633E8 /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				EFB28D2A293C19B300917DC4 /* CreateView.swift */,
+			);
+			path = Create;
+			sourceTree = "<group>";
+		};
+		EFF56BAB293F7A39006633E8 /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				EFB28D1F293BAE6600917DC4 /* ExploreView.swift */,
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
+		EFF56BAC293F7A49006633E8 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				EFF56BA5293F5E36006633E8 /* ActivityView.swift */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
+		EFF56BAD293F7A55006633E8 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				EFF56BA7293F5E8F006633E8 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		EFF56BAE293F92BE006633E8 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				EFF56BAF293F92D4006633E8 /* HttpService.swift */,
+				EFF56BB429438E91006633E8 /* WebView.swift */,
+			);
+			path = Lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,10 +367,18 @@
 			files = (
 				EFB28D26293BB37B00917DC4 /* ServiceInfoRow.swift in Sources */,
 				EFB28D1E293BAE3F00917DC4 /* HomeView.swift in Sources */,
+				EFF56BB529438E91006633E8 /* WebView.swift in Sources */,
+				EFB28D2B293C19B300917DC4 /* CreateView.swift in Sources */,
+				EFF56BA6293F5E36006633E8 /* ActivityView.swift in Sources */,
 				EFB28CF6293BAB7600917DC4 /* MainView.swift in Sources */,
+				EFF56BB0293F92D4006633E8 /* HttpService.swift in Sources */,
 				EFB28D20293BAE6600917DC4 /* ExploreView.swift in Sources */,
 				EFB28D24293BB00D00917DC4 /* ServiceInfo.swift in Sources */,
+				EFB28D29293BB64300917DC4 /* IntroductionRow.swift in Sources */,
+				EFB28D2D293C1B2400917DC4 /* ServiceDetailView.swift in Sources */,
+				EFF56BA8293F5E8F006633E8 /* ProfileView.swift in Sources */,
 				EFB28CF4293BAB7600917DC4 /* iosApp.swift in Sources */,
+				EFF56BB7294441F3006633E8 /* ServiceAuthInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
