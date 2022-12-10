@@ -45,7 +45,7 @@ struct ServiceInfo: Hashable, Codable, Identifiable {
   }
   
   // TODO: implement this method
-  static func loadList(serviceType: LoadSeviceType) async -> [ServiceInfo]? {
+  static func loadList(serviceType: LoadServiceType) async -> [ServiceInfo]? {
     let res = await HTTPService.requestGQL(
       query:
       """
@@ -77,7 +77,7 @@ struct ServiceInfo: Hashable, Codable, Identifiable {
     return serviceInfoList
   }
   
-  enum LoadSeviceType {
+  enum LoadServiceType {
     case All, Favorite, Recommended
   }
 }
