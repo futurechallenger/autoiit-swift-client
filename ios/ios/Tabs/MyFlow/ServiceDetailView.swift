@@ -28,9 +28,7 @@ struct ServiceDetailView: View {
         .buttonStyle(.borderedProminent)
         .buttonBorderShape(.roundedRectangle(radius: 30))
         .popover(isPresented: self.$showPopover) {
-          Link(destination: URL(string: "https://www.apple.cn")!, label: {
-            Text("Link").foregroundColor(.yellow)
-          })
+          WebView(request: URLRequest(url: URL(string: "https://www.apple.cn")!))
         }
       }
       .padding(.top, 20)
