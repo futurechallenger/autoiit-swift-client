@@ -56,7 +56,7 @@ struct ServiceInfo: Hashable, Codable, Identifiable {
           }
         }
       """,
-      retriveKey: "servicesByType",
+      retrieveKey: "servicesByType",
       variables: ["type": "RECOMMENDED"],
       operationName: nil) as? [[String: Any]]
     

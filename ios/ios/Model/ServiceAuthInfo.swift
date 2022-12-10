@@ -7,23 +7,25 @@
 
 import Foundation
 
-struct ServiceAuthInfo: Hashable, Codable, Identifiable {
-  var id: ObjectIdentifier
-  
-  private var authorizationUrl: String
-  private var providerName: String
+struct ServiceAuthInfo: Hashable, Identifiable {
+  var id: Int
+  var authorizationUrl: String
+  var providerName: String
   
   init () {
+    self.id = -1
     self.authorizationUrl = ""
     self.providerName = ""
   }
   
-  init (authorizationUrl: String, providerName: String) {
+  init (id: Int, authorizationUrl: String, providerName: String) {
+    self.id = id
     self.authorizationUrl = authorizationUrl
     self.providerName = providerName
   }
-    
+  
   func doAuth() {
-    
+    // TODO:
   }
 }
+
