@@ -40,7 +40,7 @@ struct HTTPService {
     }
   }
   
-  static func requestGQL(query: String, retriveKey: String, variables: [String:Any]?, operationName: String? ) async -> Any? {
+  static func requestGQL(query: String, retrieveKey: String, variables: [String:Any]?, operationName: String? ) async -> Any? {
     var gql = NSMutableDictionary(dictionary: ["query": query])
 //    var gql: [String: Any] = ["query": query]
     
@@ -72,7 +72,7 @@ struct HTTPService {
       return nil
     }
     
-    return data[retriveKey]
+    return data[retrieveKey]
   }
 }
 

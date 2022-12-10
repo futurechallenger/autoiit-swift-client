@@ -31,7 +31,7 @@ struct ServiceInfo: Hashable, Codable, Identifiable {
               }
             }
       """,
-      retriveKey: "service",
+      retrieveKey: "service",
       variables: ["serviceId": serviceId],
       operationName: nil) as? [String: Any]
     
