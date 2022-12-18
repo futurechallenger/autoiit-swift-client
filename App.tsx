@@ -7,6 +7,7 @@ import Navigation from "./navigation";
 import { api } from "./redux/baseApi";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { NativeBaseProvider } from "native-base";
+import { theme } from "./constants/theme";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -18,7 +19,7 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <ApiProvider api={api}>
-          <NativeBaseProvider>
+          <NativeBaseProvider theme={theme}>
             <Navigation colorScheme={colorScheme} />
             <StatusBar />
           </NativeBaseProvider>
