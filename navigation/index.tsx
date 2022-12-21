@@ -28,6 +28,7 @@ import {
 import LinkingConfiguration from "./LinkingConfiguration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LoginScreen } from "../screens/LoginScreen";
+import { AuthNavigator } from "./AuthNavigator";
 
 const { useState, useEffect } = React;
 
@@ -53,16 +54,19 @@ export default function Navigation({
     readToken();
   }, []);
 
-  if (!token) {
-    return <LoginScreen />;
-  }
+  const renderNavigator = (token: string | null) => {
+    if (!token) {
+      return <AuthNavigator />;
+    }
+    return <RootNavigator />;
+  };
 
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      <RootNavigator />
+      {renderNavigator(token)}
     </NavigationContainer>
   );
 }

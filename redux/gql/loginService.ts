@@ -18,7 +18,7 @@ export const LoginDocument = `
     `;
 
 const injectedRtkApi = api.injectEndpoints({
-  overrideExisting: module.hot?.status() === "apply",
+  // overrideExisting: module.hot?.status() === "apply",
   endpoints: (build) => ({
     login: build.mutation<LoginMutation, LoginMutationVariables>({
       query: (variables) => ({ document: LoginDocument, variables })

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Button } from "react-native";
+import { StyleSheet } from "react-native";
 import { View } from "../components/Themed";
 
 import { request, gql } from "graphql-request";
-import { Actionsheet, Box, Text } from "native-base";
+import { Actionsheet, Box, Text, Button } from "native-base";
 
 const loginGql = gql`
   mutation login($userInfo: UserInfoInput!) {
@@ -38,8 +38,8 @@ export const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      <Button title="Login" onPress={handleLogin} />
-      <Button title="SignIn" onPress={handleSignIn} />
+      <Button onPress={handleLogin}>Login</Button>
+      <Button onPress={handleSignIn}>SignIn</Button>
 
       <Actionsheet isOpen={openSheet}>
         <Actionsheet.Content>
