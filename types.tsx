@@ -45,6 +45,7 @@ export type AuthNavigatorParamList = {
   Root: undefined;
   Email: undefined;
   Password: { exists: FindUserQuery };
+  Tabs: CompositeScreenProps<RootTabScreenProps<RootTabParamList, "Root">>;
 };
 
 export type EmailScreenNavigationProp = NativeStackNavigationProp<

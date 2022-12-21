@@ -8,24 +8,32 @@ import {
   Box,
   Pressable,
   Icon,
+  ZStack,
+  Spinner,
 } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
-import { request, gql } from "graphql-request";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { PasswordScreenRouteProp } from "../types";
+import { LoginMutation, useLoginMutation } from "../redux/gql/loginService";
+import {
+  RegisterMutation,
+  useRegisterMutation,
+} from "../redux/gql/signInService";
+import { AuthContext } from "../navigation";
 
 const { useState } = React;
 
-const loginGql = gql`
-  mutation login($userInfo: UserInfoInput!) {
-    loginIn(userInfo: $userInfo)
-  }
-`;
 const PasswordScreen = () => {
   const [show, setShow] = useState(false);
   const [text, setText] = useState("");
+  const [signIn, signInResult] = useRegisterMutation();
+  const [login, loginResult] = useLoginMutation();
+  const [fetching, setFetching] = useState(false);
+  const [error, setError] = useState(null);
+  const navigation = useNavigation();
+  const authContext = React.useContext(AuthContext);
 
   const route = useRoute<PasswordScreenRouteProp>();
   const { exists } = route.params;
@@ -33,29 +41,35 @@ const PasswordScreen = () => {
   const handleClick = async () => {
     try {
       const email = await AsyncStorage.getItem("@email");
-
-      if (!exists) {
+      if (!email) {
         return;
       }
 
-      const variables = {
-        userInfo: {
-          email,
-          password: text,
-        },
-      };
-      const res = await request(
-        "http://127.0.0.1:5050/graphql",
-        loginGql,
-        variables
-      );
+      setFetching(true);
 
-      if (res?.data) {
-        AsyncStorage.setItem("@token", res?.data);
+      let res: Partial<RegisterMutation & LoginMutation>;
+      if (!exists?.userinfo) {
+        res = await signIn({ userInfo: { email, password: text } }).unwrap();
+      } else {
+        res = await login({ userInfo: { email, password: text } }).unwrap();
       }
-    } catch (e) {
+
+      const token = res?.signIn || res?.loginIn;
+
+      if (!token) {
+        throw Error("Something's wrong when login");
+      }
+
+      AsyncStorage.setItem("@token", token);
+      authContext.setAuthToken(token);
+      setFetching(false);
+
+      navigation.reset("Tabs");
+    } catch (e: any) {
       console.error("ERROR in login", e);
       // setShowError(true);
+      setFetching(false);
+      setError(e);
     }
   };
 
@@ -67,14 +81,21 @@ const PasswordScreen = () => {
     // TODO: forget password
   };
 
-  const headingText = exists
+  const headingText = exists?.userinfo
     ? "Welcome back! What's your password"
     : "Create your password";
-  const buttonTitle = exists ? "Login" : "SignIn";
+  const buttonTitle = exists?.userinfo ? "Login" : "SignIn";
 
   return (
-    <SafeAreaView>
-      <VStack paddingX="4" space="10" paddingY="5">
+    <ZStack flex="1" justifyContent="center" alignItems="center">
+      <VStack
+        paddingX="4"
+        space="10"
+        paddingY="5"
+        position="absolute"
+        top="0"
+        w="full"
+      >
         <Heading>{headingText}</Heading>
         <Box>
           <Input
@@ -95,7 +116,8 @@ const PasswordScreen = () => {
           </Pressable>
         </Box>
       </VStack>
-    </SafeAreaView>
+      {fetching && <Spinner size="lg" />}
+    </ZStack>
   );
 };
 

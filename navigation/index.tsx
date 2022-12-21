@@ -30,7 +30,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LoginScreen } from "../screens/LoginScreen";
 import { AuthNavigator } from "./AuthNavigator";
 
-const { useState, useEffect } = React;
+const { useState, useEffect, createContext } = React;
+
+interface AuthContextType {
+  token: string | null;
+  setAuthToken: (token: string) => void;
+}
+
+export const AuthContext = createContext<AuthContextType>({
+  token: "",
+  setAuthToken(token) {},
+});
 
 export default function Navigation({
   colorScheme,
@@ -62,12 +72,16 @@ export default function Navigation({
   };
 
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    <AuthContext.Provider
+      value={{ token: token ?? "", setAuthToken: (token) => setToken(token) }}
     >
-      {renderNavigator(token)}
-    </NavigationContainer>
+      <NavigationContainer
+        linking={LinkingConfiguration}
+        theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      >
+        {renderNavigator(token)}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
 
@@ -77,7 +91,7 @@ export default function Navigation({
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
+export function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen

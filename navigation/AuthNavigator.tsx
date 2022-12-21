@@ -4,6 +4,7 @@ import { AuthScreen } from "../screens/AuthScreen";
 import { EmailScreen } from "../screens/EmailScreen";
 import { PasswordScreen } from "../screens/PasswordScreen";
 import { AuthNavigatorParamList } from "../types";
+import { RootNavigator } from ".";
 
 export const AuthNavigator = () => {
   return (
@@ -23,6 +24,7 @@ export const AuthNavigator = () => {
         component={PasswordScreen}
         options={{ headerShown: true }}
       />
+      <Stack.Screen name="Tabs" component={RootNavigator} />
     </Stack.Navigator>
   );
 };
