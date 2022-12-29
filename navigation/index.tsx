@@ -18,29 +18,47 @@ import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import TabOneScreen from "../screens/TabOneScreen";
+import TabOneScreen from "../screens/MyFlowScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
-  RootStackParamList,
+  BottomStackParamList,
   RootTabParamList,
-  RootTabScreenProps,
+  MainTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { LoginScreen } from "../screens/LoginScreen";
-import { AuthNavigator } from "./AuthNavigator";
+import { AuthScreen } from "../screens/AuthScreen";
+import { EmailScreen } from "../screens/EmailScreen";
+import { PasswordScreen } from "../screens/PasswordScreen";
+import { StackNavigatorParamList } from "../types";
+import { AuthContext } from "./AuthContext";
 
-const { useState, useEffect, createContext } = React;
+const { useState, useEffect } = React;
 
-interface AuthContextType {
-  token: string | null;
-  setAuthToken: (token: string) => void;
-}
+const NavStack = createNativeStackNavigator<StackNavigatorParamList>();
 
-export const AuthContext = createContext<AuthContextType>({
-  token: "",
-  setAuthToken(token) {},
-});
+export const AuthNavigator = () => {
+  return (
+    <NavStack.Navigator>
+      <NavStack.Screen
+        name="Root"
+        component={AuthScreen}
+        options={{ headerShown: false }}
+      />
+      <NavStack.Screen
+        name="Email"
+        component={EmailScreen}
+        options={{ headerShown: true }}
+      />
+      <NavStack.Screen
+        name="Password"
+        component={PasswordScreen}
+        options={{ headerShown: true }}
+      />
+      <NavStack.Screen name="Tabs" component={RootNavigator} />
+    </NavStack.Navigator>
+  );
+};
 
 export default function Navigation({
   colorScheme,
@@ -53,7 +71,7 @@ export default function Navigation({
     const readToken = async () => {
       let token = null;
       try {
-        token = await AsyncStorage.getItem("token");
+        token = await AsyncStorage.getItem("@token");
       } catch (e) {
         token = null;
       }
@@ -89,7 +107,7 @@ export default function Navigation({
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
  */
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<BottomStackParamList>();
 
 export function RootNavigator() {
   return (
@@ -122,16 +140,16 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="MyFlow"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
-        name="TabOne"
+        name="MyFlow"
         component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
-          title: "Tab One",
+        options={({ navigation }: MainTabScreenProps<"MyFlow">) => ({
+          title: "My Flow",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable

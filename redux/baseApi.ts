@@ -1,9 +1,48 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { graphqlRequestBaseQuery } from "@rtk-query/graphql-request-base-query";
+import { SERVER_URL } from "../Lib/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import type { APIResponse } from "../types";
 
-export const api = createApi({
-  baseQuery: graphqlRequestBaseQuery({
-    url: "http://127.0.0.1:5050/graphql",
-  }),
-  endpoints: () => ({}),
-});
+type RequestParam = {
+  query: string;
+  operationName?: string;
+  variables: any | undefined;
+};
+
+const sendRequest = async ({
+  query,
+  variables = undefined,
+  operationName,
+}: RequestParam): Promise<APIResponse> => {
+  const token = await AsyncStorage.getItem("@token");
+
+  const headers: { [index: string]: string } = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  };
+
+  if (token) {
+    headers["authorization"] = token;
+  }
+
+  const body: { [index: string]: string } = {};
+
+  body["query"] = query;
+  if (operationName) {
+    body["operationName"] = operationName;
+  }
+  if (variables) {
+    body["variables"] = variables;
+  }
+
+  const res = await fetch(`${SERVER_URL}/graphql`, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    headers: { ...headers, Authorization: token ?? "" },
+    body: JSON.stringify(body),
+  });
+
+  return res.json();
+};
+
+export { sendRequest };

@@ -5,6 +5,7 @@ import { View } from "../components/Themed";
 
 import { request, gql } from "graphql-request";
 import { Actionsheet, Box, Text, Button } from "native-base";
+import { SERVER_URL } from "../Lib/config";
 
 const loginGql = gql`
   mutation login($userInfo: UserInfoInput!) {
@@ -20,11 +21,7 @@ export const LoginScreen = () => {
   const handleLogin = async () => {
     try {
       console.log("Login button pressed");
-      const res = await request(
-        "http://127.0.0.1:5050/graphql",
-        loginGql,
-        variables
-      );
+      const res = await request(`${SERVER_URL}/graphql`, loginGql, variables);
     } catch (e) {
       console.error("ERROR in login", e);
       setShowError(true);

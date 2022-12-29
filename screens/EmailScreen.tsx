@@ -12,8 +12,10 @@ import {
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useLazyFindUserQuery } from "../redux/gql/userInfoService";
 import { EmailScreenNavigationProp } from "../types";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { getUserInfo } from "../redux/gql/userInfoService";
+import { RootState } from "../redux/store";
 
 const { useState } = React;
 
@@ -27,10 +29,19 @@ const { useState } = React;
  * If not, show `Create account` there
  */
 const EmailScreen = () => {
+  const dispatch = useAppDispatch();
+  const { userInfo, status } = useAppSelector(
+    (state: RootState) => state.userInfo
+  );
   const navigation = useNavigation<EmailScreenNavigationProp>();
   const [text, setText] = useState<string>("");
-  const [trigger, { data, error, isFetching }] = useLazyFindUserQuery();
   const toast = useToast();
+  const [email, setEmail] = useState("");
+
+  React.useEffect(() => {
+    if (!email || !status || status === "loading") return;
+    navigation.navigate("Password", { exists: userInfo });
+  }, [email, status]);
 
   const handleClick = async () => {
     if (!text) {
@@ -38,10 +49,10 @@ const EmailScreen = () => {
     }
 
     try {
-      AsyncStorage.setItem("@email", text ?? "");
+      await AsyncStorage.setItem("@email", text ?? "");
+      setEmail(text);
 
-      const exists = await trigger({ email: text }).unwrap();
-      navigation.navigate("Password", { exists });
+      dispatch(getUserInfo({ email: text }));
     } catch (e) {
       console.error("E:", e);
       toast.show({ description: "Error" });
@@ -82,7 +93,7 @@ const EmailScreen = () => {
             </Box>
           </VStack>
 
-          {isFetching && <Spinner size="lg" />}
+          {status === "loading" && <Spinner size="lg" />}
         </ZStack>
         <Box paddingBottom={10} paddingX="5">
           <Button onPress={handleClick}>Continue</Button>

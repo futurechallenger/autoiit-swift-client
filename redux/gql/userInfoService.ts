@@ -1,32 +1,59 @@
-import * as Types from '../types.generated';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import * as Types from "../types.generated";
 
-import { api } from '../baseApi';
+import { sendRequest } from "../baseApi";
+
+export const getUserInfo = createAsyncThunk(
+  "userInfo",
+  async (variables: FindUserQueryVariables) => {
+    const res = await sendRequest({ query: FindUserDocument, variables });
+    return res?.data;
+  }
+);
+
+const initialState: {
+  userInfo: any;
+  status: string;
+  error: string | undefined;
+} = {
+  userInfo: {},
+  status: "",
+  error: "",
+};
+
+export const userInfoSlice = createSlice({
+  name: "userInfo",
+  initialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder
+      .addCase(getUserInfo.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getUserInfo.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.userInfo = action.payload;
+      })
+      .addCase(getUserInfo.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+  },
+});
 
 export type FindUserQueryVariables = Types.Exact<{
-  email: Types.Scalars['String'];
+  email: Types.Scalars["String"];
 }>;
 
-
-export type FindUserQuery = { __typename?: 'Query', userinfo?: { __typename?: 'UserInfo', name?: string | null } | null };
-
+export type FindUserQuery = {
+  __typename?: "Query";
+  userinfo?: { __typename?: "UserInfo"; name?: string | null } | null;
+};
 
 export const FindUserDocument = `
-    query findUser($email: String!) {
+query findUser($email: String!) {
   userinfo(email: $email) {
     name
   }
 }
-    `;
-
-const injectedRtkApi = api.injectEndpoints({
-  // overrideExisting: module.hot?.status() === "apply",
-  endpoints: (build) => ({
-    findUser: build.query<FindUserQuery, FindUserQueryVariables>({
-      query: (variables) => ({ document: FindUserDocument, variables })
-    }),
-  }),
-});
-
-export { injectedRtkApi as api };
-export const { useFindUserQuery, useLazyFindUserQuery } = injectedRtkApi;
-
+`;

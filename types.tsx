@@ -3,7 +3,6 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import {
   CompositeScreenProps,
   NavigatorScreenParams,
@@ -14,46 +13,52 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { FindUserQuery } from "./redux/gql/userInfoService";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
+    interface RootParamList extends BottomStackParamList {}
   }
 }
 
-export type RootStackParamList = {
+export type BottomStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
 };
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, Screen>;
+export type RootStackScreenProps<Screen extends keyof BottomStackParamList> =
+  NativeStackScreenProps<BottomStackParamList, Screen>;
 
 export type RootTabParamList = {
-  TabOne: undefined;
+  MyFlow: undefined;
   TabTwo: undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
+export type MainTabScreenProps<Screen extends keyof RootTabParamList> =
   CompositeScreenProps<
     BottomTabScreenProps<RootTabParamList, Screen>,
-    NativeStackScreenProps<RootStackParamList>
+    NativeStackScreenProps<StackNavigatorParamList, "Tabs">
   >;
 
-export type AuthNavigatorParamList = {
+export type StackNavigatorParamList = {
   Root: undefined;
   Email: undefined;
   Password: { exists: FindUserQuery };
-  Tabs: CompositeScreenProps<RootTabScreenProps<RootTabParamList, "Root">>;
+  // Tabs: CompositeScreenProps<RootTabScreenProps<RootTabParamList, "Root">>;
+  Tabs: RootTabParamList;
 };
 
 export type EmailScreenNavigationProp = NativeStackNavigationProp<
-  AuthNavigatorParamList,
+  StackNavigatorParamList,
   "Password"
 >;
 
 export type PasswordScreenRouteProp = RouteProp<
-  AuthNavigatorParamList,
+  StackNavigatorParamList,
   "Password"
 >;
+
+export type APIResponse = {
+  data: any;
+};

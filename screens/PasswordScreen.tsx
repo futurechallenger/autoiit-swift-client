@@ -16,27 +16,50 @@ import { MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { PasswordScreenRouteProp } from "../types";
-import { LoginMutation, useLoginMutation } from "../redux/gql/loginService";
-import {
-  RegisterMutation,
-  useRegisterMutation,
-} from "../redux/gql/signInService";
-import { AuthContext } from "../navigation";
+// import { LoginMutation, useLoginMutation } from "../redux/gql/loginService";
+// import {
+//   RegisterMutation,
+//   useRegisterMutation,
+// } from "../redux/gql/signInService";
+import { AuthContext } from "../navigation/AuthContext";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { login } from "../redux/gql/loginService";
+import { signIn } from "../redux/gql/signInService";
+import { RootState } from "../redux/store";
 
 const { useState } = React;
 
 const PasswordScreen = () => {
+  const dispatch = useAppDispatch();
+  const { token: signInToken, status: signInStatus } = useAppSelector(
+    (state: RootState) => state.signIn
+  );
+  const { token: loginToken, status: loginStatus } = useAppSelector(
+    (state: RootState) => state.login
+  );
+
   const [show, setShow] = useState(false);
   const [text, setText] = useState("");
-  const [signIn, signInResult] = useRegisterMutation();
-  const [login, loginResult] = useLoginMutation();
-  const [fetching, setFetching] = useState(false);
+  // const [signIn, signInResult] = useRegisterMutation();
+  // const [login, loginResult] = useLoginMutation();
   const [error, setError] = useState(null);
   const navigation = useNavigation();
   const authContext = React.useContext(AuthContext);
 
   const route = useRoute<PasswordScreenRouteProp>();
   const { exists } = route.params;
+
+  React.useEffect(() => {
+    const token = signInToken || loginToken;
+    if (!token) {
+      return;
+    }
+
+    AsyncStorage.setItem("@token", token);
+    authContext.setAuthToken(token);
+
+    navigation.reset("Tabs");
+  }, [signInToken, loginToken]);
 
   const handleClick = async () => {
     try {
@@ -45,30 +68,27 @@ const PasswordScreen = () => {
         return;
       }
 
-      setFetching(true);
-
-      let res: Partial<RegisterMutation & LoginMutation>;
       if (!exists?.userinfo) {
-        res = await signIn({ userInfo: { email, password: text } }).unwrap();
+        // res = await signIn({ userInfo: { email, password: text } }).unwrap();
+        dispatch(signIn({ userInfo: { email, password: text } }));
       } else {
-        res = await login({ userInfo: { email, password: text } }).unwrap();
+        // res = await login({ userInfo: { email, password: text } }).unwrap();
+        dispatch(login({ userInfo: { email, password: text } }));
       }
 
-      const token = res?.signIn || res?.loginIn;
+      // const token = res?.signIn || res?.loginIn;
 
-      if (!token) {
-        throw Error("Something's wrong when login");
-      }
+      // if (!token) {
+      //   throw Error("Something's wrong when login");
+      // }
 
-      AsyncStorage.setItem("@token", token);
-      authContext.setAuthToken(token);
-      setFetching(false);
+      // AsyncStorage.setItem("@token", token);
+      // authContext.setAuthToken(token);
 
-      navigation.reset("Tabs");
+      // navigation.reset("Tabs");
     } catch (e: any) {
       console.error("ERROR in login", e);
       // setShowError(true);
-      setFetching(false);
       setError(e);
     }
   };
@@ -116,7 +136,9 @@ const PasswordScreen = () => {
           </Pressable>
         </Box>
       </VStack>
-      {fetching && <Spinner size="lg" />}
+      {(signInStatus === "loading" || loginStatus === "loading") && (
+        <Spinner size="lg" />
+      )}
     </ZStack>
   );
 };

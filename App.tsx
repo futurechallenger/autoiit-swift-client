@@ -4,9 +4,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
-import { api } from "./redux/baseApi";
-import { ApiProvider } from "@reduxjs/toolkit/query/react";
+import { Provider } from "react-redux";
 import { NativeBaseProvider } from "native-base";
+import { store } from "./redux/store";
 // TODO: Theme
 // import { theme } from "./constants/theme";
 
@@ -19,12 +19,12 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <ApiProvider api={api}>
+        <Provider store={store}>
           <NativeBaseProvider>
             <Navigation colorScheme={colorScheme} />
             <StatusBar />
           </NativeBaseProvider>
-        </ApiProvider>
+        </Provider>
       </SafeAreaProvider>
     );
   }

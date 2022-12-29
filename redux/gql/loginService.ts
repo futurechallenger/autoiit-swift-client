@@ -1,31 +1,47 @@
-import * as Types from '../types.generated';
-
-import { api } from '../baseApi';
-
-module.hot?.accept();
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { sendRequest } from "../baseApi";
+import * as Types from "../types.generated";
 
 export type LoginMutationVariables = Types.Exact<{
   userInfo: Types.UserInfoInput;
 }>;
 
-export type LoginMutation = { __typename?: 'Mutation', loginIn: string };
+export const login = createAsyncThunk(
+  "login",
+  async (variables: LoginMutationVariables) => {
+    const query = `
+  mutation login($userInfo: UserInfoInput!) {
+    loginIn(userInfo: $userInfo)
+  }`;
+    const res = await sendRequest({ query, variables });
+    return res?.data;
+  }
+);
 
+type InitStateType = {
+  status: string;
+  token: string | undefined;
+  error: string | undefined;
+};
 
-export const LoginDocument = `
-    mutation login($userInfo: UserInfoInput!) {
-  loginIn(userInfo: $userInfo)
-}
-    `;
+const initState: InitStateType = { status: "", token: "", error: undefined };
 
-const injectedRtkApi = api.injectEndpoints({
-  // overrideExisting: module.hot?.status() === "apply",
-  endpoints: (build) => ({
-    login: build.mutation<LoginMutation, LoginMutationVariables>({
-      query: (variables) => ({ document: LoginDocument, variables })
-    }),
-  }),
+export const loginSlice = createSlice({
+  name: "login",
+  initialState: initState,
+  reducers: {},
+  extraReducers(builder) {
+    builder
+      .addCase(login.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.token = action.payload?.token;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+  },
 });
-
-export { injectedRtkApi as api };
-export const { useLoginMutation } = injectedRtkApi;
-
