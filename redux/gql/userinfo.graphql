@@ -1,5 +1,0 @@
-query findUser($email:String!) {
-  userinfo(email: $email) {
-    name
-  }
-}

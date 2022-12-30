@@ -8,11 +8,11 @@ type RequestParam = {
   variables: any | undefined;
 };
 
-const sendRequest = async ({
+async function sendRequest<DataType>({
   query,
   variables = undefined,
   operationName,
-}: RequestParam): Promise<APIResponse> => {
+}: RequestParam): Promise<APIResponse<DataType>> {
   const token = await AsyncStorage.getItem("@token");
 
   const headers: { [index: string]: string } = {
@@ -43,6 +43,6 @@ const sendRequest = async ({
   });
 
   return res.json();
-};
+}
 
 export { sendRequest };

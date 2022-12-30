@@ -59,6 +59,10 @@ export type PasswordScreenRouteProp = RouteProp<
   "Password"
 >;
 
-export type APIResponse = {
-  data: any;
-};
+export interface APIResponse<DataType> {
+  data: DataType;
+  errors: {
+    message: string;
+    path: string;
+  };
+}

@@ -17,17 +17,31 @@ import {
   Spacer,
 } from "native-base";
 import type { ServiceInfo } from "../redux/gql/serviceInfoService";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../navigation/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  serviceInfoSlice,
+  getServiceInfo,
+} from "../redux/gql/serviceInfoService";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { RootState } from "../redux/store";
 
 export default function TabOneScreen({
   navigation,
 }: MainTabScreenProps<"MyFlow">) {
-  const { data, error, isFetching } = useGetServicesQuery({
-    type: "RECOMMENDED",
-  });
+  // const { data, error, isFetching } = useGetServicesQuery({
+  //   type: "RECOMMENDED",
+  // });
+  const { services, status, error } = useAppSelector(
+    (state: RootState) => state.serviceInfo
+  );
+  const dispatch = useAppDispatch();
   const authContext = useContext(AuthContext);
+
+  useEffect(() => {
+    dispatch(getServiceInfo({ type: "RECOMMENDED" }));
+  }, []);
 
   const handleItemClick = (item: GestureResponderEvent) => {
     console.log("Item clicked", item);
@@ -55,10 +69,7 @@ export default function TabOneScreen({
   };
 
   if (error) {
-    if (
-      error?.message &&
-      error?.message?.indexOf("Signature has expired") >= 0
-    ) {
+    if (error.indexOf("Signature has expired") >= 0) {
       AsyncStorage.setItem("@token", "");
       authContext.setAuthToken("");
     }
@@ -77,7 +88,7 @@ export default function TabOneScreen({
           w="full"
           h="full"
           paddingX={5}
-          data={data?.servicesByType ?? []}
+          data={services ?? []}
           ListHeaderComponent={<ListHeader />}
           ListFooterComponent={<ListFooter />}
           renderItem={renderItem}

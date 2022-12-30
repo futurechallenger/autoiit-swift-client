@@ -1,11 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import { APIResponse } from "../../types";
 import { sendRequest } from "../baseApi";
 import * as Types from "../types.generated";
 
-const getServiceInfo = createAsyncThunk(
+export const getServiceInfo = createAsyncThunk(
   "serviceInfo",
-  async (variables: GetServicesQueryVariables): Promise<GetServicesQuery> => {
+  async (variables: GetServicesQueryVariables): Promise<APIResponse> => {
     const query=`query getServices($type: String!) {
       servicesByType(serviceType: $type) {
         id
@@ -13,8 +14,7 @@ const getServiceInfo = createAsyncThunk(
         description
       }
     }`
-    const res = await sendRequest({query, variables});
-    return res.data;
+    return sendRequest({query, variables});
   }
 );
 
@@ -38,8 +38,14 @@ export const serviceInfoSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getServiceInfo.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.services.push(action.payload);
+        const payload = action.payload
+        if(payload?.errors) {
+          state.status = "failed";
+          state.error = payload.errors?.message;
+        } else {
+          state.status = "succeeded";
+          state.services.push(action.payload);
+        }
       })
       .addCase(getServiceInfo.rejected, (state, action) => {
         state.status = "failed";

@@ -6,8 +6,7 @@ import { sendRequest } from "../baseApi";
 export const getUserInfo = createAsyncThunk(
   "userInfo",
   async (variables: FindUserQueryVariables) => {
-    const res = await sendRequest({ query: FindUserDocument, variables });
-    return res?.data;
+    return sendRequest<FindUserQuery>({ query: FindUserDocument, variables });
   }
 );
 
@@ -31,8 +30,14 @@ export const userInfoSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getUserInfo.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.userInfo = action.payload;
+        const payload = action.payload;
+        if (payload?.errors) {
+          state.error = payload?.errors?.message;
+          state.status = "failed";
+        } else {
+          state.status = "succeeded";
+          state.userInfo = payload.data;
+        }
       })
       .addCase(getUserInfo.rejected, (state, action) => {
         state.status = "failed";

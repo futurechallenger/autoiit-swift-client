@@ -7,6 +7,10 @@ export type RegisterMutationVariables = Types.Exact<{
   userInfo: Types.UserInfoInput;
 }>;
 
+export type SignInReturnType = {
+  signIn: string;
+};
+
 export type RegisterMutation = { __typename?: "Mutation"; signIn: string };
 
 export const RegisterDocument = `
@@ -18,17 +22,19 @@ mutation register($userInfo: UserInfoInput!) {
 export const signIn = createAsyncThunk(
   "signIn",
   async (variables: RegisterMutationVariables) => {
-    const res = await sendRequest({ query: RegisterDocument, variables });
-    return res.data;
+    return sendRequest<SignInReturnType>({
+      query: RegisterDocument,
+      variables,
+    });
   }
 );
 
 const initialState: {
-  token: string;
+  token: SignInReturnType | undefined;
   status: string;
   error: string | undefined;
 } = {
-  token: "",
+  token: undefined,
   status: "",
   error: "",
 };
@@ -43,8 +49,14 @@ export const signInSlice = createSlice({
         state.status = "loading";
       })
       .addCase(signIn.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.token = action.payload.signIn;
+        const payload = action.payload;
+        if (payload?.errors) {
+          state.status = "failed";
+          state.error = payload?.errors?.message;
+        } else {
+          state.status = "succeeded";
+          state.token = payload.data;
+        }
       })
       .addCase(signIn.rejected, (state, action) => {
         state.status = "failed";

@@ -6,6 +6,10 @@ export type LoginMutationVariables = Types.Exact<{
   userInfo: Types.UserInfoInput;
 }>;
 
+type LoginReturnType = {
+  login: string;
+};
+
 export const login = createAsyncThunk(
   "login",
   async (variables: LoginMutationVariables) => {
@@ -13,18 +17,21 @@ export const login = createAsyncThunk(
   mutation login($userInfo: UserInfoInput!) {
     loginIn(userInfo: $userInfo)
   }`;
-    const res = await sendRequest({ query, variables });
-    return res?.data;
+    return sendRequest<LoginReturnType>({ query, variables });
   }
 );
 
 type InitStateType = {
   status: string;
-  token: string | undefined;
+  token: LoginReturnType | undefined;
   error: string | undefined;
 };
 
-const initState: InitStateType = { status: "", token: "", error: undefined };
+const initState: InitStateType = {
+  status: "",
+  token: undefined,
+  error: undefined,
+};
 
 export const loginSlice = createSlice({
   name: "login",
@@ -36,8 +43,14 @@ export const loginSlice = createSlice({
         state.status = "loading";
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.token = action.payload?.token;
+        const payload = action.payload;
+        if (payload?.errors) {
+          state.status = "failed";
+          state.error = payload?.errors?.message;
+        } else {
+          state.status = "succeeded";
+          state.token = payload?.data;
+        }
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
