@@ -21,19 +21,15 @@ import type { ServiceInfo } from "../redux/gql/serviceInfoService";
 import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../navigation/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  serviceInfoSlice,
-  getServiceInfo,
-} from "../redux/gql/serviceInfoService";
+import { getServiceInfo } from "../redux/gql/serviceInfoService";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
+import { clearToken as clearLoginToken } from "../redux/gql/loginService";
+import { clearToken as clearSignInToken } from "../redux/gql/signInService";
 
 export default function TabOneScreen({
   navigation,
 }: MainTabScreenProps<"MyFlow">) {
-  // const { data, error, isFetching } = useGetServicesQuery({
-  //   type: "RECOMMENDED",
-  // });
   const { services, status, error } = useAppSelector(
     (state: RootState) => state.serviceInfo
   );
@@ -77,6 +73,8 @@ export default function TabOneScreen({
     ) {
       AsyncStorage.setItem("@token", "");
       authContext.setAuthToken("");
+      dispatch(clearSignInToken());
+      dispatch(clearLoginToken());
     }
   }
 
@@ -98,7 +96,7 @@ export default function TabOneScreen({
           ListFooterComponent={<ListFooter />}
           renderItem={renderItem}
         />
-        <Spinner size="lg" />
+        {status === "loading" && <Spinner size="lg" />}
         {error && console.error("ERROR", error)}
       </ZStack>
     </View>

@@ -7,26 +7,26 @@ import * as Types from "../types.generated";
 export const getServiceInfo = createAsyncThunk(
   "serviceInfo",
   async (variables: GetServicesQueryVariables): Promise<APIResponse> => {
-    const query=`query getServices($type: String!) {
+    const query = `query getServices($type: String!) {
       servicesByType(serviceType: $type) {
         id
         name
         description
       }
-    }`
-    return sendRequest({query, variables});
+    }`;
+    return sendRequest({ query, variables });
   }
 );
 
 const initialState: {
-  services: Array<any> ,
-  error: string|undefined,
+  services: Array<any>;
+  error: string | undefined;
   status: string;
 } = {
-  services:[],
+  services: [],
   error: undefined,
-  status: '',
-}
+  status: "",
+};
 
 export const serviceInfoSlice = createSlice({
   name: "serviceInfo",
@@ -36,15 +36,18 @@ export const serviceInfoSlice = createSlice({
     builder
       .addCase(getServiceInfo.pending, (state, action) => {
         state.status = "loading";
+        if (state.error) {
+          state.error = undefined;
+        }
       })
       .addCase(getServiceInfo.fulfilled, (state, action) => {
-        const payload = action.payload
-        if(payload?.errors) {
+        const payload = action.payload;
+        if (payload?.errors) {
           state.status = "failed";
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = "succeeded";
-          state.services.push(action.payload);
+          state.services.push(payload?.data?.servicesByType ?? []);
         }
       })
       .addCase(getServiceInfo.rejected, (state, action) => {

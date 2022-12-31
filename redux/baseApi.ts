@@ -38,7 +38,7 @@ async function sendRequest<DataType>({
     method: "POST",
     mode: "cors",
     cache: "no-cache",
-    headers: { ...headers, Authorization: token ?? "" },
+    headers: { ...headers },
     body: JSON.stringify(body),
   });
 

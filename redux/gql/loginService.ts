@@ -36,11 +36,18 @@ const initState: InitStateType = {
 export const loginSlice = createSlice({
   name: "login",
   initialState: initState,
-  reducers: {},
+  reducers: {
+    clearToken: (state) => {
+      state.token = undefined;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(login.pending, (state, action) => {
         state.status = "loading";
+        if (state.error) {
+          state.error = undefined;
+        }
       })
       .addCase(login.fulfilled, (state, action) => {
         const payload = action.payload;
@@ -58,3 +65,5 @@ export const loginSlice = createSlice({
       });
   },
 });
+
+export const { clearToken } = loginSlice.actions;

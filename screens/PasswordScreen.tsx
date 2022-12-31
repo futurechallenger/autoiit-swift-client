@@ -42,14 +42,23 @@ const PasswordScreen = () => {
   const { exists } = route.params;
 
   React.useEffect(() => {
-    const token = signInToken?.signIn || loginToken?.loginIn;
-    if (!token) {
-      return;
-    }
+    const storeItem = async () => {
+      const token = signInToken?.signIn || loginToken?.loginIn;
+      if (!token) {
+        return;
+      }
 
-    AsyncStorage.setItem("@token", token);
-    authContext.setAuthToken(token);
+      console.log(">>>TOKEN: ", token);
 
+      const t = await AsyncStorage.getItem("@token");
+
+      if (!t) {
+        await AsyncStorage.setItem("@token", token);
+      }
+      authContext.setAuthToken(token);
+    };
+
+    storeItem();
     // navigation.reset("Tabs");
   }, [signInToken, loginToken]);
 

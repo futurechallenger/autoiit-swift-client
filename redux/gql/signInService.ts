@@ -1,3 +1,4 @@
+import { loginSlice } from "./loginService";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import * as Types from "../types.generated";
@@ -42,11 +43,18 @@ const initialState: {
 export const signInSlice = createSlice({
   name: "signIn",
   initialState,
-  reducers: {},
+  reducers: {
+    clearToken: (state) => {
+      state.token = undefined;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(signIn.pending, (state, action) => {
         state.status = "loading";
+        if (state.error) {
+          state.error = undefined;
+        }
       })
       .addCase(signIn.fulfilled, (state, action) => {
         const payload = action.payload;
@@ -64,3 +72,5 @@ export const signInSlice = createSlice({
       });
   },
 });
+
+export const { clearToken } = signInSlice.actions;

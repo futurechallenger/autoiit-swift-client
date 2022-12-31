@@ -28,6 +28,9 @@ export const userInfoSlice = createSlice({
     builder
       .addCase(getUserInfo.pending, (state, action) => {
         state.status = "loading";
+        if (state.error) {
+          state.error = undefined;
+        }
       })
       .addCase(getUserInfo.fulfilled, (state, action) => {
         const payload = action.payload;
