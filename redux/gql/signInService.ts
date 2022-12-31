@@ -52,7 +52,7 @@ export const signInSlice = createSlice({
         const payload = action.payload;
         if (payload?.errors) {
           state.status = "failed";
-          state.error = payload?.errors?.message;
+          state.error = payload?.errors?.[0]?.message;
         } else {
           state.status = "succeeded";
           state.token = payload.data;

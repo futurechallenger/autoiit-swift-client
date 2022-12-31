@@ -61,8 +61,8 @@ export type PasswordScreenRouteProp = RouteProp<
 
 export interface APIResponse<DataType> {
   data: DataType;
-  errors: {
+  errors: Array<{
     message: string;
     path: string;
-  };
+  }>;
 }

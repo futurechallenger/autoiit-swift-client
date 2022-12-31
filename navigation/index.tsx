@@ -37,25 +37,30 @@ const { useState, useEffect } = React;
 
 const NavStack = createNativeStackNavigator<StackNavigatorParamList>();
 
-export const AuthNavigator = () => {
+export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
   return (
     <NavStack.Navigator>
-      <NavStack.Screen
-        name="Root"
-        component={AuthScreen}
-        options={{ headerShown: false }}
-      />
-      <NavStack.Screen
-        name="Email"
-        component={EmailScreen}
-        options={{ headerShown: true }}
-      />
-      <NavStack.Screen
-        name="Password"
-        component={PasswordScreen}
-        options={{ headerShown: true }}
-      />
-      <NavStack.Screen name="Tabs" component={RootNavigator} />
+      {!isSignedIn ? (
+        <>
+          <NavStack.Screen
+            name="Root"
+            component={AuthScreen}
+            options={{ headerShown: false }}
+          />
+          <NavStack.Screen
+            name="Email"
+            component={EmailScreen}
+            options={{ headerShown: true }}
+          />
+          <NavStack.Screen
+            name="Password"
+            component={PasswordScreen}
+            options={{ headerShown: true }}
+          />
+        </>
+      ) : (
+        <NavStack.Screen name="Tabs" component={RootNavigator} />
+      )}
     </NavStack.Navigator>
   );
 };
@@ -83,10 +88,7 @@ export default function Navigation({
   }, []);
 
   const renderNavigator = (token: string | null) => {
-    if (!token) {
-      return <AuthNavigator />;
-    }
-    return <RootNavigator />;
+    return <AuthNavigator isSignedIn={!!token} />;
   };
 
   return (

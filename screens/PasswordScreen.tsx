@@ -11,16 +11,10 @@ import {
   ZStack,
   Spinner,
 } from "native-base";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { PasswordScreenRouteProp } from "../types";
-// import { LoginMutation, useLoginMutation } from "../redux/gql/loginService";
-// import {
-//   RegisterMutation,
-//   useRegisterMutation,
-// } from "../redux/gql/signInService";
 import { AuthContext } from "../navigation/AuthContext";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { login } from "../redux/gql/loginService";
@@ -40,8 +34,6 @@ const PasswordScreen = () => {
 
   const [show, setShow] = useState(false);
   const [text, setText] = useState("");
-  // const [signIn, signInResult] = useRegisterMutation();
-  // const [login, loginResult] = useLoginMutation();
   const [error, setError] = useState(null);
   const navigation = useNavigation();
   const authContext = React.useContext(AuthContext);
@@ -50,7 +42,7 @@ const PasswordScreen = () => {
   const { exists } = route.params;
 
   React.useEffect(() => {
-    const token = signInToken || loginToken;
+    const token = signInToken?.signIn || loginToken?.loginIn;
     if (!token) {
       return;
     }
@@ -58,7 +50,7 @@ const PasswordScreen = () => {
     AsyncStorage.setItem("@token", token);
     authContext.setAuthToken(token);
 
-    navigation.reset("Tabs");
+    // navigation.reset("Tabs");
   }, [signInToken, loginToken]);
 
   const handleClick = async () => {

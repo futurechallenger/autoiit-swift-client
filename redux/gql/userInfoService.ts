@@ -32,7 +32,7 @@ export const userInfoSlice = createSlice({
       .addCase(getUserInfo.fulfilled, (state, action) => {
         const payload = action.payload;
         if (payload?.errors) {
-          state.error = payload?.errors?.message;
+          state.error = payload?.errors?.[0]?.message;
           state.status = "failed";
         } else {
           state.status = "succeeded";

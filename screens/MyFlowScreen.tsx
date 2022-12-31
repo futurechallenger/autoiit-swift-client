@@ -15,6 +15,7 @@ import {
   Button,
   FlatList,
   Spacer,
+  Toast,
 } from "native-base";
 import type { ServiceInfo } from "../redux/gql/serviceInfoService";
 import React, { useContext, useEffect } from "react";
@@ -69,7 +70,11 @@ export default function TabOneScreen({
   };
 
   if (error) {
-    if (error.indexOf("Signature has expired") >= 0) {
+    Toast.show({ description: error });
+    if (
+      error === "Signature has expired" ||
+      error === "Signature verification failed"
+    ) {
       AsyncStorage.setItem("@token", "");
       authContext.setAuthToken("");
     }
