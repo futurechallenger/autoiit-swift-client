@@ -10,7 +10,7 @@ import {
   Actionsheet,
 } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { NavigationAction, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 const { useState } = React;
 

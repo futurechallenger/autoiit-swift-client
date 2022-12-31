@@ -27,7 +27,7 @@ import { RootState } from "../redux/store";
 import { clearToken as clearLoginToken } from "../redux/gql/loginService";
 import { clearToken as clearSignInToken } from "../redux/gql/signInService";
 
-export default function TabOneScreen({
+export default function MyFlowScreen({
   navigation,
 }: MainTabScreenProps<"MyFlow">) {
   const { services, status, error } = useAppSelector(

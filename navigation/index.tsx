@@ -18,7 +18,7 @@ import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import TabOneScreen from "../screens/MyFlowScreen";
+import MyFlowScreen from "../screens/MyFlowScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
   BottomStackParamList,
@@ -149,7 +149,7 @@ function BottomTabNavigator() {
     >
       <BottomTab.Screen
         name="MyFlow"
-        component={TabOneScreen}
+        component={MyFlowScreen}
         options={({ navigation }: MainTabScreenProps<"MyFlow">) => ({
           title: "My Flow",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
