@@ -19,7 +19,6 @@ import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import MyFlowScreen from "../screens/MyFlowScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
 import {
   BottomStackParamList,
   RootTabParamList,
@@ -32,6 +31,10 @@ import { EmailScreen } from "../screens/EmailScreen";
 import { PasswordScreen } from "../screens/PasswordScreen";
 import { StackNavigatorParamList } from "../types";
 import { AuthContext } from "./AuthContext";
+import { AccountScreen } from "../screens/Profile/AccountScreen";
+import { ExploreScreen } from "../screens/ExploreScreen";
+import { SearchScreen } from "../screens/SearchScreen";
+import { ProfileScreen } from "../screens/ProfileScreen";
 
 const { useState, useEffect } = React;
 
@@ -59,7 +62,19 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
           />
         </>
       ) : (
-        <NavStack.Screen name="Tabs" component={RootNavigator} />
+        <>
+          <NavStack.Screen
+            name="Tabs"
+            component={RootNavigator}
+            options={{ headerShown: false }}
+          />
+          <NavStack.Screen name="Account" component={AccountScreen} />
+          <NavStack.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{ animation: "fade" }}
+          />
+        </>
       )}
     </NavStack.Navigator>
   );
@@ -171,11 +186,35 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Explore"
+        component={ExploreScreen}
+        options={{
+          title: "Explore",
+          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
+        }}
+      />
+      {/*<BottomTab.Screen
+        name="Create"
         component={TabTwoScreen}
         options={{
           title: "Tab Two",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Activity"
+        component={TabTwoScreen}
+        options={{
+          title: "Tab Two",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      /> */}
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color }) => <TabBarIcon name="user-o" color={color} />,
         }}
       />
     </BottomTab.Navigator>

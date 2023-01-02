@@ -6,7 +6,7 @@ import * as Types from "../types.generated";
 
 export const getServiceInfo = createAsyncThunk(
   "serviceInfo",
-  async (variables: GetServicesQueryVariables): Promise<APIResponse> => {
+  async (variables: GetServicesQueryVariables): Promise<APIResponse<GetServicesQuery>> => {
     const query = `query getServices($type: String!) {
       servicesByType(serviceType: $type) {
         id
@@ -14,7 +14,7 @@ export const getServiceInfo = createAsyncThunk(
         description
       }
     }`;
-    return sendRequest({ query, variables });
+    return sendRequest<GetServicesQuery>({ query, variables });
   }
 );
 

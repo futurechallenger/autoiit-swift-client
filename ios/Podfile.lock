@@ -321,8 +321,6 @@ PODS:
     - React-RCTImage
   - RNSVG (13.4.0):
     - React-Core
-  - SimpleStorage (0.1.3):
-    - ExpoModulesCore
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -519,7 +517,6 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
-  SimpleStorage: ea3194ac7436b6ccf15f297be8aabec71892bd68
   Yoga: eca980a5771bf114c41a754098cd85e6e0d90ed7
 
 PODFILE CHECKSUM: 0d81ac3a832b486cfb127edb64006c5a068c6d09
