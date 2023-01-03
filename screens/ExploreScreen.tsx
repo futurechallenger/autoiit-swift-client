@@ -11,22 +11,28 @@ import {
 } from "native-base";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
-import { exploreService } from "../redux/gql/searchService";
+import {
+  exploreService,
+  getMostSearchedServices,
+} from "../redux/gql/searchService";
 import { ServiceCell } from "../components/ServiceCell";
 import { useNavigation } from "@react-navigation/native";
+import { REQUEST_COUNT } from "../Lib/config";
 
 const { useEffect, useState } = React;
 
-const REQUEST_COUNT = 10;
-
 export const ExploreScreen = () => {
   const [condition, setCondition] = useState("");
-  const [searching, setSearching] = useState(false);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   const { services, error, status } = useAppSelector(
     (state: RootState) => state.exploreServices
   );
+  const {
+    services: mostSearchedServices,
+    error: mostSearchedError,
+    status: mostSearchedStatus,
+  } = useAppSelector((state: RootState) => state.mostSearchedServices);
   useEffect(() => {
     dispatch(
       exploreService({
@@ -36,6 +42,7 @@ export const ExploreScreen = () => {
         name: condition,
       })
     );
+    dispatch(getMostSearchedServices());
   }, []);
 
   const handleItemClick = (item: any) => {
@@ -58,7 +65,11 @@ export const ExploreScreen = () => {
           <ServiceCell item={item} handleItemClick={handleItemClick} />
         )}
         ListHeaderComponent={<ListHeader onSearchFocus={handleFocus} />}
-        ListFooterComponent={status === "loading" ? <Spinner /> : null}
+        ListFooterComponent={
+          status === "loading" || mostSearchedStatus === "loading" ? (
+            <Spinner />
+          ) : null
+        }
         onEndReached={
           () => {}
           // dispatch(
@@ -72,7 +83,9 @@ export const ExploreScreen = () => {
         }
       />
       {status === "loading" && <Text>Loading...</Text>}
-      {error && <Text>{error}</Text>}
+      {(error || mostSearchedError) && (
+        <Text>{error || mostSearchedError}</Text>
+      )}
     </View>
   );
 };
@@ -81,13 +94,13 @@ const ListHeader = ({ onSearchFocus }: { onSearchFocus: () => void }) => {
   const [searching, setSearching] = useState(false);
   const [text, setText] = useState("");
 
-  const handleInput = (newValue: string) => {
-    if (newValue) {
-      if (!searching) setSearching(true);
+  // const handleInput = (newValue: string) => {
+  //   if (newValue) {
+  //     if (!searching) setSearching(true);
 
-      setText(newValue);
-    }
-  };
+  //     setText(newValue);
+  //   }
+  // };
 
   const handleSearchFocus = () => {
     if (onSearchFocus) onSearchFocus();
@@ -95,19 +108,13 @@ const ListHeader = ({ onSearchFocus }: { onSearchFocus: () => void }) => {
 
   const handleClick = () => {
     if (searching) setSearching(false);
-
-    setText("");
   };
 
   return (
     <View>
       <HStack padding={5} justifyContent="center" alignItems="center">
         <Box flex={1} paddingRight="5">
-          <Input
-            placeholder="Search"
-            value={text}
-            onFocus={handleSearchFocus}
-          />
+          <Input placeholder="Search" onFocus={handleSearchFocus} />
         </Box>
         {searching && <Button onPress={handleClick}>Cancel</Button>}
       </HStack>

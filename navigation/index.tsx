@@ -72,7 +72,7 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
           <NavStack.Screen
             name="Search"
             component={SearchScreen}
-            options={{ animation: "fade" }}
+            options={{ animation: "fade", headerShown: false }}
           />
         </>
       )}
