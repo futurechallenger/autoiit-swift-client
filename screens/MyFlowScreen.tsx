@@ -41,29 +41,14 @@ export default function MyFlowScreen({
     dispatch(getServiceInfo({ type: "RECOMMENDED" }));
   }, []);
 
-  const handleItemClick = (item: GestureResponderEvent) => {
+  const handleItemClick = (item: any) => {
     console.log("Item clicked", item);
+    navigation.navigate("ServiceDetail", { item });
   };
 
   const renderItem: ListRenderItem<ServiceInfo> = ({
     item,
   }: ListRenderItemInfo<ServiceInfo>) => {
-    // return (
-    //   <Box
-    //     w="full"
-    //     h="50"
-    //     justifyContent="center"
-    //     alignItems="flex-start"
-    //     borderBottomWidth="1"
-    //     borderColor="muted.500"
-    //     _dark={{ borderColor: "muted.50" }}
-    //   >
-    //     <Pressable onPress={handleItemClick}>
-    //       <Text>{item?.name}</Text>
-    //     </Pressable>
-    //     <Spacer />
-    //   </Box>
-    // );
     return <ServiceCell item={item} handleItemClick={handleItemClick} />;
   };
 

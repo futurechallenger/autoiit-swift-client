@@ -48,6 +48,10 @@ export const SearchScreen = () => {
     setShowMostSearched(false);
   };
 
+  const handleItemPress = (item) => {
+    navigation.navigate("ServiceDetail", { item });
+  };
+
   return (
     <View w="full" h="full">
       <HStack padding="5" justifyContent="flex-start" alignItems="center">
@@ -73,17 +77,16 @@ export const SearchScreen = () => {
         />
       )}
       {!showMostSearched && (
-        <FlatList
-          data={services ?? []}
-          renderItem={({ item }) => {
-            return (
-              <ServiceCell
-                item={item}
-                handleItemClick={(item) => console.log("item clicked", item)}
-              />
-            );
-          }}
-        />
+        <Box paddingX="5">
+          <FlatList
+            data={services ?? []}
+            renderItem={({ item }) => {
+              return (
+                <ServiceCell item={item} handleItemClick={handleItemPress} />
+              );
+            }}
+          />
+        </Box>
       )}
       {status === "loading" && <Spinner />}
     </View>

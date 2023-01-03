@@ -35,6 +35,7 @@ import { AccountScreen } from "../screens/Profile/AccountScreen";
 import { ExploreScreen } from "../screens/ExploreScreen";
 import { SearchScreen } from "../screens/SearchScreen";
 import { ProfileScreen } from "../screens/ProfileScreen";
+import { ServiceDetailScreen } from "../screens/ServiceDetailScreen";
 
 const { useState, useEffect } = React;
 
@@ -73,6 +74,10 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
             name="Search"
             component={SearchScreen}
             options={{ animation: "fade", headerShown: false }}
+          />
+          <NavStack.Screen
+            name="ServiceDetail"
+            component={ServiceDetailScreen}
           />
         </>
       )}
