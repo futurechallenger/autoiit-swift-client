@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import { getServiceById } from "../redux/gql/serviceById";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Platform, Share } from "react-native";
 
 const { useEffect } = React;
 
@@ -22,19 +23,21 @@ export const ServiceDetailScreen = () => {
 
   const handleShareClick = () => {
     console.log("Handle share button click");
+    if (Platform.OS !== "web") {
+      Share.share({ message: "Autoiit" });
+    }
   };
 
   return (
     <View justifyContent="center" alignItems="center">
       <Box
         paddingX="5"
-        bg="amber.100"
         w="full"
         justifyContent="space-between"
         alignItems="center"
         flexDirection="row"
       >
-        <View w="10" h="10" bg="rose.400" />
+        <View w="10" h="10" />
         <IconButton
           icon={<Ionicons name="ios-share-outline" size={32} />}
           borderRadius="full"
