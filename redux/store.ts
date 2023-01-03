@@ -8,6 +8,7 @@ import {
 import { serviceInfoSlice } from "./gql/serviceInfoService";
 import { signInSlice } from "./gql/signInService";
 import { userInfoSlice } from "./gql/userInfoService";
+import { getServiceByIdSlice } from "./gql/serviceById";
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -17,6 +18,7 @@ export const store = configureStore({
     userInfo: userInfoSlice.reducer,
     exploreServices: searchServiceSlice.reducer,
     mostSearchedServices: mostSearchedServicesSlice.reducer,
+    serviceById: getServiceByIdSlice.reducer,
   }),
 });
 
