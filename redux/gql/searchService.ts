@@ -19,7 +19,6 @@ export const getMostSearchedServices = createAsyncThunk(
   "mostSearchedServices",
   async (): Promise<APIResponse<MostSearchedServicesQuery>> => {
     const variables: MostSearchedServicesQueryVariables = {
-      serviceType: "MOST_SEARCHED",
     };
     return sendRequest<MostSearchedServicesQuery>({
       query: MostSearchedServicesDocument,
@@ -94,7 +93,7 @@ export const mostSearchedServicesSlice = createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = "succeeded";
-          state.services = payload?.data?.servicesByType ?? [];
+          state.services = payload?.data?.mostSearchServices ?? [];
         }
       })
       .addCase(getMostSearchedServices.rejected, (state, action) => {
@@ -135,22 +134,22 @@ query searchServices($sinceId: Int, $untilId: Int, $count: Int!, $name: String!)
 `;
 
 export type MostSearchedServicesQueryVariables = Types.Exact<{
-  serviceType: Types.Scalars["String"];
+  [key: string]: never;
 }>;
 
 export type MostSearchedServicesQuery = {
   __typename?: "Query";
-  servicesByType?: Array<{
-    __typename?: "Service";
+  mostSearchServices?: Array<{
+    __typename?: "MostSearchedServiceType";
     id: number;
-    name: string;
+    serviceType?: string | null;
   }> | null;
 };
 
 export const MostSearchedServicesDocument = `
-    query mostSearchedServices($serviceType: String!) {
-  servicesByType(serviceType: $serviceType) {
+    query mostSearchedServices {
+  mostSearchServices {
     id
-    name
+    serviceType
   }
 }`;

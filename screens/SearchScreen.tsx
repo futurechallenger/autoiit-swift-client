@@ -42,7 +42,7 @@ export const SearchScreen = () => {
         count: REQUEST_COUNT,
         sinceId: null,
         untilId: null,
-        name: selected?.name,
+        name: selected?.serviceType,
       })
     );
     setShowMostSearched(false);
@@ -64,7 +64,7 @@ export const SearchScreen = () => {
               <Pressable h="10" onPress={() => handleSelect(item)}>
                 <View h="full">
                   <Text fontWeight="bold" padding="5">
-                    {item?.name}
+                    {item?.serviceType}
                   </Text>
                 </View>
               </Pressable>
