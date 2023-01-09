@@ -54,8 +54,7 @@ export const ExploreScreen = () => {
   };
 
   return (
-    <View bg="amber.400">
-      <Text>Explore</Text>
+    <View paddingX="5">
       <FlatList
         snapToAlignment="start"
         decelerationRate="fast"

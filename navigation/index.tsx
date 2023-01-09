@@ -12,7 +12,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName, Pressable, Button } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -36,6 +36,9 @@ import { ExploreScreen } from "../screens/ExploreScreen";
 import { SearchScreen } from "../screens/SearchScreen";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { ServiceDetailScreen } from "../screens/ServiceDetailScreen";
+import { CreateServiceScreen } from "../screens/CreateServiceScreen";
+import { BlankScreen } from "../screens/BlankScreen";
+import { PopupScreen } from "../screens/PopupScreen";
 
 const { useState, useEffect } = React;
 
@@ -79,6 +82,18 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
             name="ServiceDetail"
             component={ServiceDetailScreen}
           />
+          <NavStack.Group
+            screenOptions={{
+              presentation: "modal",
+              headerBackVisible: false,
+            }}
+          >
+            <NavStack.Screen
+              name="Connect"
+              component={PopupScreen}
+              options={{ headerBackVisible: false }}
+            />
+          </NavStack.Group>
         </>
       )}
     </NavStack.Navigator>
@@ -198,15 +213,15 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
-      {/*<BottomTab.Screen
+      <BottomTab.Screen
         name="Create"
-        component={TabTwoScreen}
+        component={CreateServiceScreen}
         options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Create",
+          tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
         }}
       />
-      <BottomTab.Screen
+      {/*<BottomTab.Screen
         name="Activity"
         component={TabTwoScreen}
         options={{
