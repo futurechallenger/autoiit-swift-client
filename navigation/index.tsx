@@ -39,6 +39,7 @@ import { ServiceDetailScreen } from "../screens/ServiceDetailScreen";
 import { CreateServiceScreen } from "../screens/CreateServiceScreen";
 import { BlankScreen } from "../screens/BlankScreen";
 import { PopupScreen } from "../screens/PopupScreen";
+import { ChooseServiceScreen } from "../screens/ChooseServiceScreen";
 
 const { useState, useEffect } = React;
 
@@ -67,7 +68,7 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
         </>
       ) : (
         <>
-          <NavStack.Screen
+          {/* <NavStack.Screen
             name="Tabs"
             component={RootNavigator}
             options={{ headerShown: false }}
@@ -93,7 +94,13 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
               component={PopupScreen}
               options={{ headerBackVisible: false }}
             />
-          </NavStack.Group>
+
+          </NavStack.Group>*/}
+          <NavStack.Screen name="Create" component={CreateServiceScreen} />
+          <NavStack.Screen
+            name="ChooseService"
+            component={ChooseServiceScreen}
+          />
         </>
       )}
     </NavStack.Navigator>

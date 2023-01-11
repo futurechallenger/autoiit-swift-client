@@ -11,7 +11,7 @@ type RequestParam = {
 async function sendRequest<DataType>({
   query,
   variables = undefined,
-  operationName,
+  operationName = undefined,
 }: RequestParam): Promise<APIResponse<DataType>> {
   const token = await AsyncStorage.getItem("@token");
 

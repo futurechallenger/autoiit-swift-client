@@ -19,7 +19,7 @@ export const CreateServiceScreen = () => {
 
   return (
     <View>
-      <Text>Create</Text>
+      <Text>Create Native</Text>
     </View>
   );
 };
