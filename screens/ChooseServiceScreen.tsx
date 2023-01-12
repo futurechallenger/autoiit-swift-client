@@ -12,10 +12,12 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import { chooseService, chooseServiceSlice } from "../redux/gql/chooseServices";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const { useEffect, useState } = React;
 
 export const ChooseServiceScreen = () => {
+  const navigation = useNavigation();
   const { services, error, status } = useAppSelector(
     (state: RootState) => state.chooseService
   );
@@ -54,7 +56,7 @@ export const ChooseServiceScreen = () => {
         w="full"
         data={services ?? []}
         renderItem={({ item }) => (
-          <Pressable>
+          <Pressable onPress={() => navigation.navigate("Triggers", { item })}>
             <View
               w="full"
               h={60}

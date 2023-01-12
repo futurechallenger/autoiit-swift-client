@@ -40,6 +40,7 @@ import { CreateServiceScreen } from "../screens/CreateServiceScreen";
 import { BlankScreen } from "../screens/BlankScreen";
 import { PopupScreen } from "../screens/PopupScreen";
 import { ChooseServiceScreen } from "../screens/ChooseServiceScreen";
+import { TriggersScreen } from "../screens/TriggersScreen";
 
 const { useState, useEffect } = React;
 
@@ -101,6 +102,7 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
             name="ChooseService"
             component={ChooseServiceScreen}
           />
+          <NavStack.Screen name="Triggers" component={TriggersScreen} />
         </>
       )}
     </NavStack.Navigator>
