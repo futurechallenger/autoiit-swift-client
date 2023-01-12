@@ -16,13 +16,21 @@ const initialState: InitialStateType = {
   status: "",
 };
 
+let cachedServices: any[] = [];
+
 export const chooseServiceSlice = createSlice({
   name: "chooseServiceSlice",
   initialState,
   reducers: {
     searchByName(state, action) {
-      state.services = state.services.filter(item => item.name.indexOf(action.payload) >= 0)
-    }
+      if (action.payload) {
+        state.services = state.services.filter(
+          (item) => item.name.indexOf(action.payload) >= 0
+        );
+      } else {
+        state.services = cachedServices;
+      }
+    },
   },
   extraReducers(builder) {
     builder
@@ -39,6 +47,7 @@ export const chooseServiceSlice = createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = "succeeded";
+          cachedServices = payload?.data?.services ?? [];
           state.services = payload?.data?.services ?? [];
         }
       })

@@ -19,9 +19,6 @@ export const ChooseServiceScreen = () => {
   const { services, error, status } = useAppSelector(
     (state: RootState) => state.chooseService
   );
-  // const chosenServices = useAppSelector(
-  //   (state: RootState) => state.chooseService.services
-  // );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -55,7 +52,7 @@ export const ChooseServiceScreen = () => {
       </HStack>
       <FlatList
         w="full"
-        data={services ?? /*chosenServices ??*/ []}
+        data={services ?? []}
         renderItem={({ item }) => (
           <Pressable>
             <View
