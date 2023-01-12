@@ -19,7 +19,11 @@ const initialState: InitialStateType = {
 export const chooseServiceSlice = createSlice({
   name: "chooseServiceSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    searchByName(state, action) {
+      state.services = state.services.filter(item => item.name.indexOf(action.payload) >= 0)
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(chooseService.pending, (state, action) => {
