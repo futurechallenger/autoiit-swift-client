@@ -17,6 +17,7 @@ import { exploreService } from "../redux/gql/searchService";
 
 import { REQUEST_COUNT } from "../Lib/config";
 import { ServiceCell } from "../components/ServiceCell";
+import { ServiceInfo } from "../redux/gql/chooseServices";
 
 const { useState } = React;
 
@@ -48,8 +49,10 @@ export const SearchScreen = () => {
     setShowMostSearched(false);
   };
 
-  const handleItemPress = (item) => {
-    navigation.navigate("ServiceDetail", { item });
+  const handleItemPress = (item: ServiceInfo) => {
+    if (!item.connected) {
+      navigation.navigate("ServiceDetail", { service: item });
+    }
   };
 
   return (

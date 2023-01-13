@@ -116,6 +116,7 @@ export type SearchServicesQuery = {
     __typename?: "Service";
     id: number;
     name: string;
+    connected?: boolean | null
   }> | null;
 };
 
@@ -129,6 +130,7 @@ query searchServices($sinceId: Int, $untilId: Int, $count: Int!, $name: String!)
   ) {
     id
     name
+    connected
   }
 }
 `;

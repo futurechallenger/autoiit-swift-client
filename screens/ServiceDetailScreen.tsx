@@ -20,7 +20,7 @@ export const ServiceDetailScreen = () => {
     (state: RootState) => state.serviceById
   );
   const route = useRoute();
-  const { item } = route.params;
+  const { item, service: routeService } = route?.params ?? {};
 
   useEffect(() => {
     if (Platform.OS === "web") {
@@ -37,8 +37,8 @@ export const ServiceDetailScreen = () => {
   });
 
   useEffect(() => {
-    dispatch(getServiceById({ serviceId: item.id }));
-  }, [item.id]);
+    dispatch(getServiceById({ serviceId: routeService?.id }));
+  }, [routeService.id]);
 
   const messageHandler = (event: MessageEvent) => {
     // if (event?.data?.indexOf("setImmediate") >= 0) {

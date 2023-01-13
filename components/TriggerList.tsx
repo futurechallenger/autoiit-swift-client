@@ -1,8 +1,14 @@
 import * as React from "react";
-import { FlatList, View, Text } from "native-base";
+import { FlatList, View, Text, Pressable } from "native-base";
 import type { TriggerInfo } from "../redux/gql/triggersSlice";
 
-export const TriggerList = ({ data }: { data: TriggerInfo[] }) => {
+export const TriggerList = ({
+  data,
+  onItemClick,
+}: {
+  data: TriggerInfo[];
+  onItemClick: (item: TriggerInfo) => void;
+}) => {
   const items = [
     ...(data ?? []),
     {
@@ -16,9 +22,11 @@ export const TriggerList = ({ data }: { data: TriggerInfo[] }) => {
       data={items}
       renderItem={({ item }) => {
         return (
-          <View>
-            <Text>{item.name}</Text>
-          </View>
+          <Pressable onPress={() => onItemClick(item)}>
+            <View>
+              <Text>{item.name}</Text>
+            </View>
+          </Pressable>
         );
       }}
     />

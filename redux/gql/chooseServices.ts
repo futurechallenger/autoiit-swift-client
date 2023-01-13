@@ -73,6 +73,7 @@ export type ServiceInfo = {
   id: number;
   name: string;
   description?: string | null;
+  connected?: boolean | null;
 };
 
 export type ChooseServicesQuery = {

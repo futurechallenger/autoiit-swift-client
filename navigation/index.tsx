@@ -41,6 +41,7 @@ import { BlankScreen } from "../screens/BlankScreen";
 import { PopupScreen } from "../screens/PopupScreen";
 import { ChooseServiceScreen } from "../screens/ChooseServiceScreen";
 import { TriggersScreen } from "../screens/TriggersScreen";
+import { TriggerFieldsScreen } from "../screens/TriggerFieldsScreen";
 
 const { useState, useEffect } = React;
 
@@ -80,10 +81,7 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
             component={SearchScreen}
             options={{ animation: "fade", headerShown: false }}
           />
-          <NavStack.Screen
-            name="ServiceDetail"
-            component={ServiceDetailScreen}
-          />
+
           <NavStack.Group
             screenOptions={{
               presentation: "modal",
@@ -103,6 +101,14 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
             component={ChooseServiceScreen}
           />
           <NavStack.Screen name="Triggers" component={TriggersScreen} />
+          <NavStack.Screen
+            name="ServiceDetail"
+            component={ServiceDetailScreen}
+          />
+          <NavStack.Screen
+            name="CompleteTriggerFields"
+            component={TriggerFieldsScreen}
+          />
         </>
       )}
     </NavStack.Navigator>
