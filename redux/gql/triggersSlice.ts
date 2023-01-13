@@ -58,13 +58,15 @@ interface InitialStateType {
   status: string;
 }
 
+export type TriggerInfo = {
+  __typename?: "ServiceTrigger";
+  name?: string | null;
+  description?: string | null;
+};
+
 export type TriggersByServiceQuery = {
   __typename?: "Query";
-  triggers?: Array<{
-    __typename?: "ServiceTrigger";
-    name?: string | null;
-    description?: string | null;
-  }> | null;
+  triggers?: Array<TriggerInfo> | null;
 };
 
 export const TriggersByServiceDocument = `

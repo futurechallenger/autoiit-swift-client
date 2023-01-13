@@ -5,6 +5,7 @@ import { useRoute } from "@react-navigation/native";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { getTriggersByServiceId } from "../redux/gql/triggersSlice";
 import { RootState } from "../redux/store";
+import { TriggerList } from "../components/TriggerList";
 import type { ServiceInfo } from "../redux/gql/chooseServices";
 
 const { useEffect } = React;
@@ -23,28 +24,15 @@ export const TriggersScreen = () => {
   }, []);
 
   return (
-    <View>
+    <View w="full" h="full">
       <View>
         <Text>Service {item.name}</Text>
       </View>
-      <View>
+      <View w="full" h="full" bg="green.50">
         {status === "loading" ? (
           <Spinner size="lg" />
         ) : (
-          <FlatList
-            data={triggers ?? []}
-            renderItem={({ item }) => (
-              <View
-                w="100"
-                h="100"
-                bg="amber.100"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Text>{item.name}</Text>
-              </View>
-            )}
-          />
+          <TriggerList data={triggers} />
         )}
       </View>
     </View>
