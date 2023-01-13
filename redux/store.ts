@@ -1,3 +1,4 @@
+import { getTriggersSlice } from './gql/triggersSlice';
 import { chooseServiceSlice } from './gql/chooseServices';
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "@reduxjs/toolkit";
@@ -21,6 +22,7 @@ export const store = configureStore({
     mostSearchedServices: mostSearchedServicesSlice.reducer,
     serviceById: getServiceByIdSlice.reducer,
     chooseService: chooseServiceSlice.reducer,
+    serviceTriggers: getTriggersSlice.reducer,
   }),
 });
 

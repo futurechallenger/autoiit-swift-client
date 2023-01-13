@@ -68,14 +68,16 @@ export type ChooseServicesQueryVariables = Types.Exact<{
   [key: string]: never;
 }>;
 
+export type ServiceInfo = {
+  __typename?: "Service";
+  id: number;
+  name: string;
+  description?: string | null;
+};
+
 export type ChooseServicesQuery = {
   __typename?: "Query";
-  services: Array<{
-    __typename?: "Service";
-    id: number;
-    name: string;
-    description?: string | null;
-  }>;
+  services: Array<ServiceInfo>;
 };
 
 export const ChooseServicesDocument = `query ChooseServices {
