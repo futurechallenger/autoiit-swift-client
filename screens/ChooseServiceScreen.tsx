@@ -38,7 +38,7 @@ export const ChooseServiceScreen = () => {
           onChangeText={(text) => setInputText(text)}
           InputRightElement={
             <View marginRight={2}>
-              <Ionicons name="search" size={20} />{" "}
+              <Ionicons name="search" size={20} />
             </View>
           }
         />
@@ -49,7 +49,7 @@ export const ChooseServiceScreen = () => {
             dispatch(chooseServiceSlice.actions.searchByName(inputText));
           }}
         >
-          OK
+          <Text>OK</Text>
         </Button>
       </HStack>
       <FlatList

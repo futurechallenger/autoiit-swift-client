@@ -19,7 +19,7 @@ export const TriggerList = ({
 
   const renderItem = () => {
     return items.map((el: any) => (
-      <Pressable onPress={() => onItemClick(el)}>
+      <Pressable key={el.name ?? "empty"} onPress={() => onItemClick(el)}>
         <View
           justifyContent="center"
           alignItems="center"

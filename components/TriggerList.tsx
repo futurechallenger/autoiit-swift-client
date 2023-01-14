@@ -22,9 +22,12 @@ export const TriggerList = ({
       data={items}
       renderItem={({ item }) => {
         return (
-          <Pressable onPress={() => onItemClick(item)}>
+          <Pressable
+            key={item.name ?? "empty"}
+            onPress={() => onItemClick(item)}
+          >
             <View>
-              <Text>{item.name}</Text>
+              <Text>{item.name ?? "Suggest a trigger"}</Text>
             </View>
           </Pressable>
         );

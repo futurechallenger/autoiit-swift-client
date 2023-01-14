@@ -1,5 +1,14 @@
 import * as React from "react";
-import { Icon, Button, Box, View, Text, IconButton } from "native-base";
+import {
+  HStack,
+  Pressable,
+  Icon,
+  Button,
+  Box,
+  View,
+  Text,
+  IconButton,
+} from "native-base";
 import { useRoute } from "@react-navigation/native";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
@@ -8,6 +17,11 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Platform, Share } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SERVER_URL } from "../Lib/config";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { ServiceTab } from "../components/ServiceTab";
+
+const Tab = createBottomTabNavigator();
 
 const { useEffect, useState } = React;
 let popup: Window | null = null;
@@ -41,13 +55,6 @@ export const ServiceDetailScreen = () => {
   }, [routeService.id]);
 
   const messageHandler = (event: MessageEvent) => {
-    // if (event?.data?.indexOf("setImmediate") >= 0) {
-    //   // Messages from UI framework
-    //   return;
-    // }
-
-    console.log(">>> posted message: ", event);
-    console.log(">>> posted message data: ", event?.data);
     if (event?.data?.source === "autoiit") {
       setConnection(event?.data?.message);
     }
@@ -97,6 +104,10 @@ export const ServiceDetailScreen = () => {
         </Button>
       </Box>
       {status === "loading" && <Text>loading...</Text>}
+      <ServiceTab
+        selected={0}
+        onSelectedChanged={(index) => console.log(`${index} is selected`)}
+      />
     </View>
   );
 };

@@ -86,5 +86,6 @@ export const ChooseServicesDocument = `query ChooseServices {
     id
     name
     description
+    connected
   }
 }`;
