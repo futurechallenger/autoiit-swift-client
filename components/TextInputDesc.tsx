@@ -20,7 +20,11 @@ export const TextInputDesc: React.FunctionComponent<TextInputDescProps> = ({
   return (
     <Box style={{ ...styles.container, marginTop }}>
       <Text>{text ?? ""}</Text>
-      <Input numberOfLines={numberOfLines ?? 0} placeholder="" />
+      <Input
+        numberOfLines={numberOfLines ?? 0}
+        placeholder=""
+        onChangeText={onTextChanged}
+      />
       <Text>{description ?? ""}</Text>
     </Box>
   );
