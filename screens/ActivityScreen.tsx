@@ -4,7 +4,7 @@ import { View, Text } from "native-base";
 export const ActivityScreen = () => {
   return (
     <View>
-      <Text>Activity Service</Text>
+      <Text>Activity Screen</Text>
     </View>
   );
 };

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { View, Text } from "native-base";
 
-export const CreateServiceScreen = () => {
+export const DeveloperServiceAPIScreen = () => {
   return (
     <View>
-      <Text>Create Service</Text>
+      <Text>Developer Service API</Text>
     </View>
   );
 };

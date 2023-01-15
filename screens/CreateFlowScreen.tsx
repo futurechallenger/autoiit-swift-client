@@ -1,25 +1,48 @@
 import * as React from "react";
-import { Button, Text, View } from "native-base";
+import { View, Text, Button } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
-const { useEffect } = React;
+const VerticalDivider = () => {
+  return <View width="2" h="16" bg="red.500" />;
+};
 
 export const CreateFlowScreen = () => {
   const navigation = useNavigation();
-  useEffect(() => {
-    // navigation.setOptions({
-    //   headerRight: () => <Button onPress={handleCancel}>Cancel</Button>,
-    // });
-  }, []);
-
-  const handleCancel = () => {
-    console.log("Cancel clicked");
-    navigation.goBack();
-  };
 
   return (
-    <View>
-      <Text>Create Native</Text>
+    <View h="full" w="full" justifyContent="flex-start" alignItems="center">
+      <View
+        bg="yellow.300"
+        minW="50%"
+        width="300"
+        flexDirection="row"
+        justifyContent="center"
+        alignItems="center"
+        borderRadius="10"
+        marginTop="10"
+      >
+        <Text fontSize="60" marginRight="10" marginY="5">
+          When
+        </Text>
+        <Button onPress={() => navigation.navigate("ChooseService")}>
+          Add
+        </Button>
+      </View>
+      <VerticalDivider />
+      <View
+        bg="yellow.300"
+        minW="50%"
+        width="300"
+        flexDirection="row"
+        justifyContent="center"
+        alignItems="center"
+        borderRadius="10"
+      >
+        <Text fontSize="60" marginRight="10" marginY="5">
+          Then
+        </Text>
+        <Button>Add</Button>
+      </View>
     </View>
   );
 };

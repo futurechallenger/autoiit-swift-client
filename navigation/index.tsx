@@ -44,6 +44,7 @@ import { TriggersScreen } from "../screens/TriggersScreen";
 import { TriggerFieldsScreen } from "../screens/TriggerFieldsScreen";
 import { CreateServiceScreen } from "../screens/CreateServiceScreen.web";
 import { ActivityScreen } from "../screens/ActivityScreen";
+import { DeveloperScreen } from "../screens/developer/DeveloperScreen";
 
 const { useState, useEffect } = React;
 
@@ -240,8 +241,8 @@ function BottomTabNavigator() {
       />
       {Platform.OS === "web" && (
         <BottomTab.Screen
-          name="Service"
-          component={ActivityScreen}
+          name="Developers"
+          component={DeveloperScreen}
           options={{
             title: "Create Service",
             tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
