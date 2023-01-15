@@ -34,7 +34,8 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
       </VStack>
       <Box
         bg="green.100"
-        w="full"
+        w="90%"
+        marginRight={10}
         justifyContent="center"
         alignItems="flex-start"
       >
