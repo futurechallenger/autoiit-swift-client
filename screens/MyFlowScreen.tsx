@@ -17,7 +17,7 @@ import {
   Spacer,
   Toast,
 } from "native-base";
-import type { ServiceInfo } from "../redux/gql/serviceInfoService";
+import type { ServiceInfo } from "../redux/gql/chooseServices";
 import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../navigation/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";

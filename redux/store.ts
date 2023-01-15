@@ -1,3 +1,4 @@
+import { getServiceFullInfoSlice } from './gql/serviceFullInfo';
 import { getTriggersSlice } from './gql/triggersSlice';
 import { chooseServiceSlice } from './gql/chooseServices';
 import { configureStore } from "@reduxjs/toolkit";
@@ -23,6 +24,7 @@ export const store = configureStore({
     serviceById: getServiceByIdSlice.reducer,
     chooseService: chooseServiceSlice.reducer,
     serviceTriggers: getTriggersSlice.reducer,
+    serviceFullInfo: getServiceFullInfoSlice.reducer,
   }),
 });
 

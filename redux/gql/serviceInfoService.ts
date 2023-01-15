@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { APIResponse } from "../../types";
 import { sendRequest } from "../baseApi";
 import * as Types from "../types.generated";
+import { ServiceInfo } from "./chooseServices";
 
 export const getServiceInfo = createAsyncThunk(
   "serviceInfo",
@@ -84,12 +85,6 @@ export const GetServiceDocument = `
 export type GetServicesQueryVariables = Types.Exact<{
   type: Types.Scalars["String"];
 }>;
-
-export type ServiceInfo = {
-  __typename?: "Service";
-  id: number;
-  name: string;
-};
 
 export type GetServicesQuery = {
   __typename?: "Query";

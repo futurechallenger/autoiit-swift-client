@@ -1,16 +1,21 @@
 import * as React from "react";
 import { View, Text, Box, HStack, Pressable } from "native-base";
+import type { AutoFlowInfo } from "../redux/gql/serviceFullInfo";
 
 const { useState } = React;
 
 interface ServiceTabProps {
   selected: number;
   onSelectedChanged: (selectedIndex: number) => void;
+  flows: AutoFlowInfo[] | undefined;
+  triggers: any[];
 }
 
 export const ServiceTab: React.FC<ServiceTabProps> = ({
   selected = 0,
   onSelectedChanged,
+  flows,
+  triggers,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(selected);
 
@@ -20,6 +25,11 @@ export const ServiceTab: React.FC<ServiceTabProps> = ({
         return (
           <View>
             <Text>Applets</Text>
+            {flows?.map((f) => (
+              <View>
+                <Text>{f.id}</Text>
+              </View>
+            ))}
           </View>
         );
 
@@ -27,6 +37,11 @@ export const ServiceTab: React.FC<ServiceTabProps> = ({
         return (
           <View>
             <Text>Details</Text>
+            {triggers.map((t) => (
+              <View>
+                <Text>{t.name}</Text>
+              </View>
+            ))}
           </View>
         );
     }

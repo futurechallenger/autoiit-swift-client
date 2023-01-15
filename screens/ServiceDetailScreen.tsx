@@ -20,6 +20,7 @@ import { SERVER_URL } from "../Lib/config";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { ServiceTab } from "../components/ServiceTab";
+import { getServiceFullInfo } from "../redux/gql/serviceFullInfo";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,9 +31,13 @@ export const ServiceDetailScreen = () => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   const [connection, setConnection] = useState("");
-  const { service, status, error } = useAppSelector(
-    (state: RootState) => state.serviceById
-  );
+  const {
+    service: serviceInfo,
+    flows,
+    triggers,
+    status,
+    error,
+  } = useAppSelector((state: RootState) => state.serviceFullInfo);
   const route = useRoute();
   const { item, service: routeService } = route?.params ?? {};
 
@@ -51,7 +56,7 @@ export const ServiceDetailScreen = () => {
   });
 
   useEffect(() => {
-    dispatch(getServiceById({ serviceId: routeService?.id }));
+    dispatch(getServiceFullInfo({ serviceId: routeService?.id }));
   }, [routeService.id]);
 
   const messageHandler = (event: MessageEvent) => {
@@ -96,7 +101,7 @@ export const ServiceDetailScreen = () => {
         />
       </Box>
       <Box padding="5">
-        <Text>{service?.description}</Text>
+        <Text>{serviceInfo?.description}</Text>
       </Box>
       <Box>
         <Button maxW={200} w="160" minW={90} onPress={handleConnect}>
@@ -107,6 +112,8 @@ export const ServiceDetailScreen = () => {
       <ServiceTab
         selected={0}
         onSelectedChanged={(index) => console.log(`${index} is selected`)}
+        flows={flows}
+        triggers={triggers}
       />
     </View>
   );
