@@ -17,12 +17,15 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
   children,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const handlePress = (index: number) => {
+    setSelectedIndex(index);
+  };
 
   return (
     <HStack w="full" bg="blue.100">
       <VStack bg="pink.100" marginX="5">
         {React.Children.map(children, (child: any, i) => (
-          <Pressable onPress={() => setSelectedIndex(i)}>
+          <Pressable onPress={() => handlePress(i)}>
             <View
               marginY={5}
               style={selectedIndex === i ? { ...styles.active } : {}}
@@ -39,7 +42,15 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
         justifyContent="center"
         alignItems="flex-start"
       >
-        {children[selectedIndex].props?.component()}
+        {React.Children.map(children, (child: any, i: number) => (
+          <View
+            style={
+              selectedIndex !== i ? { display: "none" } : { display: "flex" }
+            }
+          >
+            {child?.props?.component()}
+          </View>
+        ))}
       </Box>
     </HStack>
   );

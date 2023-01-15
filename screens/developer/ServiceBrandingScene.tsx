@@ -4,7 +4,7 @@ import { View, Text } from "native-base";
 export const ServiceBrandingScene = () => {
   return (
     <View>
-      <Text>General</Text>
+      <Text>Branding</Text>
     </View>
   );
 };
