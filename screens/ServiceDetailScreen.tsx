@@ -85,7 +85,7 @@ export const ServiceDetailScreen = () => {
   };
 
   return (
-    <View justifyContent="center" alignItems="center">
+    <View justifyContent="center" alignItems="center" w="full">
       <Box
         paddingX="5"
         w="full"

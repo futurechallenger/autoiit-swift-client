@@ -1,4 +1,5 @@
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { View, Text, Box, HStack, Pressable } from "native-base";
 import type { AutoFlowInfo } from "../redux/gql/serviceFullInfo";
 
@@ -23,32 +24,40 @@ export const ServiceTab: React.FC<ServiceTabProps> = ({
     switch (selectedIndex) {
       case 0:
         return (
-          <View>
-            <Text>Applets</Text>
+          <>
+            <Text style={styles.contentTitle}>
+              Popular workflows & automations
+            </Text>
             {flows?.map((f) => (
-              <View>
+              <View style={styles.details} bg="emerald.100">
                 <Text>{f.id}</Text>
               </View>
             ))}
-          </View>
+          </>
         );
 
       case 1:
         return (
-          <View>
-            <Text>Details</Text>
+          <>
+            <Text style={styles.contentTitle}>Details</Text>
             {triggers.map((t) => (
-              <View>
+              <View style={styles.details} bg="emerald.100">
                 <Text>{t.name}</Text>
               </View>
             ))}
-          </View>
+          </>
         );
     }
   };
 
   return (
-    <Box>
+    <Box
+      w="full"
+      bg="lime.100"
+      justifyContent="flex-start"
+      alignItems="center"
+      paddingX="8"
+    >
       <HStack
         w="140"
         justifyContent="space-around"
@@ -62,7 +71,15 @@ export const ServiceTab: React.FC<ServiceTabProps> = ({
           }}
         >
           <View>
-            <Text>Applets</Text>
+            <Text
+              style={
+                selectedIndex === 0
+                  ? { ...styles.barTitle, ...styles.highlightTitle }
+                  : styles.barTitle
+              }
+            >
+              Applets
+            </Text>
           </View>
         </Pressable>
         <Pressable
@@ -72,11 +89,45 @@ export const ServiceTab: React.FC<ServiceTabProps> = ({
           }}
         >
           <View>
-            <Text>Details</Text>
+            <Text
+              style={
+                selectedIndex === 1
+                  ? { ...styles.barTitle, ...styles.highlightTitle }
+                  : styles.barTitle
+              }
+            >
+              Details
+            </Text>
           </View>
         </Pressable>
       </HStack>
-      {renderScene()}
+      <Box w="full" style={styles.content}>
+        {renderScene()}
+      </Box>
     </Box>
   );
 };
+
+const styles = StyleSheet.create({
+  details: {
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  content: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 15,
+  },
+  contentTitle: {
+    fontWeight: "600",
+    color: "#222",
+    marginBottom: 10,
+  },
+  barTitle: {
+    fontWeight: "700",
+    color: "rgba(0,0,0,.5);",
+  },
+  highlightTitle: { color: "#222" },
+});
