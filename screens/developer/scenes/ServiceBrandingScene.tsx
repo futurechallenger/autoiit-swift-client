@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button, View, Text, Divider, VStack, HStack } from "native-base";
-import { TextInputDesc } from "../../components/TextInputDesc";
+import { TextInputDesc } from "../../../components/TextInputDesc";
 
 export const ServiceBrandingScene = () => {
   const [brandColor, setBrandColor] = React.useState("");

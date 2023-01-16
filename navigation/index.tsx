@@ -45,6 +45,7 @@ import { TriggerFieldsScreen } from "../screens/TriggerFieldsScreen";
 import { CreateServiceScreen } from "../screens/CreateServiceScreen.web";
 import { ActivityScreen } from "../screens/ActivityScreen";
 import { DeveloperScreen } from "../screens/developer/DeveloperScreen";
+import { ServiceGeneralScene } from "../screens/developer/scenes/ServiceGeneralScene";
 
 const { useState, useEffect } = React;
 
@@ -78,7 +79,7 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
             component={RootNavigator}
             options={{ headerShown: false }}
           />
-          {/*<NavStack.Screen name="Account" component={AccountScreen} />
+          <NavStack.Screen name="Account" component={AccountScreen} />
           <NavStack.Screen
             name="Search"
             component={SearchScreen}
@@ -96,8 +97,18 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
               component={PopupScreen}
               options={{ headerBackVisible: false }}
             />
-
-          </NavStack.Group>*/}
+          </NavStack.Group>
+          <NavStack.Group
+            screenOptions={{
+              presentation: "modal",
+              headerBackVisible: false,
+            }}
+          >
+            <NavStack.Screen
+              name="NewService"
+              component={ServiceGeneralScene}
+            />
+          </NavStack.Group>
           <NavStack.Screen name="Create" component={CreateFlowScreen} />
           <NavStack.Screen
             name="ChooseService"

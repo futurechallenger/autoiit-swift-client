@@ -44,9 +44,10 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
       >
         {React.Children.map(children, (child: any, i: number) => (
           <View
-            style={
-              selectedIndex !== i ? { display: "none" } : { display: "flex" }
-            }
+            style={[
+              selectedIndex !== i ? { display: "none" } : { display: "flex" },
+              { width: "100%" },
+            ]}
           >
             {child?.props?.component()}
           </View>

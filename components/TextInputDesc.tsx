@@ -7,6 +7,7 @@ interface TextInputDescProps {
   numberOfLines?: number;
   description: string;
   marginTop: number | string;
+  placeholder?: string;
   onTextChanged: (text: string | undefined) => void;
 }
 
@@ -15,6 +16,7 @@ export const TextInputDesc: React.FunctionComponent<TextInputDescProps> = ({
   numberOfLines,
   description,
   marginTop,
+  placeholder,
   onTextChanged,
 }) => {
   return (
@@ -22,7 +24,7 @@ export const TextInputDesc: React.FunctionComponent<TextInputDescProps> = ({
       <Text>{text ?? ""}</Text>
       <Input
         numberOfLines={numberOfLines ?? 0}
-        placeholder=""
+        placeholder={placeholder ?? ""}
         onChangeText={onTextChanged}
       />
       <Text>{description ?? ""}</Text>

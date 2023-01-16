@@ -10,7 +10,7 @@ import {
   Text,
   Divider,
 } from "native-base";
-import { TextInputDesc } from "../../components/TextInputDesc";
+import { TextInputDesc } from "../../../components/TextInputDesc";
 
 const { useState } = React;
 
@@ -23,10 +23,10 @@ export const ServiceGeneralScene = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View width="100%">
       <Text fontSize="lg">General</Text>
       <Divider marginTop={15} />
-      <VStack marginRight={10}>
+      <VStack>
         <TextInputDesc
           marginTop={10}
           text="Service name"
