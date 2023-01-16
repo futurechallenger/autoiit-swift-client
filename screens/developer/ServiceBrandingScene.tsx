@@ -50,6 +50,7 @@ export const ServiceBrandingScene = () => {
             </View>
           </HStack>
         </VStack>
+        <Button>Save</Button>
       </VStack>
     </View>
   );
