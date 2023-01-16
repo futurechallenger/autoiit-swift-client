@@ -46,6 +46,7 @@ import { CreateServiceScreen } from "../screens/CreateServiceScreen.web";
 import { ActivityScreen } from "../screens/ActivityScreen";
 import { DeveloperScreen } from "../screens/developer/DeveloperScreen";
 import { ServiceGeneralScene } from "../screens/developer/scenes/ServiceGeneralScene";
+import { NewServiceScreen } from "../screens/developer/NewServiceScreen";
 
 const { useState, useEffect } = React;
 
@@ -104,10 +105,7 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
               headerBackVisible: false,
             }}
           >
-            <NavStack.Screen
-              name="NewService"
-              component={ServiceGeneralScene}
-            />
+            <NavStack.Screen name="NewService" component={NewServiceScreen} />
           </NavStack.Group>
           <NavStack.Screen name="Create" component={CreateFlowScreen} />
           <NavStack.Screen

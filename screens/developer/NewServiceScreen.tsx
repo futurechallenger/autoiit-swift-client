@@ -1,7 +1,19 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Box, Button, View, Text, Divider, VStack, HStack } from "native-base";
+import {
+  Box,
+  Button,
+  View,
+  Text,
+  Divider,
+  VStack,
+  HStack,
+  Spinner,
+} from "native-base";
 import { TextInputDesc } from "../../components/TextInputDesc";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { addService } from "../../redux/gql/addServiceSlice";
+import { RootState } from "../../redux/store";
 
 const { useState } = React;
 
@@ -9,18 +21,27 @@ export const NewServiceScreen = () => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
 
+  const dispatch = useAppDispatch();
+  const { serviceId, error, status } = useAppSelector(
+    (state: RootState) => state.addService
+  );
+
   const handleCancel = () => {};
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    dispatch(addService({ name, description: desc }));
+  };
 
   return (
-    <View>
-      <Text>new service</Text>
+    <View style={styles.container}>
+      <VStack style={styles.content}>
+        <Text fontWeight="bold" fontSize="5xl">
+          Create a new service
+        </Text>
 
-      <Divider />
-      <VStack>
+        <Divider style={styles.divider} />
         <TextInputDesc
-          marginTop={10}
+          marginTop={20}
           text="Service name"
           numberOfLines={1}
           description="Your product name or service name"
@@ -29,7 +50,7 @@ export const NewServiceScreen = () => {
           }}
         />
         <TextInputDesc
-          marginTop={10}
+          marginTop={20}
           text="Description"
           numberOfLines={4}
           description="A 3-4 sentence description of your service"
@@ -37,7 +58,7 @@ export const NewServiceScreen = () => {
             setDesc(description ?? "");
           }}
         />
-        <Divider marginTop={15} />
+        <Divider style={styles.divider} />
         <Box alignSelf="flex-end" marginTop={15}>
           <HStack>
             <Button style={styles.button} onPress={handleCancel}>
@@ -48,6 +69,11 @@ export const NewServiceScreen = () => {
             </Button>
           </HStack>
         </Box>
+        {status === "loading" && (
+          <Box style={styles.spinner}>
+            <Spinner size="lg" />
+          </Box>
+        )}
       </VStack>
     </View>
   );
@@ -58,8 +84,23 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+    padding: 10,
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  content: {
+    width: "50%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
     width: 90,
+    marginRight: 20,
+  },
+  spinner: {
+    alignSelf: "center",
+  },
+  divider: {
+    marginVertical: 30,
   },
 });
