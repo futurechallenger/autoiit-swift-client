@@ -14,17 +14,27 @@ import { TextInputDesc } from "../../components/TextInputDesc";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { addService } from "../../redux/gql/addServiceSlice";
 import { RootState } from "../../redux/store";
+import Navigation from "../../navigation";
+import { useNavigation } from "@react-navigation/native";
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
 export const NewServiceScreen = () => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
 
+  const navigation = useNavigation();
+
   const dispatch = useAppDispatch();
   const { serviceId, error, status } = useAppSelector(
     (state: RootState) => state.addService
   );
+
+  useEffect(() => {
+    if (status === "succeeded") {
+      navigation.navigate("Developers", { serviceId });
+    }
+  }, [status]);
 
   const handleCancel = () => {};
 
