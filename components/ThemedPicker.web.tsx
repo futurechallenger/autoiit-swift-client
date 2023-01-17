@@ -1,4 +1,5 @@
 import React from "react";
+import { StyleSheet } from "react-native";
 
 // import Select from "react-select";
 
@@ -17,6 +18,7 @@ export const ThemedPicker: React.FunctionComponent<Props> = ({
   items = [{ value: -1, label: placeholder ?? "" }, ...items];
   return (
     <select
+      style={styles.select}
       title="Select"
       onChange={(ev) => {
         ev.preventDefault();
@@ -32,3 +34,12 @@ export const ThemedPicker: React.FunctionComponent<Props> = ({
     </select>
   );
 };
+
+const styles = StyleSheet.create({
+  select: {
+    color: "rgb(115,115,115)",
+    height: "30px",
+    fontSize: "large",
+    paddingLeft: "5px",
+  },
+});

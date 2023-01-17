@@ -1,6 +1,14 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { View, Text, Button, HStack, Select, CheckIcon } from "native-base";
+import {
+  View,
+  Text,
+  Button,
+  HStack,
+  Select,
+  CheckIcon,
+  Spinner,
+} from "native-base";
 
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { DeveloperServiceScreen } from "./DeveloperServiceScreen";
@@ -12,6 +20,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { RootState } from "../../redux/store";
 import { getServicesByUserId } from "../../redux/gql/servicesByUserIdSlice";
 import { ThemedPicker } from "../../components/ThemedPicker";
+import { getServiceById } from "../../redux/gql/serviceById";
 
 const { useState, useEffect } = React;
 
@@ -24,6 +33,11 @@ export const DeveloperScreen = () => {
     status,
     error,
   } = useAppSelector((state: RootState) => state.userServices);
+  const {
+    service: serviceDetail,
+    status: serviceStatus,
+    error: serviceError,
+  } = useAppSelector((state: RootState) => state.serviceById);
   const navigation = useNavigation();
 
   const handleClick = () => {
@@ -45,9 +59,12 @@ export const DeveloperScreen = () => {
           <ThemedPicker
             options={userServices}
             placeholder="Choose a service"
-            onSelectChange={(index: number | undefined) =>
-              console.log("Selected index: ", index)
-            }
+            onSelectChange={(index: number | undefined) => {
+              console.log("Selected index: ", index);
+              if (index) {
+                dispatch(getServiceById({ serviceId: index }));
+              }
+            }}
           />
         </HStack>
 
@@ -61,6 +78,9 @@ export const DeveloperScreen = () => {
         <Tab.Screen name="API" component={DeveloperServiceAPIScreen} />
         <Tab.Screen name="Flows" component={DeveloperFlowScreen} />
       </Tab.Navigator>
+
+      {status === "loading" ||
+        (serviceStatus === "loading" && <Spinner size="lg" />)}
     </View>
   );
 };
