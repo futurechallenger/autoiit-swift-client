@@ -48,8 +48,6 @@ const PasswordScreen = () => {
         return;
       }
 
-      console.log(">>>TOKEN: ", token);
-
       const t = await AsyncStorage.getItem("@token");
 
       if (!t) {

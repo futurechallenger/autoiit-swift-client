@@ -16,12 +16,14 @@
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "~1.17.3",
+    "@react-native-picker/picker": "2.4.8",
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/material-top-tabs": "^6.5.2",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "@reduxjs/toolkit": "^1.9.1",
     "@rtk-query/graphql-request-base-query": "^2.2.0",
+    "add": "^2.0.6",
     "expo": "~47.0.9",
     "expo-asset": "~8.7.0",
     "expo-constants": "~14.0.2",
@@ -45,7 +47,9 @@
     "react-native-tab-view": "^3.3.4",
     "react-native-web": "~0.18.7",
     "react-native-webview": "11.23.1",
-    "react-redux": "^8.0.5"
+    "react-redux": "^8.0.5",
+    "react-select": "^5.7.0",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

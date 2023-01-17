@@ -1,3 +1,4 @@
+import { getServicesByUserIdSlice } from './gql/servicesByUserIdSlice';
 import { addServiceSlice } from './gql/addServiceSlice';
 import { getServiceFullInfoSlice } from './gql/serviceFullInfo';
 import { getTriggersSlice } from './gql/triggersSlice';
@@ -27,6 +28,7 @@ export const store = configureStore({
     serviceTriggers: getTriggersSlice.reducer,
     serviceFullInfo: getServiceFullInfoSlice.reducer,
     addService: addServiceSlice.reducer,
+    userServices: getServicesByUserIdSlice.reducer,
   }),
 });
 
