@@ -14,7 +14,9 @@ import { TextInputDesc } from "../../../components/TextInputDesc";
 
 const { useState } = React;
 
-export const ServiceGeneralScene = () => {
+export const ServiceGeneralScene = ({ params }: { params: any }) => {
+  const { service } = params ?? {};
+
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
 
@@ -30,6 +32,7 @@ export const ServiceGeneralScene = () => {
         <TextInputDesc
           marginTop={10}
           text="Service name"
+          value={service?.name}
           numberOfLines={1}
           description="Your product name or service name"
           onTextChanged={(serviceName: string | undefined) => {
@@ -39,6 +42,7 @@ export const ServiceGeneralScene = () => {
         <TextInputDesc
           marginTop={10}
           text="Description"
+          value={service?.description}
           numberOfLines={4}
           description="A 3-4 sentence description of your service"
           onTextChanged={(description: string | undefined) => {

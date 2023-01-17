@@ -44,10 +44,17 @@ export const DeveloperScreen = () => {
     navigation.navigate("NewService");
   };
 
-  const [itemId, setItemId] = useState<string>("");
   useEffect(() => {
     dispatch(getServicesByUserId());
   }, []);
+
+  useEffect(() => {
+    if (!userServices || userServices.length <= 0) {
+      return;
+    }
+    // const items = userServices.sort((el1, el2) => el1.id - el2.id);
+    dispatch(getServiceById(userServices[userServices.length - 1]));
+  }, [userServices]);
 
   return (
     <View>
@@ -74,7 +81,11 @@ export const DeveloperScreen = () => {
       </HStack>
 
       <Tab.Navigator>
-        <Tab.Screen name="Service" component={DeveloperServiceScreen} />
+        <Tab.Screen
+          name="Service"
+          component={DeveloperServiceScreen}
+          initialParams={{ serviceDetail }}
+        />
         <Tab.Screen name="API" component={DeveloperServiceAPIScreen} />
         <Tab.Screen name="Flows" component={DeveloperFlowScreen} />
       </Tab.Navigator>

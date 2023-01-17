@@ -4,7 +4,8 @@ import { VStack, Box, View, Text, HStack, Pressable } from "native-base";
 
 interface ChildProps {
   name: string;
-  component: () => JSX.Element;
+  component: (params: any | undefined) => JSX.Element;
+  params?: object;
 }
 
 const { useState } = React;
@@ -42,16 +43,19 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
         justifyContent="center"
         alignItems="flex-start"
       >
-        {React.Children.map(children, (child: any, i: number) => (
-          <View
-            style={[
-              selectedIndex !== i ? { display: "none" } : { display: "flex" },
-              { width: "100%" },
-            ]}
-          >
-            {child?.props?.component()}
-          </View>
-        ))}
+        {React.Children.map(children, (child: any, i: number) => {
+          const params = child?.props?.params;
+          return (
+            <View
+              style={[
+                selectedIndex !== i ? { display: "none" } : { display: "flex" },
+                { width: "100%" },
+              ]}
+            >
+              {child?.props?.component({ params })}
+            </View>
+          );
+        })}
       </Box>
     </HStack>
   );
