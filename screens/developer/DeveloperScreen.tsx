@@ -15,7 +15,11 @@ import { DeveloperServiceScreen } from "./DeveloperServiceScreen";
 import { DeveloperServiceAPIScreen } from "./DeveloperServiceAPIScreen";
 import { DeveloperFlowScreen } from "./DeveloperFlowScreen";
 
-import { useNavigation } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation,
+} from "@react-navigation/native";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { RootState } from "../../redux/store";
 import { getServicesByUserId } from "../../redux/gql/servicesByUserIdSlice";
@@ -27,6 +31,7 @@ const { useState, useEffect } = React;
 const Tab = createMaterialTopTabNavigator();
 
 export const DeveloperScreen = () => {
+  const isFocused = useIsFocused();
   const dispatch = useAppDispatch();
   const {
     services: userServices,
@@ -44,9 +49,15 @@ export const DeveloperScreen = () => {
     navigation.navigate("NewService");
   };
 
+  // useEffect(() => {
+  //   dispatch(getServicesByUserId());
+  // }, []);
+
   useEffect(() => {
-    dispatch(getServicesByUserId());
-  }, []);
+    if (isFocused) {
+      dispatch(getServicesByUserId());
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     if (!userServices || userServices.length <= 0) {
