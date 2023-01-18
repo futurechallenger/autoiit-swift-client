@@ -12,6 +12,10 @@ import {
 } from "native-base";
 import { TextInputDesc } from "../../../components/TextInputDesc";
 import { ThemedTitle } from "../../../components/ThemedTitle";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import type { RootState } from "../../../redux/store";
+import { updateService } from "../../../redux/gql/updateServiceSlice";
+import { InputMaybe } from "../../../redux/types.generated";
 
 const { useState } = React;
 
@@ -19,10 +23,25 @@ export const ServiceGeneralScene = ({ params }: { params: any }) => {
   const { service } = params ?? {};
 
   const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
+  const [desc, setDesc] = useState<InputMaybe<string>>("");
+
+  const dispatch = useAppDispatch();
+  const {
+    service: newService,
+    status,
+    error,
+  } = useAppSelector((state: RootState) => state.updateService);
 
   const handleClick = () => {
     console.log("Service to save: ", { name, desc });
+    dispatch(
+      updateService({
+        id: parseInt(service?.id, 10),
+        name,
+        desc: desc,
+        searchItems: service.searchItems,
+      })
+    );
   };
 
   return (
