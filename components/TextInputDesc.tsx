@@ -1,6 +1,7 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Box, Input, HStack, View, Text, Divider } from "native-base";
+import { InputTitle, ThemedDescription } from "./ThemedTitle";
 
 const { useState } = React;
 
@@ -26,7 +27,7 @@ export const TextInputDesc: React.FunctionComponent<TextInputDescProps> = ({
   const [inputVal, setInputVal] = useState<string | undefined>(undefined);
   return (
     <Box style={{ ...styles.container, marginTop }}>
-      <Text>{text ?? ""}</Text>
+      <InputTitle>{text ?? ""}</InputTitle>
       <Input
         value={inputVal ?? value}
         numberOfLines={numberOfLines ?? 0}
@@ -36,7 +37,7 @@ export const TextInputDesc: React.FunctionComponent<TextInputDescProps> = ({
           onTextChanged(v);
         }}
       />
-      <Text>{description ?? ""}</Text>
+      <ThemedDescription>{description ?? ""}</ThemedDescription>
     </Box>
   );
 };

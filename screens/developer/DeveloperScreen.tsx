@@ -15,11 +15,7 @@ import { DeveloperServiceScreen } from "./DeveloperServiceScreen";
 import { DeveloperServiceAPIScreen } from "./DeveloperServiceAPIScreen";
 import { DeveloperFlowScreen } from "./DeveloperFlowScreen";
 
-import {
-  useFocusEffect,
-  useIsFocused,
-  useNavigation,
-} from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { RootState } from "../../redux/store";
 import { getServicesByUserId } from "../../redux/gql/servicesByUserIdSlice";
@@ -48,10 +44,6 @@ export const DeveloperScreen = () => {
   const handleClick = () => {
     navigation.navigate("NewService");
   };
-
-  // useEffect(() => {
-  //   dispatch(getServicesByUserId());
-  // }, []);
 
   useEffect(() => {
     if (isFocused) {

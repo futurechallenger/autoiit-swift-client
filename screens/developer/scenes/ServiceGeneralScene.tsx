@@ -11,6 +11,7 @@ import {
   Divider,
 } from "native-base";
 import { TextInputDesc } from "../../../components/TextInputDesc";
+import { ThemedTitle } from "../../../components/ThemedTitle";
 
 const { useState } = React;
 
@@ -26,7 +27,7 @@ export const ServiceGeneralScene = ({ params }: { params: any }) => {
 
   return (
     <View width="100%">
-      <Text fontSize="lg">General</Text>
+      <ThemedTitle>General</ThemedTitle>
       <Divider marginTop={15} />
       <VStack>
         <TextInputDesc

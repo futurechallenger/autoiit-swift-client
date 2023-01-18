@@ -1,17 +1,22 @@
 import * as React from "react";
-import { Button, View, Text, Divider } from "native-base";
+import { Box, Button, View, Text, Divider } from "native-base";
 import { TextInputDesc } from "../../../components/TextInputDesc";
+import {
+  ThemedDescription,
+  ThemedTitle,
+} from "../../../components/ThemedTitle";
+import { StyleSheet } from "react-native";
 
 export const SearchItemsScene = () => {
   return (
     <View>
-      <Text>Search Items</Text>
-      <Divider />
-      <Text>
+      <ThemedTitle>Search Items</ThemedTitle>
+      <Divider marginTop="5" />
+      <ThemedDescription>
         Add keywords that describe your service to help make search results more
         accurate. If your service has an acronym or shorthand name, include it
         here.
-      </Text>
+      </ThemedDescription>
       <TextInputDesc
         marginTop={10}
         text="Keywords"
@@ -22,7 +27,21 @@ export const SearchItemsScene = () => {
           console.log("Search items: ", items);
         }}
       />
-      <Button>Save</Button>
+      <Divider marginTop={10} />
+      <Box style={styles.saveWrapper}>
+        <Button style={styles.save}>Save</Button>
+      </Box>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  save: {
+    alignSelf: "flex-end",
+    paddingHorizontal: "20px",
+    marginTop: "20px",
+  },
+  saveWrapper: {
+    paddingHorizontal: "20px",
+  },
+});
