@@ -53,7 +53,9 @@ export const DeveloperScreen = () => {
       return;
     }
     // const items = userServices.sort((el1, el2) => el1.id - el2.id);
-    dispatch(getServiceById(userServices[userServices.length - 1]));
+    dispatch(
+      getServiceById({ serviceId: userServices[userServices.length - 1].id })
+    );
   }, [userServices]);
 
   return (

@@ -29,7 +29,9 @@ export const ThemedPicker: React.FunctionComponent<Props> = ({
       }}
     >
       {items.map((el) => (
-        <option value={el.value}>{el.label}</option>
+        <option key={el.value} value={el.value}>
+          {el.label}
+        </option>
       ))}
     </select>
   );
