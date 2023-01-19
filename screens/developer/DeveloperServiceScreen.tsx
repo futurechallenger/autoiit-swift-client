@@ -22,8 +22,16 @@ export const DeveloperServiceScreen = () => {
           component={ServiceGeneralScene}
           params={{ service }}
         />
-        <DrawerScene name="Branding" component={ServiceBrandingScene} />
-        <DrawerScene name="Search Items" component={SearchItemsScene} />
+        <DrawerScene
+          name="Branding"
+          component={ServiceBrandingScene}
+          params={{ service }}
+        />
+        <DrawerScene
+          name="Search Items"
+          component={SearchItemsScene}
+          params={{ service }}
+        />
       </DrawerContainer>
     </View>
   );

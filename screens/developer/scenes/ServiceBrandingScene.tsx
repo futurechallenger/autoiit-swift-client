@@ -11,6 +11,8 @@ import {
 export const ServiceBrandingScene = () => {
   const [brandColor, setBrandColor] = React.useState("");
 
+  const handleSave = () => {};
+
   return (
     <View style={styles.scene}>
       <ThemedTitle>Branding</ThemedTitle>
@@ -18,9 +20,11 @@ export const ServiceBrandingScene = () => {
       <VStack>
         <TextInputDesc
           marginTop={20}
-          text="Service name"
+          text="Brand color"
+          value={brandColor}
+          subTitle="Your service’s brand color will serve as the background color on your service page and Applets."
           numberOfLines={1}
-          description="Your product name or service name"
+          description="Choose a brand color that your Auto-flow logo will look great on. Darker colors are preferred to bright or light colors."
           onTextChanged={(colorValue: string | undefined) => {
             setBrandColor(colorValue ?? "");
           }}
@@ -60,7 +64,9 @@ export const ServiceBrandingScene = () => {
           </HStack> */}
         </VStack>
         <View>
-          <Button style={styles.save}>Save</Button>
+          <Button onPress={handleSave} style={styles.save}>
+            Save
+          </Button>
         </View>
       </VStack>
     </View>
