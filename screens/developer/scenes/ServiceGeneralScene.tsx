@@ -52,7 +52,7 @@ export const ServiceGeneralScene = ({ params }: { params: any }) => {
         <TextInputDesc
           marginTop={10}
           text="Service name"
-          value={service?.name}
+          value={newService?.name ?? service?.name}
           numberOfLines={1}
           description="Your product name or service name"
           onTextChanged={(serviceName: string | undefined) => {
@@ -62,7 +62,7 @@ export const ServiceGeneralScene = ({ params }: { params: any }) => {
         <TextInputDesc
           marginTop={10}
           text="Description"
-          value={service?.description}
+          value={newService?.description ?? service?.description}
           numberOfLines={4}
           description="A 3-4 sentence description of your service"
           onTextChanged={(description: string | undefined) => {
