@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text } from "native-base";
+import { View, Text, Spinner } from "native-base";
 import { DrawerContainer, DrawerScene } from "../../components/DrawerContainer";
 import { useAppSelector } from "../../redux/hooks";
 import { RootState } from "../../redux/store";
@@ -38,6 +38,9 @@ export const DeveloperServiceAPIScreen = () => {
           params={{ service }}
         />
       </DrawerContainer>
+      <View>
+        <Spinner size="lg" />
+      </View>
     </View>
   );
 };

@@ -1,3 +1,5 @@
+import { updateServiceApiSlice } from './gql/updateServiceApiSlice';
+import { addServiceApiSlice } from './gql/addServiceApiSlice';
 import { updateServiceSlice } from './gql/updateServiceSlice';
 import { getServicesByUserIdSlice } from './gql/servicesByUserIdSlice';
 import { addServiceSlice } from './gql/addServiceSlice';
@@ -15,6 +17,7 @@ import { serviceInfoSlice } from "./gql/serviceInfoService";
 import { signInSlice } from "./gql/signInService";
 import { userInfoSlice } from "./gql/userInfoService";
 import { getServiceByIdSlice } from "./gql/serviceById";
+import { getServiceApisSlice } from './gql/getServiceApisSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -31,6 +34,9 @@ export const store = configureStore({
     addService: addServiceSlice.reducer,
     userServices: getServicesByUserIdSlice.reducer,
     updateService: updateServiceSlice.reducer,
+    serviceApis: getServiceApisSlice.reducer,
+    addServiceApi: addServiceApiSlice.reducer,
+    updateServiceApi: updateServiceApiSlice.reducer
   }),
 });
 

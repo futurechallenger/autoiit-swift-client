@@ -19,8 +19,8 @@ const initialState: InitialStateType = {
   error: undefined,
 };
 
-export const addServiceApiSlice = createSlice({
-  name: "addServiceApiSlice",
+export const updateServiceApiSlice = createSlice({
+  name: "updateServiceApiSlice",
   initialState,
   reducers: {},
   extraReducers(builder) {

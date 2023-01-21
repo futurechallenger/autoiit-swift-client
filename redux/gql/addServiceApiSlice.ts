@@ -4,7 +4,7 @@ import { sendRequest } from "../baseApi";
 import * as Types from "../types.generated";
 
 export const addServiceApi = createAsyncThunk(
-  "createServiceApi",
+  "addServiceApi",
   async (variables: AddServiceApiMutationVariables) => {
     return sendRequest<AddServiceApiMutation>({
       variables,
