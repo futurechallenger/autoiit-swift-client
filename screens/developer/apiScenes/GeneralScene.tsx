@@ -20,28 +20,28 @@ import { InputMaybe } from "../../../redux/types.generated";
 const { useState } = React;
 
 export const GeneralScene = ({ params }: { params: any }) => {
-  const { service } = params ?? {};
+  const { serviceApi } = params ?? {};
 
   const [apiUrl, setApiUrl] = useState<string | undefined>();
   const [desc, setDesc] = useState<InputMaybe<string>>("");
 
   const dispatch = useAppDispatch();
-  const {
-    service: newService,
-    status,
-    error,
-  } = useAppSelector((state: RootState) => state.updateService);
+  // const {
+  //   service: newService,
+  //   status,
+  //   error,
+  // } = useAppSelector((state: RootState) => state.updateService);
 
   const handleClick = () => {
     console.log("Service to save: ", { name, desc });
-    dispatch(
-      updateService({
-        id: parseInt(service?.id, 10),
-        apiUrl,
-        desc: desc,
-        searchItems: service.searchItems,
-      })
-    );
+    // dispatch(
+    //   updateService({
+    //     id: parseInt(service?.id, 10),
+    //     apiUrl,
+    //     desc: desc,
+    //     searchItems: service.searchItems,
+    //   })
+    // );
   };
 
   return (
@@ -52,7 +52,7 @@ export const GeneralScene = ({ params }: { params: any }) => {
         <TextInputDesc
           marginTop={10}
           text="API URL"
-          value={newService?.name ?? service?.name}
+          value={serviceApi?.name}
           numberOfLines={1}
           description="If you do not have a single server, you don't need fill in this."
           onTextChanged={(url: string | undefined) => {
@@ -62,7 +62,7 @@ export const GeneralScene = ({ params }: { params: any }) => {
         <TextInputDesc
           marginTop={10}
           text="Description"
-          value={newService?.description ?? service?.description}
+          value={serviceApi?.description}
           numberOfLines={4}
           description="A 3-4 sentence description of your service"
           onTextChanged={(description: string | undefined) => {
