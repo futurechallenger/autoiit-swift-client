@@ -1,14 +1,14 @@
 import * as React from "react";
 import { View, Text } from "native-base";
 import { DrawerContainer, DrawerScene } from "../../components/DrawerContainer";
-import { ServiceGeneralScene } from "./scenes/ServiceGeneralScene";
-import { ServiceBrandingScene } from "./scenes/ServiceBrandingScene";
-import { SearchItemsScene } from "./scenes/SearchItemsScene";
-import { useRoute } from "@react-navigation/native";
 import { useAppSelector } from "../../redux/hooks";
 import { RootState } from "../../redux/store";
+import { GeneralScene } from "./apiScenes/GeneralScene";
+import { AuthScene } from "./apiScenes/AuthScene";
+import { TriggersScene } from "./apiScenes/TriggersScene";
+import { ActionsScene } from "./apiScenes/ActionsScene";
 
-export const DeveloperServiceScreen = () => {
+export const DeveloperServiceAPIScreen = () => {
   const { service, status, error } = useAppSelector(
     (state: RootState) => state.serviceById
   );
@@ -19,17 +19,22 @@ export const DeveloperServiceScreen = () => {
       <DrawerContainer>
         <DrawerScene
           name="General"
-          component={ServiceGeneralScene}
+          component={GeneralScene}
           params={{ service }}
         />
         <DrawerScene
-          name="Branding"
-          component={ServiceBrandingScene}
+          name="Authentication"
+          component={AuthScene}
           params={{ service }}
         />
         <DrawerScene
-          name="Search Items"
-          component={SearchItemsScene}
+          name="Triggers"
+          component={TriggersScene}
+          params={{ service }}
+        />
+        <DrawerScene
+          name="Actions"
+          component={ActionsScene}
           params={{ service }}
         />
       </DrawerContainer>
