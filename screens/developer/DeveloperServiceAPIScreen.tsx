@@ -41,7 +41,7 @@ export const DeveloperServiceAPIScreen = () => {
         <DrawerScene
           name="Authentication"
           component={AuthScene}
-          params={{ serviceApi: serviceApis[0] }}
+          params={{ service }}
         />
         <DrawerScene
           name="Triggers"

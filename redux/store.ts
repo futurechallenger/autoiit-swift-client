@@ -18,6 +18,7 @@ import { signInSlice } from "./gql/signInService";
 import { userInfoSlice } from "./gql/userInfoService";
 import { getServiceByIdSlice } from "./gql/serviceById";
 import { getServiceApisSlice } from './gql/getServiceApisSlice';
+import { addServiceAuthSlice } from './gql/addServiceAuthSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -36,7 +37,8 @@ export const store = configureStore({
     updateService: updateServiceSlice.reducer,
     serviceApis: getServiceApisSlice.reducer,
     addServiceApi: addServiceApiSlice.reducer,
-    updateServiceApi: updateServiceApiSlice.reducer
+    updateServiceApi: updateServiceApiSlice.reducer,
+    addServiceAuth: addServiceAuthSlice.reducer
   }),
 });
 

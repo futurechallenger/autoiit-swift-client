@@ -17,13 +17,14 @@ import { TextInputDesc } from "../../../components/TextInputDesc";
 const { useState } = React;
 
 export const AuthScene = ({ params }: { params: any }) => {
-  const { serviceApi } = params;
+  const { service } = params;
+  const {serviceAuth, status, error} =
   const [serviceUrl, setServiceUrl] = React.useState(serviceApi?.url);
 
   const isFocused = useIsFocused();
   const [radioValue, setRadioValue] = useState("no-auth");
-  const [clientId, setClientId] = useState(serviceApi);
-  const [clientSecret, setClientSecret] = useState(serviceApi);
+  const [clientId, setClientId] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
 
   console.log("Auth scene is focused: ", { isFocused });
 
@@ -32,7 +33,6 @@ export const AuthScene = ({ params }: { params: any }) => {
       setServiceUrl(serviceApi?.url);
     }
   }, [serviceApi]);
-  console.log("SERVICE API: ", serviceApi);
 
   const handleClick = () => {};
 
