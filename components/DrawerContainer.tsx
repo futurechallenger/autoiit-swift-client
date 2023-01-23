@@ -40,7 +40,7 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
         bg="green.100"
         w="90%"
         marginRight={10}
-        justifyContent="center"
+        justifyContent="flex-start"
         alignItems="flex-start"
       >
         {React.Children.map(children, (child: any, i: number) => {
@@ -49,7 +49,7 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
             <View
               style={[
                 selectedIndex !== i ? { display: "none" } : { display: "flex" },
-                { width: "100%", height: "100%" },
+                { width: "100%", justifyContent: "flex-start" },
               ]}
             >
               {child?.props?.component({ params })}

@@ -99,7 +99,6 @@ export const AuthScene = ({ params }: { params: any }) => {
       <ThemedTitle> Authentication</ThemedTitle>
       <Divider />
       <Radio.Group
-        h="full"
         name="myRadioGroup"
         accessibilityLabel="favorite number"
         value={radioValue}
