@@ -63,6 +63,7 @@ export type GetServiceApisQuery = {
   serviceApis: Array<{
     __typename?: "ServiceAPI";
     id?: number | null;
+    serviceId?: number | null;
     name?: string | null;
     description?: string | null;
     url?: string | null;
@@ -84,5 +85,6 @@ export const GetServiceApisDocument = `
     supportMail
     servicePath
     inviteUrl
+    serviceId
   }
 }`;

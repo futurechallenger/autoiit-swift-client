@@ -1,6 +1,7 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import {
+  Spinner,
   VStack,
   Box,
   Button,
@@ -15,15 +16,31 @@ import { ThemedTitle } from "../../../components/ThemedTitle";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import type { RootState } from "../../../redux/store";
 import { updateService } from "../../../redux/gql/updateServiceSlice";
-import { InputMaybe } from "../../../redux/types.generated";
+import { InputMaybe, Maybe, Scalars } from "../../../redux/types.generated";
+import { getServiceApis } from "../../../redux/gql/getServiceApisSlice";
+import { updateServiceApi } from "../../../redux/gql/updateServiceApiSlice";
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
 export const GeneralScene = ({ params }: { params: any }) => {
   const { serviceApi } = params ?? {};
 
-  const [apiUrl, setApiUrl] = useState<string | undefined>();
-  const [desc, setDesc] = useState<InputMaybe<string>>("");
+  const {
+    serviceApis: serviceApiInfoList,
+    status,
+    error,
+  } = useAppSelector((state: RootState) => state.serviceApis);
+  const {
+    serviceApi: updateRet,
+    status: updateStatus,
+    error: updateError,
+  } = useAppSelector((state: RootState) => state.updateServiceApi);
+  const [apiUrl, setApiUrl] = useState<Maybe<string> | undefined>(
+    serviceApiInfoList?.[0]?.url
+  );
+  const [desc, setDesc] = useState<Maybe<string> | undefined>(
+    serviceApiInfoList?.[0]?.description
+  );
 
   const dispatch = useAppDispatch();
   // const {
@@ -32,16 +49,34 @@ export const GeneralScene = ({ params }: { params: any }) => {
   //   error,
   // } = useAppSelector((state: RootState) => state.updateService);
 
+  useEffect(() => {
+    if (!serviceApi?.serviceId) {
+      return;
+    }
+
+    dispatch(getServiceApis({ serviceId: serviceApi?.serviceId }));
+  }, [serviceApi?.serviceId]);
+
+  useEffect(() => {
+    if (!serviceApiInfoList?.[0]?.id) {
+      return;
+    }
+
+    setDesc(serviceApiInfoList?.[0]?.description);
+    setApiUrl(serviceApiInfoList?.[0]?.url);
+  }, [serviceApiInfoList]);
+
   const handleClick = () => {
-    console.log("Service to save: ", { name, desc });
-    // dispatch(
-    //   updateService({
-    //     id: parseInt(service?.id, 10),
-    //     apiUrl,
-    //     desc: desc,
-    //     searchItems: service.searchItems,
-    //   })
-    // );
+    dispatch(
+      updateServiceApi({
+        serviceApi: {
+          id: serviceApiInfoList?.[0]?.id as Scalars["Int"],
+          serviceId: serviceApiInfoList?.[0]?.serviceId as Scalars["Int"],
+          url: apiUrl,
+          description: desc,
+        },
+      })
+    );
   };
 
   return (
@@ -52,7 +87,7 @@ export const GeneralScene = ({ params }: { params: any }) => {
         <TextInputDesc
           marginTop={10}
           text="API URL"
-          value={serviceApi?.name}
+          value={apiUrl ?? ""}
           numberOfLines={1}
           description="If you do not have a single server, you don't need fill in this."
           onTextChanged={(url: string | undefined) => {
@@ -62,7 +97,7 @@ export const GeneralScene = ({ params }: { params: any }) => {
         <TextInputDesc
           marginTop={10}
           text="Description"
-          value={serviceApi?.description}
+          value={desc ?? ""}
           numberOfLines={4}
           description="A 3-4 sentence description of your service"
           onTextChanged={(description: string | undefined) => {
@@ -76,6 +111,9 @@ export const GeneralScene = ({ params }: { params: any }) => {
           </Button>
         </Box>
       </VStack>
+      {(status === "loading" || updateStatus === "loading") && (
+        <Spinner size="lg" />
+      )}
     </View>
   );
 };

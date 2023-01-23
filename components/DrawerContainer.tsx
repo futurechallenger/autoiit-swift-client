@@ -49,7 +49,7 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
             <View
               style={[
                 selectedIndex !== i ? { display: "none" } : { display: "flex" },
-                { width: "100%" },
+                { width: "100%", height: "100%" },
               ]}
             >
               {child?.props?.component({ params })}
@@ -66,7 +66,7 @@ export const DrawerScene: React.FunctionComponent<ChildProps> = ({
   component,
 }) => {
   return (
-    <View>
+    <View height="100%">
       <Text>{name}</Text>
       {component()}
     </View>

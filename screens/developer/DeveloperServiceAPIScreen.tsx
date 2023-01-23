@@ -24,11 +24,13 @@ export const DeveloperServiceAPIScreen = () => {
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (service.id) dispatch(getServiceApis({ serviceId: service.id }));
+    if (service.id) {
+      dispatch(getServiceApis({ serviceId: service.id }));
+    }
   }, [service.id]);
 
   return (
-    <View>
+    <View h="100%">
       <Text>Developer Create Service Web</Text>
       <DrawerContainer>
         <DrawerScene
