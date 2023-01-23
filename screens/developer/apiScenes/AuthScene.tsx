@@ -13,28 +13,75 @@ import { useIsFocused } from "@react-navigation/native";
 import { ThemedTitle } from "../../../components/ThemedTitle";
 import { StyleSheet } from "react-native";
 import { TextInputDesc } from "../../../components/TextInputDesc";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { RootState } from "../../../redux/store";
+import { getServiceAuth } from "../../../redux/gql/getServiceAuthBySlice";
+import { addServiceAuth } from "../../../redux/gql/addServiceAuthSlice";
+import { updateServiceAuth } from "../../../redux/gql/updateServiceAuthSlice";
 
 const { useState } = React;
 
 export const AuthScene = ({ params }: { params: any }) => {
   const { service } = params;
-  const {serviceAuth, status, error} =
-  const [serviceUrl, setServiceUrl] = React.useState(serviceApi?.url);
+  const dispatch = useAppDispatch();
+  const {
+    serviceAuths: serviceAuthList,
+    status,
+    error,
+  } = useAppSelector((state: RootState) => state.getServiceAuth);
+
+  const [authUrl, setAuthUrl] = React.useState(
+    serviceAuthList?.[0]?.authorizationUrl
+  );
 
   const isFocused = useIsFocused();
   const [radioValue, setRadioValue] = useState("no-auth");
-  const [clientId, setClientId] = useState("");
-  const [clientSecret, setClientSecret] = useState("");
+  const [clientId, setClientId] = useState<string | undefined>();
+  const [clientSecret, setClientSecret] = useState<string | undefined>();
+  const [tokenUrl, setTokenUrl] = useState<string | undefined>();
+  const [redirectUrl, setRedirectUrl] = useState<string | undefined>();
 
   console.log("Auth scene is focused: ", { isFocused });
 
   React.useEffect(() => {
-    if (serviceApi?.url) {
-      setServiceUrl(serviceApi?.url);
+    if (!service?.id || serviceAuthList?.[0]?.id) {
+      return;
     }
-  }, [serviceApi]);
 
-  const handleClick = () => {};
+    dispatch(getServiceAuth({ serviceId: service?.id }));
+  }, [service?.id, serviceAuthList?.[0]?.id]);
+
+  const handleClick = () => {
+    if (!serviceAuthList || serviceAuthList.length <= 0) {
+      dispatch(
+        addServiceAuth({
+          auth: {
+            authorizationUrl: authUrl,
+            clientId,
+            clientSecret,
+            tokenUrl,
+            redirectUrl,
+            serviceId: service.id,
+          },
+        })
+      );
+    } else {
+      // update service-auth
+      dispatch(
+        updateServiceAuth({
+          auth: {
+            id: serviceAuthList?.[0]?.id + "",
+            authorizationUrl: authUrl,
+            clientId,
+            clientSecret,
+            tokenUrl,
+            redirectUrl,
+            serviceId: service.id,
+          },
+        })
+      );
+    }
+  };
 
   const renderAuthContent = () => {
     if (radioValue === "no-auth") {
@@ -47,40 +94,40 @@ export const AuthScene = ({ params }: { params: any }) => {
             text="Client ID"
             description=""
             marginTop={10}
-            onTextChanged={(cId) => {
-              setClientId(cId);
+            onTextChanged={(value) => {
+              setClientId(value);
             }}
           />
           <TextInputDesc
             text="Client Secret"
             description=""
             marginTop={10}
-            onTextChanged={(cId) => {
-              setClientId(cId);
+            onTextChanged={(value) => {
+              setClientSecret(value);
             }}
           />
           <TextInputDesc
             text="Authorization URL"
             description="e.g. https://api.example.com/oauth2/authorize"
             marginTop={10}
-            onTextChanged={(cId) => {
-              setClientId(cId);
+            onTextChanged={(value) => {
+              setAuthUrl(value);
             }}
           />
           <TextInputDesc
             text="Token URL"
             description="e.g. https://api.example.com/oauth2/token"
             marginTop={10}
-            onTextChanged={(cId) => {
-              setClientId(cId);
+            onTextChanged={(value) => {
+              setTokenUrl(value);
             }}
           />
           <TextInputDesc
             text="Redirect url after authentication completes"
             description=""
             marginTop={10}
-            onTextChanged={(cId) => {
-              setClientId(cId);
+            onTextChanged={(value) => {
+              setRedirectUrl(value);
             }}
           />
           <Divider />

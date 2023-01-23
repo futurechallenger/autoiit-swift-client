@@ -14,7 +14,7 @@ export const getServiceAuth = createAsyncThunk(
 );
 
 const initialState: InitialStateType = {
-  serviceAuth: undefined,
+  serviceAuths: undefined,
   status: undefined,
   error: undefined,
 };
@@ -38,7 +38,7 @@ export const getServiceAuthSlice = createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = "succeeded";
-          state.serviceAuth = payload?.data?.serviceAuthsBy;
+          state.serviceAuths = payload?.data?.serviceAuthsBy;
         }
       })
       .addCase(getServiceAuth.rejected, (state, action) => {
@@ -49,7 +49,7 @@ export const getServiceAuthSlice = createSlice({
 });
 
 interface InitialStateType {
-  serviceAuth: Types.ServiceAuth[] | undefined;
+  serviceAuths: Types.ServiceAuth[] | undefined;
   status: string | undefined;
   error: string | undefined;
 }
