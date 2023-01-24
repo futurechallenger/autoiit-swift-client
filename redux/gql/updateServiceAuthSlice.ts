@@ -68,7 +68,22 @@ export type UpdateServiceAuthMutation = {
 export const UpdateServiceAuthDocument = `
     mutation updateServiceAuth($auth: ServiceAuthInput!) {
   updateServiceAuth(service: $auth) {
+    accessToken
+    accessTokenTtl
+    authorizationUrl
+    clientId
+    clientSecret
+    demoAccountLogin
+    demoAccountNotes
+    demoAccountPassword
     id
     providerName
+    redirectUrl
+    refreshToken
+    refreshTokenTtl
+    scope
+    serviceId
+    tokenSecret
+    tokenUrl
   }
 }`;

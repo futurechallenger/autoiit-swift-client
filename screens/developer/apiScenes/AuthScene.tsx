@@ -8,6 +8,7 @@ import {
   Radio,
   HStack,
   Box,
+  Spinner,
 } from "native-base";
 import { useIsFocused } from "@react-navigation/native";
 import { ThemedTitle } from "../../../components/ThemedTitle";
@@ -18,8 +19,9 @@ import { RootState } from "../../../redux/store";
 import { getServiceAuth } from "../../../redux/gql/getServiceAuthBySlice";
 import { addServiceAuth } from "../../../redux/gql/addServiceAuthSlice";
 import { updateServiceAuth } from "../../../redux/gql/updateServiceAuthSlice";
+import * as Types from "../../../redux/types.generated";
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
 export const AuthScene = ({ params }: { params: any }) => {
   const { service } = params;
@@ -29,6 +31,11 @@ export const AuthScene = ({ params }: { params: any }) => {
     status,
     error,
   } = useAppSelector((state: RootState) => state.getServiceAuth);
+  const {
+    serviceAuth: updatedServiceAuth,
+    status: updateStatus,
+    error: updateError,
+  } = useAppSelector((state: RootState) => state.updateServiceAuth);
 
   const [authUrl, setAuthUrl] = React.useState(
     serviceAuthList?.[0]?.authorizationUrl
@@ -36,20 +43,37 @@ export const AuthScene = ({ params }: { params: any }) => {
 
   const isFocused = useIsFocused();
   const [radioValue, setRadioValue] = useState("no-auth");
-  const [clientId, setClientId] = useState<string | undefined>();
-  const [clientSecret, setClientSecret] = useState<string | undefined>();
-  const [tokenUrl, setTokenUrl] = useState<string | undefined>();
-  const [redirectUrl, setRedirectUrl] = useState<string | undefined>();
+  const [clientId, setClientId] = useState<Types.Maybe<string> | undefined>();
+  const [clientSecret, setClientSecret] = useState<
+    Types.Maybe<string> | undefined
+  >();
+  const [tokenUrl, setTokenUrl] = useState<Types.Maybe<string> | undefined>();
+  const [redirectUrl, setRedirectUrl] = useState<
+    Types.Maybe<string> | undefined
+  >();
 
   console.log("Auth scene is focused: ", { isFocused });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!service?.id || serviceAuthList?.[0]?.id) {
       return;
     }
 
     dispatch(getServiceAuth({ serviceId: service?.id }));
   }, [service?.id, serviceAuthList?.[0]?.id]);
+
+  useEffect(() => {
+    const serviceAuth: Types.ServiceAuth | undefined | null =
+      serviceAuthList?.[0] ?? updatedServiceAuth;
+    if (!serviceAuth) {
+      return;
+    }
+
+    setClientId(serviceAuth.clientId);
+    setClientSecret(serviceAuth.clientSecret);
+    setTokenUrl(serviceAuth.tokenUrl);
+    setRedirectUrl(serviceAuth.redirectUrl);
+  }, [serviceAuthList, updatedServiceAuth]);
 
   const handleClick = () => {
     if (!serviceAuthList || serviceAuthList.length <= 0) {
@@ -92,6 +116,7 @@ export const AuthScene = ({ params }: { params: any }) => {
         <View w="90%" marginRight="10">
           <TextInputDesc
             text="Client ID"
+            value={clientId ?? ""}
             description=""
             marginTop={10}
             onTextChanged={(value) => {
@@ -100,6 +125,7 @@ export const AuthScene = ({ params }: { params: any }) => {
           />
           <TextInputDesc
             text="Client Secret"
+            value={clientSecret ?? ""}
             description=""
             marginTop={10}
             onTextChanged={(value) => {
@@ -108,6 +134,7 @@ export const AuthScene = ({ params }: { params: any }) => {
           />
           <TextInputDesc
             text="Authorization URL"
+            value={authUrl ?? ""}
             description="e.g. https://api.example.com/oauth2/authorize"
             marginTop={10}
             onTextChanged={(value) => {
@@ -116,6 +143,7 @@ export const AuthScene = ({ params }: { params: any }) => {
           />
           <TextInputDesc
             text="Token URL"
+            value={tokenUrl ?? ""}
             description="e.g. https://api.example.com/oauth2/token"
             marginTop={10}
             onTextChanged={(value) => {
@@ -124,6 +152,7 @@ export const AuthScene = ({ params }: { params: any }) => {
           />
           <TextInputDesc
             text="Redirect url after authentication completes"
+            value={redirectUrl ?? ""}
             description=""
             marginTop={10}
             onTextChanged={(value) => {
@@ -164,6 +193,11 @@ export const AuthScene = ({ params }: { params: any }) => {
         </Radio>
       </Radio.Group>
       {renderAuthContent()}
+      {(status === "loading" || updateStatus === "loading") && (
+        <View zIndex={1000}>
+          <Spinner size="lg" />
+        </View>
+      )}
     </View>
   );
 };
