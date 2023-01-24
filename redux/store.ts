@@ -1,4 +1,4 @@
-import { getServiceTriggerSlice } from "./gql/getTriggersSlice";
+import { getServiceTriggerSlice} from './gql/getTriggersSlice';
 import { updateServiceAuthSlice } from "./gql/updateServiceAuthSlice";
 import { getServiceAuthSlice } from "./gql/getServiceAuthBySlice";
 import { updateServiceApiSlice } from "./gql/updateServiceApiSlice";

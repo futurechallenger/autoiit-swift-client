@@ -3,13 +3,11 @@ import * as React from "react";
 import { View, Text, Spinner, FlatList } from "native-base";
 import { useRoute } from "@react-navigation/native";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import {
-  getTriggersByServiceId,
-  TriggerInfo,
-} from "../redux/gql/triggersSlice";
 import { RootState } from "../redux/store";
 import { TriggerList } from "../components/TriggerList";
 import { useNavigation } from "@react-navigation/native";
+import * as Types from "../redux/types.generated";
+import { getServiceTriggers } from "../redux/gql/getTriggersSlice";
 
 const { useEffect } = React;
 
@@ -23,12 +21,12 @@ export const TriggersScreen = () => {
   );
 
   useEffect(() => {
-    dispatch(getTriggersByServiceId({ serviceId: service.id }));
+    dispatch(getServiceTriggers({ serviceId: service.id }));
   }, []);
 
   const navigation = useNavigation();
 
-  const handleItemClick = (item: TriggerInfo) => {
+  const handleItemClick = (item: Types.ServiceTrigger) => {
     navigation.navigate("ServiceDetail", { item, service });
   };
 
@@ -41,7 +39,7 @@ export const TriggersScreen = () => {
         {status === "loading" ? (
           <Spinner size="lg" />
         ) : (
-          <TriggerList data={triggers} onItemClick={handleItemClick} />
+          <TriggerList data={triggers ?? []} onItemClick={handleItemClick} />
         )}
       </View>
     </View>

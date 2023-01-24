@@ -1,13 +1,13 @@
 import * as React from "react";
 import { View, Text, Pressable } from "native-base";
-import { TriggerInfo } from "../redux/gql/triggersSlice";
+import * as Types from "../redux/types.generated";
 
 export const TriggerList = ({
   data,
   onItemClick,
 }: {
-  data: TriggerInfo[];
-  onItemClick: (item: TriggerInfo) => void;
+  data: Types.ServiceTrigger[];
+  onItemClick: (item: Types.ServiceTrigger) => void;
 }) => {
   const items = [
     ...(data ?? []),
