@@ -6,6 +6,7 @@ import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
 import { addServiceTrigger } from "../../../redux/gql/addTriggerSlice";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
+import { CreateTriggerScene } from "./CreateTriggerScene";
 
 const { useState, useEffect } = React;
 
@@ -36,7 +37,7 @@ export const TriggersScene = ({ params }: { params: any }) => {
       <Stack.Screen
         name="Trigger List"
         component={() => (
-          <View>
+          <View style={{ height: "800" }}>
             <Text>Triggers Scene</Text>
             <View>
               <Button onPress={handleClick}>Add Trigger</Button>
@@ -55,14 +56,7 @@ export const TriggersScene = ({ params }: { params: any }) => {
           </View>
         )}
       />
-      <Stack.Screen
-        name="CreateTrigger"
-        component={() => (
-          <View>
-            <Text>Create Trigger</Text>
-          </View>
-        )}
-      />
+      <Stack.Screen name="CreateTrigger" component={CreateTriggerScene} />
     </Stack.Navigator>
   );
 };
