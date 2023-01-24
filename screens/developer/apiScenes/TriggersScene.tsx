@@ -28,13 +28,6 @@ export const TriggersScene = ({ params }: { params: any }) => {
   }, [serviceApi?.serviceId]);
 
   const handleClick = () => {
-    // dispatch(
-    //   addServiceTrigger({
-    //     serviceTrigger: {
-    //       serviceApiId: serviceApi?.id,
-    //     },
-    //   })
-    // );
     navigation.navigate("CreateTrigger");
   };
 
