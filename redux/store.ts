@@ -1,3 +1,4 @@
+import { getServiceTriggerSlice } from './gql/getTriggersSlice';
 import { updateServiceAuthSlice } from "./gql/updateServiceAuthSlice";
 import { getServiceAuthSlice } from "./gql/getServiceAuthBySlice";
 import { updateServiceApiSlice } from "./gql/updateServiceApiSlice";
@@ -6,7 +7,6 @@ import { updateServiceSlice } from "./gql/updateServiceSlice";
 import { getServicesByUserIdSlice } from "./gql/servicesByUserIdSlice";
 import { addServiceSlice } from "./gql/addServiceSlice";
 import { getServiceFullInfoSlice } from "./gql/serviceFullInfo";
-import { getTriggersSlice } from "./gql/triggersSlice";
 import { chooseServiceSlice } from "./gql/chooseServices";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "@reduxjs/toolkit";
@@ -32,7 +32,6 @@ export const store = configureStore({
     mostSearchedServices: mostSearchedServicesSlice.reducer,
     serviceById: getServiceByIdSlice.reducer,
     chooseService: chooseServiceSlice.reducer,
-    serviceTriggers: getTriggersSlice.reducer,
     serviceFullInfo: getServiceFullInfoSlice.reducer,
     addService: addServiceSlice.reducer,
     userServices: getServicesByUserIdSlice.reducer,
@@ -43,6 +42,7 @@ export const store = configureStore({
     addServiceAuth: addServiceAuthSlice.reducer,
     getServiceAuth: getServiceAuthSlice.reducer,
     updateServiceAuth: updateServiceAuthSlice.reducer,
+    serviceTriggers: getServiceTriggerSlice.reducer,
   }),
 });
 
