@@ -37,9 +37,9 @@ export const AuthScene = ({ params }: { params: any }) => {
     error: updateError,
   } = useAppSelector((state: RootState) => state.updateServiceAuth);
 
-  const [authUrl, setAuthUrl] = React.useState(
-    serviceAuthList?.[0]?.authorizationUrl
-  );
+  const [authUrl, setAuthUrl] = React.useState<
+    Types.Maybe<string> | undefined
+  >();
 
   const isFocused = useIsFocused();
   const [radioValue, setRadioValue] = useState("no-auth");
@@ -73,6 +73,7 @@ export const AuthScene = ({ params }: { params: any }) => {
     setClientSecret(serviceAuth.clientSecret);
     setTokenUrl(serviceAuth.tokenUrl);
     setRedirectUrl(serviceAuth.redirectUrl);
+    setAuthUrl(serviceAuth.authorizationUrl);
   }, [serviceAuthList, updatedServiceAuth]);
 
   const handleClick = () => {
