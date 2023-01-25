@@ -21,6 +21,7 @@ import { RootState } from "../../redux/store";
 import { getServicesByUserId } from "../../redux/gql/servicesByUserIdSlice";
 import { ThemedPicker } from "../../components/ThemedPicker";
 import { getServiceById } from "../../redux/gql/serviceById";
+import { ThemedSpinner } from "../../components/ThemedSpinner";
 
 const { useState, useEffect } = React;
 
@@ -96,7 +97,7 @@ export const DeveloperScreen = () => {
       </Tab.Navigator>
 
       {status === "loading" ||
-        (serviceStatus === "loading" && <Spinner size="lg" />)}
+        (serviceStatus === "loading" && <ThemedSpinner />)}
     </View>
   );
 };
