@@ -12,6 +12,7 @@ import {
   HStack,
   Toast,
   useToast,
+  Alert,
 } from "native-base";
 import { ThemedTitle } from "../../../components/ThemedTitle";
 import { TextInputDesc } from "../../../components/TextInputDesc";
@@ -20,6 +21,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { addServiceTrigger } from "../../../redux/gql/addTriggerSlice";
 import { RootState } from "../../../redux/store";
 import { ThemedSpinner } from "../../../components/ThemedSpinner";
+import { ThemedAlert } from "../../../components/ThemedAlert";
 
 const { useState, useEffect } = React;
 
@@ -27,8 +29,8 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
   const { serviceApi } = params ?? {};
   const toast = useToast();
   const [refreshed, setRefreshed] = useState(false);
-  const [triggerName, setTriggerName] = useState();
-  const [description, setDescription] = useState();
+  const [triggerName, setTriggerName] = useState<string | undefined>();
+  const [description, setDescription] = useState<string | undefined>();
   const [endpoint, setEndpoint] = useState("api");
   const [endpointPath, setEndpointPath] = useState<string | undefined>();
 
@@ -44,11 +46,6 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
       setRefreshed(true);
     }
   }, [isFocused]);
-
-  if (error) {
-    toast.closeAll();
-    toast.show({ description: error });
-  }
 
   const handleClick = () => {
     dispatch(
@@ -71,6 +68,7 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
 
   return (
     <View bg="green.50" h="full">
+      {error && <ThemedAlert />}
       <ThemedTitle>Create new trigger</ThemedTitle>
 
       <Divider />
@@ -117,7 +115,7 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
       )}
 
       <Divider />
-      <HStack>
+      <HStack justifyContent="flex-end">
         <Button onPress={handleClick}>Save</Button>
       </HStack>
       {status === "loading" && <ThemedSpinner />}

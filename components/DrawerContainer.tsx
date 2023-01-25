@@ -24,7 +24,7 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
 
   return (
     <HStack w="full" h="full" bg="blue.100">
-      <VStack bg="pink.100" marginX="5" h="full">
+      <VStack bg="pink.100" marginX="5" h="full" marginRight={50}>
         {React.Children.map(children, (child: any, i) => (
           <Pressable onPress={() => handlePress(i)}>
             <View
