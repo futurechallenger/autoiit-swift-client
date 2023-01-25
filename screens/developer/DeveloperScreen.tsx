@@ -62,7 +62,7 @@ export const DeveloperScreen = () => {
   }, [userServices]);
 
   return (
-    <View>
+    <View h="full">
       <HStack style={styles.header}>
         <HStack style={styles.service}>
           <Text fontSize="2xl" marginRight="5">

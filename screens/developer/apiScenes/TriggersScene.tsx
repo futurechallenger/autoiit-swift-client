@@ -33,7 +33,7 @@ export const TriggersScene = ({ params }: { params: any }) => {
   };
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator id="triggerScene">
       <Stack.Screen
         name="Trigger List"
         component={() => (
