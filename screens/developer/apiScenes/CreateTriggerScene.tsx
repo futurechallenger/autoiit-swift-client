@@ -4,13 +4,14 @@ import {
   View,
   Text,
   Divider,
-  Box,
   VStack,
   Radio,
   Input,
   InputGroup,
   InputLeftAddon,
   HStack,
+  Toast,
+  useToast,
 } from "native-base";
 import { ThemedTitle } from "../../../components/ThemedTitle";
 import { TextInputDesc } from "../../../components/TextInputDesc";
@@ -24,6 +25,7 @@ const { useState, useEffect } = React;
 
 export const CreateTriggerScene = ({ params }: { params: any }) => {
   const { serviceApi } = params ?? {};
+  const toast = useToast();
   const [refreshed, setRefreshed] = useState(false);
   const [triggerName, setTriggerName] = useState();
   const [description, setDescription] = useState();
@@ -42,6 +44,11 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
       setRefreshed(true);
     }
   }, [isFocused]);
+
+  if (error) {
+    toast.closeAll();
+    toast.show({ description: error });
+  }
 
   const handleClick = () => {
     dispatch(
@@ -97,14 +104,16 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
         </Radio.Group>
       </VStack>
       {endpoint === "api" && (
-        <InputGroup>
-          <InputLeftAddon children={"https://"} />
-          <Input value={endpointPath} onChangeText={handleInput} />
+        <>
+          <InputGroup>
+            <InputLeftAddon children={"https://"} />
+            <Input value={endpointPath} onChangeText={handleInput} />
+          </InputGroup>
           <Text>
             API endpoint for this trigger. Must be in snake_case and begin with
             a letter.
           </Text>
-        </InputGroup>
+        </>
       )}
 
       <Divider />
