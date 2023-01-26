@@ -7,6 +7,8 @@ import { addServiceTrigger } from "../../../redux/gql/addTriggerSlice";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { CreateTriggerScene } from "./CreateTriggerScene";
+import { ListRenderItem, ListRenderItemInfo, Pressable } from "react-native";
+import * as Types from "../../../redux/types.generated";
 
 const { useState, useEffect } = React;
 
@@ -33,6 +35,22 @@ export const TriggersScene = ({ params }: { params: any }) => {
     navigation.navigate("CreateTrigger", { serviceApi });
   };
 
+  const handleClickItem = (item: Types.ServiceTrigger) => {
+    navigation.navigate("TriggerDetail", { trigger: item, serviceApi });
+  };
+
+  const renderItem: ListRenderItem<Types.ServiceTrigger> = ({
+    item,
+  }: ListRenderItemInfo<Types.ServiceTrigger>) => {
+    return (
+      <Pressable onPress={() => handleClickItem(item)}>
+        <View>
+          <Text>{item.name}</Text>
+        </View>
+      </Pressable>
+    );
+  };
+
   return (
     <Stack.Navigator id="triggerScene">
       <Stack.Screen
@@ -44,14 +62,7 @@ export const TriggersScene = ({ params }: { params: any }) => {
               <Button onPress={handleClick}>Add Trigger</Button>
             </View>
             <View>
-              <FlatList
-                data={triggers ?? []}
-                renderItem={({ item }) => (
-                  <View>
-                    <Text>{item.name}</Text>
-                  </View>
-                )}
-              />
+              <FlatList data={triggers ?? []} renderItem={renderItem} />
             </View>
             {status === "loading" && <Spinner size="lg" />}
           </View>
