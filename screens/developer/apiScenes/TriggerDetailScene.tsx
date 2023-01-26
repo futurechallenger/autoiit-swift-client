@@ -1,13 +1,106 @@
 import * as React from "react";
-import { View, Text } from "native-base";
+import {
+  Box,
+  Button,
+  VStack,
+  View,
+  Text,
+  Divider,
+  InputGroup,
+  InputLeftAddon,
+  Input,
+  HStack,
+  Pressable,
+} from "native-base";
 import { useRoute } from "@react-navigation/native";
+import { ThemedTitle } from "../../../components/ThemedTitle";
+import { TextInputDesc } from "../../../components/TextInputDesc";
+
+const { useState, useEffect } = React;
 
 export const TriggerDetailScene = () => {
   const route = useRoute();
   const { trigger, serviceApi } = route.params ?? {};
+
+  const [name, setName] = useState();
+  const [description, setDescription] = useState();
+  const [endpointType, setEndpointType] = useState();
+  const [endpointPath, setEndpointPath] = useState();
+  const [showTriggerFields, setShowTriggerFields] = useState(false);
+
+  useEffect(() => {
+    setName(trigger.name);
+    setDescription(trigger.description);
+    setEndpointPath(trigger.endpointPath);
+    setEndpointType(trigger.endpointType);
+  }, []);
+
+  const handleInput = (nextValue) => {
+    setEndpointPath(nextValue);
+  };
+
   return (
     <View>
-      <Text>Trigger Details {trigger.name}</Text>
+      <ThemedTitle>{trigger.name}</ThemedTitle>
+      <Divider />
+      <TextInputDesc
+        marginTop={10}
+        text="Name"
+        value={name}
+        description="Use sentence case capitalization — no period"
+        onTextChanged={(nextValue) => setName(nextValue)}
+      />
+      <TextInputDesc
+        marginTop={10}
+        text="Description"
+        value={description}
+        description="Must be a complete sentence starting with “This trigger fires” and ending with a period"
+        onTextChanged={(nextValue) => setDescription(nextValue)}
+      />
+      <VStack>
+        <ThemedTitle>Endpoint</ThemedTitle>
+        <InputGroup>
+          <InputLeftAddon children={"https://"} />
+          <Input value={endpointPath} onChangeText={handleInput} />
+        </InputGroup>
+        <Text>
+          API endpoint for this trigger. Must be in snake_case and begin with a
+          letter.
+        </Text>
+      </VStack>
+      <Divider />
+      <HStack justifyContent="center" alignItems="space-between">
+        <Pressable>
+          <Text>Delete trigger</Text>
+        </Pressable>
+        <Button>Save</Button>
+      </HStack>
+      <Box>
+        <ThemedTitle>Trigger fields</ThemedTitle>
+        <Text>
+          To make triggers as relevant to the user as possible you can let users
+          provide one or more trigger fields. For example, the "New tweet by you
+          with hashtag" trigger would require a trigger field to specify the
+          hashtag to look for. Read the full documentation on trigger fields.
+        </Text>
+
+        <Button>Add trigger fields</Button>
+
+        {showTriggerFields && (
+          <Box bg="muted.50">
+            <TextInputDesc
+              marginTop={10}
+              text="Label"
+              value=""
+              description="Include a leading statement — use a question where possible"
+              onTextChanged={(nextValue) =>
+                console.log("field label: ", nextValue)
+              }
+            />
+          </Box>
+        )}
+        <Divider />
+      </Box>
     </View>
   );
 };

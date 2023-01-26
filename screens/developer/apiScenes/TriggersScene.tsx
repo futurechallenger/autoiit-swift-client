@@ -9,6 +9,7 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { CreateTriggerScene } from "./CreateTriggerScene";
 import { ListRenderItem, ListRenderItemInfo, Pressable } from "react-native";
 import * as Types from "../../../redux/types.generated";
+import { TriggerDetailScene } from "./TriggerDetailScene";
 
 const { useState, useEffect } = React;
 
@@ -69,6 +70,7 @@ export const TriggersScene = ({ params }: { params: any }) => {
         )}
       />
       <Stack.Screen name="CreateTrigger" component={CreateTriggerScene} />
+      <Stack.Screen name="TriggerDetail" component={TriggerDetailScene} />
     </Stack.Navigator>
   );
 };
