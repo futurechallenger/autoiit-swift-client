@@ -66,12 +66,6 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
 
   return (
     <View bg="green.50" h="full">
-      {error && (
-        <ThemedAlert
-          status="error"
-          text={error ?? "Something wrong, please try again later"}
-        />
-      )}
       <ThemedTitle>Create new trigger</ThemedTitle>
 
       <Divider />
@@ -122,6 +116,16 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
         <Button onPress={handleClick}>Save</Button>
       </HStack>
       {status === "loading" && <ThemedSpinner />}
+      {/* {error && (
+        <ThemedAlert
+          status="error"
+          text={error ?? "Something wrong, please try again later"}
+        />
+      )} */}
+      <ThemedAlert
+        status="error"
+        text={error ?? "Something wrong, please try again later"}
+      />
     </View>
   );
 };

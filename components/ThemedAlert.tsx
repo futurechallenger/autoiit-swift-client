@@ -9,6 +9,7 @@ import {
   IconButton,
   CloseIcon,
 } from "native-base";
+import { StyleSheet } from "react-native";
 
 interface ThemedAlertProps {
   status?: "success" | "error" | "info" | "warning";
@@ -22,7 +23,7 @@ export const ThemedAlert: React.FunctionComponent<ThemedAlertProps> = ({
   const alertStatus = status ?? "success";
 
   return (
-    <Stack space={3} w="100%" maxW="400">
+    <Stack space={3} w="full" maxW="400" style={styles.alert}>
       <Alert w="100%" status={alertStatus}>
         <VStack space={2} flexShrink={1} w="100%">
           <HStack flexShrink={1} space={2} justifyContent="space-between">
@@ -48,3 +49,15 @@ export const ThemedAlert: React.FunctionComponent<ThemedAlertProps> = ({
     </Stack>
   );
 };
+
+const styles = StyleSheet.create({
+  alert: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+});
