@@ -10,9 +10,7 @@ import {
   InputGroup,
   InputLeftAddon,
   HStack,
-  Toast,
   useToast,
-  Alert,
 } from "native-base";
 import { ThemedTitle } from "../../../components/ThemedTitle";
 import { TextInputDesc } from "../../../components/TextInputDesc";
@@ -68,7 +66,12 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
 
   return (
     <View bg="green.50" h="full">
-      {error && <ThemedAlert />}
+      {error && (
+        <ThemedAlert
+          status="error"
+          text={error ?? "Something wrong, please try again later"}
+        />
+      )}
       <ThemedTitle>Create new trigger</ThemedTitle>
 
       <Divider />
