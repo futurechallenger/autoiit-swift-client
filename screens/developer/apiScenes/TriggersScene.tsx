@@ -5,7 +5,7 @@ import { RootState } from "../../../redux/store";
 import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
 import { addServiceTrigger } from "../../../redux/gql/addTriggerSlice";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { CreateTriggerScene } from "./CreateTriggerScene";
 
 const { useState, useEffect } = React;
@@ -19,17 +19,18 @@ export const TriggersScene = ({ params }: { params: any }) => {
   );
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (!serviceApi?.serviceId) {
+    if (!serviceApi?.serviceId || !isFocused) {
       return;
     }
 
     dispatch(getServiceTriggers({ serviceId: serviceApi?.serviceId }));
-  }, [serviceApi?.serviceId]);
+  }, [serviceApi?.serviceId, isFocused]);
 
   const handleClick = () => {
-    navigation.navigate("CreateTrigger");
+    navigation.navigate("CreateTrigger", { serviceApi });
   };
 
   return (

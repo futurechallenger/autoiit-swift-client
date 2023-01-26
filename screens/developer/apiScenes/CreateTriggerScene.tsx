@@ -4,26 +4,51 @@ import {
   View,
   Text,
   Divider,
-  Box,
   VStack,
   Radio,
   Input,
   InputGroup,
   InputLeftAddon,
   HStack,
+  useToast,
 } from "native-base";
 import { ThemedTitle } from "../../../components/ThemedTitle";
 import { TextInputDesc } from "../../../components/TextInputDesc";
-import { useIsFocused } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import {
+  addServiceTrigger,
+  resetStatus,
+} from "../../../redux/gql/addTriggerSlice";
+import { RootState } from "../../../redux/store";
+import { ThemedSpinner } from "../../../components/ThemedSpinner";
+import { ThemedAlert } from "../../../components/ThemedAlert";
+import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
 
 const { useState, useEffect } = React;
 
 export const CreateTriggerScene = () => {
+  const toast = useToast();
   const [refreshed, setRefreshed] = useState(false);
-  const [triggerName, setTriggerName] = useState();
-  const [description, setDescription] = useState();
+  const [triggerName, setTriggerName] = useState<string | undefined>();
+  const [description, setDescription] = useState<string | undefined>();
+  const [endpoint, setEndpoint] = useState("api");
+  const [endpointPath, setEndpointPath] = useState<string | undefined>();
 
   const isFocused = useIsFocused();
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { serviceApi } = route.params ?? {};
+
+  const dispatch = useAppDispatch();
+  const { trigger, status, error } = useAppSelector(
+    (state: RootState) => state.addTrigger
+  );
 
   useEffect(() => {
     if (isFocused && !refreshed) {
@@ -31,8 +56,35 @@ export const CreateTriggerScene = () => {
     }
   }, [isFocused]);
 
+  useEffect(() => {
+    if (status === "succeeded" && serviceApi?.serviceId) {
+      dispatch(resetStatus());
+      navigation.goBack();
+      dispatch(getServiceTriggers({ serviceId: serviceApi?.serviceId }));
+    }
+  }, [status, serviceApi?.serviceId]);
+
+  const handleClick = () => {
+    dispatch(
+      addServiceTrigger({
+        serviceTrigger: {
+          name: triggerName,
+          description,
+          endpointPath,
+          endpointType: endpoint === "api" ? 0 : 1,
+          serviceApiId: serviceApi?.id,
+          fields: [],
+        },
+      })
+    );
+  };
+
+  const handleInput = (input: string) => {
+    setEndpointPath(input);
+  };
+
   return (
-    <View bg="green.50" h="full">
+    <View bg="green.50" h="full" marginRight={20}>
       <ThemedTitle>Create new trigger</ThemedTitle>
 
       <Divider />
@@ -40,40 +92,55 @@ export const CreateTriggerScene = () => {
         marginTop={10}
         subTitle="Name"
         text=""
+        value={triggerName}
         placeholder=""
         description="Use sentence case capitalization — no period"
-        onTextChanged={(value) => console.log("Trigger name: ", value)}
+        onTextChanged={(value) => setTriggerName(value)}
       />
       <TextInputDesc
         marginTop={10}
         subTitle="Description"
         text=""
+        value={description}
         placeholder=""
         description="Must be a complete sentence starting with “This trigger fires” and ending with a period"
-        onTextChanged={(value) => console.log("Trigger description: ", value)}
+        onTextChanged={(value) => setDescription(value)}
       />
       <VStack>
         <ThemedTitle>Endpoint</ThemedTitle>
         <Radio.Group
           name="endpoint"
-          onChange={(nextValue) => console.log(">>>Next Value: ", nextValue)}
+          value={endpoint}
+          onChange={(nextValue) => setEndpoint(nextValue)}
         >
           <Radio value="api">API</Radio>
           <Radio value="feed">Feed(RSS or Atom)</Radio>
         </Radio.Group>
       </VStack>
-      <InputGroup>
-        <InputLeftAddon children={"https://"} />
-        <Input />
-        <Text>
-          API endpoint for this trigger. Must be in snake_case and begin with a
-          letter.
-        </Text>
-      </InputGroup>
+      {endpoint === "api" && (
+        <>
+          <InputGroup>
+            <InputLeftAddon children={"https://"} />
+            <Input value={endpointPath} onChangeText={handleInput} />
+          </InputGroup>
+          <Text>
+            API endpoint for this trigger. Must be in snake_case and begin with
+            a letter.
+          </Text>
+        </>
+      )}
+
       <Divider />
-      <HStack>
-        <Button>Save</Button>
+      <HStack justifyContent="flex-end">
+        <Button onPress={handleClick}>Save</Button>
       </HStack>
+      {status === "loading" && <ThemedSpinner />}
+      {error && (
+        <ThemedAlert
+          status="error"
+          text={error ?? "Something wrong, please try again later"}
+        />
+      )}
     </View>
   );
 };

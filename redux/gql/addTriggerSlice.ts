@@ -22,7 +22,11 @@ const initialState: InitialStateType = {
 export const addServiceTriggerSlice = createSlice({
   name: "addServiceTriggerSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    resetStatus(state) {
+      state.status = "";
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(addServiceTrigger.pending, (state, action) => {
@@ -38,7 +42,7 @@ export const addServiceTriggerSlice = createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = "succeeded";
-          state.trigger = payload?.data?.addServiceTrigger ;
+          state.trigger = payload?.data?.addServiceTrigger;
         }
       })
       .addCase(addServiceTrigger.rejected, (state, action) => {
@@ -49,7 +53,7 @@ export const addServiceTriggerSlice = createSlice({
 });
 
 interface InitialStateType {
-  trigger: Types.ServiceTrigger | null |undefined;
+  trigger: Types.ServiceTrigger | null | undefined;
   status: string | undefined;
   error: string | undefined;
 }
@@ -74,3 +78,5 @@ export const AddTriggerDocument = `
     serviceApiId
   }
 }`;
+
+export const { resetStatus } = addServiceTriggerSlice.actions;
