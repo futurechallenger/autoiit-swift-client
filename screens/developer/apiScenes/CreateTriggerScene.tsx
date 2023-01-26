@@ -14,17 +14,25 @@ import {
 } from "native-base";
 import { ThemedTitle } from "../../../components/ThemedTitle";
 import { TextInputDesc } from "../../../components/TextInputDesc";
-import { useIsFocused } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { addServiceTrigger } from "../../../redux/gql/addTriggerSlice";
+import {
+  addServiceTrigger,
+  resetStatus,
+} from "../../../redux/gql/addTriggerSlice";
 import { RootState } from "../../../redux/store";
 import { ThemedSpinner } from "../../../components/ThemedSpinner";
 import { ThemedAlert } from "../../../components/ThemedAlert";
+import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
 
 const { useState, useEffect } = React;
 
-export const CreateTriggerScene = ({ params }: { params: any }) => {
-  const { serviceApi } = params ?? {};
+export const CreateTriggerScene = () => {
   const toast = useToast();
   const [refreshed, setRefreshed] = useState(false);
   const [triggerName, setTriggerName] = useState<string | undefined>();
@@ -33,6 +41,9 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
   const [endpointPath, setEndpointPath] = useState<string | undefined>();
 
   const isFocused = useIsFocused();
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { serviceApi } = route.params ?? {};
 
   const dispatch = useAppDispatch();
   const { trigger, status, error } = useAppSelector(
@@ -44,6 +55,14 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
       setRefreshed(true);
     }
   }, [isFocused]);
+
+  useEffect(() => {
+    if (status === "succeeded" && serviceApi?.serviceId) {
+      dispatch(resetStatus());
+      navigation.goBack();
+      dispatch(getServiceTriggers({ serviceId: serviceApi?.serviceId }));
+    }
+  }, [status, serviceApi?.serviceId]);
 
   const handleClick = () => {
     dispatch(
@@ -65,7 +84,7 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
   };
 
   return (
-    <View bg="green.50" h="full">
+    <View bg="green.50" h="full" marginRight={20}>
       <ThemedTitle>Create new trigger</ThemedTitle>
 
       <Divider />
@@ -116,16 +135,12 @@ export const CreateTriggerScene = ({ params }: { params: any }) => {
         <Button onPress={handleClick}>Save</Button>
       </HStack>
       {status === "loading" && <ThemedSpinner />}
-      {/* {error && (
+      {error && (
         <ThemedAlert
           status="error"
           text={error ?? "Something wrong, please try again later"}
         />
-      )} */}
-      <ThemedAlert
-        status="error"
-        text={error ?? "Something wrong, please try again later"}
-      />
+      )}
     </View>
   );
 };
