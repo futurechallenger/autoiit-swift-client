@@ -12,9 +12,11 @@ import {
   HStack,
   Pressable,
 } from "native-base";
+import { ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { ThemedTitle } from "../../../components/ThemedTitle";
 import { TextInputDesc } from "../../../components/TextInputDesc";
+import { TriggerField } from "./TriggerField";
 
 const { useState, useEffect } = React;
 
@@ -40,7 +42,7 @@ export const TriggerDetailScene = () => {
   };
 
   return (
-    <View>
+    <View style={{ overflow: "scroll" }}>
       <ThemedTitle>{trigger.name}</ThemedTitle>
       <Divider />
       <TextInputDesc
@@ -84,21 +86,11 @@ export const TriggerDetailScene = () => {
           hashtag to look for. Read the full documentation on trigger fields.
         </Text>
 
-        <Button>Add trigger fields</Button>
+        <Button onPress={() => setShowTriggerFields(true)}>
+          Add trigger fields
+        </Button>
 
-        {showTriggerFields && (
-          <Box bg="muted.50">
-            <TextInputDesc
-              marginTop={10}
-              text="Label"
-              value=""
-              description="Include a leading statement — use a question where possible"
-              onTextChanged={(nextValue) =>
-                console.log("field label: ", nextValue)
-              }
-            />
-          </Box>
-        )}
+        {showTriggerFields && <TriggerField />}
         <Divider />
       </Box>
     </View>
