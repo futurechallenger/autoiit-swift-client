@@ -22,6 +22,7 @@ import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
 import { RootState } from "../../../redux/store";
 import { addTriggerField } from "../../../redux/gql/addTriggerFieldSlice";
 import { updateTriggerField } from "../../../redux/gql/updateTriggerFieldSlice";
+import { getTriggerFields } from "../../../redux/gql/getTriggerFieldsSlice";
 
 const { useState, useEffect } = React;
 
@@ -33,6 +34,16 @@ export const TriggerDetailScene = () => {
   const { triggerFields, status, error } = useAppSelector(
     (state: RootState) => state.triggerFields
   );
+  const {
+    triggerField: addField,
+    status: addStatus,
+    error: addError,
+  } = useAppSelector((state: RootState) => state.addTriggerField);
+  const {
+    triggerField: updateField,
+    status: updateStatus,
+    error: updateError,
+  } = useAppSelector((state: RootState) => state.addTriggerField);
 
   const [name, setName] = useState();
   const [description, setDescription] = useState();
@@ -47,6 +58,15 @@ export const TriggerDetailScene = () => {
     setEndpointPath(trigger.endpointPath);
     setEndpointType(trigger.endpointType);
   }, []);
+
+  useEffect(() => {
+    if (
+      (addStatus === "succeeded" || updateStatus === "succeeded") &&
+      trigger?.id
+    ) {
+      dispatch(getTriggerFields({ triggerId: trigger?.id }));
+    }
+  }, [addStatus, updateStatus, trigger?.id]);
 
   const handleInput = (nextValue) => {
     setEndpointPath(nextValue);

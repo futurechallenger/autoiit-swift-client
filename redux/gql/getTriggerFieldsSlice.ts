@@ -5,7 +5,7 @@ import * as Types from "../types.generated";
 
 export const getTriggerFields = createAsyncThunk(
   "getTriggerFields",
-  async (variables: GetTriggersFieldsQuery) => {
+  async (variables: GetTriggersFieldsQueryVariables) => {
     return sendRequest<GetTriggersFieldsQuery>({
       variables,
       query: GetTriggersFieldsDocument,
