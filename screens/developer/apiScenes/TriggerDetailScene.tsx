@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  Icon,
   Box,
   Button,
   VStack,
@@ -12,6 +13,7 @@ import {
   HStack,
   Pressable,
   FlatList,
+  IconButton,
 } from "native-base";
 import { useRoute } from "@react-navigation/native";
 import { ThemedTitle } from "../../../components/ThemedTitle";
@@ -23,6 +25,9 @@ import { RootState } from "../../../redux/store";
 import { addTriggerField } from "../../../redux/gql/addTriggerFieldSlice";
 import { updateTriggerField } from "../../../redux/gql/updateTriggerFieldSlice";
 import { getTriggerFields } from "../../../redux/gql/getTriggerFieldsSlice";
+import { Entypo } from "@expo/vector-icons";
+import { deleteTriggerField } from "../../../redux/gql/removeTriggerFieldSlice";
+import { current } from "@reduxjs/toolkit";
 
 const { useState, useEffect } = React;
 
@@ -46,6 +51,7 @@ export const TriggerDetailScene = () => {
   } = useAppSelector((state: RootState) => state.addTriggerField);
 
   const [name, setName] = useState();
+  const [currentField, setCurrentField] = useState();
   const [description, setDescription] = useState();
   const [endpointType, setEndpointType] = useState();
   const [endpointPath, setEndpointPath] = useState();
@@ -86,12 +92,16 @@ export const TriggerDetailScene = () => {
     dispatch(updateTriggerField({ field }));
   };
 
+  const handleDeleteTriggerField = (fieldId: number) => {
+    dispatch(deleteTriggerField({ fieldId }));
+  };
+
   const renderTriggerFields = () => {
     if (showCreateField) {
       return (
         <TriggerFieldInput
           key="create-field"
-          trigger={trigger}
+          triggerInfo={trigger}
           onSave={handleCreateTriggerField}
           onCancel={() => setShowCreateField(false)}
         />
@@ -101,9 +111,10 @@ export const TriggerDetailScene = () => {
       return (
         <TriggerFieldInput
           key="edit-field"
-          trigger={trigger}
+          fieldInfo={currentField}
           onSave={handleEditTriggerField}
-          onCancel={() => setShowCreateField(false)}
+          onDelete={handleDeleteTriggerField}
+          onCancel={() => setShowEditField(false)}
         />
       );
     }
@@ -159,16 +170,33 @@ export const TriggerDetailScene = () => {
           <FlatList
             data={triggerFields ?? []}
             renderItem={({ item }) => (
-              <View>
+              <HStack
+                bg="muted.50"
+                w="full"
+                h="50"
+                justifyContent="center"
+                alignItems="flex-start"
+              >
                 <Text>{item?.label ?? ""}</Text>
-              </View>
+                <View flex={1} />
+                <Button
+                  onPress={() => {
+                    setCurrentField(item);
+                    setShowEditField(true);
+                  }}
+                >
+                  Edit
+                </Button>
+              </HStack>
             )}
           />
         )}
 
-        <Button onPress={() => setShowCreateField(true)}>
-          Add trigger fields
-        </Button>
+        {showCreateField && showEditField ? null : (
+          <Button onPress={() => setShowCreateField(true)}>
+            Add trigger fields
+          </Button>
+        )}
 
         {renderTriggerFields()}
         <Divider />

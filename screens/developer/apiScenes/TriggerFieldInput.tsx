@@ -13,19 +13,23 @@ import { TextInputDesc } from "../../../components/TextInputDesc";
 import { ThemedTitle } from "../../../components/ThemedTitle";
 import * as Types from "../../../redux/types.generated";
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
 interface TriggerFieldProps {
-  trigger?: Types.TriggerField;
+  triggerInfo?: Types.ServiceTrigger;
+  fieldInfo?: Types.TriggerField;
   cancelCode?: string;
   onCancel: () => void;
+  onDelete?: (fieldId: number) => void;
   onSave: (field: Types.TriggerField) => void;
 }
 
 export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
-  trigger,
+  triggerInfo,
+  fieldInfo,
   onCancel,
   onSave,
+  onDelete,
 }) => {
   const [label, setLabel] = useState();
   const [helperText, setHelperText] = useState();
@@ -36,6 +40,22 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
   const handleCancel = () => {
     if (onCancel) onCancel();
   };
+
+  const handleDelete = () => {
+    if (onDelete && fieldInfo?.id) onDelete(fieldInfo?.id);
+  };
+
+  useEffect(() => {
+    if (!fieldInfo?.id) {
+      return;
+    }
+
+    setLabel(fieldInfo?.label);
+    setHelperText(fieldInfo?.helperText);
+    setkeyName(fieldInfo?.keyName);
+    setInputType(fieldInfo?.inputType);
+    setInputValidation(fieldInfo?.validationRequired);
+  }, [fieldInfo?.id]);
 
   return (
     <View>
@@ -102,24 +122,31 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
         </VStack>
       )}
       <HStack>
-        <Pressable onPress={handleCancel}>
-          <Text>Cancel</Text>
-        </Pressable>
-        <Button
-          onPress={() =>
-            onSave({
-              label,
-              helperText,
-              keyName,
-              inputType: parseInt(inputType ?? "-1", 10),
-              validationRule: -1,
-              validationRequired: inputValidataion === "no-validtion",
-              serviceTriggerId: trigger?.id,
-            })
-          }
-        >
-          Save
-        </Button>
+        {fieldInfo ? (
+          <Pressable onPress={handleDelete}>
+            <Text>Delete</Text>
+          </Pressable>
+        ) : null}
+        <HStack>
+          <Pressable onPress={handleCancel}>
+            <Text>Cancel</Text>
+          </Pressable>
+          <Button
+            onPress={() =>
+              onSave({
+                label,
+                helperText,
+                keyName,
+                inputType: parseInt(inputType ?? "-1", 10),
+                validationRule: -1,
+                validationRequired: inputValidataion === "no-validtion",
+                serviceTriggerId: triggerInfo?.id,
+              })
+            }
+          >
+            Save
+          </Button>
+        </HStack>
       </HStack>
     </View>
   );
