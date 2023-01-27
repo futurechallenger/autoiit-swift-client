@@ -60,6 +60,12 @@ export const TriggerDetailScene = () => {
   }, []);
 
   useEffect(() => {
+    if (trigger?.id) {
+      dispatch(getTriggerFields({ triggerId: trigger?.id }));
+    }
+  }, [trigger?.id]);
+
+  useEffect(() => {
     if (
       (addStatus === "succeeded" || updateStatus === "succeeded") &&
       trigger?.id
