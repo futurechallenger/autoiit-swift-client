@@ -54,12 +54,16 @@ export const TriggerDetailScene = () => {
     setFields([...fields, field]);
   };
 
+  const handleCreateTriggerField = () => {};
+
+  const handleEditTriggerField = () => {};
+
   const renderTriggerFields = () => {
     if (showCreateField) {
       return (
         <TriggerFieldInput
           key="create-field"
-          onSave={handleSaveTriggerField}
+          onSave={handleCreateTriggerField}
           onCancel={() => setShowCreateField(false)}
         />
       );
@@ -68,7 +72,7 @@ export const TriggerDetailScene = () => {
       return (
         <TriggerFieldInput
           key="edit-field"
-          onSave={handleSaveTriggerField}
+          onSave={handleEditTriggerField}
           onCancel={() => setShowCreateField(false)}
         />
       );
