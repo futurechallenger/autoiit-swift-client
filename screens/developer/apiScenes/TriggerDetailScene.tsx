@@ -11,12 +11,13 @@ import {
   Input,
   HStack,
   Pressable,
+  FlatList,
 } from "native-base";
-import { ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { ThemedTitle } from "../../../components/ThemedTitle";
 import { TextInputDesc } from "../../../components/TextInputDesc";
-import { TriggerField } from "./TriggerField";
+import { TriggerFieldInput } from "./TriggerFieldInput";
+import * as Types from "../../../redux/types.generated";
 
 const { useState, useEffect } = React;
 
@@ -25,6 +26,8 @@ export const TriggerDetailScene = () => {
   const { trigger, serviceApi } = route.params ?? {};
 
   const [name, setName] = useState();
+  const [cancelCode, setCancelCode] = useState<string | undefined>();
+  const [fields, setFields] = useState<Types.TriggerField[]>([]);
   const [description, setDescription] = useState();
   const [endpointType, setEndpointType] = useState();
   const [endpointPath, setEndpointPath] = useState();
@@ -39,6 +42,14 @@ export const TriggerDetailScene = () => {
 
   const handleInput = (nextValue) => {
     setEndpointPath(nextValue);
+  };
+
+  const handleTriggerFieldCancel = (code: string) => {
+    setCancelCode(code);
+  };
+
+  const handleSaveTriggerField = (field: Types.TriggerField) => {
+    setFields([...fields, field]);
   };
 
   return (
@@ -87,11 +98,19 @@ export const TriggerDetailScene = () => {
           hashtag to look for. Read the full documentation on trigger fields.
         </Text>
 
+        {triggerFields && <FlatList />}
+
         <Button onPress={() => setShowTriggerFields(true)}>
           Add trigger fields
         </Button>
 
-        {showTriggerFields && <TriggerField />}
+        {showTriggerFields && (
+          <TriggerFieldInput
+            onSave={handleSaveTriggerField}
+            code={code}
+            cancelCode={cancelCode}
+          />
+        )}
         <Divider />
       </Box>
     </View>

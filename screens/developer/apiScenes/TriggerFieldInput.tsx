@@ -1,18 +1,39 @@
 import * as React from "react";
-import { CheckIcon, Select, View, Text, VStack } from "native-base";
+import {
+  Button,
+  CheckIcon,
+  Select,
+  View,
+  Text,
+  VStack,
+  HStack,
+  Pressable,
+} from "native-base";
 import { TextInputDesc } from "../../../components/TextInputDesc";
 import { ThemedTitle } from "../../../components/ThemedTitle";
-
-// interface TriggerFieldProps {
-// 	title: string;
-// 	description:
-// }
+import * as Types from "../../../redux/types.generated";
 
 const { useState } = React;
 
-export const TriggerField = () => {
+interface TriggerFieldProps {
+  code: string;
+  cancelCode?: string;
+  onCancel: (code: string) => void;
+  onSave: (field: Types.TriggerField) => void;
+}
+
+export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
+  code,
+  cancelCode,
+  onCancel,
+  onSave,
+}) => {
   const [inputType, setInputType] = useState();
   const [inputValidataion, setInputValidation] = useState();
+
+  if (cancelCode && code === cancelCode) {
+    return null;
+  }
 
   return (
     <View>
@@ -41,8 +62,7 @@ export const TriggerField = () => {
         <Select
           selectedValue={inputType}
           minWidth="200"
-          accessibilityLabel="Choose Service"
-          placeholder="Choose Service"
+          accessibilityLabel="Choose input type"
           _selectedItem={{
             bg: "teal.600",
             endIcon: <CheckIcon size="5" />,
@@ -66,8 +86,7 @@ export const TriggerField = () => {
           <Select
             selectedValue={inputValidataion}
             minWidth="200"
-            accessibilityLabel="Choose Service"
-            placeholder="Choose Service"
+            accessibilityLabel="Input validation"
             _selectedItem={{
               bg: "teal.600",
               endIcon: <CheckIcon size="5" />,
@@ -80,6 +99,12 @@ export const TriggerField = () => {
           </Select>
         </VStack>
       )}
+      <HStack>
+        <Pressable onPress={handleCancel}>
+          <Text>Cancel</Text>
+        </Pressable>
+        <Button onPress={() => onSave({})}>Save</Button>
+      </HStack>
     </View>
   );
 };
