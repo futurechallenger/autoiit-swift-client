@@ -16,9 +16,8 @@ import * as Types from "../../../redux/types.generated";
 const { useState } = React;
 
 interface TriggerFieldProps {
-  code: string;
   cancelCode?: string;
-  onCancel: (code: string) => void;
+  onCancel: () => void;
   onSave: (field: Types.TriggerField) => void;
 }
 
@@ -31,9 +30,9 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
   const [inputType, setInputType] = useState();
   const [inputValidataion, setInputValidation] = useState();
 
-  if (cancelCode && code === cancelCode) {
-    return null;
-  }
+  const handleCancel = () => {
+    if (onCancel) onCancel();
+  };
 
   return (
     <View>

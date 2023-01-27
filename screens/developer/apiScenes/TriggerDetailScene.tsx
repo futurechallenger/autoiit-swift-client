@@ -18,6 +18,8 @@ import { ThemedTitle } from "../../../components/ThemedTitle";
 import { TextInputDesc } from "../../../components/TextInputDesc";
 import { TriggerFieldInput } from "./TriggerFieldInput";
 import * as Types from "../../../redux/types.generated";
+import { useAppSelector } from "../../../redux/hooks";
+import { RootState } from "../../../redux/store";
 
 const { useState, useEffect } = React;
 
@@ -25,13 +27,17 @@ export const TriggerDetailScene = () => {
   const route = useRoute();
   const { trigger, serviceApi } = route.params ?? {};
 
+  const { triggerFields, status, error } = useAppSelector(
+    (state: RootState) => state.triggerFields
+  );
+
   const [name, setName] = useState();
-  const [cancelCode, setCancelCode] = useState<string | undefined>();
   const [fields, setFields] = useState<Types.TriggerField[]>([]);
   const [description, setDescription] = useState();
   const [endpointType, setEndpointType] = useState();
   const [endpointPath, setEndpointPath] = useState();
-  const [showTriggerFields, setShowTriggerFields] = useState(false);
+  const [showCreateField, setShowCreateField] = useState(false);
+  const [showEditField, setShowEditField] = useState(false);
 
   useEffect(() => {
     setName(trigger.name);
@@ -44,12 +50,29 @@ export const TriggerDetailScene = () => {
     setEndpointPath(nextValue);
   };
 
-  const handleTriggerFieldCancel = (code: string) => {
-    setCancelCode(code);
-  };
-
   const handleSaveTriggerField = (field: Types.TriggerField) => {
     setFields([...fields, field]);
+  };
+
+  const renderTriggerFields = () => {
+    if (showCreateField) {
+      return (
+        <TriggerFieldInput
+          key="create-field"
+          onSave={handleSaveTriggerField}
+          onCancel={() => setShowCreateField(false)}
+        />
+      );
+    }
+    if (showEditField) {
+      return (
+        <TriggerFieldInput
+          key="edit-field"
+          onSave={handleSaveTriggerField}
+          onCancel={() => setShowCreateField(false)}
+        />
+      );
+    }
   };
 
   return (
@@ -98,19 +121,22 @@ export const TriggerDetailScene = () => {
           hashtag to look for. Read the full documentation on trigger fields.
         </Text>
 
-        {triggerFields && <FlatList />}
+        {triggerFields && (
+          <FlatList
+            data={triggerFields ?? []}
+            renderItem={({ item }) => (
+              <View>
+                <Text>{item?.label ?? ""}</Text>
+              </View>
+            )}
+          />
+        )}
 
-        <Button onPress={() => setShowTriggerFields(true)}>
+        <Button onPress={() => setShowCreateField(true)}>
           Add trigger fields
         </Button>
 
-        {showTriggerFields && (
-          <TriggerFieldInput
-            onSave={handleSaveTriggerField}
-            code={code}
-            cancelCode={cancelCode}
-          />
-        )}
+        {renderTriggerFields()}
         <Divider />
       </Box>
     </View>

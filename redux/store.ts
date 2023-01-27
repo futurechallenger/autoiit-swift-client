@@ -1,4 +1,4 @@
-import { getServiceTriggerSlice} from './gql/getTriggersSlice';
+import { getServiceTriggerSlice } from "./gql/getTriggersSlice";
 import { updateServiceAuthSlice } from "./gql/updateServiceAuthSlice";
 import { getServiceAuthSlice } from "./gql/getServiceAuthBySlice";
 import { updateServiceApiSlice } from "./gql/updateServiceApiSlice";
@@ -22,6 +22,7 @@ import { getServiceByIdSlice } from "./gql/serviceById";
 import { getServiceApisSlice } from "./gql/getServiceApisSlice";
 import { addServiceAuthSlice } from "./gql/addServiceAuthSlice";
 import { addServiceTriggerSlice } from "./gql/addTriggerSlice";
+import { getTriggerFieldsSlice } from "./gql/getTriggerFieldsSlice";
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -45,6 +46,7 @@ export const store = configureStore({
     updateServiceAuth: updateServiceAuthSlice.reducer,
     serviceTriggers: getServiceTriggerSlice.reducer,
     addTrigger: addServiceTriggerSlice.reducer,
+    triggerFields: getTriggerFieldsSlice.reducer,
   }),
 });
 
