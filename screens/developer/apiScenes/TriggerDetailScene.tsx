@@ -18,8 +18,10 @@ import { ThemedTitle } from "../../../components/ThemedTitle";
 import { TextInputDesc } from "../../../components/TextInputDesc";
 import { TriggerFieldInput } from "./TriggerFieldInput";
 import * as Types from "../../../redux/types.generated";
-import { useAppSelector } from "../../../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
 import { RootState } from "../../../redux/store";
+import { addTriggerField } from "../../../redux/gql/addTriggerFieldSlice";
+import { updateTriggerField } from "../../../redux/gql/updateTriggerFieldSlice";
 
 const { useState, useEffect } = React;
 
@@ -27,12 +29,12 @@ export const TriggerDetailScene = () => {
   const route = useRoute();
   const { trigger, serviceApi } = route.params ?? {};
 
+  const dispatch = useAppDispatch();
   const { triggerFields, status, error } = useAppSelector(
     (state: RootState) => state.triggerFields
   );
 
   const [name, setName] = useState();
-  const [fields, setFields] = useState<Types.TriggerField[]>([]);
   const [description, setDescription] = useState();
   const [endpointType, setEndpointType] = useState();
   const [endpointPath, setEndpointPath] = useState();
@@ -50,19 +52,20 @@ export const TriggerDetailScene = () => {
     setEndpointPath(nextValue);
   };
 
-  const handleSaveTriggerField = (field: Types.TriggerField) => {
-    setFields([...fields, field]);
+  const handleCreateTriggerField = (field: Types.TriggerField) => {
+    dispatch(addTriggerField({ field }));
   };
 
-  const handleCreateTriggerField = () => {};
-
-  const handleEditTriggerField = () => {};
+  const handleEditTriggerField = (field: Types.TriggerField) => {
+    dispatch(updateTriggerField({ field }));
+  };
 
   const renderTriggerFields = () => {
     if (showCreateField) {
       return (
         <TriggerFieldInput
           key="create-field"
+          trigger={trigger}
           onSave={handleCreateTriggerField}
           onCancel={() => setShowCreateField(false)}
         />
@@ -72,6 +75,7 @@ export const TriggerDetailScene = () => {
       return (
         <TriggerFieldInput
           key="edit-field"
+          trigger={trigger}
           onSave={handleEditTriggerField}
           onCancel={() => setShowCreateField(false)}
         />

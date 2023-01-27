@@ -16,17 +16,20 @@ import * as Types from "../../../redux/types.generated";
 const { useState } = React;
 
 interface TriggerFieldProps {
+  trigger?: Types.TriggerField;
   cancelCode?: string;
   onCancel: () => void;
   onSave: (field: Types.TriggerField) => void;
 }
 
 export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
-  code,
-  cancelCode,
+  trigger,
   onCancel,
   onSave,
 }) => {
+  const [label, setLabel] = useState();
+  const [helperText, setHelperText] = useState();
+  const [keyName, setkeyName] = useState();
   const [inputType, setInputType] = useState();
   const [inputValidataion, setInputValidation] = useState();
 
@@ -38,23 +41,26 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
     <View>
       <TextInputDesc
         marginTop={0}
+        value={label}
         text="Label"
         description="Include a leading statement — use a question where possible"
-        onTextChanged={(nextValue) => {
-          console.log(nextValue);
+        onTextChanged={(nextValue: string) => {
+          setLabel(nextValue);
         }}
       />
       <TextInputDesc
         marginTop={10}
+        value={helperText}
         text="Optional helper text"
         description="Markdown-style links allowed"
-        onTextChanged={(nextValue) => console.log(nextValue)}
+        onTextChanged={(nextValue) => setHelperText(nextValue)}
       />
       <TextInputDesc
         marginTop={10}
+        value={keyName}
         text="Key name"
         description="in snake_case"
-        onTextChanged={(nextValue) => console.log(nextValue)}
+        onTextChanged={(nextValue) => setkeyName(nextValue)}
       />
       <VStack>
         <ThemedTitle>Input Type</ThemedTitle>
@@ -69,14 +75,11 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
           mt={1}
           onValueChange={(itemValue) => setInputType(itemValue)}
         >
-          <Select.Item label="Text input" value="text-input" />
-          <Select.Item label="Dropdown list" value="dropdown" />
+          <Select.Item label="Text input" value="0" />
+          <Select.Item label="Dropdown list" value="1" />
           {/* <Select.Item label="Location based input" value="location-input" />
           <Select.Item label="Nested dropdown list" value="nexted-dropdown" /> */}
-          <Select.Item
-            label="Multiple checkbox selection"
-            value="multiple-checkbox-selection"
-          />
+          <Select.Item label="Multiple checkbox selection" value="2" />
         </Select>
       </VStack>
       {inputType === "text-input" && (
@@ -102,7 +105,21 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
         <Pressable onPress={handleCancel}>
           <Text>Cancel</Text>
         </Pressable>
-        <Button onPress={() => onSave({})}>Save</Button>
+        <Button
+          onPress={() =>
+            onSave({
+              label,
+              helperText,
+              keyName,
+              inputType: parseInt(inputType ?? "-1", 10),
+              validationRule: -1,
+              validationRequired: inputValidataion === "no-validtion",
+              serviceTriggerId: trigger?.id,
+            })
+          }
+        >
+          Save
+        </Button>
       </HStack>
     </View>
   );
