@@ -28,6 +28,7 @@ import { getTriggerFields } from "../../../redux/gql/getTriggerFieldsSlice";
 import { Entypo } from "@expo/vector-icons";
 import { deleteTriggerField } from "../../../redux/gql/removeTriggerFieldSlice";
 import { current } from "@reduxjs/toolkit";
+import { EditableCell } from "../../../components/EditableCell";
 
 const { useState, useEffect } = React;
 
@@ -51,7 +52,9 @@ export const TriggerDetailScene = () => {
   } = useAppSelector((state: RootState) => state.addTriggerField);
 
   const [name, setName] = useState();
-  const [currentField, setCurrentField] = useState();
+  const [currentField, setCurrentField] = useState<
+    Types.TriggerField | undefined
+  >();
   const [description, setDescription] = useState();
   const [endpointType, setEndpointType] = useState();
   const [endpointPath, setEndpointPath] = useState();
@@ -170,24 +173,13 @@ export const TriggerDetailScene = () => {
           <FlatList
             data={triggerFields ?? []}
             renderItem={({ item }) => (
-              <HStack
-                bg="muted.50"
-                w="full"
-                h="50"
-                justifyContent="center"
-                alignItems="flex-start"
-              >
-                <Text>{item?.label ?? ""}</Text>
-                <View flex={1} />
-                <Button
-                  onPress={() => {
-                    setCurrentField(item);
-                    setShowEditField(true);
-                  }}
-                >
-                  Edit
-                </Button>
-              </HStack>
+              <EditableCell
+                title={item?.label ?? ""}
+                onEditClick={() => {
+                  setCurrentField(item);
+                  setShowEditField(true);
+                }}
+              />
             )}
           />
         )}

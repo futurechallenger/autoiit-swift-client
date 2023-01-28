@@ -10,6 +10,7 @@ import { CreateTriggerScene } from "./CreateTriggerScene";
 import { ListRenderItem, ListRenderItemInfo, Pressable } from "react-native";
 import * as Types from "../../../redux/types.generated";
 import { TriggerDetailScene } from "./TriggerDetailScene";
+import { EditableCell } from "../../../components/EditableCell";
 
 const { useState, useEffect } = React;
 
@@ -44,10 +45,16 @@ export const TriggersScene = ({ params }: { params: any }) => {
     item,
   }: ListRenderItemInfo<Types.ServiceTrigger>) => {
     return (
-      <Pressable onPress={() => handleClickItem(item)}>
-        <View>
-          <Text>{item.name}</Text>
-        </View>
+      // <Pressable onPress={() => handleClickItem(item)}>
+      //   <View>
+      //     <Text>{item.name}</Text>
+      //   </View>
+      // </Pressable>
+      <Pressable>
+        <EditableCell
+          title={item.name ?? ""}
+          onEditClick={() => handleClickItem(item)}
+        />
       </Pressable>
     );
   };
