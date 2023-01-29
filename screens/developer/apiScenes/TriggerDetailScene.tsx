@@ -154,7 +154,7 @@ export const TriggerDetailScene = () => {
         </Text>
       </VStack>
       <Divider />
-      <HStack justifyContent="center" alignItems="space-between">
+      <HStack justifyContent="center" alignItems="space-between" w="100%">
         <Pressable>
           <Text>Delete trigger</Text>
         </Pressable>

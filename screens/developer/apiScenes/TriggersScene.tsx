@@ -45,11 +45,6 @@ export const TriggersScene = ({ params }: { params: any }) => {
     item,
   }: ListRenderItemInfo<Types.ServiceTrigger>) => {
     return (
-      // <Pressable onPress={() => handleClickItem(item)}>
-      //   <View>
-      //     <Text>{item.name}</Text>
-      //   </View>
-      // </Pressable>
       <Pressable>
         <EditableCell
           title={item.name ?? ""}
