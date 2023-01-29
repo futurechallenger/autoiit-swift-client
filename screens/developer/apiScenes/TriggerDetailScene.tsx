@@ -29,6 +29,8 @@ import { Entypo } from "@expo/vector-icons";
 import { deleteTriggerField } from "../../../redux/gql/removeTriggerFieldSlice";
 import { current } from "@reduxjs/toolkit";
 import { EditableCell } from "../../../components/EditableCell";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { StyleSheet } from "react-native";
 
 const { useState, useEffect } = React;
 
@@ -85,6 +87,10 @@ export const TriggerDetailScene = () => {
 
   const handleInput = (nextValue) => {
     setEndpointPath(nextValue);
+  };
+
+  const handleDeleteTrigger = () => {
+    // dispatch(deleteTriggerField)
   };
 
   const handleCreateTriggerField = (field: Types.TriggerField) => {
@@ -154,9 +160,17 @@ export const TriggerDetailScene = () => {
         </Text>
       </VStack>
       <Divider />
-      <HStack justifyContent="center" alignItems="space-between" w="100%">
-        <Pressable>
-          <Text>Delete trigger</Text>
+      <HStack
+        justifyContent="space-between"
+        alignItems="center"
+        w="100%"
+        h={60}
+      >
+        <Pressable onPress={handleDeleteTrigger}>
+          <View style={styles.deleteButton}>
+            <Ionicons name="trash" size={28} color="muted.50" />
+            <Text color="muted.500">Delete trigger</Text>
+          </View>
         </Pressable>
         <Button>Save</Button>
       </HStack>
@@ -196,3 +210,11 @@ export const TriggerDetailScene = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  deleteButton: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+});
