@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, Button, FlatList, Spinner } from "native-base";
+import { View, Text, Button, FlatList, Spinner, HStack } from "native-base";
 import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
 import { RootState } from "../../../redux/store";
 import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
@@ -60,10 +60,12 @@ export const TriggersScene = ({ params }: { params: any }) => {
         name="Trigger List"
         component={() => (
           <View style={{ height: "800" }}>
-            <Text>Triggers Scene</Text>
-            <View>
-              <Button onPress={handleClick}>Add Trigger</Button>
-            </View>
+            <HStack w="full" justifyContent="space-between" alignItems="center">
+              <Text>Triggers</Text>
+              <View>
+                <Button onPress={handleClick}>Add Trigger</Button>
+              </View>
+            </HStack>
             <View>
               <FlatList data={triggers ?? []} renderItem={renderItem} />
             </View>

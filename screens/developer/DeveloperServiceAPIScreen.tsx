@@ -30,7 +30,7 @@ export const DeveloperServiceAPIScreen = () => {
   }, [service.id]);
 
   return (
-    <View h="full" overflowY="auto">
+    <View h="full" overflowY="auto" overflowX="hidden">
       <Text>Developer Create Service Web</Text>
       <DrawerContainer>
         <DrawerScene

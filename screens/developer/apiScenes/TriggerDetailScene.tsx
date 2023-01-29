@@ -131,8 +131,7 @@ export const TriggerDetailScene = () => {
   };
 
   return (
-    // <View style={{ overflow: "scroll" }}>
-    <View style={{ overflow: "scroll" }}>
+    <View>
       <ThemedTitle>{trigger.name}</ThemedTitle>
       <Divider />
       <TextInputDesc
