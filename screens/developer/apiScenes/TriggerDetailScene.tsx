@@ -31,6 +31,7 @@ import { current } from "@reduxjs/toolkit";
 import { EditableCell } from "../../../components/EditableCell";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { StyleSheet } from "react-native";
+import { deleteTrigger } from "../../../redux/gql/removeTriggerSlice";
 
 const { useState, useEffect } = React;
 
@@ -90,7 +91,7 @@ export const TriggerDetailScene = () => {
   };
 
   const handleDeleteTrigger = () => {
-    // dispatch(deleteTriggerField)
+    dispatch(deleteTrigger({ triggerId: trigger?.id }));
   };
 
   const handleCreateTriggerField = (field: Types.TriggerField) => {
@@ -199,9 +200,11 @@ export const TriggerDetailScene = () => {
         )}
 
         {showCreateField && showEditField ? null : (
-          <Button onPress={() => setShowCreateField(true)}>
-            Add trigger fields
-          </Button>
+          <View style={styles.addFields}>
+            <Button onPress={() => setShowCreateField(true)}>
+              Add trigger fields
+            </Button>
+          </View>
         )}
 
         {renderTriggerFields()}
@@ -216,5 +219,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+  addFields: {
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginBottom: 20,
   },
 });

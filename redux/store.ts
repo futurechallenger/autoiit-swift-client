@@ -29,6 +29,7 @@ import {
 } from "./gql/addTriggerFieldSlice";
 import { updateTriggerFieldSlice } from "./gql/updateTriggerFieldSlice";
 import { deleteTriggerFieldSlice } from "./gql/removeTriggerFieldSlice";
+import { deleteTriggerSlice } from "./gql/removeTriggerSlice";
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -56,6 +57,7 @@ export const store = configureStore({
     addTriggerField: addTriggerFieldSlice.reducer,
     updateTriggerField: updateTriggerFieldSlice.reducer,
     deleteTriggerFieldSucceeded: deleteTriggerFieldSlice.reducer,
+    deleteTrigger: deleteTriggerSlice.reducer,
   }),
 });
 
