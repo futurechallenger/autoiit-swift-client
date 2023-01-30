@@ -1,17 +1,8 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  Button,
-  FlatList,
-  Spinner,
-  HStack,
-  Divider,
-} from "native-base";
+import { View, Button, FlatList, Spinner, HStack, Divider } from "native-base";
 import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
 import { RootState } from "../../../redux/store";
 import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
-import { addServiceTrigger } from "../../../redux/gql/addTriggerSlice";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { CreateTriggerScene } from "./CreateTriggerScene";

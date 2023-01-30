@@ -10,8 +10,9 @@ import {
   Pressable,
 } from "native-base";
 import { TextInputDesc } from "../../../components/TextInputDesc";
-import { ThemedTitle } from "../../../components/ThemedTitle";
+import { InputTitle, ThemedTitle } from "../../../components/ThemedTitle";
 import * as Types from "../../../redux/types.generated";
+import { InputType } from "../../../constants/Trigger";
 
 const { useState, useEffect } = React;
 
@@ -36,6 +37,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
   const [keyName, setkeyName] = useState();
   const [inputType, setInputType] = useState();
   const [inputValidataion, setInputValidation] = useState();
+  const [validationRule, setValidationRule] = useState();
 
   const handleCancel = () => {
     if (onCancel) onCancel();
@@ -55,6 +57,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
     setkeyName(fieldInfo?.keyName);
     setInputType(fieldInfo?.inputType);
     setInputValidation(fieldInfo?.validationRequired);
+    setValidationRule(fieldInfo?.validationRule);
   }, [fieldInfo?.id]);
 
   return (
@@ -83,7 +86,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
         onTextChanged={(nextValue) => setkeyName(nextValue)}
       />
       <VStack>
-        <ThemedTitle>Input Type</ThemedTitle>
+        <InputTitle>Input Type</InputTitle>
         <Select
           selectedValue={inputType}
           minWidth="200"
@@ -102,7 +105,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
           <Select.Item label="Multiple checkbox selection" value="2" />
         </Select>
       </VStack>
-      {inputType === "text-input" && (
+      {inputType === InputType.TextInput && (
         <VStack>
           <ThemedTitle>Input validataion</ThemedTitle>
           <Select
@@ -121,6 +124,33 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
           </Select>
         </VStack>
       )}
+      {inputType === InputType.TextInput &&
+        inputValidataion === "need-validation" && (
+          <VStack>
+            <ThemedTitle>Validation rule</ThemedTitle>
+            <Select
+              selectedValue={validationRule}
+              minWidth="200"
+              accessibilityLabel="Validation rule"
+              _selectedItem={{
+                bg: "teal.600",
+                endIcon: <CheckIcon size="5" />,
+              }}
+              mt={1}
+              onValueChange={(itemValue) => setValidationRule(itemValue)}
+            >
+              <Select.Item label="Text is not blank" value="no-blank" />
+              <Select.Item
+                label="Text with a custom regex"
+                value="custom-regex"
+              />
+              <Select.Item
+                label="Validate text using a service"
+                value="by-service"
+              />
+            </Select>
+          </VStack>
+        )}
       <HStack>
         {fieldInfo ? (
           <Pressable onPress={handleDelete}>

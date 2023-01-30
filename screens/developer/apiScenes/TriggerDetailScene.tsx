@@ -1,37 +1,37 @@
-import * as React from "react";
+import { Entypo } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useRoute } from "@react-navigation/native";
+import { current } from "@reduxjs/toolkit";
 import {
-  Icon,
   Box,
   Button,
-  VStack,
-  View,
-  Text,
   Divider,
+  FlatList,
+  HStack,
+  Icon,
+  IconButton,
+  Input,
   InputGroup,
   InputLeftAddon,
-  Input,
-  HStack,
   Pressable,
-  FlatList,
-  IconButton,
+  Text,
+  View,
+  VStack,
 } from "native-base";
-import { useRoute } from "@react-navigation/native";
-import { ThemedTitle } from "../../../components/ThemedTitle";
-import { TextInputDesc } from "../../../components/TextInputDesc";
-import { TriggerFieldInput } from "./TriggerFieldInput";
-import * as Types from "../../../redux/types.generated";
-import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
-import { RootState } from "../../../redux/store";
-import { addTriggerField } from "../../../redux/gql/addTriggerFieldSlice";
-import { updateTriggerField } from "../../../redux/gql/updateTriggerFieldSlice";
-import { getTriggerFields } from "../../../redux/gql/getTriggerFieldsSlice";
-import { Entypo } from "@expo/vector-icons";
-import { deleteTriggerField } from "../../../redux/gql/removeTriggerFieldSlice";
-import { current } from "@reduxjs/toolkit";
-import { EditableCell } from "../../../components/EditableCell";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import * as React from "react";
 import { StyleSheet } from "react-native";
+import { EditableCell } from "../../../components/EditableCell";
+import { TextInputDesc } from "../../../components/TextInputDesc";
+import { InputTitle, ThemedTitle } from "../../../components/ThemedTitle";
+import { addTriggerField } from "../../../redux/gql/addTriggerFieldSlice";
+import { getTriggerFields } from "../../../redux/gql/getTriggerFieldsSlice";
+import { deleteTriggerField } from "../../../redux/gql/removeTriggerFieldSlice";
 import { deleteTrigger } from "../../../redux/gql/removeTriggerSlice";
+import { updateTriggerField } from "../../../redux/gql/updateTriggerFieldSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { RootState } from "../../../redux/store";
+import * as Types from "../../../redux/types.generated";
+import { TriggerFieldInput } from "./TriggerFieldInput";
 
 const { useState, useEffect } = React;
 
@@ -149,7 +149,7 @@ export const TriggerDetailScene = () => {
         onTextChanged={(nextValue) => setDescription(nextValue)}
       />
       <VStack>
-        <ThemedTitle>Endpoint</ThemedTitle>
+        <InputTitle>Endpoint</InputTitle>
         <InputGroup>
           <InputLeftAddon children={"https://"} />
           <Input value={endpointPath} onChangeText={handleInput} />
@@ -159,12 +159,13 @@ export const TriggerDetailScene = () => {
           letter.
         </Text>
       </VStack>
-      <Divider />
+      <Divider marginTop={5} />
       <HStack
         justifyContent="space-between"
         alignItems="center"
         w="100%"
         h={60}
+        marginY={5}
       >
         <Pressable onPress={handleDeleteTrigger}>
           <View style={styles.deleteButton}>
@@ -174,7 +175,7 @@ export const TriggerDetailScene = () => {
         </Pressable>
         <Button>Save</Button>
       </HStack>
-      <Box>
+      <Box marginY={5}>
         <ThemedTitle>Trigger fields</ThemedTitle>
         <Text>
           To make triggers as relevant to the user as possible you can let users
