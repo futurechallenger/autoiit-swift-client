@@ -1,5 +1,13 @@
 import * as React from "react";
-import { View, Text, Button, FlatList, Spinner, HStack } from "native-base";
+import {
+  View,
+  Text,
+  Button,
+  FlatList,
+  Spinner,
+  HStack,
+  Divider,
+} from "native-base";
 import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
 import { RootState } from "../../../redux/store";
 import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
@@ -11,6 +19,7 @@ import { ListRenderItem, ListRenderItemInfo, Pressable } from "react-native";
 import * as Types from "../../../redux/types.generated";
 import { TriggerDetailScene } from "./TriggerDetailScene";
 import { EditableCell } from "../../../components/EditableCell";
+import { ThemedTitle } from "../../../components/ThemedTitle";
 
 const { useState, useEffect } = React;
 
@@ -60,15 +69,22 @@ export const TriggersScene = ({ params }: { params: any }) => {
         name="Trigger List"
         component={() => (
           <View style={{ height: "800" }}>
-            <HStack w="full" justifyContent="space-between" alignItems="center">
-              <Text>Triggers</Text>
+            <HStack
+              w="full"
+              marginTop={5}
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <ThemedTitle>Triggers</ThemedTitle>
               <View>
                 <Button onPress={handleClick}>Add Trigger</Button>
               </View>
             </HStack>
-            <View>
+            <Divider marginTop={5} />
+            <View marginY={5}>
               <FlatList data={triggers ?? []} renderItem={renderItem} />
             </View>
+            <Divider marginTop={5} />
             {status === "loading" && <Spinner size="lg" />}
           </View>
         )}
