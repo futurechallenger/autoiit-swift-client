@@ -165,14 +165,16 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
       </VStack>
       {renderValidation()}
       {renderValidationRule()}
-      <HStack>
+      <HStack w="full" justifyContent="space-between" alignItems="center">
         {fieldInfo ? (
           <Pressable onPress={handleDelete}>
             <Text>Delete</Text>
           </Pressable>
-        ) : null}
+        ) : (
+          <View />
+        )}
         <HStack>
-          <Pressable onPress={handleCancel}>
+          <Pressable onPress={handleCancel} marginRight={10}>
             <Text>Cancel</Text>
           </Pressable>
           <Button
