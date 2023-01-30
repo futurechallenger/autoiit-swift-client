@@ -67,7 +67,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
   const renderValidation = () => {
     if (inputType === InputType.TextInput) {
       return (
-        <VStack>
+        <VStack marginTop={10}>
           <InputTitle>Input validataion</InputTitle>
           <Select
             selectedValue={inputValidataion}
@@ -94,7 +94,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
       inputValidataion === "need-validation"
     ) {
       return (
-        <VStack>
+        <VStack marginTop={10}>
           <InputTitle>Validation rule</InputTitle>
           <Select
             selectedValue={validationRule}
@@ -169,7 +169,12 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
       </VStack>
       {renderValidation()}
       {renderValidationRule()}
-      <HStack w="full" justifyContent="space-between" alignItems="center">
+      <HStack
+        w="full"
+        justifyContent="space-between"
+        alignItems="center"
+        marginY={10}
+      >
         {fieldInfo ? (
           <Pressable onPress={handleDelete}>
             <Text>Delete</Text>
@@ -177,7 +182,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
         ) : (
           <View />
         )}
-        <HStack>
+        <HStack justifyContent="space-between" alignItems="center">
           <Pressable onPress={handleCancel} marginRight={10}>
             <Text>Cancel</Text>
           </Pressable>
