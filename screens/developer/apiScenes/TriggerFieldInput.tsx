@@ -10,9 +10,13 @@ import {
   Pressable,
 } from "native-base";
 import { TextInputDesc } from "../../../components/TextInputDesc";
-import { InputTitle, ThemedTitle } from "../../../components/ThemedTitle";
+import { InputTitle } from "../../../components/ThemedTitle";
 import * as Types from "../../../redux/types.generated";
-import { InputType } from "../../../constants/Trigger";
+import {
+  convertValidationRule,
+  InputType,
+  ValidationRule,
+} from "../../../constants/Trigger";
 
 const { useState, useEffect } = React;
 
@@ -184,8 +188,8 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
                 helperText,
                 keyName,
                 inputType: parseInt(inputType ?? "-1", 10),
-                validationRule: -1,
-                validationRequired: inputValidataion === "no-validtion",
+                validationRule: convertValidationRule(validationRule),
+                validationRequired: inputValidataion === "need-validtion",
                 serviceTriggerId: triggerInfo?.id,
               })
             }
