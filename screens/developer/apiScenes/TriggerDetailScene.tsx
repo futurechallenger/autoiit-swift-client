@@ -122,6 +122,7 @@ export const TriggerDetailScene = () => {
       return (
         <TriggerFieldInput
           key="edit-field"
+          triggerInfo={trigger}
           fieldInfo={currentField}
           onSave={handleEditTriggerField}
           onDelete={handleDeleteTriggerField}

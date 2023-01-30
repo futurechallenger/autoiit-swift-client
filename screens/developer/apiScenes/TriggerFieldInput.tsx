@@ -15,6 +15,7 @@ import * as Types from "../../../redux/types.generated";
 import {
   convertValidationRule,
   InputType,
+  reverseValidationRule,
   ValidationRule,
 } from "../../../constants/Trigger";
 
@@ -59,9 +60,11 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
     setLabel(fieldInfo?.label);
     setHelperText(fieldInfo?.helperText);
     setkeyName(fieldInfo?.keyName);
-    setInputType(fieldInfo?.inputType);
-    setInputValidation(fieldInfo?.validationRequired);
-    setValidationRule(fieldInfo?.validationRule);
+    setInputType(fieldInfo?.inputType ? "" + fieldInfo?.inputType : undefined);
+    setInputValidation(
+      fieldInfo?.validationRequired ? "need-validation" : "no-validation"
+    );
+    setValidationRule(reverseValidationRule(fieldInfo?.validationRule));
   }, [fieldInfo?.id]);
 
   const renderValidation = () => {
@@ -189,6 +192,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
           <Button
             onPress={() =>
               onSave({
+                id: fieldInfo?.id,
                 label,
                 helperText,
                 keyName,
