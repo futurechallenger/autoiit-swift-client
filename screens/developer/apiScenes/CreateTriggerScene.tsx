@@ -12,7 +12,7 @@ import {
   HStack,
   useToast,
 } from "native-base";
-import { ThemedTitle } from "../../../components/ThemedTitle";
+import { InputTitle, ThemedTitle } from "../../../components/ThemedTitle";
 import { TextInputDesc } from "../../../components/TextInputDesc";
 import {
   useFocusEffect,
@@ -107,7 +107,7 @@ export const CreateTriggerScene = () => {
         onTextChanged={(value) => setDescription(value)}
       />
       <VStack>
-        <ThemedTitle>Endpoint</ThemedTitle>
+        <InputTitle>Endpoint</InputTitle>
         <Radio.Group
           name="endpoint"
           value={endpoint}

@@ -60,6 +60,64 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
     setValidationRule(fieldInfo?.validationRule);
   }, [fieldInfo?.id]);
 
+  const renderValidation = () => {
+    if (inputType === InputType.TextInput) {
+      return (
+        <VStack>
+          <InputTitle>Input validataion</InputTitle>
+          <Select
+            selectedValue={inputValidataion}
+            minWidth="200"
+            accessibilityLabel="Input validation"
+            _selectedItem={{
+              bg: "teal.600",
+              endIcon: <CheckIcon size="5" />,
+            }}
+            mt={1}
+            onValueChange={(itemValue) => setInputValidation(itemValue)}
+          >
+            <Select.Item label="No validation required" value="no-validation" />
+            <Select.Item label="Validation required" value="need-validation" />
+          </Select>
+        </VStack>
+      );
+    }
+  };
+
+  const renderValidationRule = () => {
+    if (
+      inputType === InputType.TextInput &&
+      inputValidataion === "need-validation"
+    ) {
+      return (
+        <VStack>
+          <InputTitle>Validation rule</InputTitle>
+          <Select
+            selectedValue={validationRule}
+            minWidth="200"
+            accessibilityLabel="Validation rule"
+            _selectedItem={{
+              bg: "teal.600",
+              endIcon: <CheckIcon size="5" />,
+            }}
+            mt={1}
+            onValueChange={(itemValue) => setValidationRule(itemValue)}
+          >
+            <Select.Item label="Text is not blank" value="no-blank" />
+            <Select.Item
+              label="Text with a custom regex"
+              value="custom-regex"
+            />
+            <Select.Item
+              label="Validate text using a service"
+              value="by-service"
+            />
+          </Select>
+        </VStack>
+      );
+    }
+  };
+
   return (
     <View>
       <TextInputDesc
@@ -105,52 +163,8 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
           <Select.Item label="Multiple checkbox selection" value="2" />
         </Select>
       </VStack>
-      {inputType === InputType.TextInput && (
-        <VStack>
-          <ThemedTitle>Input validataion</ThemedTitle>
-          <Select
-            selectedValue={inputValidataion}
-            minWidth="200"
-            accessibilityLabel="Input validation"
-            _selectedItem={{
-              bg: "teal.600",
-              endIcon: <CheckIcon size="5" />,
-            }}
-            mt={1}
-            onValueChange={(itemValue) => setInputValidation(itemValue)}
-          >
-            <Select.Item label="No validation required" value="no-validation" />
-            <Select.Item label="Validation required" value="need-validation" />
-          </Select>
-        </VStack>
-      )}
-      {inputType === InputType.TextInput &&
-        inputValidataion === "need-validation" && (
-          <VStack>
-            <ThemedTitle>Validation rule</ThemedTitle>
-            <Select
-              selectedValue={validationRule}
-              minWidth="200"
-              accessibilityLabel="Validation rule"
-              _selectedItem={{
-                bg: "teal.600",
-                endIcon: <CheckIcon size="5" />,
-              }}
-              mt={1}
-              onValueChange={(itemValue) => setValidationRule(itemValue)}
-            >
-              <Select.Item label="Text is not blank" value="no-blank" />
-              <Select.Item
-                label="Text with a custom regex"
-                value="custom-regex"
-              />
-              <Select.Item
-                label="Validate text using a service"
-                value="by-service"
-              />
-            </Select>
-          </VStack>
-        )}
+      {renderValidation()}
+      {renderValidationRule()}
       <HStack>
         {fieldInfo ? (
           <Pressable onPress={handleDelete}>
