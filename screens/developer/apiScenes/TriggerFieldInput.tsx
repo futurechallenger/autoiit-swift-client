@@ -147,7 +147,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
         description="in snake_case"
         onTextChanged={(nextValue) => setkeyName(nextValue)}
       />
-      <VStack>
+      <VStack marginTop={10}>
         <InputTitle>Input Type</InputTitle>
         <Select
           selectedValue={inputType}
