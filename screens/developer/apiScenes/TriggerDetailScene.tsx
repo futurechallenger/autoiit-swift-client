@@ -106,7 +106,7 @@ export const TriggerDetailScene = () => {
     dispatch(deleteTriggerField({ fieldId }));
   };
 
-  const renderCreateTriggerField = () => {
+  const renderCreateEditTriggerField = () => {
     if (showCreateField) {
       return (
         <TriggerFieldInput
@@ -117,9 +117,7 @@ export const TriggerDetailScene = () => {
         />
       );
     }
-  };
 
-  const renderEditTriggerField = () => {
     if (showEditField) {
       return (
         <TriggerFieldInput
@@ -210,8 +208,8 @@ export const TriggerDetailScene = () => {
           </View>
         )}
 
-        {renderEditTriggerField()}
-        {renderCreateTriggerField()}
+        {renderCreateEditTriggerField()}
+
         <Divider />
       </Box>
     </View>
