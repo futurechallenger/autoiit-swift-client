@@ -15,7 +15,7 @@ import {
   Button,
   FlatList,
   Spacer,
-  Toast,
+  // Toast,
 } from "native-base";
 import type { ServiceInfo } from "../redux/gql/chooseServices";
 import React, { useContext, useEffect } from "react";
@@ -54,7 +54,8 @@ export default function MyFlowScreen({
   };
 
   if (error) {
-    Toast.show({ description: error });
+    // TODO: show error message
+    // Toast.show({ description: error });
     if (
       error === "Signature has expired" ||
       error === "Signature verification failed" ||

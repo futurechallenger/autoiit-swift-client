@@ -1,10 +1,10 @@
 import * as React from "react";
 import { View, Text } from "native-base";
 
-export const ActionsScene = () => {
+export const ActionDetailScene = () => {
   return (
     <View>
-      <Text>Actions Scene</Text>
+      <Text>Action Detail</Text>
     </View>
   );
 };
