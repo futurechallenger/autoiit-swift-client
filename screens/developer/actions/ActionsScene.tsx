@@ -11,7 +11,7 @@ export const ActionsScene = ({ params }: { params: any }) => {
   const { serviceApi } = params ?? {};
 
   return (
-    <NavContainer>
+    <NavContainer containerId="actions-nav">
       <NavScene
         name="ActionList"
         component={ActionListScene}

@@ -1,8 +1,4 @@
-import {
-  useIsFocused,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Button, Divider, FlatList, HStack, Spinner, View } from "native-base";
 import * as React from "react";
@@ -28,7 +24,6 @@ export const TriggerGeneralScene: React.FunctionComponent<Props> = ({
     (state: RootState) => state.serviceTriggers
   );
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
   const isFocused = useIsFocused();
 
   useEffect(() => {

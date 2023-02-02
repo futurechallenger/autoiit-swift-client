@@ -20,23 +20,9 @@ const Stack = createNativeStackNavigator();
 
 export const TriggersScene = ({ params }: { params: any }) => {
   const { serviceApi } = params ?? {};
-  // const { triggers, error, status } = useAppSelector(
-  //   (state: RootState) => state.serviceTriggers
-  // );
-  // const dispatch = useAppDispatch();
-  // const navigation = useNavigation();
-  // const isFocused = useIsFocused();
-
-  // useEffect(() => {
-  //   if (!serviceApi?.serviceId || !isFocused) {
-  //     return;
-  //   }
-
-  //   dispatch(getServiceTriggers({ serviceId: serviceApi?.serviceId }));
-  // }, [serviceApi?.serviceId, isFocused]);
 
   return (
-    <NavContainer>
+    <NavContainer containerId="triggers-nav">
       <NavScene
         name="TriggerList"
         component={TriggerGeneralScene}
