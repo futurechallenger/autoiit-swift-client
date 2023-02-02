@@ -42,7 +42,6 @@ export default function MyFlowScreen({
   }, []);
 
   const handleItemClick = (item: any) => {
-    console.log("Item clicked", item);
     if (!item.connected)
       navigation.navigate("ServiceDetail", { service: item });
   };

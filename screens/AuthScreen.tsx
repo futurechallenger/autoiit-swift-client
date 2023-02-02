@@ -24,13 +24,11 @@ const AuthScreen = () => {
     }
   };
   const handleClose = () => {
-    console.log("Actionsheet is closing");
     setIsOpen(false);
   };
   const handleSelect = (selected: string) => {
     switch (selected) {
       case "email":
-        console.log("Selected continue with email");
         if (isOpen) setIsOpen(false);
         navigation.navigate("Email");
         break;

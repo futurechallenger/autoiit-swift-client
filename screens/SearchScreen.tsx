@@ -37,7 +37,6 @@ export const SearchScreen = () => {
   };
 
   const handleSelect = (selected: any) => {
-    console.log(">>SELECTED: ", selected);
     dispatch(
       exploreService({
         count: REQUEST_COUNT,
