@@ -22,7 +22,6 @@ export const ThemedPicker: React.FunctionComponent<Props> = ({
       title="Select"
       onChange={(ev) => {
         ev.preventDefault();
-        console.log("Select value", ev);
         if (onSelectChange) {
           onSelectChange(ev?.target?.options?.selectedIndex);
         }

@@ -45,7 +45,6 @@ export const ChooseServiceScreen = () => {
         <Button
           marginLeft={2}
           onPress={() => {
-            console.log("OK to search");
             dispatch(chooseServiceSlice.actions.searchByName(inputText));
           }}
         >

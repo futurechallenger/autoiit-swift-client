@@ -52,8 +52,6 @@ export const AuthScene = ({ params }: { params: any }) => {
     Types.Maybe<string> | undefined
   >();
 
-  console.log("Auth scene is focused: ", { isFocused });
-
   useEffect(() => {
     if (!service?.id || serviceAuthList?.[0]?.id) {
       return;

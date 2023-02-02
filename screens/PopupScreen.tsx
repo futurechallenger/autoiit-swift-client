@@ -12,7 +12,6 @@ export const PopupScreen = () => {
         onMessage={(event) => {
           const data = JSON.parse(event.nativeEvent.data);
           alert(data?.source);
-          console.log(">>> posted message: ", data);
         }}
       />
     </View>

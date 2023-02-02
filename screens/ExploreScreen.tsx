@@ -45,9 +45,7 @@ export const ExploreScreen = () => {
     dispatch(getMostSearchedServices());
   }, []);
 
-  const handleItemClick = (item: any) => {
-    console.log(">>Item clicked", item);
-  };
+  const handleItemClick = (item: any) => {};
 
   const handleFocus = () => {
     navigation.navigate("Search");

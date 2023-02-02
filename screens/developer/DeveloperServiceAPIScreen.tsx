@@ -5,9 +5,12 @@ import { RootState } from "../../redux/store";
 import { GeneralScene } from "./apiScenes/GeneralScene";
 import { AuthScene } from "./apiScenes/AuthScene";
 import { TriggersScene } from "./apiScenes/TriggersScene";
-import { ActionsScene } from "./apiScenes/ActionsScene";
+import { ActionsScene } from "./actions/ActionsScene";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getServiceApis } from "../../redux/gql/getServiceApisSlice";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
 
 const { useEffect } = React;
 
@@ -24,14 +27,13 @@ export const DeveloperServiceAPIScreen = () => {
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (service.id) {
+    if (service?.id) {
       dispatch(getServiceApis({ serviceId: service.id }));
     }
-  }, [service.id]);
+  }, [service?.id]);
 
   return (
-    <View h="full">
-      <Text>Developer Create Service Web</Text>
+    <View h="full" w="100%" overflowY="auto" overflowX="hidden">
       <DrawerContainer>
         <DrawerScene
           name="General"

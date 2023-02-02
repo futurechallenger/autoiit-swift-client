@@ -15,7 +15,6 @@ export const DeveloperServiceScreen = () => {
 
   return (
     <View h="full">
-      <Text>Developer Create Service Web</Text>
       <DrawerContainer>
         <DrawerScene
           name="General"

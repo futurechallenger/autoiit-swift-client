@@ -66,7 +66,6 @@ export const ServiceDetailScreen = () => {
   };
 
   const handleShareClick = () => {
-    console.log("Handle share button click");
     if (Platform.OS !== "web") {
       Share.share({ message: "Autoiit" });
     }

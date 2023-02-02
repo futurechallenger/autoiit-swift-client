@@ -38,7 +38,7 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
       </VStack>
       <Box
         bg="green.100"
-        w="90%"
+        w="80%"
         h="full"
         marginRight={10}
         justifyContent="flex-start"
@@ -72,7 +72,7 @@ export const DrawerScene: React.FunctionComponent<ChildProps> = ({
   return (
     <View height="100%">
       <Text>{name}</Text>
-      {component()}
+      {component && component()}
     </View>
   );
 };

@@ -21,7 +21,6 @@ export const ProfileScreen = () => {
   const navigation = useNavigation();
 
   const handleItemPress = () => {
-    console.log("Item pressed");
     navigation.navigate("Account");
   };
 

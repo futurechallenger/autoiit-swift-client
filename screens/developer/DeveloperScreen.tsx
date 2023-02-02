@@ -73,7 +73,6 @@ export const DeveloperScreen = () => {
             options={userServices}
             placeholder="Choose a service"
             onSelectChange={(index: number | undefined) => {
-              console.log("Selected index: ", index);
               if (index) {
                 dispatch(getServiceById({ serviceId: index }));
               }

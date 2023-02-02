@@ -34,7 +34,6 @@ export const ServiceGeneralScene = ({ params }: { params: any }) => {
   } = useAppSelector((state: RootState) => state.updateService);
 
   const handleClick = () => {
-    console.log("Service to save: ", { name, desc });
     dispatch(
       updateService({
         id: parseInt(service?.id, 10),

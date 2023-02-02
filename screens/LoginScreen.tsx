@@ -20,7 +20,6 @@ export const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
-      console.log("Login button pressed");
       const res = await request(`${SERVER_URL}/graphql`, loginGql, variables);
     } catch (e) {
       console.error("ERROR in login", e);
@@ -28,9 +27,7 @@ export const LoginScreen = () => {
     }
   };
 
-  const handleSignIn = () => {
-    console.log("Clicked signIn button");
-  };
+  const handleSignIn = () => {};
 
   return (
     <View style={styles.container}>
