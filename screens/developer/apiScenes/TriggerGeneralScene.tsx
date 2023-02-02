@@ -13,14 +13,17 @@ import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { RootState } from "../../../redux/store";
 import * as Types from "../../../redux/types.generated";
-import { CreateTriggerScene } from "./CreateTriggerScene";
-import { TriggerDetailScene } from "./TriggerDetailScene";
 
 const { useState, useEffect } = React;
 
-export const TriggerGeneralScene: React.FunctionComponent<Props> = () => {
-  const route = useRoute();
-  const { serviceApi } = route.params ?? {};
+interface Props {
+  params: any;
+}
+
+export const TriggerGeneralScene: React.FunctionComponent<Props> = ({
+  params,
+}) => {
+  const { serviceApi, setScene } = params ?? {};
   const { triggers, error, status } = useAppSelector(
     (state: RootState) => state.serviceTriggers
   );
@@ -50,11 +53,13 @@ export const TriggerGeneralScene: React.FunctionComponent<Props> = () => {
   };
 
   const handleClick = () => {
-    navigation.navigate("CreateTrigger", { serviceApi });
+    // setScene("CreateTrigger", { serviceApi });
+    setScene("CreateTrigger");
   };
 
   const handleClickItem = (item: Types.ServiceTrigger) => {
-    navigation.navigate("TriggerDetail", { trigger: item, serviceApi });
+    // setScene("TriggerDetail", { trigger: item, serviceApi });
+    setScene("TriggerDetail");
   };
 
   return (

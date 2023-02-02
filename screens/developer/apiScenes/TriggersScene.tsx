@@ -37,9 +37,14 @@ export const TriggersScene = ({ params }: { params: any }) => {
 
   return (
     <NavContainer>
-      <NavScene name="ActionList" component={TriggerGeneralScene} isDefault />
-      <NavScene name="CreateAction" component={CreateTriggerScene} />
-      <NavScene name="ActionDetail" component={TriggerDetailScene} />
+      <NavScene
+        name="TriggerList"
+        component={TriggerGeneralScene}
+        params={{ serviceApi }}
+        isDefault
+      />
+      <NavScene name="CreateTrigger" component={CreateTriggerScene} />
+      <NavScene name="TriggerDetail" component={TriggerDetailScene} />
     </NavContainer>
   );
 };

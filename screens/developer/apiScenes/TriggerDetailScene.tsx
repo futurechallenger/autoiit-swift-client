@@ -65,10 +65,10 @@ export const TriggerDetailScene = () => {
   const [showEditField, setShowEditField] = useState(false);
 
   useEffect(() => {
-    setName(trigger.name);
-    setDescription(trigger.description);
-    setEndpointPath(trigger.endpointPath);
-    setEndpointType(trigger.endpointType);
+    setName(trigger?.name);
+    setDescription(trigger?.description);
+    setEndpointPath(trigger?.endpointPath);
+    setEndpointType(trigger?.endpointType);
   }, []);
 
   useEffect(() => {
@@ -134,7 +134,7 @@ export const TriggerDetailScene = () => {
 
   return (
     <View>
-      <ThemedTitle>{trigger.name}</ThemedTitle>
+      <ThemedTitle>{trigger?.name}</ThemedTitle>
       <Divider />
       <TextInputDesc
         marginTop={10}

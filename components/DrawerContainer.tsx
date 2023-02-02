@@ -72,7 +72,7 @@ export const DrawerScene: React.FunctionComponent<ChildProps> = ({
   return (
     <View height="100%">
       <Text>{name}</Text>
-      {component()}
+      {component && component()}
     </View>
   );
 };

@@ -27,10 +27,10 @@ export const DeveloperServiceAPIScreen = () => {
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (service.id) {
+    if (service?.id) {
       dispatch(getServiceApis({ serviceId: service.id }));
     }
-  }, [service.id]);
+  }, [service?.id]);
 
   return (
     <View h="full" w="100%" overflowY="auto" overflowX="hidden">

@@ -7,13 +7,15 @@ import { ActionDetailScene } from "./ActionDetailScene";
 
 const { useState } = React;
 
-export const ActionsScene = () => {
+export const ActionsScene = ({ params }: { params: any }) => {
+  const { serviceApi } = params ?? {};
+
   return (
     <NavContainer>
       <NavScene
         name="ActionList"
         component={ActionListScene}
-        params={{ serviceApi: null }}
+        params={{ serviceApi }}
         isDefault
       />
       <NavScene name="CreateAction" component={CreateActionScene} />
