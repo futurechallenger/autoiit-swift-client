@@ -60,6 +60,7 @@ export const store = configureStore({
     deleteTriggerFieldSucceeded: deleteTriggerFieldSlice.reducer,
     deleteTrigger: deleteTriggerSlice.reducer,
     serviceActions: getServiceActionsSlice.reducer,
+    addServiceAction: addServiceApiSlice.reducer,
   }),
 });
 

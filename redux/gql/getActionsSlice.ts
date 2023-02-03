@@ -14,7 +14,7 @@ export const getServiceActinos = createAsyncThunk(
 );
 
 const initialState: InitialStateType = {
-  triggers: undefined,
+  actions: undefined,
   status: undefined,
   error: undefined,
 };
@@ -38,7 +38,7 @@ export const getServiceActionsSlice = createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = "succeeded";
-          state.triggers = payload?.data?.triggers ?? [];
+          state.actions = payload?.data?.triggers ?? [];
         }
       })
       .addCase(getServiceActinos.rejected, (state, action) => {
@@ -49,7 +49,7 @@ export const getServiceActionsSlice = createSlice({
 });
 
 interface InitialStateType {
-  triggers: Types.ServiceAction[] | undefined;
+  actions: Types.ServiceAction[] | undefined;
   status: string | undefined;
   error: string | undefined;
 }

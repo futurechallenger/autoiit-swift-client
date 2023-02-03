@@ -1,11 +1,10 @@
 import { useIsFocused } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Button, Divider, FlatList, HStack, Spinner, View } from "native-base";
 import * as React from "react";
 import { ListRenderItem, ListRenderItemInfo, Pressable } from "react-native";
 import { EditableCell } from "../../../components/EditableCell";
 import { ThemedTitle } from "../../../components/ThemedTitle";
-import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
+import { getServiceActinos } from "../../../redux/gql/getActionsSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { RootState } from "../../../redux/store";
 import * as Types from "../../../redux/types.generated";
@@ -21,19 +20,20 @@ interface Props {
  */
 export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
   const { serviceApi, setScene } = params ?? {};
-  const { triggers, error, status } = useAppSelector(
-    (state: RootState) => state.serviceTriggers
+  const { actions, error, status } = useAppSelector(
+    (state: RootState) => state.serviceActions
   );
+
   const dispatch = useAppDispatch();
-  const isFocused = useIsFocused();
+  // const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (!serviceApi?.serviceId || !isFocused) {
+    if (!serviceApi?.serviceId /*|| !isFocused*/) {
       return;
     }
 
-    dispatch(getServiceTriggers({ serviceId: serviceApi?.serviceId }));
-  }, [serviceApi?.serviceId, isFocused]);
+    dispatch(getServiceActinos({ serviceId: serviceApi?.serviceId }));
+  }, [serviceApi?.serviceId /*,isFocused*/]);
 
   const renderItem: ListRenderItem<Types.ServiceTrigger> = ({
     item,
@@ -49,8 +49,7 @@ export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
   };
 
   const handleClick = () => {
-    // setScene("CreateTrigger", { serviceApi });
-    setScene("CreateTrigger");
+    setScene("CreateAction");
   };
 
   const handleClickItem = (item: Types.ServiceTrigger) => {
@@ -66,14 +65,14 @@ export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <ThemedTitle>Triggers</ThemedTitle>
+        <ThemedTitle>Actions</ThemedTitle>
         <View>
           <Button onPress={handleClick}>Add Trigger</Button>
         </View>
       </HStack>
       <Divider marginTop={5} />
       <View marginY={5}>
-        <FlatList data={triggers ?? []} renderItem={renderItem} />
+        <FlatList data={actions ?? []} renderItem={renderItem} />
       </View>
       <Divider marginTop={5} />
       {status === "loading" && <Spinner size="lg" />}

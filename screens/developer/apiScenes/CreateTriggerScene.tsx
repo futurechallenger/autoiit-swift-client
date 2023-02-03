@@ -10,12 +10,10 @@ import {
   InputGroup,
   InputLeftAddon,
   HStack,
-  useToast,
 } from "native-base";
 import { InputTitle, ThemedTitle } from "../../../components/ThemedTitle";
 import { TextInputDesc } from "../../../components/TextInputDesc";
 import {
-  useFocusEffect,
   useIsFocused,
   useNavigation,
   useRoute,
@@ -33,7 +31,6 @@ import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
 const { useState, useEffect } = React;
 
 export const CreateTriggerScene = () => {
-  const toast = useToast();
   const [refreshed, setRefreshed] = useState(false);
   const [triggerName, setTriggerName] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();
@@ -85,7 +82,7 @@ export const CreateTriggerScene = () => {
 
   return (
     <View bg="green.50" h="full" marginRight={20}>
-      <ThemedTitle>Create new trigger</ThemedTitle>
+      <ThemedTitle>Create a new trigger</ThemedTitle>
 
       <Divider />
       <TextInputDesc

@@ -4,6 +4,8 @@ import { NavContainer, NavScene } from "../../../components/NavContainer";
 import { ActionListScene } from "./ActionListScene";
 import { CreateActionScene } from "./CreateActionScene";
 import { ActionDetailScene } from "./ActionDetailScene";
+import { useAppSelector } from "../../../redux/hooks";
+import { RootState } from "../../../redux/store";
 
 const { useState } = React;
 
@@ -18,8 +20,16 @@ export const ActionsScene = ({ params }: { params: any }) => {
         params={{ serviceApi }}
         isDefault
       />
-      <NavScene name="CreateAction" component={CreateActionScene} />
-      <NavScene name="ActionDetail" component={ActionDetailScene} />
+      <NavScene
+        name="CreateAction"
+        component={CreateActionScene}
+        params={{ serviceApi }}
+      />
+      <NavScene
+        name="ActionDetail"
+        component={ActionDetailScene}
+        params={{ serviceApi }}
+      />
     </NavContainer>
   );
 };
