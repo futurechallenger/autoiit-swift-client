@@ -20,8 +20,16 @@ export const ActionsScene = ({ params }: { params: any }) => {
         params={{ serviceApi }}
         isDefault
       />
-      <NavScene name="CreateAction" component={CreateActionScene} />
-      <NavScene name="ActionDetail" component={ActionDetailScene} />
+      <NavScene
+        name="CreateAction"
+        component={CreateActionScene}
+        params={{ serviceApi }}
+      />
+      <NavScene
+        name="ActionDetail"
+        component={ActionDetailScene}
+        params={{ serviceApi }}
+      />
     </NavContainer>
   );
 };
