@@ -54,7 +54,7 @@ export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
 
   const handleClickItem = (item: Types.ServiceTrigger) => {
     // setScene("TriggerDetail", { trigger: item, serviceApi });
-    setScene("TriggerDetail");
+    setScene("ActionDetail");
   };
 
   return (
