@@ -38,7 +38,7 @@ export const getServiceActionsSlice = createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = "succeeded";
-          state.actions = payload?.data?.triggers ?? [];
+          state.actions = payload?.data?.actions ?? [];
         }
       })
       .addCase(getServiceActinos.rejected, (state, action) => {
