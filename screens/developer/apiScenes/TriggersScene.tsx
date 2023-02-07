@@ -18,11 +18,19 @@ const { useState, useEffect } = React;
 
 const Stack = createNativeStackNavigator();
 
-export const TriggersScene = ({ params }: { params: any }) => {
+interface Props {
+  params: any;
+  focusScene: boolean;
+}
+
+export const TriggersScene: React.FunctionComponent<Props> = ({
+  params,
+  focusScene,
+}) => {
   const { serviceApi } = params ?? {};
 
   return (
-    <NavContainer containerId="triggers-nav">
+    <NavContainer containerId="triggers-nav" needsReset={focusScene}>
       <NavScene
         name="TriggerList"
         component={TriggerGeneralScene}
