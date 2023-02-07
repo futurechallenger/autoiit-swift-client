@@ -28,6 +28,7 @@ import { getTriggerFields } from "../../../redux/gql/getTriggerFieldsSlice";
 import { deleteTriggerField } from "../../../redux/gql/removeTriggerFieldSlice";
 import { deleteTrigger } from "../../../redux/gql/removeTriggerSlice";
 import { updateTriggerField } from "../../../redux/gql/updateTriggerFieldSlice";
+import { updateServiceTrigger } from "../../../redux/gql/updateTriggerSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { RootState } from "../../../redux/store";
 import * as Types from "../../../redux/types.generated";
@@ -106,6 +107,18 @@ export const TriggerDetailScene = () => {
     dispatch(deleteTriggerField({ fieldId }));
   };
 
+  const handleUpdateTrigger = () => {
+    const targetTrigger = {
+      id: trigger?.id,
+      serviceApiId: serviceApi?.id,
+      description,
+      endpointPath,
+      endpointType,
+      name,
+    };
+    dispatch(updateServiceTrigger({ trigger: targetTrigger }));
+  };
+
   const renderCreateEditTriggerField = () => {
     if (showCreateField) {
       return (
@@ -175,7 +188,7 @@ export const TriggerDetailScene = () => {
             <Text color="muted.500">Delete trigger</Text>
           </View>
         </Pressable>
-        <Button>Save</Button>
+        <Button onPress={handleUpdateTrigger}>Save</Button>
       </HStack>
       <Box marginY={5}>
         <ThemedTitle>Trigger fields</ThemedTitle>

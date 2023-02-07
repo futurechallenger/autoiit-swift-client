@@ -59,13 +59,13 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     error: updateError,
   } = useAppSelector((state: RootState) => state.addTriggerField);
 
-  const [name, setName] = useState();
+  const [name, setName] = useState<string | undefined>();
   const [currentField, setCurrentField] = useState<
     Types.TriggerField | undefined
   >();
-  const [description, setDescription] = useState();
-  const [endpointType, setEndpointType] = useState();
-  const [endpointPath, setEndpointPath] = useState();
+  const [description, setDescription] = useState<string | undefined>();
+  const [endpointType, setEndpointType] = useState<string | undefined>();
+  const [endpointPath, setEndpointPath] = useState<string | undefined>();
   const [showCreateField, setShowCreateField] = useState(false);
   const [showEditField, setShowEditField] = useState(false);
 
@@ -91,12 +91,12 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     }
   }, [addStatus, updateStatus, action?.id]);
 
-  const handleInput = (nextValue) => {
+  const handleInput = (nextValue: string | undefined) => {
     setEndpointPath(nextValue);
   };
 
   const handleDeleteTrigger = () => {
-    dispatch(deleteTrigger({ triggerId: action?.id }));
+    // dispatch(deleteAction({ actionId: action?.id }));
   };
 
   const handleCreateTriggerField = (field: Types.TriggerField) => {
