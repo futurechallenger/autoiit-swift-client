@@ -1,7 +1,7 @@
-import { Entypo } from "@expo/vector-icons";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { useRoute } from "@react-navigation/native";
-import { current } from "@reduxjs/toolkit";
+import { Entypo } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useRoute } from '@react-navigation/native';
+import { current } from '@reduxjs/toolkit';
 import {
   Box,
   Button,
@@ -17,21 +17,22 @@ import {
   Text,
   View,
   VStack,
-} from "native-base";
-import * as React from "react";
-import { StyleSheet } from "react-native";
-import { EditableCell } from "../../../components/EditableCell";
-import { TextInputDesc } from "../../../components/TextInputDesc";
-import { InputTitle, ThemedTitle } from "../../../components/ThemedTitle";
-import { addTriggerField } from "../../../redux/gql/addTriggerFieldSlice";
-import { getTriggerFields } from "../../../redux/gql/getTriggerFieldsSlice";
-import { deleteTriggerField } from "../../../redux/gql/removeTriggerFieldSlice";
-import { deleteTrigger } from "../../../redux/gql/removeTriggerSlice";
-import { updateTriggerField } from "../../../redux/gql/updateTriggerFieldSlice";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { RootState } from "../../../redux/store";
-import * as Types from "../../../redux/types.generated";
-import { TriggerFieldInput } from "../apiScenes/TriggerFieldInput";
+} from 'native-base';
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
+import { EditableCell } from '../../../components/EditableCell';
+import { TextInputDesc } from '../../../components/TextInputDesc';
+import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
+import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
+import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
+import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
+import { deleteTrigger } from '../../../redux/gql/removeTriggerSlice';
+import { updateServiceAction } from '../../../redux/gql/updateActionSlice';
+import { updateTriggerField } from '../../../redux/gql/updateTriggerFieldSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { RootState } from '../../../redux/store';
+import * as Types from '../../../redux/types.generated';
+import { TriggerFieldInput } from '../apiScenes/TriggerFieldInput';
 
 const { useState, useEffect } = React;
 
@@ -45,8 +46,8 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
   const { action, setScene, serviceApi } = params ?? {};
 
   const dispatch = useAppDispatch();
-  const { triggerFields, status, error } = useAppSelector(
-    (state: RootState) => state.triggerFields
+  const { actionFields, status, error } = useAppSelector(
+    (state: RootState) => state.triggerFields,
   );
   const {
     triggerField: addField,
@@ -64,7 +65,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     Types.TriggerField | undefined
   >();
   const [description, setDescription] = useState<string | undefined>();
-  const [endpointType, setEndpointType] = useState<string | undefined>();
+  // const [endpointType, setEndpointType] = useState<string | undefined>();
   const [endpointPath, setEndpointPath] = useState<string | undefined>();
   const [showCreateField, setShowCreateField] = useState(false);
   const [showEditField, setShowEditField] = useState(false);
@@ -73,7 +74,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     setName(action?.name);
     setDescription(action?.description);
     setEndpointPath(action?.endpointPath);
-    setEndpointType(action?.endpointType);
+    // setEndpointType(action?.endpointType);
   }, []);
 
   useEffect(() => {
@@ -84,7 +85,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     if (
-      (addStatus === "succeeded" || updateStatus === "succeeded") &&
+      (addStatus === 'succeeded' || updateStatus === 'succeeded') &&
       action?.id
     ) {
       dispatch(getTriggerFields({ triggerId: action?.id }));
@@ -95,29 +96,40 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     setEndpointPath(nextValue);
   };
 
-  const handleDeleteTrigger = () => {
+  const handleDeleteAction = () => {
     // dispatch(deleteAction({ actionId: action?.id }));
   };
 
-  const handleCreateTriggerField = (field: Types.TriggerField) => {
+  const handleCreateActionField = (field: Types.TriggerField) => {
     dispatch(addTriggerField({ field }));
   };
 
-  const handleEditTriggerField = (field: Types.TriggerField) => {
+  const handleEditActionField = (field: Types.TriggerField) => {
     dispatch(updateTriggerField({ field }));
   };
 
-  const handleDeleteTriggerField = (fieldId: number) => {
+  const handleDeleteActionField = (fieldId: number) => {
     dispatch(deleteTriggerField({ fieldId }));
   };
 
-  const renderCreateEditTriggerField = () => {
+  const handleUpdateAction = () => {
+    const targetAction = {
+      id: action?.id,
+      name,
+      description,
+      endpointPath,
+      serviceApiId: serviceApi?.id,
+    };
+    dispatch(updateServiceAction({ action: targetAction }));
+  };
+
+  const renderCreateEditActionField = () => {
     if (showCreateField) {
       return (
         <TriggerFieldInput
           key="create-field"
           triggerInfo={action}
-          onSave={handleCreateTriggerField}
+          onSave={handleCreateActionField}
           onCancel={() => setShowCreateField(false)}
         />
       );
@@ -129,8 +141,8 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
           key="edit-field"
           triggerInfo={action}
           fieldInfo={currentField}
-          onSave={handleEditTriggerField}
-          onDelete={handleDeleteTriggerField}
+          onSave={handleEditActionField}
+          onDelete={handleDeleteActionField}
           onCancel={() => setShowEditField(false)}
         />
       );
@@ -139,7 +151,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
 
   return (
     <View>
-      <ThemedTitle>{action?.name}</ThemedTitle>
+      <ThemedTitle>{action?.name ?? ''}</ThemedTitle>
       <Divider />
       <TextInputDesc
         marginTop={10}
@@ -158,7 +170,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
       <VStack>
         <InputTitle>Endpoint</InputTitle>
         <InputGroup>
-          <InputLeftAddon children={"https://"} />
+          <InputLeftAddon children={'https://'} />
           <Input value={endpointPath} onChangeText={handleInput} />
         </InputGroup>
         <Text>
@@ -174,29 +186,29 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
         h={60}
         marginY={5}
       >
-        <Pressable onPress={handleDeleteTrigger}>
+        <Pressable onPress={handleDeleteAction}>
           <View style={styles.deleteButton}>
             <Ionicons name="trash" size={28} color="muted.50" />
-            <Text color="muted.500">Delete trigger</Text>
+            <Text color="muted.500">Delete action</Text>
           </View>
         </Pressable>
-        <Button>Save</Button>
+        <Button onPress={handleUpdateAction}>Save</Button>
       </HStack>
       <Box marginY={5}>
-        <ThemedTitle>Trigger fields</ThemedTitle>
+        <ThemedTitle>Action fields</ThemedTitle>
         <Text>
-          To make triggers as relevant to the user as possible you can let users
-          provide one or more trigger fields. For example, the "New tweet by you
-          with hashtag" trigger would require a trigger field to specify the
-          hashtag to look for. Read the full documentation on trigger fields.
+          To make action as relevant to the user as possible you can let users
+          provide one or more action fields. For example, the "New tweet by you
+          with hashtag" action would require a action field to specify the
+          hashtag to look for. Read the full documentation on action fields.
         </Text>
 
-        {triggerFields && (
+        {actionFields && (
           <FlatList
-            data={triggerFields ?? []}
+            data={actionFields ?? []}
             renderItem={({ item }) => (
               <EditableCell
-                title={item?.label ?? ""}
+                title={item?.label ?? ''}
                 onEditClick={() => {
                   setCurrentField(item);
                   setShowEditField(true);
@@ -214,7 +226,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
           </View>
         )}
 
-        {renderCreateEditTriggerField()}
+        {renderCreateEditActionField()}
 
         <Divider />
       </Box>
@@ -224,13 +236,13 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
 
 const styles = StyleSheet.create({
   deleteButton: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   addFields: {
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     marginBottom: 20,
   },
 });

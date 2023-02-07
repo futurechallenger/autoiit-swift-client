@@ -1,36 +1,37 @@
-import { getServiceTriggerSlice } from "./gql/getTriggersSlice";
-import { updateServiceAuthSlice } from "./gql/updateServiceAuthSlice";
-import { getServiceAuthSlice } from "./gql/getServiceAuthBySlice";
-import { updateServiceApiSlice } from "./gql/updateServiceApiSlice";
-import { addServiceApiSlice } from "./gql/addServiceApiSlice";
-import { updateServiceSlice } from "./gql/updateServiceSlice";
-import { getServicesByUserIdSlice } from "./gql/servicesByUserIdSlice";
-import { addServiceSlice } from "./gql/addServiceSlice";
-import { getServiceFullInfoSlice } from "./gql/serviceFullInfo";
-import { chooseServiceSlice } from "./gql/chooseServices";
-import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers } from "@reduxjs/toolkit";
-import { loginSlice } from "./gql/loginService";
+import { getServiceTriggerSlice } from './gql/getTriggersSlice';
+import { updateServiceAuthSlice } from './gql/updateServiceAuthSlice';
+import { getServiceAuthSlice } from './gql/getServiceAuthBySlice';
+import { updateServiceApiSlice } from './gql/updateServiceApiSlice';
+import { addServiceApiSlice } from './gql/addServiceApiSlice';
+import { updateServiceSlice } from './gql/updateServiceSlice';
+import { getServicesByUserIdSlice } from './gql/servicesByUserIdSlice';
+import { addServiceSlice } from './gql/addServiceSlice';
+import { getServiceFullInfoSlice } from './gql/serviceFullInfo';
+import { chooseServiceSlice } from './gql/chooseServices';
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from '@reduxjs/toolkit';
+import { loginSlice } from './gql/loginService';
 import {
   searchServiceSlice,
   mostSearchedServicesSlice,
-} from "./gql/searchService";
-import { serviceInfoSlice } from "./gql/serviceInfoService";
-import { signInSlice } from "./gql/signInService";
-import { userInfoSlice } from "./gql/userInfoService";
-import { getServiceByIdSlice } from "./gql/serviceById";
-import { getServiceApisSlice } from "./gql/getServiceApisSlice";
-import { addServiceAuthSlice } from "./gql/addServiceAuthSlice";
-import { addServiceTriggerSlice } from "./gql/addTriggerSlice";
-import { getTriggerFieldsSlice } from "./gql/getTriggerFieldsSlice";
+} from './gql/searchService';
+import { serviceInfoSlice } from './gql/serviceInfoService';
+import { signInSlice } from './gql/signInService';
+import { userInfoSlice } from './gql/userInfoService';
+import { getServiceByIdSlice } from './gql/serviceById';
+import { getServiceApisSlice } from './gql/getServiceApisSlice';
+import { addServiceAuthSlice } from './gql/addServiceAuthSlice';
+import { addServiceTriggerSlice } from './gql/addTriggerSlice';
+import { getTriggerFieldsSlice } from './gql/getTriggerFieldsSlice';
 import {
   addTriggerField,
   addTriggerFieldSlice,
-} from "./gql/addTriggerFieldSlice";
-import { updateTriggerFieldSlice } from "./gql/updateTriggerFieldSlice";
-import { deleteTriggerFieldSlice } from "./gql/removeTriggerFieldSlice";
-import { deleteTriggerSlice } from "./gql/removeTriggerSlice";
-import { getServiceActionsSlice } from "./gql/getActionsSlice";
+} from './gql/addTriggerFieldSlice';
+import { updateTriggerFieldSlice } from './gql/updateTriggerFieldSlice';
+import { deleteTriggerFieldSlice } from './gql/removeTriggerFieldSlice';
+import { deleteTriggerSlice } from './gql/removeTriggerSlice';
+import { getServiceActionsSlice } from './gql/getActionsSlice';
+import { updateServiceActionSlice } from './gql/updateActionSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -61,6 +62,7 @@ export const store = configureStore({
     deleteTrigger: deleteTriggerSlice.reducer,
     serviceActions: getServiceActionsSlice.reducer,
     addServiceAction: addServiceApiSlice.reducer,
+    updateServiceAction: updateServiceActionSlice.reducer,
   }),
 });
 

@@ -1,13 +1,13 @@
-import { useIsFocused } from "@react-navigation/native";
-import { Button, Divider, FlatList, HStack, Spinner, View } from "native-base";
-import * as React from "react";
-import { ListRenderItem, ListRenderItemInfo, Pressable } from "react-native";
-import { EditableCell } from "../../../components/EditableCell";
-import { ThemedTitle } from "../../../components/ThemedTitle";
-import { getServiceActinos } from "../../../redux/gql/getActionsSlice";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { RootState } from "../../../redux/store";
-import * as Types from "../../../redux/types.generated";
+import { useIsFocused } from '@react-navigation/native';
+import { Button, Divider, FlatList, HStack, Spinner, View } from 'native-base';
+import * as React from 'react';
+import { ListRenderItem, ListRenderItemInfo, Pressable } from 'react-native';
+import { EditableCell } from '../../../components/EditableCell';
+import { ThemedTitle } from '../../../components/ThemedTitle';
+import { getServiceActinos } from '../../../redux/gql/getActionsSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { RootState } from '../../../redux/store';
+import * as Types from '../../../redux/types.generated';
 
 const { useState, useEffect } = React;
 
@@ -21,7 +21,7 @@ interface Props {
 export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
   const { serviceApi, setScene } = params ?? {};
   const { actions, error, status } = useAppSelector(
-    (state: RootState) => state.serviceActions
+    (state: RootState) => state.serviceActions,
   );
 
   const dispatch = useAppDispatch();
@@ -41,7 +41,7 @@ export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
     return (
       <Pressable>
         <EditableCell
-          title={item.name ?? ""}
+          title={item.name ?? ''}
           onEditClick={() => handleClickItem(item)}
         />
       </Pressable>
@@ -49,16 +49,16 @@ export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
   };
 
   const handleClick = () => {
-    setScene("CreateAction");
+    setScene('CreateAction');
   };
 
   const handleClickItem = (item: Types.ServiceTrigger) => {
     // setScene("TriggerDetail", { trigger: item, serviceApi });
-    setScene("ActionDetail");
+    setScene('ActionDetail');
   };
 
   return (
-    <View style={{ height: "800" }}>
+    <View style={{ height: '800' }}>
       <HStack
         w="full"
         marginTop={5}
@@ -75,7 +75,7 @@ export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
         <FlatList data={actions ?? []} renderItem={renderItem} />
       </View>
       <Divider marginTop={5} />
-      {status === "loading" && <Spinner size="lg" />}
+      {status === 'loading' && <Spinner size="lg" />}
     </View>
   );
 };
