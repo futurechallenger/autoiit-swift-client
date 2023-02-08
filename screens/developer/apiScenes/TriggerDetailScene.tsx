@@ -1,7 +1,7 @@
-import { Entypo } from "@expo/vector-icons";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { useRoute } from "@react-navigation/native";
-import { current } from "@reduxjs/toolkit";
+import { Entypo } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useRoute } from '@react-navigation/native';
+import { current } from '@reduxjs/toolkit';
 import {
   Box,
   Button,
@@ -17,31 +17,38 @@ import {
   Text,
   View,
   VStack,
-} from "native-base";
-import * as React from "react";
-import { StyleSheet } from "react-native";
-import { EditableCell } from "../../../components/EditableCell";
-import { TextInputDesc } from "../../../components/TextInputDesc";
-import { InputTitle, ThemedTitle } from "../../../components/ThemedTitle";
-import { addTriggerField } from "../../../redux/gql/addTriggerFieldSlice";
-import { getTriggerFields } from "../../../redux/gql/getTriggerFieldsSlice";
-import { deleteTriggerField } from "../../../redux/gql/removeTriggerFieldSlice";
-import { deleteTrigger } from "../../../redux/gql/removeTriggerSlice";
-import { updateTriggerField } from "../../../redux/gql/updateTriggerFieldSlice";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { RootState } from "../../../redux/store";
-import * as Types from "../../../redux/types.generated";
-import { TriggerFieldInput } from "./TriggerFieldInput";
+} from 'native-base';
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
+import { EditableCell } from '../../../components/EditableCell';
+import { TextInputDesc } from '../../../components/TextInputDesc';
+import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
+import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
+import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
+import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
+import { deleteTrigger } from '../../../redux/gql/removeTriggerSlice';
+import { updateTriggerField } from '../../../redux/gql/updateTriggerFieldSlice';
+import { updateServiceTrigger } from '../../../redux/gql/updateTriggerSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { RootState } from '../../../redux/store';
+import * as Types from '../../../redux/types.generated';
+import { TriggerFieldInput } from './TriggerFieldInput';
 
 const { useState, useEffect } = React;
 
-export const TriggerDetailScene = () => {
-  const route = useRoute();
-  const { trigger, serviceApi } = route.params ?? {};
+interface Props {
+  params: any;
+}
+
+export const TriggerDetailScene: React.FunctionComponent<Props> = ({
+  params,
+}) => {
+  const { serviceApi, sceneParams, setScene } = params ?? {};
+  const trigger = sceneParams;
 
   const dispatch = useAppDispatch();
   const { triggerFields, status, error } = useAppSelector(
-    (state: RootState) => state.triggerFields
+    (state: RootState) => state.triggerFields,
   );
   const {
     triggerField: addField,
@@ -65,21 +72,18 @@ export const TriggerDetailScene = () => {
   const [showEditField, setShowEditField] = useState(false);
 
   useEffect(() => {
-    setName(trigger?.name);
-    setDescription(trigger?.description);
-    setEndpointPath(trigger?.endpointPath);
-    setEndpointType(trigger?.endpointType);
-  }, []);
-
-  useEffect(() => {
     if (trigger?.id) {
+      setName(trigger?.name);
+      setDescription(trigger?.description);
+      setEndpointPath(trigger?.endpointPath);
+      setEndpointType(trigger?.endpointType);
       dispatch(getTriggerFields({ triggerId: trigger?.id }));
     }
-  }, [trigger?.id]);
+  }, [trigger]);
 
   useEffect(() => {
     if (
-      (addStatus === "succeeded" || updateStatus === "succeeded") &&
+      (addStatus === 'succeeded' || updateStatus === 'succeeded') &&
       trigger?.id
     ) {
       dispatch(getTriggerFields({ triggerId: trigger?.id }));
@@ -104,6 +108,18 @@ export const TriggerDetailScene = () => {
 
   const handleDeleteTriggerField = (fieldId: number) => {
     dispatch(deleteTriggerField({ fieldId }));
+  };
+
+  const handleUpdateTrigger = () => {
+    const targetTrigger = {
+      id: trigger?.id,
+      serviceApiId: serviceApi?.id,
+      description,
+      endpointPath,
+      endpointType,
+      name,
+    };
+    dispatch(updateServiceTrigger({ trigger: targetTrigger }));
   };
 
   const renderCreateEditTriggerField = () => {
@@ -153,7 +169,7 @@ export const TriggerDetailScene = () => {
       <VStack>
         <InputTitle>Endpoint</InputTitle>
         <InputGroup>
-          <InputLeftAddon children={"https://"} />
+          <InputLeftAddon children={'https://'} />
           <Input value={endpointPath} onChangeText={handleInput} />
         </InputGroup>
         <Text>
@@ -175,7 +191,7 @@ export const TriggerDetailScene = () => {
             <Text color="muted.500">Delete trigger</Text>
           </View>
         </Pressable>
-        <Button>Save</Button>
+        <Button onPress={handleUpdateTrigger}>Save</Button>
       </HStack>
       <Box marginY={5}>
         <ThemedTitle>Trigger fields</ThemedTitle>
@@ -191,7 +207,7 @@ export const TriggerDetailScene = () => {
             data={triggerFields ?? []}
             renderItem={({ item }) => (
               <EditableCell
-                title={item?.label ?? ""}
+                title={item?.label ?? ''}
                 onEditClick={() => {
                   setCurrentField(item);
                   setShowEditField(true);
@@ -219,13 +235,13 @@ export const TriggerDetailScene = () => {
 
 const styles = StyleSheet.create({
   deleteButton: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   addFields: {
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     marginBottom: 20,
   },
 });
