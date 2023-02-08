@@ -25,6 +25,7 @@ import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
 import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
 import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
+import { deleteServiceAction } from '../../../redux/gql/removeActionSlice';
 import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
 import { deleteTrigger } from '../../../redux/gql/removeTriggerSlice';
 import { updateServiceAction } from '../../../redux/gql/updateActionSlice';
@@ -98,7 +99,9 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
   };
 
   const handleDeleteAction = () => {
-    // dispatch(deleteAction({ actionId: action?.id }));
+    if (action?.id) {
+      dispatch(deleteServiceAction({ actionId: action?.id }));
+    }
   };
 
   const handleCreateActionField = (field: Types.TriggerField) => {

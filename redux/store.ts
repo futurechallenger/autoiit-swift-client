@@ -32,6 +32,7 @@ import { deleteTriggerFieldSlice } from './gql/removeTriggerFieldSlice';
 import { deleteTriggerSlice } from './gql/removeTriggerSlice';
 import { getServiceActionsSlice } from './gql/getActionsSlice';
 import { updateServiceActionSlice } from './gql/updateActionSlice';
+import { deleteServiceActionSlice } from './gql/removeActionSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -63,6 +64,7 @@ export const store = configureStore({
     serviceActions: getServiceActionsSlice.reducer,
     addServiceAction: addServiceApiSlice.reducer,
     updateServiceAction: updateServiceActionSlice.reducer,
+    removeServiceAction: deleteServiceActionSlice.reducer,
   }),
 });
 
