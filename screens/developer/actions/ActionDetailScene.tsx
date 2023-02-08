@@ -75,16 +75,14 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
   const [showEditField, setShowEditField] = useState(false);
 
   useEffect(() => {
-    setName(action?.name);
-    setDescription(action?.description);
-    setEndpointPath(action?.endpointPath);
-  }, []);
-
-  useEffect(() => {
     if (action?.id) {
-      dispatch(getTriggerFields({ triggerId: action?.id }));
+      setName(action?.name);
+      setDescription(action?.description);
+      setEndpointPath(action?.endpointPath);
+
+      // dispatch(getTriggerFields({ triggerId: action?.id }));
     }
-  }, [action?.id]);
+  }, [action]);
 
   useEffect(() => {
     if (

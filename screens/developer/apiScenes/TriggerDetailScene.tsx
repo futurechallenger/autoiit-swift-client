@@ -72,17 +72,14 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
   const [showEditField, setShowEditField] = useState(false);
 
   useEffect(() => {
-    setName(trigger?.name);
-    setDescription(trigger?.description);
-    setEndpointPath(trigger?.endpointPath);
-    setEndpointType(trigger?.endpointType);
-  }, []);
-
-  useEffect(() => {
     if (trigger?.id) {
+      setName(trigger?.name);
+      setDescription(trigger?.description);
+      setEndpointPath(trigger?.endpointPath);
+      setEndpointType(trigger?.endpointType);
       dispatch(getTriggerFields({ triggerId: trigger?.id }));
     }
-  }, [trigger?.id]);
+  }, [trigger]);
 
   useEffect(() => {
     if (
