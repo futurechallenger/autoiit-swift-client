@@ -1,14 +1,14 @@
-import { useIsFocused } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Button, Divider, FlatList, HStack, Spinner, View } from "native-base";
-import * as React from "react";
-import { ListRenderItem, ListRenderItemInfo, Pressable } from "react-native";
-import { EditableCell } from "../../../components/EditableCell";
-import { ThemedTitle } from "../../../components/ThemedTitle";
-import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { RootState } from "../../../redux/store";
-import * as Types from "../../../redux/types.generated";
+import { useIsFocused } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Button, Divider, FlatList, HStack, Spinner, View } from 'native-base';
+import * as React from 'react';
+import { ListRenderItem, ListRenderItemInfo, Pressable } from 'react-native';
+import { EditableCell } from '../../../components/EditableCell';
+import { ThemedTitle } from '../../../components/ThemedTitle';
+import { getServiceTriggers } from '../../../redux/gql/getTriggersSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { RootState } from '../../../redux/store';
+import * as Types from '../../../redux/types.generated';
 
 const { useState, useEffect } = React;
 
@@ -21,7 +21,7 @@ export const TriggerGeneralScene: React.FunctionComponent<Props> = ({
 }) => {
   const { serviceApi, setScene } = params ?? {};
   const { triggers, error, status } = useAppSelector(
-    (state: RootState) => state.serviceTriggers
+    (state: RootState) => state.serviceTriggers,
   );
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
@@ -40,7 +40,7 @@ export const TriggerGeneralScene: React.FunctionComponent<Props> = ({
     return (
       <Pressable>
         <EditableCell
-          title={item.name ?? ""}
+          title={item.name ?? ''}
           onEditClick={() => handleClickItem(item)}
         />
       </Pressable>
@@ -48,17 +48,15 @@ export const TriggerGeneralScene: React.FunctionComponent<Props> = ({
   };
 
   const handleClick = () => {
-    // setScene("CreateTrigger", { serviceApi });
-    setScene("CreateTrigger");
+    setScene({ name: 'CreateTrigger' });
   };
 
   const handleClickItem = (item: Types.ServiceTrigger) => {
-    // setScene("TriggerDetail", { trigger: item, serviceApi });
-    setScene("TriggerDetail");
+    setScene({ name: 'TriggerDetail', params: item });
   };
 
   return (
-    <View style={{ height: "800" }}>
+    <View style={{ height: '800' }}>
       <HStack
         w="full"
         marginTop={5}
@@ -75,7 +73,7 @@ export const TriggerGeneralScene: React.FunctionComponent<Props> = ({
         <FlatList data={triggers ?? []} renderItem={renderItem} />
       </View>
       <Divider marginTop={5} />
-      {status === "loading" && <Spinner size="lg" />}
+      {status === 'loading' && <Spinner size="lg" />}
     </View>
   );
 };

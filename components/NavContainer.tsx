@@ -1,7 +1,12 @@
-import * as React from "react";
-import { View, Text } from "native-base";
+import * as React from 'react';
+import { View, Text } from 'native-base';
 
 const { useState, useMemo } = React;
+
+interface SceneType {
+  name: string;
+  params: any;
+}
 
 interface NavContainerProps {
   containerId: string;
@@ -12,7 +17,7 @@ export const NavContainer: React.FunctionComponent<NavContainerProps> = ({
   containerId,
   children,
 }) => {
-  const [scene, setScene] = useState();
+  const [scene, setScene] = useState<SceneType | undefined>();
 
   let defaultComponentName = useMemo(() => {
     let temp: string | undefined;
@@ -30,21 +35,25 @@ export const NavContainer: React.FunctionComponent<NavContainerProps> = ({
   return (
     <>
       {React.Children.map(children, (child: any, index: number) => {
-        const currentSceneName = scene ?? defaultComponentName;
+        const currentSceneName = scene?.name ?? defaultComponentName;
         return (
           <View
             style={[
               child.props.name !== currentSceneName
-                ? { display: "none" }
+                ? { display: 'none' }
                 : {
-                    display: "flex",
-                    width: "100%",
-                    justifyContent: "flex-start",
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'flex-start',
                   },
             ]}
           >
             {child?.props?.component({
-              params: { ...(child?.props?.params ?? {}), setScene },
+              params: {
+                ...(child?.props?.params ?? {}),
+                sceneParams: scene?.params,
+                setScene,
+              },
             })}
           </View>
         );

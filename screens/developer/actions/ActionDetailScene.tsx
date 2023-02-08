@@ -43,12 +43,16 @@ interface Props {
 export const ActionDetailScene: React.FunctionComponent<Props> = ({
   params,
 }) => {
-  const { action, setScene, serviceApi } = params ?? {};
+  const { setScene, sceneParams, serviceApi } = params ?? {};
+  // const { action } = sceneParams ?? {};
+  const action = sceneParams;
 
   const dispatch = useAppDispatch();
-  const { actionFields, status, error } = useAppSelector(
-    (state: RootState) => state.triggerFields,
-  );
+  const {
+    triggerFields: actionFields,
+    status,
+    error,
+  } = useAppSelector((state: RootState) => state.triggerFields);
   const {
     triggerField: addField,
     status: addStatus,
@@ -74,7 +78,6 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     setName(action?.name);
     setDescription(action?.description);
     setEndpointPath(action?.endpointPath);
-    // setEndpointType(action?.endpointType);
   }, []);
 
   useEffect(() => {

@@ -19,7 +19,7 @@ interface Props {
  * TODO: Refactor this component with `TriggerGeneralScene` component
  */
 export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
-  const { serviceApi, setScene } = params ?? {};
+  const { serviceApi, sceneParms, setScene } = params ?? {};
   const { actions, error, status } = useAppSelector(
     (state: RootState) => state.serviceActions,
   );
@@ -49,12 +49,11 @@ export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
   };
 
   const handleClick = () => {
-    setScene('CreateAction');
+    setScene({ name: 'CreateAction' });
   };
 
-  const handleClickItem = (item: Types.ServiceTrigger) => {
-    // setScene("TriggerDetail", { trigger: item, serviceApi });
-    setScene('ActionDetail');
+  const handleClickItem = (item: Types.ServiceAction) => {
+    setScene({ name: 'ActionDetail', params: item });
   };
 
   return (
