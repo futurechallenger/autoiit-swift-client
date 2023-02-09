@@ -24,6 +24,7 @@ import { EditableCell } from '../../../components/EditableCell';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
 import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
+import { getActionInputFields } from '../../../redux/gql/getActionInputFieldsSlice';
 import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
 import { deleteServiceAction } from '../../../redux/gql/removeActionSlice';
 import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
@@ -49,11 +50,9 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
   const action = sceneParams;
 
   const dispatch = useAppDispatch();
-  const {
-    triggerFields: actionFields,
-    status,
-    error,
-  } = useAppSelector((state: RootState) => state.triggerFields);
+  const { actionInputFields, status, error } = useAppSelector(
+    (state: RootState) => state.actionInputFields,
+  );
   const {
     triggerField: addField,
     status: addStatus,
@@ -81,7 +80,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
       setDescription(action?.description);
       setEndpointPath(action?.endpointPath);
 
-      // dispatch(getTriggerFields({ triggerId: action?.id }));
+      dispatch(getActionInputFields({ actionId: action?.id }));
     }
   }, [action]);
 
@@ -90,7 +89,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
       (addStatus === 'succeeded' || updateStatus === 'succeeded') &&
       action?.id
     ) {
-      dispatch(getTriggerFields({ triggerId: action?.id }));
+      dispatch(getActionInputFields({ actionId: action?.id }));
     }
   }, [addStatus, updateStatus, action?.id]);
 
@@ -104,15 +103,15 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     }
   };
 
-  const handleCreateActionField = (field: Types.TriggerField) => {
+  const handleCreateActionInputField = (field: Types.TriggerField) => {
     dispatch(addTriggerField({ field }));
   };
 
-  const handleEditActionField = (field: Types.TriggerField) => {
+  const handleEditActionInputField = (field: Types.TriggerField) => {
     dispatch(updateTriggerField({ field }));
   };
 
-  const handleDeleteActionField = (fieldId: number) => {
+  const handleDeleteActionInputField = (fieldId: number) => {
     dispatch(deleteTriggerField({ fieldId }));
   };
 
@@ -127,13 +126,13 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     dispatch(updateServiceAction({ action: targetAction }));
   };
 
-  const renderCreateEditActionField = () => {
+  const renderCreateEditActionInputField = () => {
     if (showCreateField) {
       return (
         <TriggerFieldInput
           key="create-field"
           triggerInfo={action}
-          onSave={handleCreateActionField}
+          onSave={handleCreateActionInputField}
           onCancel={() => setShowCreateField(false)}
         />
       );
@@ -145,8 +144,8 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
           key="edit-field"
           triggerInfo={action}
           fieldInfo={currentField}
-          onSave={handleEditActionField}
-          onDelete={handleDeleteActionField}
+          onSave={handleEditActionInputField}
+          onDelete={handleDeleteActionInputField}
           onCancel={() => setShowEditField(false)}
         />
       );
@@ -207,9 +206,9 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
           hashtag to look for. Read the full documentation on action fields.
         </Text>
 
-        {actionFields && (
+        {actionInputFields && (
           <FlatList
-            data={actionFields ?? []}
+            data={actionInputFields ?? []}
             renderItem={({ item }) => (
               <EditableCell
                 title={item?.label ?? ''}
@@ -230,7 +229,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
           </View>
         )}
 
-        {renderCreateEditActionField()}
+        {renderCreateEditActionInputField()}
 
         <Divider />
       </Box>
