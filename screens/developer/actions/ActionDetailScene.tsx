@@ -26,7 +26,7 @@ import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
 import { addActionInputField } from '../../../redux/gql/addActionInputFieldSlice';
 import { getActionInputFields } from '../../../redux/gql/getActionInputFieldsSlice';
 import { deleteServiceAction } from '../../../redux/gql/removeActionSlice';
-import { removeActionInputField } from '../../../redux/gql/removeTriggerFieldSlice';
+import { removeActionInputField } from '../../../redux/gql/removeActionInputFieldSlice';
 import { updateActionInputField } from '../../../redux/gql/updateActionInputFieldSlice';
 import { updateServiceAction } from '../../../redux/gql/updateActionSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
@@ -57,10 +57,10 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     error: addError,
   } = useAppSelector((state: RootState) => state.addActionInputField);
   const {
-    triggerField: updateInputField,
+    actionInputField: updateInputField,
     status: updateStatus,
     error: updateError,
-  } = useAppSelector((state: RootState) => state.addTriggerField);
+  } = useAppSelector((state: RootState) => state.updateActionInputField);
 
   const [name, setName] = useState<string | undefined>();
   const [currentField, setCurrentField] = useState<
@@ -165,7 +165,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
         marginTop={10}
         text="Description"
         value={description}
-        description="Must be a complete sentence starting with “This trigger fires” and ending with a period"
+        description="Must be a complete sentence starting with “This action fires” and ending with a period"
         onTextChanged={(nextValue) => setDescription(nextValue)}
       />
       <VStack>
@@ -175,7 +175,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
           <Input value={endpointPath} onChangeText={handleInput} />
         </InputGroup>
         <Text>
-          API endpoint for this trigger. Must be in snake_case and begin with a
+          API endpoint for this action. Must be in snake_case and begin with a
           letter.
         </Text>
       </VStack>
@@ -222,7 +222,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
         {showCreateField && showEditField ? null : (
           <View style={styles.addFields}>
             <Button onPress={() => setShowCreateField(true)}>
-              Add trigger fields
+              Add action fields
             </Button>
           </View>
         )}
