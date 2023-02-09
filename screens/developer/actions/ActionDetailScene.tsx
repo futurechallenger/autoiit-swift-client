@@ -35,7 +35,7 @@ import { updateTriggerField } from '../../../redux/gql/updateTriggerFieldSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { RootState } from '../../../redux/store';
 import * as Types from '../../../redux/types.generated';
-import { TriggerFieldInput } from '../apiScenes/TriggerFieldInput';
+import { ActionFieldInput } from './ActionFieldInput';
 
 const { useState, useEffect } = React;
 
@@ -67,7 +67,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
 
   const [name, setName] = useState<string | undefined>();
   const [currentField, setCurrentField] = useState<
-    Types.TriggerField | undefined
+    (Types.ActionInputField & Types.ActionOutputField) | undefined
   >();
   const [description, setDescription] = useState<string | undefined>();
   // const [endpointType, setEndpointType] = useState<string | undefined>();
@@ -104,18 +104,8 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     }
   };
 
-  const handleCreateActionInputField = (field: any) => {
-    dispatch(
-      addActionInputField({
-        f: {
-          serviceApiActionId: field.serviceTriggerId,
-          keyName,
-          helperText,
-          label,
-          fieldType: -1,
-        },
-      }),
-    );
+  const handleCreateActionInputField = (field: Types.ActionInputField) => {
+    dispatch(addActionInputField({ f: field }));
   };
 
   const handleEditActionInputField = (field: Types.TriggerField) => {
@@ -140,9 +130,9 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
   const renderCreateEditActionInputField = () => {
     if (showCreateField) {
       return (
-        <TriggerFieldInput
+        <ActionFieldInput
           key="create-field"
-          triggerInfo={action}
+          actionInfo={action}
           onSave={handleCreateActionInputField}
           onCancel={() => setShowCreateField(false)}
         />
@@ -151,9 +141,9 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
 
     if (showEditField) {
       return (
-        <TriggerFieldInput
+        <ActionFieldInput
           key="edit-field"
-          triggerInfo={action}
+          actionInfo={action}
           fieldInfo={currentField}
           onSave={handleEditActionInputField}
           onDelete={handleDeleteActionInputField}
