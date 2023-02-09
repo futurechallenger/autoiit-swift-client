@@ -35,6 +35,8 @@ import { updateServiceActionSlice } from './gql/updateActionSlice';
 import { deleteServiceActionSlice } from './gql/removeActionSlice';
 import { getActionInputFieldsSlice } from './gql/getActionInputFieldsSlice';
 import { addActionInputFieldSlice } from './gql/addActionInputFieldSlice';
+import { updateActionInputFieldSlice } from './gql/updateActionInputFieldSlice';
+import { removeActionInputFieldSlice } from './gql/removeActionInputFieldSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -69,6 +71,8 @@ export const store = configureStore({
     removeServiceAction: deleteServiceActionSlice.reducer,
     actionInputFields: getActionInputFieldsSlice.reducer,
     addActionInputField: addActionInputFieldSlice.reducer,
+    updateActionInputField: updateActionInputFieldSlice.reducer,
+    removeActionInputField: removeActionInputFieldSlice.reducer,
   }),
 });
 

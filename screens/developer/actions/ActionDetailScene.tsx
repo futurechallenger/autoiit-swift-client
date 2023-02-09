@@ -24,14 +24,11 @@ import { EditableCell } from '../../../components/EditableCell';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
 import { addActionInputField } from '../../../redux/gql/addActionInputFieldSlice';
-import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
 import { getActionInputFields } from '../../../redux/gql/getActionInputFieldsSlice';
-import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
 import { deleteServiceAction } from '../../../redux/gql/removeActionSlice';
-import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
-import { deleteTrigger } from '../../../redux/gql/removeTriggerSlice';
+import { removeActionInputField } from '../../../redux/gql/removeTriggerFieldSlice';
+import { updateActionInputField } from '../../../redux/gql/updateActionInputFieldSlice';
 import { updateServiceAction } from '../../../redux/gql/updateActionSlice';
-import { updateTriggerField } from '../../../redux/gql/updateTriggerFieldSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { RootState } from '../../../redux/store';
 import * as Types from '../../../redux/types.generated';
@@ -55,12 +52,12 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     (state: RootState) => state.actionInputFields,
   );
   const {
-    actionInputField: addField,
+    actionInputField: addInputField,
     status: addStatus,
     error: addError,
   } = useAppSelector((state: RootState) => state.addActionInputField);
   const {
-    triggerField: updateField,
+    triggerField: updateInputField,
     status: updateStatus,
     error: updateError,
   } = useAppSelector((state: RootState) => state.addTriggerField);
@@ -108,12 +105,12 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     dispatch(addActionInputField({ f: field }));
   };
 
-  const handleEditActionInputField = (field: Types.TriggerField) => {
-    dispatch(updateTriggerField({ field }));
+  const handleEditActionInputField = (field: Types.ActionInputField) => {
+    dispatch(updateActionInputField({ actionInputField: field }));
   };
 
   const handleDeleteActionInputField = (fieldId: number) => {
-    dispatch(deleteTriggerField({ fieldId }));
+    dispatch(removeActionInputField({ fieldId }));
   };
 
   const handleUpdateAction = () => {
