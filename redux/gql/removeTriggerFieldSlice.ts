@@ -1,16 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { sendRequest } from "../baseApi";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { sendRequest } from '../baseApi';
 
-import * as Types from "../types.generated";
+import * as Types from '../types.generated';
 
 export const deleteTriggerField = createAsyncThunk(
-  "remvoeTriggerField",
+  'remvoeTriggerField',
   async (variables: DeleteTriggerFieldMutationVariables) => {
     return sendRequest<DeleteTriggerFieldMutation>({
       variables,
       query: DeleteTriggerFieldDocument,
     });
-  }
+  },
 );
 
 const initialState: InitialStateType = {
@@ -20,13 +20,13 @@ const initialState: InitialStateType = {
 };
 
 export const deleteTriggerFieldSlice = createSlice({
-  name: "deleteTriggerFieldSlice",
+  name: 'deleteTriggerFieldSlice',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
       .addCase(deleteTriggerField.pending, (state, action) => {
-        state.status = "loading";
+        state.status = 'loading';
         if (state.error) {
           state.error = undefined;
         }
@@ -34,15 +34,15 @@ export const deleteTriggerFieldSlice = createSlice({
       .addCase(deleteTriggerField.fulfilled, (state, action) => {
         const payload = action.payload;
         if (payload?.errors) {
-          state.status = "failed";
+          state.status = 'failed';
           state.error = payload.errors?.[0]?.message;
         } else {
-          state.status = "succeeded";
+          state.status = 'succeeded';
           state.deleted = payload?.data?.removeTriggerField;
         }
       })
       .addCase(deleteTriggerField.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.error.message;
       });
   },
@@ -55,11 +55,11 @@ interface InitialStateType {
 }
 
 export type DeleteTriggerFieldMutationVariables = Types.Exact<{
-  fieldId: Types.Scalars["Int"];
+  fieldId: Types.Scalars['Int'];
 }>;
 
 export type DeleteTriggerFieldMutation = {
-  __typename?: "Mutation";
+  __typename?: 'Mutation';
   removeTriggerField: boolean;
 };
 

@@ -24,14 +24,11 @@ import { EditableCell } from '../../../components/EditableCell';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
 import { addActionInputField } from '../../../redux/gql/addActionInputFieldSlice';
-import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
 import { getActionInputFields } from '../../../redux/gql/getActionInputFieldsSlice';
-import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
 import { deleteServiceAction } from '../../../redux/gql/removeActionSlice';
-import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
-import { deleteTrigger } from '../../../redux/gql/removeTriggerSlice';
+import { removeActionInputField } from '../../../redux/gql/removeActionInputFieldSlice';
+import { updateActionInputField } from '../../../redux/gql/updateActionInputFieldSlice';
 import { updateServiceAction } from '../../../redux/gql/updateActionSlice';
-import { updateTriggerField } from '../../../redux/gql/updateTriggerFieldSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { RootState } from '../../../redux/store';
 import * as Types from '../../../redux/types.generated';
@@ -55,15 +52,15 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     (state: RootState) => state.actionInputFields,
   );
   const {
-    actionInputField: addField,
+    actionInputField: addInputField,
     status: addStatus,
     error: addError,
   } = useAppSelector((state: RootState) => state.addActionInputField);
   const {
-    triggerField: updateField,
+    actionInputField: updateInputField,
     status: updateStatus,
     error: updateError,
-  } = useAppSelector((state: RootState) => state.addTriggerField);
+  } = useAppSelector((state: RootState) => state.updateActionInputField);
 
   const [name, setName] = useState<string | undefined>();
   const [currentField, setCurrentField] = useState<
@@ -108,12 +105,12 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     dispatch(addActionInputField({ f: field }));
   };
 
-  const handleEditActionInputField = (field: Types.TriggerField) => {
-    dispatch(updateTriggerField({ field }));
+  const handleEditActionInputField = (field: Types.ActionInputField) => {
+    dispatch(updateActionInputField({ actionInputField: field }));
   };
 
   const handleDeleteActionInputField = (fieldId: number) => {
-    dispatch(deleteTriggerField({ fieldId }));
+    dispatch(removeActionInputField({ fieldId }));
   };
 
   const handleUpdateAction = () => {
@@ -168,7 +165,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
         marginTop={10}
         text="Description"
         value={description}
-        description="Must be a complete sentence starting with “This trigger fires” and ending with a period"
+        description="Must be a complete sentence starting with “This action fires” and ending with a period"
         onTextChanged={(nextValue) => setDescription(nextValue)}
       />
       <VStack>
@@ -178,7 +175,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
           <Input value={endpointPath} onChangeText={handleInput} />
         </InputGroup>
         <Text>
-          API endpoint for this trigger. Must be in snake_case and begin with a
+          API endpoint for this action. Must be in snake_case and begin with a
           letter.
         </Text>
       </VStack>
@@ -225,7 +222,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
         {showCreateField && showEditField ? null : (
           <View style={styles.addFields}>
             <Button onPress={() => setShowCreateField(true)}>
-              Add trigger fields
+              Add action fields
             </Button>
           </View>
         )}
