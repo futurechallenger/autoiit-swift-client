@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Button,
   CheckIcon,
@@ -8,20 +8,20 @@ import {
   VStack,
   HStack,
   Pressable,
-} from "native-base";
-import { TextInputDesc } from "../../../components/TextInputDesc";
-import { InputTitle } from "../../../components/ThemedTitle";
-import * as Types from "../../../redux/types.generated";
+} from 'native-base';
+import { TextInputDesc } from '../../../components/TextInputDesc';
+import { InputTitle } from '../../../components/ThemedTitle';
+import * as Types from '../../../redux/types.generated';
 import {
   convertValidationRule,
   InputType,
   reverseValidationRule,
   ValidationRule,
-} from "../../../constants/Trigger";
+} from '../../../constants/Trigger';
 
 const { useState, useEffect } = React;
 
-interface TriggerFieldProps {
+interface FieldProps {
   triggerInfo?: Types.ServiceTrigger;
   fieldInfo?: Types.TriggerField;
   cancelCode?: string;
@@ -30,7 +30,7 @@ interface TriggerFieldProps {
   onSave: (field: Types.TriggerField) => void;
 }
 
-export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
+export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
   triggerInfo,
   fieldInfo,
   onCancel,
@@ -60,9 +60,9 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
     setLabel(fieldInfo?.label);
     setHelperText(fieldInfo?.helperText);
     setkeyName(fieldInfo?.keyName);
-    setInputType(fieldInfo?.inputType ? "" + fieldInfo?.inputType : undefined);
+    setInputType(fieldInfo?.inputType ? '' + fieldInfo?.inputType : undefined);
     setInputValidation(
-      fieldInfo?.validationRequired ? "need-validation" : "no-validation"
+      fieldInfo?.validationRequired ? 'need-validation' : 'no-validation',
     );
     setValidationRule(reverseValidationRule(fieldInfo?.validationRule));
   }, [fieldInfo?.id]);
@@ -77,7 +77,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
             minWidth="200"
             accessibilityLabel="Input validation"
             _selectedItem={{
-              bg: "teal.600",
+              bg: 'teal.600',
               endIcon: <CheckIcon size="5" />,
             }}
             mt={1}
@@ -94,7 +94,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
   const renderValidationRule = () => {
     if (
       inputType === InputType.TextInput &&
-      inputValidataion === "need-validation"
+      inputValidataion === 'need-validation'
     ) {
       return (
         <VStack marginTop={10}>
@@ -104,7 +104,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
             minWidth="200"
             accessibilityLabel="Validation rule"
             _selectedItem={{
-              bg: "teal.600",
+              bg: 'teal.600',
               endIcon: <CheckIcon size="5" />,
             }}
             mt={1}
@@ -157,7 +157,7 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
           minWidth="200"
           accessibilityLabel="Choose input type"
           _selectedItem={{
-            bg: "teal.600",
+            bg: 'teal.600',
             endIcon: <CheckIcon size="5" />,
           }}
           mt={1}
@@ -196,9 +196,9 @@ export const TriggerFieldInput: React.FunctionComponent<TriggerFieldProps> = ({
                 label,
                 helperText,
                 keyName,
-                inputType: parseInt(inputType ?? "-1", 10),
+                inputType: parseInt(inputType ?? '-1', 10),
                 validationRule: convertValidationRule(validationRule),
-                validationRequired: inputValidataion === "need-validtion",
+                validationRequired: inputValidataion === 'need-validtion',
                 serviceTriggerId: triggerInfo?.id,
               })
             }

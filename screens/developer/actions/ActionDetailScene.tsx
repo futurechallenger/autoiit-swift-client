@@ -23,6 +23,7 @@ import { StyleSheet } from 'react-native';
 import { EditableCell } from '../../../components/EditableCell';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
+import { addActionInputField } from '../../../redux/gql/addActionInputFieldSlice';
 import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
 import { getActionInputFields } from '../../../redux/gql/getActionInputFieldsSlice';
 import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
@@ -54,10 +55,10 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     (state: RootState) => state.actionInputFields,
   );
   const {
-    triggerField: addField,
+    actionInputField: addField,
     status: addStatus,
     error: addError,
-  } = useAppSelector((state: RootState) => state.addTriggerField);
+  } = useAppSelector((state: RootState) => state.addActionInputField);
   const {
     triggerField: updateField,
     status: updateStatus,
@@ -103,8 +104,18 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     }
   };
 
-  const handleCreateActionInputField = (field: Types.TriggerField) => {
-    dispatch(addTriggerField({ field }));
+  const handleCreateActionInputField = (field: any) => {
+    dispatch(
+      addActionInputField({
+        f: {
+          serviceApiActionId: field.serviceTriggerId,
+          keyName,
+          helperText,
+          label,
+          fieldType: -1,
+        },
+      }),
+    );
   };
 
   const handleEditActionInputField = (field: Types.TriggerField) => {
