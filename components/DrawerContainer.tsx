@@ -1,6 +1,6 @@
-import * as React from "react";
-import { StyleSheet } from "react-native";
-import { VStack, Box, View, Text, HStack, Pressable } from "native-base";
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
+import { VStack, Box, View, Text, HStack, Pressable } from 'native-base';
 
 interface ChildProps {
   name: string;
@@ -24,14 +24,14 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
 
   return (
     <HStack w="full" h="full" bg="blue.100">
-      <VStack bg="pink.100" marginX="5" h="full" marginRight={50}>
+      <VStack bg="pink.100" marginX="5" h="full" w={110} marginRight={20}>
         {React.Children.map(children, (child: any, i) => (
           <Pressable onPress={() => handlePress(i)}>
             <View
               marginY={5}
               style={selectedIndex === i ? { ...styles.active } : {}}
             >
-              <Text>{child?.props?.name ?? ""}</Text>
+              <Text style={styles.menuText}>{child?.props?.name ?? ''}</Text>
             </View>
           </Pressable>
         ))}
@@ -49,10 +49,10 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
           return (
             <View
               style={[
-                selectedIndex !== i ? { display: "none" } : { display: "flex" },
+                selectedIndex !== i ? { display: 'none' } : { display: 'flex' },
                 {
-                  width: "100%",
-                  justifyContent: "flex-start",
+                  width: '100%',
+                  justifyContent: 'flex-start',
                 },
               ]}
             >
@@ -80,6 +80,9 @@ export const DrawerScene: React.FunctionComponent<ChildProps> = ({
 const styles = StyleSheet.create({
   active: {
     borderLeftWidth: 5,
-    borderColor: "#09f",
+    borderColor: '#09f',
+  },
+  menuText: {
+    marginLeft: 5,
   },
 });
