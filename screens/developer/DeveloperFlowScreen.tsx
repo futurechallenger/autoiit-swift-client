@@ -1,10 +1,63 @@
-import * as React from "react";
-import { View, Text } from "native-base";
+import * as React from 'react';
+import { View, Text, Spinner } from 'native-base';
+import { DrawerContainer, DrawerScene } from '../../components/DrawerContainer';
+import { RootState } from '../../redux/store';
+import { GeneralScene } from './apiScenes/GeneralScene';
+import { AuthScene } from './apiScenes/AuthScene';
+import { TriggersScene } from './apiScenes/TriggersScene';
+import { ActionsScene } from './actions/ActionsScene';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { getServiceApis } from '../../redux/gql/getServiceApisSlice';
+
+const { useEffect } = React;
 
 export const DeveloperFlowScreen = () => {
+  const {
+    service,
+    status: serviceStatus,
+    error: serviceError,
+  } = useAppSelector((state: RootState) => state.serviceById);
+
+  const { serviceApis, status, error } = useAppSelector(
+    (state: RootState) => state.serviceApis,
+  );
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (service?.id) {
+      dispatch(getServiceApis({ serviceId: service.id }));
+    }
+  }, [service?.id]);
+
   return (
-    <View>
-      <Text>Developer Flows</Text>
+    <View h="full" w="100%" overflowY="auto" overflowX="hidden">
+      <DrawerContainer>
+        <DrawerScene
+          name="Published"
+          component={GeneralScene}
+          params={{ serviceApi: serviceApis[0] }}
+        />
+        {/* <DrawerScene
+          name="Suggested"
+          component={AuthScene}
+          params={{ service }}
+        />
+        <DrawerScene
+          name="Private"
+          component={TriggersScene}
+          params={{ serviceApi: serviceApis[0] }}
+        /> */}
+        <DrawerScene
+          name="Archived"
+          component={ActionsScene}
+          params={{ serviceApi: serviceApis[0] }}
+        />
+      </DrawerContainer>
+      {(status === 'loading' || serviceStatus === 'loading') && (
+        <View>
+          <Spinner size="lg" />
+        </View>
+      )}
     </View>
   );
 };

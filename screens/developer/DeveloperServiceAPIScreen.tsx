@@ -1,16 +1,13 @@
-import * as React from "react";
-import { View, Text, Spinner } from "native-base";
-import { DrawerContainer, DrawerScene } from "../../components/DrawerContainer";
-import { RootState } from "../../redux/store";
-import { GeneralScene } from "./apiScenes/GeneralScene";
-import { AuthScene } from "./apiScenes/AuthScene";
-import { TriggersScene } from "./apiScenes/TriggersScene";
-import { ActionsScene } from "./actions/ActionsScene";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { getServiceApis } from "../../redux/gql/getServiceApisSlice";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-const Stack = createNativeStackNavigator();
+import * as React from 'react';
+import { View, Text, Spinner } from 'native-base';
+import { DrawerContainer, DrawerScene } from '../../components/DrawerContainer';
+import { RootState } from '../../redux/store';
+import { GeneralScene } from './apiScenes/GeneralScene';
+import { AuthScene } from './apiScenes/AuthScene';
+import { TriggersScene } from './apiScenes/TriggersScene';
+import { ActionsScene } from './actions/ActionsScene';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { getServiceApis } from '../../redux/gql/getServiceApisSlice';
 
 const { useEffect } = React;
 
@@ -22,7 +19,7 @@ export const DeveloperServiceAPIScreen = () => {
   } = useAppSelector((state: RootState) => state.serviceById);
 
   const { serviceApis, status, error } = useAppSelector(
-    (state: RootState) => state.serviceApis
+    (state: RootState) => state.serviceApis,
   );
 
   const dispatch = useAppDispatch();
@@ -56,7 +53,7 @@ export const DeveloperServiceAPIScreen = () => {
           params={{ serviceApi: serviceApis[0] }}
         />
       </DrawerContainer>
-      {(status === "loading" || serviceStatus === "loading") && (
+      {(status === 'loading' || serviceStatus === 'loading') && (
         <View>
           <Spinner size="lg" />
         </View>
