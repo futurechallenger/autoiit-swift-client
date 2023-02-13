@@ -9,5 +9,6 @@
     "Pressable",
     "reduxjs",
     "userinfo"
-  ]
+  ],
+  "java.compile.nullAnalysis.mode": "automatic"
 }
