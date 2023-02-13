@@ -9,13 +9,13 @@ export const getAutoFlowsByService = createAsyncThunk(
   async (variables: GetAllFlowsQueryVariables) => {
     return sendRequest<GetAllFlowsQuery>({
       variables,
-      query: GetActionsByServiceIdDocument,
+      query: GetAllFlowsDocument,
     });
   },
 );
 
 const initialState: InitialStateType = {
-  autoFlows: undefined,
+  autoFlows: [],
   status: undefined,
   error: undefined,
 };
