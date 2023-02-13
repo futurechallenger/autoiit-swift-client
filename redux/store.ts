@@ -23,10 +23,7 @@ import { getServiceApisSlice } from './gql/getServiceApisSlice';
 import { addServiceAuthSlice } from './gql/addServiceAuthSlice';
 import { addServiceTriggerSlice } from './gql/addTriggerSlice';
 import { getTriggerFieldsSlice } from './gql/getTriggerFieldsSlice';
-import {
-  addTriggerField,
-  addTriggerFieldSlice,
-} from './gql/addTriggerFieldSlice';
+import { addTriggerFieldSlice } from './gql/addTriggerFieldSlice';
 import { updateTriggerFieldSlice } from './gql/updateTriggerFieldSlice';
 import { deleteTriggerFieldSlice } from './gql/removeTriggerFieldSlice';
 import { deleteTriggerSlice } from './gql/removeTriggerSlice';
@@ -37,6 +34,7 @@ import { getActionInputFieldsSlice } from './gql/getActionInputFieldsSlice';
 import { addActionInputFieldSlice } from './gql/addActionInputFieldSlice';
 import { updateActionInputFieldSlice } from './gql/updateActionInputFieldSlice';
 import { removeActionInputFieldSlice } from './gql/removeActionInputFieldSlice';
+import { getAutoFlowsByServiceSlice } from './gql/getAutoFlowsSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -73,6 +71,7 @@ export const store = configureStore({
     addActionInputField: addActionInputFieldSlice.reducer,
     updateActionInputField: updateActionInputFieldSlice.reducer,
     removeActionInputField: removeActionInputFieldSlice.reducer,
+    autoFlowsByService: getAutoFlowsByServiceSlice.reducer,
   }),
 });
 
