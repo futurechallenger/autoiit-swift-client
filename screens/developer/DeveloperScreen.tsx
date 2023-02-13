@@ -1,5 +1,5 @@
-import * as React from "react";
-import { StyleSheet } from "react-native";
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
 import {
   View,
   Text,
@@ -8,20 +8,20 @@ import {
   Select,
   CheckIcon,
   Spinner,
-} from "native-base";
+} from 'native-base';
 
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { DeveloperServiceScreen } from "./DeveloperServiceScreen";
-import { DeveloperServiceAPIScreen } from "./DeveloperServiceAPIScreen";
-import { DeveloperFlowScreen } from "./DeveloperFlowScreen";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { DeveloperServiceScreen } from './DeveloperServiceScreen';
+import { DeveloperServiceAPIScreen } from './DeveloperServiceAPIScreen';
+import { DeveloperFlowScreen } from './DeveloperFlowScreen';
 
-import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { RootState } from "../../redux/store";
-import { getServicesByUserId } from "../../redux/gql/servicesByUserIdSlice";
-import { ThemedPicker } from "../../components/ThemedPicker";
-import { getServiceById } from "../../redux/gql/serviceById";
-import { ThemedSpinner } from "../../components/ThemedSpinner";
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { RootState } from '../../redux/store';
+import { getServicesByUserId } from '../../redux/gql/servicesByUserIdSlice';
+import { ThemedPicker } from '../../components/ThemedPicker';
+import { getServiceById } from '../../redux/gql/serviceById';
+import { ThemedSpinner } from '../../components/ThemedSpinner';
 
 const { useState, useEffect } = React;
 
@@ -43,7 +43,7 @@ export const DeveloperScreen = () => {
   const navigation = useNavigation();
 
   const handleClick = () => {
-    navigation.navigate("NewService");
+    navigation.navigate('NewService');
   };
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export const DeveloperScreen = () => {
     }
     // const items = userServices.sort((el1, el2) => el1.id - el2.id);
     dispatch(
-      getServiceById({ serviceId: userServices[userServices.length - 1].id })
+      getServiceById({ serviceId: userServices[userServices.length - 1].id }),
     );
   }, [userServices]);
 
@@ -92,27 +92,31 @@ export const DeveloperScreen = () => {
           initialParams={{ serviceDetail }}
         />
         <Tab.Screen name="API" component={DeveloperServiceAPIScreen} />
-        <Tab.Screen name="Flows" component={DeveloperFlowScreen} />
+        <Tab.Screen
+          name="Flows"
+          component={DeveloperFlowScreen}
+          initialParams={{ service: serviceDetail }}
+        />
       </Tab.Navigator>
 
-      {status === "loading" ||
-        (serviceStatus === "loading" && <ThemedSpinner />)}
+      {status === 'loading' ||
+        (serviceStatus === 'loading' && <ThemedSpinner />)}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    justifyContent: "space-between",
-    alignItems: "center",
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginHorizontal: 20,
     marginVertical: 10,
   },
   create: {
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
   },
   service: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
