@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { View, Text } from 'native-base';
+import { ThemedTitle } from '../../../components/ThemedTitle';
 
 export const ArchivedFlowScene = () => {
   return (
     <View>
-      <Text>Archived flows</Text>
+      <ThemedTitle>Archived Flows</ThemedTitle>
     </View>
   );
 };

@@ -50,7 +50,7 @@ export const getAutoFlowsByServiceSlice = createSlice({
 });
 
 interface InitialStateType {
-  autoFlows: Types.AutoFlow[] | undefined;
+  autoFlows: Types.AutoFlow[];
   status: string | undefined;
   error: string | undefined;
 }
@@ -61,14 +61,7 @@ export type GetAllFlowsQueryVariables = Types.Exact<{
 
 export type GetAllFlowsQuery = {
   __typename?: 'Query';
-  flowsByService?: Array<{
-    __typename?: 'AutoFlow';
-    id?: number | null;
-    triggerId?: number | null;
-    actionId?: number | null;
-    triggerInfo?: string | null;
-    actionInfo?: string | null;
-  }> | null;
+  flowsByService?: Array<Types.AutoFlow> | null;
 };
 
 export const GetAllFlowsDocument = `
@@ -79,5 +72,6 @@ export const GetAllFlowsDocument = `
     actionId
     triggerInfo
     actionInfo
+		published
   }
 }`;
