@@ -35,6 +35,7 @@ import { addActionInputFieldSlice } from './gql/addActionInputFieldSlice';
 import { updateActionInputFieldSlice } from './gql/updateActionInputFieldSlice';
 import { removeActionInputFieldSlice } from './gql/removeActionInputFieldSlice';
 import { getAutoFlowsByServiceSlice } from './gql/getAutoFlowsSlice';
+import { addTriggerExposeFieldSlice } from './gql/addTriggerExposeFieldSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -72,6 +73,7 @@ export const store = configureStore({
     updateActionInputField: updateActionInputFieldSlice.reducer,
     removeActionInputField: removeActionInputFieldSlice.reducer,
     autoFlowsByService: getAutoFlowsByServiceSlice.reducer,
+    addExposeField: addTriggerExposeFieldSlice.reducer,
   }),
 });
 
