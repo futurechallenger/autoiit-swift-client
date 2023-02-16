@@ -22,6 +22,7 @@ import { addTriggerExposeField } from '../../../redux/gql/addTriggerExposeFieldS
 import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
 import { getTriggerExposeFields } from '../../../redux/gql/getTriggerExposeFieldsSlice';
 import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
+import { removeTriggerExposeField } from '../../../redux/gql/removeTriggerExpopseFieldSlice';
 import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
 import { deleteTrigger } from '../../../redux/gql/removeTriggerSlice';
 import { updateTriggerExposeField } from '../../../redux/gql/updateTriggerExposeFieldSlice';
@@ -160,8 +161,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
   };
 
   const handleDeleteTriggerExposeField = (fieldId: number) => {
-    // TODO: add delete expose trigger slice
-    // dispatch(deleteTriggerField({ fieldId }));
+    dispatch(removeTriggerExposeField({ fieldId }));
   };
   const handleUpdateTrigger = () => {
     const targetTrigger = {
