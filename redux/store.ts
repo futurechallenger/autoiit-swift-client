@@ -38,6 +38,7 @@ import { getAutoFlowsByServiceSlice } from './gql/getAutoFlowsSlice';
 import { addTriggerExposeFieldSlice } from './gql/addTriggerExposeFieldSlice';
 import { updateTriggerExposeFieldSlice } from './gql/updateTriggerExposeFieldSlice';
 import { getTriggerExposeFieldsSlice } from './gql/getTriggerExposeFieldsSlice';
+import { removeTriggerExposeFieldSlice } from './gql/removeTriggerExpopseFieldSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -78,6 +79,7 @@ export const store = configureStore({
     addExposeField: addTriggerExposeFieldSlice.reducer,
     updateExposeField: updateTriggerExposeFieldSlice.reducer,
     exposeFields: getTriggerExposeFieldsSlice.reducer,
+    removeExposeField: removeTriggerExposeFieldSlice.reducer,
   }),
 });
 

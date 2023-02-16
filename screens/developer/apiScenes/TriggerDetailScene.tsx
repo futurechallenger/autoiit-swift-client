@@ -131,18 +131,38 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
   };
 
   const handleCreateTriggerExposeField = (field: Types.ExposeFieldInput) => {
-    dispatch(addTriggerExposeField({ f: field }));
+    dispatch(
+      addTriggerExposeField({
+        f: {
+          helperText: field.helperText,
+          keyName: field.keyName,
+          label: field.label,
+          // parserPath:
+          serviceTriggerId: field.serviceTriggerId,
+        },
+      }),
+    );
   };
 
   const handleEditTriggerExposeField = (field: Types.ExposeFieldInput) => {
-    dispatch(updateTriggerExposeField({ f: field }));
+    dispatch(
+      updateTriggerExposeField({
+        f: {
+          id: field.id,
+          helperText: field.helperText,
+          keyName: field.keyName,
+          label: field.label,
+          // parserPath:
+          serviceTriggerId: field.serviceTriggerId,
+        },
+      }),
+    );
   };
 
   const handleDeleteTriggerExposeField = (fieldId: number) => {
     // TODO: add delete expose trigger slice
     // dispatch(deleteTriggerField({ fieldId }));
   };
-
   const handleUpdateTrigger = () => {
     const targetTrigger = {
       id: trigger?.id,
