@@ -42,7 +42,7 @@ export const addTriggerExposeFieldSlice = createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = 'succeeded';
-          state.trigger = payload?.data?.addExposeField;
+          state.exposeField = payload?.data?.addExposeField;
         }
       })
       .addCase(addTriggerExposeField.rejected, (state, action) => {
