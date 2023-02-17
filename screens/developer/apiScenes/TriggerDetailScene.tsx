@@ -29,6 +29,7 @@ import {
   removeTriggerExposeField,
   resetRemovedExposeFieldStatus,
 } from '../../../redux/gql/removeTriggerExpopseFieldSlice';
+import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
 import {
   deleteTriggerField,
   resetStatus as resetRemoveTriggerFieldStatus,
