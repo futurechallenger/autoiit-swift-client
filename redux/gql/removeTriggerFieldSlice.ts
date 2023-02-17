@@ -22,7 +22,11 @@ const initialState: InitialStateType = {
 export const deleteTriggerFieldSlice = createSlice({
   name: 'deleteTriggerFieldSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    resetStatus(state) {
+      state.status = '';
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(deleteTriggerField.pending, (state, action) => {
@@ -67,3 +71,5 @@ export const DeleteTriggerFieldDocument = `
     mutation deleteTriggerField($fieldId: Int!) {
   removeTriggerField(triggerFieldId: $fieldId)
 }`;
+
+export const { resetStatus } = deleteTriggerFieldSlice.actions;

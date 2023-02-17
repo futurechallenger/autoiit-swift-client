@@ -22,7 +22,11 @@ const initialState: InitialStateType = {
 export const removeTriggerExposeFieldSlice = createSlice({
   name: 'removeTriggerExposeFieldSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    resetStatus(state) {
+      state.status = '';
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(removeTriggerExposeField.pending, (state, action) => {
@@ -68,5 +72,7 @@ export const RemoveExposeFieldDocument = `
   removeExposeField(fieldId: $fieldId) {
     id
   }
-}
-    `;
+}`;
+
+export const { resetStatus: resetRemovedExposeFieldStatus } =
+  removeTriggerExposeFieldSlice.actions;

@@ -65,7 +65,7 @@ export const store = configureStore({
     triggerFields: getTriggerFieldsSlice.reducer,
     addTriggerField: addTriggerFieldSlice.reducer,
     updateTriggerField: updateTriggerFieldSlice.reducer,
-    deleteTriggerFieldSucceeded: deleteTriggerFieldSlice.reducer,
+    removeTriggerField: deleteTriggerFieldSlice.reducer,
     deleteTrigger: deleteTriggerSlice.reducer,
     serviceActions: getServiceActionsSlice.reducer,
     addServiceAction: addServiceApiSlice.reducer,
