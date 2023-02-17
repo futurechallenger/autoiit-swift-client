@@ -1,16 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { sendRequest } from "../baseApi";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { sendRequest } from '../baseApi';
 
-import * as Types from "../types.generated";
+import * as Types from '../types.generated';
 
 export const updateTriggerField = createAsyncThunk(
-  "updateTriggerField",
+  'updateTriggerField',
   async (variables: EditTriggerFieldMutationVariables) => {
     return sendRequest<EditTriggerFieldMutation>({
       variables,
       query: EditTriggerFieldDocument,
     });
-  }
+  },
 );
 
 const initialState: InitialStateType = {
@@ -20,13 +20,17 @@ const initialState: InitialStateType = {
 };
 
 export const updateTriggerFieldSlice = createSlice({
-  name: "updateTriggerFieldSlice",
+  name: 'updateTriggerFieldSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    resetStatus(state) {
+      state.status = '';
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(updateTriggerField.pending, (state, action) => {
-        state.status = "loading";
+        state.status = 'loading';
         if (state.error) {
           state.error = undefined;
         }
@@ -34,15 +38,15 @@ export const updateTriggerFieldSlice = createSlice({
       .addCase(updateTriggerField.fulfilled, (state, action) => {
         const payload = action.payload;
         if (payload?.errors) {
-          state.status = "failed";
+          state.status = 'failed';
           state.error = payload.errors?.[0]?.message;
         } else {
-          state.status = "succeeded";
+          state.status = 'succeeded';
           state.triggerField = payload?.data?.updateTriggerField;
         }
       })
       .addCase(updateTriggerField.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.error.message;
       });
   },
@@ -59,7 +63,7 @@ export type EditTriggerFieldMutationVariables = Types.Exact<{
 }>;
 
 export type EditTriggerFieldMutation = {
-  __typename?: "Mutation";
+  __typename?: 'Mutation';
   updateTriggerField?: Types.TriggerField | null;
 };
 
@@ -76,3 +80,5 @@ export const EditTriggerFieldDocument = `
     serviceTriggerId
   }
 }`;
+
+export const { resetStatus } = updateTriggerFieldSlice.actions;
