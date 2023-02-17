@@ -4,7 +4,7 @@ import { sendRequest } from '../baseApi';
 import * as Types from '../types.generated';
 
 export const getTriggerExposeFields = createAsyncThunk(
-  'updateTriggerExposeField',
+  'getTriggerExposeFields',
   async (variables: GetExposeFieldsQueryVariables) => {
     return sendRequest<GetExposeFieldsQuery>({
       variables,

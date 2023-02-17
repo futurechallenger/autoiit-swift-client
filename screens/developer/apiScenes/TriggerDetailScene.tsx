@@ -18,14 +18,20 @@ import { StyleSheet } from 'react-native';
 import { EditableCell } from '../../../components/EditableCell';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
-import { addTriggerExposeField } from '../../../redux/gql/addTriggerExposeFieldSlice';
+import {
+  addTriggerExposeField,
+  resetStatus,
+} from '../../../redux/gql/addTriggerExposeFieldSlice';
 import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
 import { getTriggerExposeFields } from '../../../redux/gql/getTriggerExposeFieldsSlice';
 import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
 import { removeTriggerExposeField } from '../../../redux/gql/removeTriggerExpopseFieldSlice';
 import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
 import { deleteTrigger } from '../../../redux/gql/removeTriggerSlice';
-import { updateTriggerExposeField } from '../../../redux/gql/updateTriggerExposeFieldSlice';
+import {
+  updateTriggerExposeField,
+  resetUpdateExposeFieldStatus,
+} from '../../../redux/gql/updateTriggerExposeFieldSlice';
 import { updateTriggerField } from '../../../redux/gql/updateTriggerFieldSlice';
 import { updateServiceTrigger } from '../../../redux/gql/updateTriggerSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
@@ -66,14 +72,14 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
     error: exposeFieldsError,
   } = useAppSelector((state: RootState) => state.exposeFields);
   const {
-    exposeField: addExposeField,
-    status: addExposeFieldStatus,
+    exposeField: addedExposeField,
+    status: addedExposeFieldStatus,
     error: addExposeError,
   } = useAppSelector((state: RootState) => state.addExposeField);
   const {
-    exposeField: updateExposeField,
-    status: updateExposeFieldStatus,
-    error: updateExposeError,
+    exposeField: updatedExposeField,
+    status: updatedExposeFieldStatus,
+    error: updatedExposeFieldError,
   } = useAppSelector((state: RootState) => state.updateExposeField);
 
   const [name, setName] = useState();
@@ -110,6 +116,19 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
       dispatch(getTriggerFields({ triggerId: trigger?.id }));
     }
   }, [addStatus, updateStatus, trigger?.id]);
+
+  // TODO: refactor this logic to customized hooks
+  useEffect(() => {
+    if (
+      (addedExposeFieldStatus === 'succeeded' ||
+        updatedExposeFieldStatus === 'succeeded') &&
+      trigger?.id
+    ) {
+      dispatch(resetStatus());
+      dispatch(resetUpdateExposeFieldStatus());
+      dispatch(getTriggerExposeFields({ triggerId: trigger?.id }));
+    }
+  }, [addedExposeFieldStatus, updatedExposeFieldStatus, trigger?.id]);
 
   const handleInput = (nextValue) => {
     setEndpointPath(nextValue);
@@ -218,7 +237,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
         <TriggerFieldInput
           key="edit-field"
           triggerInfo={trigger}
-          fieldInfo={currentField}
+          fieldInfo={currentExposeField}
           onSave={handleEditTriggerExposeField}
           onDelete={handleDeleteTriggerExposeField}
           onCancel={() => setShowEditExposeField(false)}

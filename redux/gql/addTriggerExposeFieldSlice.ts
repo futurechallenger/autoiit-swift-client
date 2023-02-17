@@ -78,3 +78,5 @@ export const AddExposeFieldDocument = `
     serviceTriggerId
   }
 }`;
+
+export const { resetStatus } = addTriggerExposeFieldSlice.actions;
