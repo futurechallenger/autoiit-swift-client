@@ -25,7 +25,10 @@ import {
 import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
 import { getTriggerExposeFields } from '../../../redux/gql/getTriggerExposeFieldsSlice';
 import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
-import { removeTriggerExposeField } from '../../../redux/gql/removeTriggerExpopseFieldSlice';
+import {
+  removeTriggerExposeField,
+  resetRemovedExposeFieldStatus,
+} from '../../../redux/gql/removeTriggerExpopseFieldSlice';
 import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
 import { deleteTrigger } from '../../../redux/gql/removeTriggerSlice';
 import {
@@ -81,6 +84,11 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
     status: updatedExposeFieldStatus,
     error: updatedExposeFieldError,
   } = useAppSelector((state: RootState) => state.updateExposeField);
+  const {
+    exposeField: removedExposeField,
+    status: removedExposeFieldStatus,
+    error: removedExposeFieldError,
+  } = useAppSelector((state: RootState) => state.removeExposeField);
 
   const [name, setName] = useState();
   const [currentField, setCurrentField] = useState<
@@ -129,6 +137,25 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
       dispatch(getTriggerExposeFields({ triggerId: trigger?.id }));
     }
   }, [addedExposeFieldStatus, updatedExposeFieldStatus, trigger?.id]);
+
+  useEffect(() => {
+    if (
+      addedExposeFieldStatus === 'succeeded' ||
+      updatedExposeFieldStatus === 'succeeded' ||
+      removedExposeFieldStatus === 'succeeded'
+    ) {
+      dispatch(resetStatus());
+      dispatch(resetUpdateExposeFieldStatus());
+      dispatch(resetRemovedExposeFieldStatus());
+      setShowCreateExposeField(false);
+      setShowEditExposeField(false);
+      dispatch(getTriggerExposeFields({ triggerId: trigger?.id }));
+    }
+  }, [
+    addedExposeFieldStatus,
+    updatedExposeFieldStatus,
+    removedExposeFieldStatus,
+  ]);
 
   const handleInput = (nextValue) => {
     setEndpointPath(nextValue);
