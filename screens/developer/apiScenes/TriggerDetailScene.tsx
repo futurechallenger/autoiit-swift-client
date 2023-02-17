@@ -30,12 +30,19 @@ import {
   resetRemovedExposeFieldStatus,
 } from '../../../redux/gql/removeTriggerExpopseFieldSlice';
 import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
+import {
+  deleteTriggerField,
+  resetStatus as resetRemoveTriggerFieldStatus,
+} from '../../../redux/gql/removeTriggerFieldSlice';
 import { deleteTrigger } from '../../../redux/gql/removeTriggerSlice';
 import {
   updateTriggerExposeField,
   resetUpdateExposeFieldStatus,
 } from '../../../redux/gql/updateTriggerExposeFieldSlice';
-import { updateTriggerField } from '../../../redux/gql/updateTriggerFieldSlice';
+import {
+  updateTriggerField,
+  resetStatus as resetUpdateTriggerFieldStatus,
+} from '../../../redux/gql/updateTriggerFieldSlice';
 import { updateServiceTrigger } from '../../../redux/gql/updateTriggerSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { RootState } from '../../../redux/store';
@@ -59,15 +66,20 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
     (state: RootState) => state.triggerFields,
   );
   const {
-    triggerField: addField,
-    status: addStatus,
-    error: addError,
+    triggerField: addedField,
+    status: addedStatus,
+    error: addedError,
   } = useAppSelector((state: RootState) => state.addTriggerField);
   const {
-    triggerField: updateField,
-    status: updateStatus,
-    error: updateError,
+    triggerField: updatedField,
+    status: updatedStatus,
+    error: updatedError,
   } = useAppSelector((state: RootState) => state.updateTriggerField);
+  const {
+    deleted,
+    status: removedStatus,
+    error: removedError,
+  } = useAppSelector((state: RootState) => state.removeTriggerField);
 
   const {
     exposeFields,
@@ -118,12 +130,12 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     if (
-      (addStatus === 'succeeded' || updateStatus === 'succeeded') &&
+      (addedStatus === 'succeeded' || updatedStatus === 'succeeded') &&
       trigger?.id
     ) {
       dispatch(getTriggerFields({ triggerId: trigger?.id }));
     }
-  }, [addStatus, updateStatus, trigger?.id]);
+  }, [addedStatus, updatedStatus, trigger?.id]);
 
   // TODO: refactor this logic to customized hooks
   useEffect(() => {
@@ -137,6 +149,21 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
       dispatch(getTriggerExposeFields({ triggerId: trigger?.id }));
     }
   }, [addedExposeFieldStatus, updatedExposeFieldStatus, trigger?.id]);
+
+  useEffect(() => {
+    if (
+      addedStatus === 'succeeded' ||
+      updatedStatus === 'succeeded' ||
+      removedStatus === 'succeeded'
+    ) {
+      dispatch(resetStatus());
+      dispatch(resetUpdateTriggerFieldStatus());
+      dispatch(resetRemoveTriggerFieldStatus());
+      setShowCreateField(false);
+      setShowEditField(false);
+      dispatch(getTriggerFields({ triggerId: trigger?.id }));
+    }
+  }, [addedStatus, updatedStatus, removedStatus]);
 
   useEffect(() => {
     if (
