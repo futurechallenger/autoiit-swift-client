@@ -78,3 +78,6 @@ export const UpdateExposeFieldDocument = `
     serviceTriggerId
   }
 }`;
+
+export const { resetStatus: resetUpdateExposeFieldStatus } =
+  updateTriggerExposeFieldSlice.actions;

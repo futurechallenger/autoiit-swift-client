@@ -1,15 +1,10 @@
-import { Entypo } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useRoute } from '@react-navigation/native';
-import { current } from '@reduxjs/toolkit';
 import {
   Box,
   Button,
   Divider,
   FlatList,
   HStack,
-  Icon,
-  IconButton,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -23,10 +18,20 @@ import { StyleSheet } from 'react-native';
 import { EditableCell } from '../../../components/EditableCell';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
+import {
+  addTriggerExposeField,
+  resetStatus,
+} from '../../../redux/gql/addTriggerExposeFieldSlice';
 import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
+import { getTriggerExposeFields } from '../../../redux/gql/getTriggerExposeFieldsSlice';
 import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
+import { removeTriggerExposeField } from '../../../redux/gql/removeTriggerExpopseFieldSlice';
 import { deleteTriggerField } from '../../../redux/gql/removeTriggerFieldSlice';
 import { deleteTrigger } from '../../../redux/gql/removeTriggerSlice';
+import {
+  updateTriggerExposeField,
+  resetUpdateExposeFieldStatus,
+} from '../../../redux/gql/updateTriggerExposeFieldSlice';
 import { updateTriggerField } from '../../../redux/gql/updateTriggerFieldSlice';
 import { updateServiceTrigger } from '../../../redux/gql/updateTriggerSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
@@ -59,17 +64,38 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
     triggerField: updateField,
     status: updateStatus,
     error: updateError,
-  } = useAppSelector((state: RootState) => state.addTriggerField);
+  } = useAppSelector((state: RootState) => state.updateTriggerField);
+
+  const {
+    exposeFields,
+    status: exposeFieldsStatus,
+    error: exposeFieldsError,
+  } = useAppSelector((state: RootState) => state.exposeFields);
+  const {
+    exposeField: addedExposeField,
+    status: addedExposeFieldStatus,
+    error: addExposeError,
+  } = useAppSelector((state: RootState) => state.addExposeField);
+  const {
+    exposeField: updatedExposeField,
+    status: updatedExposeFieldStatus,
+    error: updatedExposeFieldError,
+  } = useAppSelector((state: RootState) => state.updateExposeField);
 
   const [name, setName] = useState();
   const [currentField, setCurrentField] = useState<
     Types.TriggerField | undefined
+  >();
+  const [currentExposeField, setCurrentExposeField] = useState<
+    Types.ExposeField | undefined
   >();
   const [description, setDescription] = useState();
   const [endpointType, setEndpointType] = useState();
   const [endpointPath, setEndpointPath] = useState();
   const [showCreateField, setShowCreateField] = useState(false);
   const [showEditField, setShowEditField] = useState(false);
+  const [showCreateExposeField, setShowCreateExposeField] = useState(false);
+  const [showEditExposeField, setShowEditExposeField] = useState(false);
 
   useEffect(() => {
     if (trigger?.id) {
@@ -78,6 +104,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
       setEndpointPath(trigger?.endpointPath);
       setEndpointType(trigger?.endpointType);
       dispatch(getTriggerFields({ triggerId: trigger?.id }));
+      dispatch(getTriggerExposeFields({ triggerId: trigger?.id }));
     }
   }, [trigger]);
 
@@ -89,6 +116,19 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
       dispatch(getTriggerFields({ triggerId: trigger?.id }));
     }
   }, [addStatus, updateStatus, trigger?.id]);
+
+  // TODO: refactor this logic to customized hooks
+  useEffect(() => {
+    if (
+      (addedExposeFieldStatus === 'succeeded' ||
+        updatedExposeFieldStatus === 'succeeded') &&
+      trigger?.id
+    ) {
+      dispatch(resetStatus());
+      dispatch(resetUpdateExposeFieldStatus());
+      dispatch(getTriggerExposeFields({ triggerId: trigger?.id }));
+    }
+  }, [addedExposeFieldStatus, updatedExposeFieldStatus, trigger?.id]);
 
   const handleInput = (nextValue) => {
     setEndpointPath(nextValue);
@@ -110,6 +150,38 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
     dispatch(deleteTriggerField({ fieldId }));
   };
 
+  const handleCreateTriggerExposeField = (field: Types.ExposeFieldInput) => {
+    dispatch(
+      addTriggerExposeField({
+        f: {
+          helperText: field.helperText,
+          keyName: field.keyName,
+          label: field.label,
+          // parserPath:
+          serviceTriggerId: field.serviceTriggerId,
+        },
+      }),
+    );
+  };
+
+  const handleEditTriggerExposeField = (field: Types.ExposeFieldInput) => {
+    dispatch(
+      updateTriggerExposeField({
+        f: {
+          id: field.id,
+          helperText: field.helperText,
+          keyName: field.keyName,
+          label: field.label,
+          // parserPath:
+          serviceTriggerId: field.serviceTriggerId,
+        },
+      }),
+    );
+  };
+
+  const handleDeleteTriggerExposeField = (fieldId: number) => {
+    dispatch(removeTriggerExposeField({ fieldId }));
+  };
   const handleUpdateTrigger = () => {
     const targetTrigger = {
       id: trigger?.id,
@@ -143,6 +215,32 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
           onSave={handleEditTriggerField}
           onDelete={handleDeleteTriggerField}
           onCancel={() => setShowEditField(false)}
+        />
+      );
+    }
+  };
+
+  const renderCreateEditTriggerExposeField = () => {
+    if (showCreateExposeField) {
+      return (
+        <TriggerFieldInput
+          key="create-field"
+          triggerInfo={trigger}
+          onSave={handleCreateTriggerExposeField}
+          onCancel={() => setShowCreateExposeField(false)}
+        />
+      );
+    }
+
+    if (showEditExposeField) {
+      return (
+        <TriggerFieldInput
+          key="edit-field"
+          triggerInfo={trigger}
+          fieldInfo={currentExposeField}
+          onSave={handleEditTriggerExposeField}
+          onDelete={handleDeleteTriggerExposeField}
+          onCancel={() => setShowEditExposeField(false)}
         />
       );
     }
@@ -228,6 +326,38 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
         {renderCreateEditTriggerField()}
 
         <Divider />
+      </Box>
+      <Box marginY={5}>
+        <ThemedTitle>Expose fields</ThemedTitle>
+        <Text>
+          Expose fields are parts of data that about to expose to `if-then`
+          action.
+        </Text>
+
+        {exposeFields && (
+          <FlatList
+            data={exposeFields ?? []}
+            renderItem={({ item }) => (
+              <EditableCell
+                title={item?.label ?? ''}
+                onEditClick={() => {
+                  setCurrentExposeField(item);
+                  setShowEditExposeField(true);
+                }}
+              />
+            )}
+          />
+        )}
+
+        {showCreateExposeField && showEditExposeField ? null : (
+          <View style={styles.addFields}>
+            <Button onPress={() => setShowCreateExposeField(true)}>
+              Add expose fields
+            </Button>
+          </View>
+        )}
+
+        {renderCreateEditTriggerExposeField()}
       </Box>
     </View>
   );
