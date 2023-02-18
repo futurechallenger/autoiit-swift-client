@@ -1,15 +1,10 @@
-import { Entypo } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useRoute } from '@react-navigation/native';
-import { current } from '@reduxjs/toolkit';
 import {
   Box,
   Button,
   Divider,
   FlatList,
   HStack,
-  Icon,
-  IconButton,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -23,11 +18,20 @@ import { StyleSheet } from 'react-native';
 import { EditableCell } from '../../../components/EditableCell';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
-import { addActionInputField } from '../../../redux/gql/addActionInputFieldSlice';
+import {
+  addActionInputField,
+  resetStatus,
+} from '../../../redux/gql/addActionInputFieldSlice';
 import { getActionInputFields } from '../../../redux/gql/getActionInputFieldsSlice';
+import {
+  removeActionInputField,
+  resetStatus as resetRemoveInputFieldStatus,
+} from '../../../redux/gql/removeActionInputFieldSlice';
 import { deleteServiceAction } from '../../../redux/gql/removeActionSlice';
-import { removeActionInputField } from '../../../redux/gql/removeActionInputFieldSlice';
-import { updateActionInputField } from '../../../redux/gql/updateActionInputFieldSlice';
+import {
+  updateActionInputField,
+  resetStatus as resetUpdateInputFieldStatus,
+} from '../../../redux/gql/updateActionInputFieldSlice';
 import { updateServiceAction } from '../../../redux/gql/updateActionSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { RootState } from '../../../redux/store';
@@ -61,6 +65,11 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
     status: updateStatus,
     error: updateError,
   } = useAppSelector((state: RootState) => state.updateActionInputField);
+  const {
+    actionInputField: removedInputField,
+    status: removedInputFieldStatus,
+    error: removedInputFieldError,
+  } = useAppSelector((state: RootState) => state.removeActionInputField);
 
   const [name, setName] = useState<string | undefined>();
   const [currentField, setCurrentField] = useState<
@@ -90,6 +99,23 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
       dispatch(getActionInputFields({ actionId: action?.id }));
     }
   }, [addStatus, updateStatus, action?.id]);
+
+  useEffect(() => {
+    if (
+      addStatus === 'succeeded' ||
+      updateStatus === 'succeeded' ||
+      removedInputFieldStatus === 'succeeded'
+    ) {
+      dispatch(resetStatus());
+      dispatch(resetUpdateInputFieldStatus());
+      dispatch(resetRemoveInputFieldStatus());
+      setShowCreateField(false);
+      setShowEditField(false);
+      if (action?.id) {
+        dispatch(getActionInputFields({ actionId: action?.id }));
+      }
+    }
+  }, [addStatus, updateStatus, removedInputFieldStatus]);
 
   const handleInput = (nextValue: string | undefined) => {
     setEndpointPath(nextValue);
