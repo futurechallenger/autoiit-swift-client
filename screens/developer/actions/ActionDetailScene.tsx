@@ -1,15 +1,10 @@
-import { Entypo } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useRoute } from '@react-navigation/native';
-import { current } from '@reduxjs/toolkit';
 import {
   Box,
   Button,
   Divider,
   FlatList,
   HStack,
-  Icon,
-  IconButton,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -25,8 +20,8 @@ import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
 import { addActionInputField } from '../../../redux/gql/addActionInputFieldSlice';
 import { getActionInputFields } from '../../../redux/gql/getActionInputFieldsSlice';
-import { deleteServiceAction } from '../../../redux/gql/removeActionSlice';
 import { removeActionInputField } from '../../../redux/gql/removeActionInputFieldSlice';
+import { deleteServiceAction } from '../../../redux/gql/removeActionSlice';
 import { updateActionInputField } from '../../../redux/gql/updateActionInputFieldSlice';
 import { updateServiceAction } from '../../../redux/gql/updateActionSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
