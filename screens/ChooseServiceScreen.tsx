@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Button,
   View,
@@ -7,27 +7,27 @@ import {
   Pressable,
   Input,
   HStack,
-} from "native-base";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { RootState } from "../redux/store";
-import { chooseService, chooseServiceSlice } from "../redux/gql/chooseServices";
-import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+} from 'native-base';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { RootState } from '../redux/store';
+import { getServices, getServicesSlice } from '../redux/gql/chooseServices';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const { useEffect, useState } = React;
 
 export const ChooseServiceScreen = () => {
   const navigation = useNavigation();
   const { services, error, status } = useAppSelector(
-    (state: RootState) => state.chooseService
+    (state: RootState) => state.services,
   );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(chooseService());
+    dispatch(getServices());
   }, []);
 
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState('');
 
   return (
     <View h="full" w="full" justifyContent="center" alignItems="center">
@@ -45,7 +45,7 @@ export const ChooseServiceScreen = () => {
         <Button
           marginLeft={2}
           onPress={() => {
-            dispatch(chooseServiceSlice.actions.searchByName(inputText));
+            dispatch(getServicesSlice.actions.searchByName(inputText));
           }}
         >
           <Text>OK</Text>
@@ -55,7 +55,7 @@ export const ChooseServiceScreen = () => {
         w="full"
         data={services ?? []}
         renderItem={({ item }) => (
-          <Pressable onPress={() => navigation.navigate("Triggers", { item })}>
+          <Pressable onPress={() => navigation.navigate('Triggers', { item })}>
             <View
               w="full"
               h={60}

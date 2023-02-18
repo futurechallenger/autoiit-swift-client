@@ -1,9 +1,9 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { sendRequest } from "../baseApi";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { sendRequest } from '../baseApi';
 
-import * as Types from "../types.generated";
+import * as Types from '../types.generated';
 
-export const chooseService = createAsyncThunk("chooseService", async () => {
+export const getServices = createAsyncThunk('getServices', async () => {
   return sendRequest<ChooseServicesQuery>({
     query: ChooseServicesDocument,
     variables: undefined,
@@ -13,19 +13,19 @@ export const chooseService = createAsyncThunk("chooseService", async () => {
 const initialState: InitialStateType = {
   services: [],
   error: undefined,
-  status: "",
+  status: '',
 };
 
 let cachedServices: any[] = [];
 
-export const chooseServiceSlice = createSlice({
-  name: "chooseServiceSlice",
+export const getServicesSlice = createSlice({
+  name: 'getServicesSlice',
   initialState,
   reducers: {
     searchByName(state, action) {
       if (action.payload) {
         state.services = state.services.filter(
-          (item) => item.name.indexOf(action.payload) >= 0
+          (item) => item.name.indexOf(action.payload) >= 0,
         );
       } else {
         state.services = cachedServices;
@@ -34,25 +34,25 @@ export const chooseServiceSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(chooseService.pending, (state, action) => {
-        state.status = "loading";
+      .addCase(getServices.pending, (state, action) => {
+        state.status = 'loading';
         if (state.error) {
           state.error = undefined;
         }
       })
-      .addCase(chooseService.fulfilled, (state, action) => {
+      .addCase(getServices.fulfilled, (state, action) => {
         const payload = action.payload;
         if (payload?.errors) {
-          state.status = "failed";
+          state.status = 'failed';
           state.error = payload.errors?.[0]?.message;
         } else {
-          state.status = "succeeded";
+          state.status = 'succeeded';
           cachedServices = payload?.data?.services ?? [];
           state.services = payload?.data?.services ?? [];
         }
       })
-      .addCase(chooseService.rejected, (state, action) => {
-        state.status = "failed";
+      .addCase(getServices.rejected, (state, action) => {
+        state.status = 'failed';
         state.error = action.error.message;
       });
   },
@@ -69,7 +69,7 @@ export type ChooseServicesQueryVariables = Types.Exact<{
 }>;
 
 export type ServiceInfo = {
-  __typename?: "Service";
+  __typename?: 'Service';
   id: number;
   name: string;
   description?: string | null;
@@ -77,7 +77,7 @@ export type ServiceInfo = {
 };
 
 export type ChooseServicesQuery = {
-  __typename?: "Query";
+  __typename?: 'Query';
   services: Array<ServiceInfo>;
 };
 
