@@ -22,7 +22,11 @@ const initialState: InitialStateType = {
 export const addActionInputFieldSlice = createSlice({
   name: 'addActionInputFieldSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    resetStatus(state) {
+      state.status = '';
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(addActionInputField.pending, (state, action) => {
@@ -83,3 +87,5 @@ export const AddActionInputFieldDocument = `
     serviceApiActionId
   }
 }`;
+
+export const { resetStatus } = addActionInputFieldSlice.actions;

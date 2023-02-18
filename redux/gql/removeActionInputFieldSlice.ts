@@ -22,7 +22,11 @@ const initialState: InitialStateType = {
 export const removeActionInputFieldSlice = createSlice({
   name: 'removeActionInputFieldSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    resetStatus(state) {
+      state.status = '';
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(removeActionInputField.pending, (state, action) => {
@@ -72,3 +76,5 @@ export const RemoveActionInputFieldDocument = `
     id
   }
 }`;
+
+export const { resetStatus } = removeActionInputFieldSlice.actions;
