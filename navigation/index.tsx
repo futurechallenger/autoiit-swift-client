@@ -3,50 +3,47 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { FontAwesome } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
-  NavigationContainer,
-  DefaultTheme,
   DarkTheme,
-} from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as React from "react";
-import { ColorSchemeName, Pressable, Button, Platform } from "react-native";
+  DefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as React from 'react';
+import { ColorSchemeName, Platform, Pressable } from 'react-native';
 
-import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
-import ModalScreen from "../screens/ModalScreen";
-import NotFoundScreen from "../screens/NotFoundScreen";
-import MyFlowScreen from "../screens/MyFlowScreen";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
+import { ActivityScreen } from '../screens/ActivityScreen';
+import { AuthScreen } from '../screens/AuthScreen';
+import { ChooseServiceScreen } from '../screens/ChooseServiceScreen';
+import { CreateFlowScreen } from '../screens/CreateFlowScreen';
+import { DeveloperScreen } from '../screens/developer/DeveloperScreen';
+import { NewServiceScreen } from '../screens/developer/NewServiceScreen';
+import { EmailScreen } from '../screens/EmailScreen';
+import { ExploreScreen } from '../screens/ExploreScreen';
+import ModalScreen from '../screens/ModalScreen';
+import MyFlowScreen from '../screens/MyFlowScreen';
+import NotFoundScreen from '../screens/NotFoundScreen';
+import { PasswordScreen } from '../screens/PasswordScreen';
+import { PopupScreen } from '../screens/PopupScreen';
+import { AccountScreen } from '../screens/Profile/AccountScreen';
+import { ProfileScreen } from '../screens/ProfileScreen';
+import { SearchScreen } from '../screens/SearchScreen';
+import { ServiceDetailScreen } from '../screens/ServiceDetailScreen';
+import { TriggerFieldsScreen } from '../screens/TriggerFieldsScreen';
+import { TriggersScreen } from '../screens/TriggersScreen';
 import {
   BottomStackParamList,
-  RootTabParamList,
   MainTabScreenProps,
-} from "../types";
-import LinkingConfiguration from "./LinkingConfiguration";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AuthScreen } from "../screens/AuthScreen";
-import { EmailScreen } from "../screens/EmailScreen";
-import { PasswordScreen } from "../screens/PasswordScreen";
-import { StackNavigatorParamList } from "../types";
-import { AuthContext } from "./AuthContext";
-import { AccountScreen } from "../screens/Profile/AccountScreen";
-import { ExploreScreen } from "../screens/ExploreScreen";
-import { SearchScreen } from "../screens/SearchScreen";
-import { ProfileScreen } from "../screens/ProfileScreen";
-import { ServiceDetailScreen } from "../screens/ServiceDetailScreen";
-import { CreateFlowScreen } from "../screens/CreateFlowScreen";
-import { BlankScreen } from "../screens/BlankScreen";
-import { PopupScreen } from "../screens/PopupScreen";
-import { ChooseServiceScreen } from "../screens/ChooseServiceScreen";
-import { TriggersScreen } from "../screens/TriggersScreen";
-import { TriggerFieldsScreen } from "../screens/TriggerFieldsScreen";
-import { CreateServiceScreen } from "../screens/CreateServiceScreen.web";
-import { ActivityScreen } from "../screens/ActivityScreen";
-import { DeveloperScreen } from "../screens/developer/DeveloperScreen";
-import { ServiceGeneralScene } from "../screens/developer/scenes/ServiceGeneralScene";
-import { NewServiceScreen } from "../screens/developer/NewServiceScreen";
+  RootTabParamList,
+  StackNavigatorParamList,
+} from '../types';
+import { AuthContext } from './AuthContext';
+import LinkingConfiguration from './LinkingConfiguration';
 
 const { useState, useEffect } = React;
 
@@ -84,12 +81,12 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
           <NavStack.Screen
             name="Search"
             component={SearchScreen}
-            options={{ animation: "fade", headerShown: false }}
+            options={{ animation: 'fade', headerShown: false }}
           />
 
           <NavStack.Group
             screenOptions={{
-              presentation: "modal",
+              presentation: 'modal',
               headerBackVisible: false,
             }}
           >
@@ -101,7 +98,7 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
           </NavStack.Group>
           <NavStack.Group
             screenOptions={{
-              presentation: "modal",
+              presentation: 'modal',
               headerBackVisible: false,
             }}
           >
@@ -138,7 +135,7 @@ export default function Navigation({
     const readToken = async () => {
       let token = null;
       try {
-        token = await AsyncStorage.getItem("@token");
+        token = await AsyncStorage.getItem('@token');
       } catch (e) {
         token = null;
       }
@@ -155,11 +152,11 @@ export default function Navigation({
 
   return (
     <AuthContext.Provider
-      value={{ token: token ?? "", setAuthToken: (token) => setToken(token) }}
+      value={{ token: token ?? '', setAuthToken: (token) => setToken(token) }}
     >
       <NavigationContainer
         linking={LinkingConfiguration}
-        theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
       >
         {renderNavigator(token)}
       </NavigationContainer>
@@ -184,9 +181,9 @@ export function RootNavigator() {
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
-        options={{ title: "Oops!" }}
+        options={{ title: 'Oops!' }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>
@@ -212,12 +209,12 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="MyFlow"
         component={MyFlowScreen}
-        options={({ navigation }: MainTabScreenProps<"MyFlow">) => ({
-          title: "My Flow",
+        options={({ navigation }: MainTabScreenProps<'MyFlow'>) => ({
+          title: 'My Flow',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate("Modal")}
+              onPress={() => navigation.navigate('Modal')}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}
@@ -236,7 +233,7 @@ function BottomTabNavigator() {
         name="Explore"
         component={ExploreScreen}
         options={{
-          title: "Explore",
+          title: 'Explore',
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
@@ -244,16 +241,16 @@ function BottomTabNavigator() {
         name="Create" // Create flow
         component={CreateFlowScreen}
         options={{
-          title: "Create Flow",
+          title: 'Create Flow',
           tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
         }}
       />
-      {Platform.OS === "web" && (
+      {Platform.OS === 'web' && (
         <BottomTab.Screen
           name="Developers"
           component={DeveloperScreen}
           options={{
-            title: "Create Service",
+            title: 'Create Service',
             tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           }}
         />
@@ -262,7 +259,7 @@ function BottomTabNavigator() {
         name="Activity"
         component={ActivityScreen}
         options={{
-          title: "Activity",
+          title: 'Activity',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
@@ -270,7 +267,7 @@ function BottomTabNavigator() {
         name="Profile"
         component={ProfileScreen}
         options={{
-          title: "Profile",
+          title: 'Profile',
           tabBarIcon: ({ color }) => <TabBarIcon name="user-o" color={color} />,
         }}
       />
@@ -282,7 +279,7 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
+  name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
