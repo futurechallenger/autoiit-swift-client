@@ -1,6 +1,6 @@
-import * as React from "react";
-import { View, Text, Button } from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
+import { Button, Text, View } from 'native-base';
+import * as React from 'react';
 
 const VerticalDivider = () => {
   return <View width="2" h="16" bg="red.500" />;
@@ -24,7 +24,7 @@ export const CreateFlowScreen = () => {
         <Text fontSize="60" marginRight="10" marginY="5">
           When
         </Text>
-        <Button onPress={() => navigation.navigate("ChooseService")}>
+        <Button onPress={() => navigation.navigate('ChooseService')}>
           Add
         </Button>
       </View>

@@ -7,7 +7,7 @@ import { updateServiceSlice } from './gql/updateServiceSlice';
 import { getServicesByUserIdSlice } from './gql/servicesByUserIdSlice';
 import { addServiceSlice } from './gql/addServiceSlice';
 import { getServiceFullInfoSlice } from './gql/serviceFullInfo';
-import { chooseServiceSlice } from './gql/chooseServices';
+import { getServicesSlice } from './gql/chooseServices';
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from '@reduxjs/toolkit';
 import { loginSlice } from './gql/loginService';
@@ -49,7 +49,7 @@ export const store = configureStore({
     exploreServices: searchServiceSlice.reducer,
     mostSearchedServices: mostSearchedServicesSlice.reducer,
     serviceById: getServiceByIdSlice.reducer,
-    chooseService: chooseServiceSlice.reducer,
+    services: getServicesSlice.reducer,
     serviceFullInfo: getServiceFullInfoSlice.reducer,
     addService: addServiceSlice.reducer,
     userServices: getServicesByUserIdSlice.reducer,

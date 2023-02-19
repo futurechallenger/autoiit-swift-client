@@ -1,26 +1,15 @@
-import * as React from "react";
-import {
-  HStack,
-  Pressable,
-  Icon,
-  Button,
-  Box,
-  View,
-  Text,
-  IconButton,
-} from "native-base";
-import { useRoute } from "@react-navigation/native";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { RootState } from "../redux/store";
-import { getServiceById } from "../redux/gql/serviceById";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { Platform, Share } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { SERVER_URL } from "../Lib/config";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import { ServiceTab } from "../components/ServiceTab";
-import { getServiceFullInfo } from "../redux/gql/serviceFullInfo";
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { Box, Button, IconButton, Text, View } from 'native-base';
+import * as React from 'react';
+import { Platform, Share } from 'react-native';
+import { ServiceTab } from '../components/ServiceTab';
+import { SERVER_URL } from '../Lib/config';
+import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
+import { getServiceFullInfo } from '../redux/gql/serviceFullInfo';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { RootState } from '../redux/store';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +19,7 @@ let popup: Window | null = null;
 export const ServiceDetailScreen = () => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  const [connection, setConnection] = useState("");
+  const [connection, setConnection] = useState('');
   const {
     service: serviceInfo,
     flows,
@@ -38,47 +27,63 @@ export const ServiceDetailScreen = () => {
     status,
     error,
   } = useAppSelector((state: RootState) => state.serviceFullInfo);
+  const {
+    serviceAuth,
+    status: getAuthStatus,
+    error: getAuthError,
+  } = useAppSelector((state: RootState) => state.getServiceAuth);
   const route = useRoute();
   const { item, service: routeService } = route?.params ?? {};
 
   useEffect(() => {
-    if (Platform.OS === "web") {
-      window.addEventListener("message", messageHandler);
+    if (Platform.OS === 'web') {
+      window.addEventListener('message', messageHandler);
 
       return function cleanup() {
-        if (Platform.OS === "web") {
+        if (Platform.OS === 'web') {
           if (popup) {
-            window.removeEventListener("message", messageHandler);
+            window.removeEventListener('message', messageHandler);
           }
         }
       };
     }
-  });
+  }, []);
 
   useEffect(() => {
     dispatch(getServiceFullInfo({ serviceId: routeService?.id }));
+    dispatch(getServiceAuth({ serviceId: routeService?.id }));
   }, [routeService.id]);
 
   const messageHandler = (event: MessageEvent) => {
-    if (event?.data?.source === "autoiit") {
+    if (event?.data?.source === 'autoiit') {
       setConnection(event?.data?.message);
     }
   };
 
   const handleShareClick = () => {
-    if (Platform.OS !== "web") {
-      Share.share({ message: "Autoiit" });
+    if (Platform.OS !== 'web') {
+      Share.share({ message: 'Autoiit' });
     }
   };
 
   const handleConnect = () => {
-    if (Platform.OS !== "web") {
-      navigation.navigate("Connect");
+    if (Platform.OS !== 'web') {
+      navigation.navigate('Connect');
     } else {
       popup = window.open(
         `${SERVER_URL}/login/${service.id}/service`,
-        "popUpWindow",
-        "height=600,width=900,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes"
+        'popUpWindow',
+        'height=600,width=900,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes',
+      );
+    }
+  };
+
+  const renderConnectionButton = () => {
+    if (serviceAuth) {
+      return (
+        <Button maxW={200} w="160" minW={90} onPress={handleConnect}>
+          {connection === 'success' ? 'Connected' : 'Connect'}
+        </Button>
       );
     }
   };
@@ -102,12 +107,8 @@ export const ServiceDetailScreen = () => {
       <Box padding="5">
         <Text>{serviceInfo?.description}</Text>
       </Box>
-      <Box>
-        <Button maxW={200} w="160" minW={90} onPress={handleConnect}>
-          {connection === "success" ? "Connected" : "Connect"}
-        </Button>
-      </Box>
-      {status === "loading" && <Text>loading...</Text>}
+      <Box>{renderConnectionButton()}</Box>
+      {status === 'loading' && <Text>loading...</Text>}
       <ServiceTab
         selected={0}
         onSelectedChanged={(index) => console.log(`${index} is selected`)}
