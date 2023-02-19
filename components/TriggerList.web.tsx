@@ -12,7 +12,7 @@ export const TriggerList = ({
   const items = [...(data ?? [])];
 
   const renderItem = () => {
-    if (items || items.length <= 0) {
+    if (!items || items.length <= 0) {
       return (
         <View>
           <Text>No trigger found</Text>
