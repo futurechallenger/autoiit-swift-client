@@ -55,16 +55,6 @@ export const DeveloperScreen = () => {
     }
   }, [isFocused]);
 
-  // useEffect(() => {
-  //   if (!userServices || userServices.length <= 0) {
-  //     return;
-  //   }
-  //   // const items = userServices.sort((el1, el2) => el1.id - el2.id);
-  //   dispatch(
-  //     getServiceById({ serviceId: userServices[userServices.length - 1].id }),
-  //   );
-  // }, [userServices]);
-
   useEffect(() => {
     if (!selectedItem) {
       return;
@@ -83,9 +73,6 @@ export const DeveloperScreen = () => {
             options={userServices}
             placeholder="Choose a service"
             onSelectChange={(v: any | undefined) => {
-              // if (selectedItem) {
-              //   dispatch(getServiceById({ serviceId: selectedItem.value }));
-              // }
               setSelectedItem(v);
             }}
           />
