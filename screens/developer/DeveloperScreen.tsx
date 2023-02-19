@@ -28,6 +28,9 @@ const { useState, useEffect } = React;
 const Tab = createMaterialTopTabNavigator();
 
 export const DeveloperScreen = () => {
+  const [selectedItem, setSelectedItem] = useState<
+    { value: number; label: string } | undefined
+  >();
   const isFocused = useIsFocused();
   const dispatch = useAppDispatch();
   const {
@@ -52,15 +55,22 @@ export const DeveloperScreen = () => {
     }
   }, [isFocused]);
 
+  // useEffect(() => {
+  //   if (!userServices || userServices.length <= 0) {
+  //     return;
+  //   }
+  //   // const items = userServices.sort((el1, el2) => el1.id - el2.id);
+  //   dispatch(
+  //     getServiceById({ serviceId: userServices[userServices.length - 1].id }),
+  //   );
+  // }, [userServices]);
+
   useEffect(() => {
-    if (!userServices || userServices.length <= 0) {
+    if (!selectedItem) {
       return;
     }
-    // const items = userServices.sort((el1, el2) => el1.id - el2.id);
-    dispatch(
-      getServiceById({ serviceId: userServices[userServices.length - 1].id }),
-    );
-  }, [userServices]);
+    dispatch(getServiceById({ serviceId: selectedItem.value }));
+  }, [selectedItem]);
 
   return (
     <View h="full">
@@ -72,10 +82,11 @@ export const DeveloperScreen = () => {
           <ThemedPicker
             options={userServices}
             placeholder="Choose a service"
-            onSelectChange={(index: number | undefined) => {
-              if (index) {
-                dispatch(getServiceById({ serviceId: index }));
-              }
+            onSelectChange={(v: any | undefined) => {
+              // if (selectedItem) {
+              //   dispatch(getServiceById({ serviceId: selectedItem.value }));
+              // }
+              setSelectedItem(v);
             }}
           />
         </HStack>
