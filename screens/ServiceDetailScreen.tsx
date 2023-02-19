@@ -6,6 +6,7 @@ import * as React from 'react';
 import { Platform, Share } from 'react-native';
 import { ServiceTab } from '../components/ServiceTab';
 import { SERVER_URL } from '../Lib/config';
+import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
 import { getServiceFullInfo } from '../redux/gql/serviceFullInfo';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
@@ -26,6 +27,11 @@ export const ServiceDetailScreen = () => {
     status,
     error,
   } = useAppSelector((state: RootState) => state.serviceFullInfo);
+  const {
+    serviceAuth,
+    status: getAuthStatus,
+    error: getAuthError,
+  } = useAppSelector((state: RootState) => state.getServiceAuth);
   const route = useRoute();
   const { item, service: routeService } = route?.params ?? {};
 
@@ -41,10 +47,11 @@ export const ServiceDetailScreen = () => {
         }
       };
     }
-  });
+  }, []);
 
   useEffect(() => {
     dispatch(getServiceFullInfo({ serviceId: routeService?.id }));
+    dispatch(getServiceAuth({ serviceId: routeService?.id }));
   }, [routeService.id]);
 
   const messageHandler = (event: MessageEvent) => {
@@ -71,6 +78,16 @@ export const ServiceDetailScreen = () => {
     }
   };
 
+  const renderConnectionButton = () => {
+    if (serviceAuth) {
+      return (
+        <Button maxW={200} w="160" minW={90} onPress={handleConnect}>
+          {connection === 'success' ? 'Connected' : 'Connect'}
+        </Button>
+      );
+    }
+  };
+
   return (
     <View justifyContent="center" alignItems="center" w="full">
       <Box
@@ -90,11 +107,7 @@ export const ServiceDetailScreen = () => {
       <Box padding="5">
         <Text>{serviceInfo?.description}</Text>
       </Box>
-      <Box>
-        <Button maxW={200} w="160" minW={90} onPress={handleConnect}>
-          {connection === 'success' ? 'Connected' : 'Connect'}
-        </Button>
-      </Box>
+      <Box>{renderConnectionButton()}</Box>
       {status === 'loading' && <Text>loading...</Text>}
       <ServiceTab
         selected={0}
