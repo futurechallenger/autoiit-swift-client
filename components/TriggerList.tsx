@@ -1,6 +1,6 @@
-import * as React from "react";
-import { FlatList, View, Text, Pressable } from "native-base";
-import * as Types from "../redux/types.generated";
+import * as React from 'react';
+import { FlatList, View, Text, Pressable } from 'native-base';
+import * as Types from '../redux/types.generated';
 
 export const TriggerList = ({
   data,
@@ -9,13 +9,7 @@ export const TriggerList = ({
   data: Types.ServiceTrigger[];
   onItemClick: (item: Types.ServiceTrigger) => void;
 }) => {
-  const items = [
-    ...(data ?? []),
-    {
-      name: undefined,
-      description: undefined,
-    } as Types.ServiceTrigger,
-  ];
+  const items = [...(data ?? [])];
 
   return (
     <FlatList
@@ -23,15 +17,20 @@ export const TriggerList = ({
       renderItem={({ item }) => {
         return (
           <Pressable
-            key={item.name ?? "empty"}
+            key={item?.name ?? 'empty'}
             onPress={() => onItemClick(item)}
           >
             <View>
-              <Text>{item.name ?? "Suggest a trigger"}</Text>
+              <Text>{item.name}</Text>
             </View>
           </Pressable>
         );
       }}
+      ListEmptyComponent={() => (
+        <View>
+          <Text>No trigger</Text>
+        </View>
+      )}
     />
   );
 };
