@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { SERVER_URL } from '../Lib/config';
 import {
   View,
   Text,
@@ -9,16 +10,27 @@ import {
   Box,
   Button,
 } from 'native-base';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { Platform } from 'react-native';
+
+let popup: Window | null = null;
 
 export const ConnectionScreen = () => {
+  const navigation = useNavigation();
   const route = useRoute();
   const { item, service: routeService } = route?.params ?? {};
 
   const handleClick = () => {
-    console.log('Handle click `connection` button');
+    if (Platform.OS !== 'web') {
+      navigation.navigate('Connect');
+    } else {
+      popup = window.open(
+        `${SERVER_URL}/login/${routeService?.id}/service`,
+        'popUpWindow',
+        'height=600,width=900,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes',
+      );
+    }
   };
-
   const description = routeService?.description ?? routeService?.name ?? '';
 
   return (
