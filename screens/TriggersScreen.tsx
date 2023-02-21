@@ -28,7 +28,7 @@ export const TriggersScreen = () => {
 
   const handleItemClick = (item: Types.ServiceTrigger) => {
     // navigation.navigate('ServiceDetail', { item, service });
-    navigation.navigate('Connection', { item, service });
+    navigation.navigate('Connection', { trigger: item, service });
   };
 
   return (
