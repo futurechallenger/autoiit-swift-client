@@ -427,6 +427,7 @@ export type ServiceAuth = {
   refreshTokenTtl?: Maybe<Scalars['Float']>;
   scope?: Maybe<Scalars['String']>;
   serviceId?: Maybe<Scalars['Int']>;
+  category?: Maybe<Scalars['Int']>;
   tokenSecret?: Maybe<Scalars['String']>;
   tokenUrl?: Maybe<Scalars['String']>;
 };
@@ -447,6 +448,7 @@ export type ServiceAuthInput = {
   refreshTokenTtl?: InputMaybe<Scalars['Float']>;
   scope?: InputMaybe<Scalars['String']>;
   serviceId: Scalars['Int'];
+  category: Scalars['Int'];
   tokenSecret?: InputMaybe<Scalars['String']>;
   tokenUrl?: InputMaybe<Scalars['String']>;
 };

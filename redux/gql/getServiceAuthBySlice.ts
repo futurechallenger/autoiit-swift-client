@@ -83,5 +83,6 @@ export const GetServiceAuthsByDocument = `
     serviceId
     tokenSecret
     tokenUrl
+    category
   }
 }`;
