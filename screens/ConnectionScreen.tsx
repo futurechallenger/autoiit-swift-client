@@ -59,7 +59,7 @@ export const ConnectionScreen = () => {
 
   useEffect(() => {
     if (connection === 'success') {
-      // navigation.navigate();
+      navigation.navigate('CompleteTrigger', { trigger });
     }
   }, [connection]);
 
