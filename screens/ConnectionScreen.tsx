@@ -12,15 +12,70 @@ import {
 } from 'native-base';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Platform } from 'react-native';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
+import { RootState } from '../redux/store';
 
 let popup: Window | null = null;
 
+const { useState, useEffect } = React;
+
 export const ConnectionScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useAppDispatch();
   const route = useRoute();
-  const { item, service: routeService } = route?.params ?? {};
+  const { trigger, service: routeService } = route?.params ?? {};
+  const [connection, setConnection] = useState('');
 
-  const handleClick = () => {
+  const { serviceAuth, status, error } = useAppSelector(
+    (state: RootState) => state.getServiceAuth,
+  );
+
+  useEffect(() => {
+    if (!routeService?.id) {
+      return;
+    }
+
+    dispatch(getServiceAuth({ serviceId: routeService?.id }));
+  }, [routeService?.id]);
+
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      window.addEventListener('message', messageHandler);
+
+      return function cleanup() {
+        if (Platform.OS === 'web') {
+          if (popup) {
+            window.removeEventListener('message', messageHandler);
+          }
+        }
+      };
+    }
+  }, []);
+
+  const messageHandler = (event: MessageEvent) => {
+    if (event?.data?.source === 'autoiit') {
+      setConnection(event?.data?.message);
+    }
+  };
+
+  const renderConnectionButton = () => {
+    if (!serviceAuth) {
+      return null;
+    }
+
+    return (
+      <Button maxW={200} w="160" minW={90} onPress={handleConnect}>
+        {connection === 'success' ? 'Connected' : 'Connect'}
+      </Button>
+    );
+  };
+
+  const handleConnect = () => {
+    if (connection === 'success') {
+      return;
+    }
+
     if (Platform.OS !== 'web') {
       navigation.navigate('Connect');
     } else {
@@ -42,6 +97,7 @@ export const ConnectionScreen = () => {
       </Box>
       <Box marginTop={10} w="100">
         <Button onPress={handleClick}>Connect</Button>
+        {renderConnectionButton()}
       </Box>
     </View>
   );
