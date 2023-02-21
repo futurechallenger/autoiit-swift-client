@@ -10,7 +10,11 @@ import {
   Box,
   Button,
 } from 'native-base';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+  NavigationContainerRefContext,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import { Platform } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
@@ -52,6 +56,12 @@ export const ConnectionScreen = () => {
       };
     }
   }, []);
+
+  useEffect(() => {
+    if (connection === 'success') {
+      // navigation.navigate();
+    }
+  }, [connection]);
 
   const messageHandler = (event: MessageEvent) => {
     if (event?.data?.source === 'autoiit') {
@@ -96,7 +106,6 @@ export const ConnectionScreen = () => {
         <Text>{description}</Text>
       </Box>
       <Box marginTop={10} w="100">
-        <Button onPress={handleClick}>Connect</Button>
         {renderConnectionButton()}
       </Box>
     </View>
