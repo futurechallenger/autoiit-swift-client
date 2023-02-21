@@ -21,9 +21,7 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
 
   const dispatch = useAppDispatch();
   const { triggerFields, status, error } = useAppSelector(
-    (state: RootState) => {
-      state.triggerFields;
-    },
+    (state: RootState) => state.triggerFields,
   );
 
   useEffect(() => {
