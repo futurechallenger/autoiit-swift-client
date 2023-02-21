@@ -62,16 +62,17 @@ export const AuthScene = ({ params }: { params: any }) => {
   useEffect(() => {
     const authInfo: Types.ServiceAuth | undefined | null =
       serviceAuth ?? updatedServiceAuth;
-    if (!authInfo) {
-      return;
-    }
 
-    setCategory(authInfo.category + '');
-    setClientId(authInfo.clientId);
-    setClientSecret(authInfo.clientSecret);
-    setTokenUrl(authInfo.tokenUrl);
-    setRedirectUrl(authInfo.redirectUrl);
-    setAuthUrl(authInfo.authorizationUrl);
+    // if (!authInfo?.id) {
+    //   return;
+    // }
+
+    setCategory((authInfo?.category ?? '') + '');
+    setClientId(authInfo?.clientId ?? '');
+    setClientSecret(authInfo?.clientSecret ?? '');
+    setTokenUrl(authInfo?.tokenUrl ?? '');
+    setRedirectUrl(authInfo?.redirectUrl ?? '');
+    setAuthUrl(authInfo?.authorizationUrl ?? '');
   }, [serviceAuth, updatedServiceAuth]);
 
   const handleClick = () => {
@@ -109,7 +110,7 @@ export const AuthScene = ({ params }: { params: any }) => {
   };
 
   const renderAuthContent = () => {
-    if (category === '1') {
+    if (!category || category === '1') {
       return <Box style={{ height: '100%', width: '100%' }} />;
     } else {
       // auth-expires or auth-no-expires
