@@ -1,16 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { sendRequest } from "../baseApi";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { sendRequest } from '../baseApi';
 
-import * as Types from "../types.generated";
+import * as Types from '../types.generated';
 
 export const addServiceAuth = createAsyncThunk(
-  "addServiceAuth",
+  'addServiceAuth',
   async (variables: AddServiceAuthMutationVariables) => {
     return sendRequest<AddServiceAuthMutation>({
       variables,
       query: AddServiceAuthDocument,
     });
-  }
+  },
 );
 
 const initialState: InitialStateType = {
@@ -20,13 +20,13 @@ const initialState: InitialStateType = {
 };
 
 export const addServiceAuthSlice = createSlice({
-  name: "addServiceAuthSlice",
+  name: 'addServiceAuthSlice',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
       .addCase(addServiceAuth.pending, (state, action) => {
-        state.status = "loading";
+        state.status = 'loading';
         if (state.error) {
           state.error = undefined;
         }
@@ -34,15 +34,15 @@ export const addServiceAuthSlice = createSlice({
       .addCase(addServiceAuth.fulfilled, (state, action) => {
         const payload = action.payload;
         if (payload?.errors) {
-          state.status = "failed";
+          state.status = 'failed';
           state.error = payload.errors?.[0]?.message;
         } else {
-          state.status = "succeeded";
+          state.status = 'succeeded';
           state.serviceAuth = payload?.data?.addServiceAuth;
         }
       })
       .addCase(addServiceAuth.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.error.message;
       });
   },
@@ -59,13 +59,14 @@ export type AddServiceAuthMutationVariables = Types.Exact<{
 }>;
 
 export type AddServiceAuthMutation = {
-  __typename?: "Mutation";
+  __typename?: 'Mutation';
   addServiceAuth: {
-    __typename?: "ServiceAuth";
+    __typename?: 'ServiceAuth';
     id?: number | null;
     providerName?: string | null;
     scope?: string | null;
     serviceId?: number | null;
+    category?: number | null;
   };
 };
 
@@ -87,6 +88,7 @@ export const AddServiceAuthDocument = `
     refreshTokenTtl
     scope
     serviceId
+    category
     tokenSecret
     tokenUrl
   }
