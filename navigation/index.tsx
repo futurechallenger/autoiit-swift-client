@@ -45,6 +45,7 @@ import {
 import { AuthContext } from './AuthContext';
 import LinkingConfiguration from './LinkingConfiguration';
 import { ConnectionScreen } from '../screens/ConnectionScreen';
+import { FlowTriggerScreen } from '../screens/flow/FlowTriggerScreen';
 
 const { useState, useEffect } = React;
 
@@ -112,6 +113,10 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
           />
           <NavStack.Screen name="Triggers" component={TriggersScreen} />
           <NavStack.Screen name="Connection" component={ConnectionScreen} />
+          <NavStack.Screen
+            name="CompleteTrigger"
+            component={FlowTriggerScreen}
+          />
           <NavStack.Screen
             name="ServiceDetail"
             component={ServiceDetailScreen}

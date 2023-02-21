@@ -1,16 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { sendRequest } from "../baseApi";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { sendRequest } from '../baseApi';
 
-import * as Types from "../types.generated";
+import * as Types from '../types.generated';
 
 export const getTriggerFields = createAsyncThunk(
-  "getTriggerFields",
+  'getTriggerFields',
   async (variables: GetTriggersFieldsQueryVariables) => {
     return sendRequest<GetTriggersFieldsQuery>({
       variables,
       query: GetTriggersFieldsDocument,
     });
-  }
+  },
 );
 
 const initialState: InitialStateType = {
@@ -20,13 +20,13 @@ const initialState: InitialStateType = {
 };
 
 export const getTriggerFieldsSlice = createSlice({
-  name: "getTriggerFieldsSlice",
+  name: 'getTriggerFieldsSlice',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
       .addCase(getTriggerFields.pending, (state, action) => {
-        state.status = "loading";
+        state.status = 'loading';
         if (state.error) {
           state.error = undefined;
         }
@@ -34,15 +34,15 @@ export const getTriggerFieldsSlice = createSlice({
       .addCase(getTriggerFields.fulfilled, (state, action) => {
         const payload = action.payload;
         if (payload?.errors) {
-          state.status = "failed";
+          state.status = 'failed';
           state.error = payload.errors?.[0]?.message;
         } else {
-          state.status = "succeeded";
+          state.status = 'succeeded';
           state.triggerFields = payload?.data?.triggerFieldsBy ?? [];
         }
       })
       .addCase(getTriggerFields.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.error.message;
       });
   },
@@ -55,11 +55,11 @@ interface InitialStateType {
 }
 
 export type GetTriggersFieldsQueryVariables = Types.Exact<{
-  triggerId: Types.Scalars["Int"];
+  triggerId: Types.Scalars['Int'];
 }>;
 
 export type GetTriggersFieldsQuery = {
-  __typename?: "Query";
+  __typename?: 'Query';
   triggerFieldsBy?: Array<Types.TriggerField> | null;
 };
 
