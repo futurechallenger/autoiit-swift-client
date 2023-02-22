@@ -82,19 +82,21 @@ export const ConnectionScreen = () => {
   };
 
   const handleConnect = () => {
-    if (connection === 'success') {
-      return;
-    }
+    // if (connection === 'success') {
+    //   return;
+    // }
+    // if (Platform.OS !== 'web') {
+    //   navigation.navigate('Connect');
+    // } else {
+    //   popup = window.open(
+    //     `${SERVER_URL}/login/${routeService?.id}/service`,
+    //     'popUpWindow',
+    //     'height=600,width=900,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes',
+    //   );
+    // }
+    // TODO: for test only
 
-    if (Platform.OS !== 'web') {
-      navigation.navigate('Connect');
-    } else {
-      popup = window.open(
-        `${SERVER_URL}/login/${routeService?.id}/service`,
-        'popUpWindow',
-        'height=600,width=900,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes',
-      );
-    }
+    navigation.navigate('CompleteTrigger', { trigger });
   };
   const description = routeService?.description ?? routeService?.name ?? '';
 
