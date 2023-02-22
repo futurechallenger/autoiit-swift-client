@@ -8,6 +8,7 @@ import { TriggerList } from '../components/TriggerList';
 import { useNavigation } from '@react-navigation/native';
 import * as Types from '../redux/types.generated';
 import { getServiceTriggers } from '../redux/gql/getTriggersSlice';
+import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
 
 const { useEffect } = React;
 
@@ -19,16 +20,27 @@ export const TriggersScreen = () => {
   const { triggers, error, status } = useAppSelector(
     (state: RootState) => state.serviceTriggers,
   );
+  const {
+    serviceAuth,
+    status: gettingAuthStatus,
+    error: gettingAuthError,
+  } = useAppSelector((state: RootState) => state.getServiceAuth);
 
   useEffect(() => {
-    dispatch(getServiceTriggers({ serviceId: service.id }));
+    if (service?.id) {
+      dispatch(getServiceTriggers({ serviceId: service?.id }));
+      dispatch(getServiceAuth({ serviceId: service?.id }));
+    }
   }, []);
 
   const navigation = useNavigation();
 
   const handleItemClick = (item: Types.ServiceTrigger) => {
-    // navigation.navigate('ServiceDetail', { item, service });
-    navigation.navigate('Connection', { trigger: item, service });
+    if (!serviceAuth) {
+      navigation.navigate('CompleteTrigger', { trigger: item, service });
+    } else {
+      navigation.navigate('Connection', { trigger: item, service });
+    }
   };
 
   return (
