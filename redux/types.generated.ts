@@ -119,6 +119,14 @@ export type FieldOption = {
   value?: Maybe<Scalars['String']>;
 };
 
+export type FieldOptionInput = {
+  actionId?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  label?: InputMaybe<Scalars['String']>;
+  triggerId?: InputMaybe<Scalars['Int']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 export type MostSearchedServiceType = {
   __typename?: 'MostSearchedServiceType';
   createdBy?: Maybe<Scalars['Int']>;
@@ -135,6 +143,7 @@ export type Mutation = {
   addAutoFlow?: Maybe<AutoFlow>;
   addExposeField?: Maybe<ExposeField>;
   addExposeFields: Scalars['Int'];
+  addFieldOptions?: Maybe<Scalars['Int']>;
   addService: Service;
   addServiceAction?: Maybe<ServiceAction>;
   addServiceApi: ServiceApi;
@@ -157,6 +166,7 @@ export type Mutation = {
   updateActionOutputField?: Maybe<ActionOutputField>;
   updateAutoFlow?: Maybe<AutoFlow>;
   updateExposeField?: Maybe<ExposeField>;
+  updateFieldOption?: Maybe<FieldOption>;
   updateMostSearchedService: Scalars['Boolean'];
   updateService: Service;
   updateServiceAction?: Maybe<ServiceAction>;
@@ -188,6 +198,10 @@ export type MutationAddExposeFieldArgs = {
 
 export type MutationAddExposeFieldsArgs = {
   exposeFields: Array<ExposeFieldInput>;
+};
+
+export type MutationAddFieldOptionsArgs = {
+  options: Array<FieldOptionInput>;
 };
 
 export type MutationAddServiceArgs = {
@@ -273,6 +287,10 @@ export type MutationUpdateAutoFlowArgs = {
 
 export type MutationUpdateExposeFieldArgs = {
   exposeField: ExposeFieldInput;
+};
+
+export type MutationUpdateFieldOptionArgs = {
+  option: FieldOptionInput;
 };
 
 export type MutationUpdateMostSearchedServiceArgs = {
