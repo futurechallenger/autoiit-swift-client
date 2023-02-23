@@ -19,6 +19,7 @@ import {
   reverseValidationRule,
   ValidationRule,
 } from '../../../constants/Trigger';
+import { DropdownLabelValueInput } from '../../../components/DropdownLabelValueInput';
 
 const { useState, useEffect } = React;
 
@@ -189,9 +190,7 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
         {inputSourceType === '1' ? (
           <Input value={inputSourceApi} />
         ) : (
-          <View>
-            <Text>Set values here</Text>
-          </View>
+          <DropdownLabelValueInput />
         )}
       </VStack>
       {renderValidation()}

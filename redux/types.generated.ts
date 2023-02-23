@@ -21,6 +21,7 @@ export type Scalars = {
 export type ActionInputField = {
   __typename?: 'ActionInputField';
   deleted?: Maybe<Scalars['Int']>;
+  fieldSourceApi?: Maybe<Scalars['String']>;
   fieldSourceType?: Maybe<Scalars['Int']>;
   fieldType?: Maybe<Scalars['Int']>;
   helperText?: Maybe<Scalars['String']>;
@@ -32,6 +33,7 @@ export type ActionInputField = {
 
 export type ActionInputFieldInput = {
   deleted?: InputMaybe<Scalars['Int']>;
+  fieldSourceApi?: InputMaybe<Scalars['String']>;
   fieldSourceType?: InputMaybe<Scalars['Int']>;
   fieldType?: InputMaybe<Scalars['Int']>;
   helperText?: InputMaybe<Scalars['String']>;
@@ -106,6 +108,15 @@ export type ExposeFieldInput = {
   label?: InputMaybe<Scalars['String']>;
   parserPath?: InputMaybe<Scalars['String']>;
   serviceTriggerId?: InputMaybe<Scalars['Int']>;
+};
+
+export type FieldOption = {
+  __typename?: 'FieldOption';
+  actionId?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  label?: Maybe<Scalars['String']>;
+  triggerId?: Maybe<Scalars['Int']>;
+  value?: Maybe<Scalars['String']>;
 };
 
 export type MostSearchedServiceType = {
@@ -304,6 +315,7 @@ export type Query = {
   actions?: Maybe<Array<ServiceAction>>;
   autoFlow?: Maybe<AutoFlow>;
   exposeField?: Maybe<ExposeField>;
+  fieldOptionsByType?: Maybe<Array<FieldOption>>;
   flowsByService?: Maybe<Array<AutoFlow>>;
   getExposeFields?: Maybe<Array<ExposeField>>;
   mostSearchServices?: Maybe<Array<MostSearchedServiceType>>;
@@ -347,6 +359,11 @@ export type QueryAutoFlowArgs = {
 
 export type QueryExposeFieldArgs = {
   exposeFieldId: Scalars['Int'];
+};
+
+export type QueryFieldOptionsByTypeArgs = {
+  relationId: Scalars['Int'];
+  typeId: Scalars['Int'];
 };
 
 export type QueryFlowsByServiceArgs = {
