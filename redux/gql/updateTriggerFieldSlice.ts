@@ -75,6 +75,8 @@ export const EditTriggerFieldDocument = `
     label
     helperText
     inputType
+    inputSourceType
+    inputSourceApi
     validationRule
     validationRequired
     serviceTriggerId

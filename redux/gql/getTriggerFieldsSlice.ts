@@ -72,6 +72,8 @@ export const GetTriggersFieldsDocument = `
     helperText
     deleted
     inputType
+    inputSourceType
+    inputSourceApi
     validationRule
     validationRequired
     serviceTriggerId

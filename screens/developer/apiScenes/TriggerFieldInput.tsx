@@ -169,6 +169,11 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
           <Select.Item label="Nested dropdown list" value="nexted-dropdown" /> */}
           <Select.Item label="Multiple checkbox selection" value="2" />
         </Select>
+        <InputTitle>Data source for dropdown list</InputTitle>
+        <Select>
+          <Select.Item label="Options specified here" value="1" />
+          <Select.Item label="Options from your api" value="2" />
+        </Select>
       </VStack>
       {renderValidation()}
       {renderValidationRule()}
