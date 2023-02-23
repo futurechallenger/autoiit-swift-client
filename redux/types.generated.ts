@@ -21,6 +21,7 @@ export type Scalars = {
 export type ActionInputField = {
   __typename?: 'ActionInputField';
   deleted?: Maybe<Scalars['Int']>;
+  fieldSourceType?: Maybe<Scalars['Int']>;
   fieldType?: Maybe<Scalars['Int']>;
   helperText?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -31,6 +32,7 @@ export type ActionInputField = {
 
 export type ActionInputFieldInput = {
   deleted?: InputMaybe<Scalars['Int']>;
+  fieldSourceType?: InputMaybe<Scalars['Int']>;
   fieldType?: InputMaybe<Scalars['Int']>;
   helperText?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['Int']>;
@@ -66,8 +68,8 @@ export type AutoFlow = {
   __typename?: 'AutoFlow';
   actionId?: Maybe<Scalars['Int']>;
   actionInfo?: Maybe<Scalars['String']>;
-  published?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
   triggerId?: Maybe<Scalars['Int']>;
   triggerInfo?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['Int']>;
@@ -77,6 +79,7 @@ export type AutoFlowInput = {
   actionId?: InputMaybe<Scalars['Int']>;
   actionInfo?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['Int']>;
+  title?: InputMaybe<Scalars['String']>;
   triggerId?: InputMaybe<Scalars['Int']>;
   triggerInfo?: InputMaybe<Scalars['String']>;
   userId?: InputMaybe<Scalars['Int']>;
@@ -130,9 +133,13 @@ export type Mutation = {
   addTriggerFields?: Maybe<Scalars['Int']>;
   addUser?: Maybe<UserInfo>;
   deleteActionOutputField?: Maybe<ActionOutputField>;
+  deleteServiceAction?: Maybe<ServiceAction>;
   loginIn: Scalars['String'];
   removeActionInputField?: Maybe<ActionInputField>;
   removeAutoFlow?: Maybe<AutoFlow>;
+  removeExposeField?: Maybe<ExposeField>;
+  removeServiceTrigger: Scalars['Boolean'];
+  removeTriggerField: Scalars['Boolean'];
   signIn: Scalars['String'];
   testCode: Scalars['Boolean'];
   updateActionInputField?: Maybe<ActionInputField>;
@@ -141,8 +148,10 @@ export type Mutation = {
   updateExposeField?: Maybe<ExposeField>;
   updateMostSearchedService: Scalars['Boolean'];
   updateService: Service;
+  updateServiceAction?: Maybe<ServiceAction>;
   updateServiceApi?: Maybe<ServiceApi>;
   updateServiceAuth?: Maybe<ServiceAuth>;
+  updateServiceTrigger?: Maybe<ServiceTrigger>;
   updateTriggerField?: Maybe<TriggerField>;
 };
 
@@ -207,6 +216,10 @@ export type MutationDeleteActionOutputFieldArgs = {
   actionOutputFieldId: Scalars['Int'];
 };
 
+export type MutationDeleteServiceActionArgs = {
+  serviceActionId: Scalars['Int'];
+};
+
 export type MutationLoginInArgs = {
   userInfo: UserInfoInput;
 };
@@ -217,6 +230,18 @@ export type MutationRemoveActionInputFieldArgs = {
 
 export type MutationRemoveAutoFlowArgs = {
   autoFlowId: Scalars['Int'];
+};
+
+export type MutationRemoveExposeFieldArgs = {
+  fieldId: Scalars['Int'];
+};
+
+export type MutationRemoveServiceTriggerArgs = {
+  triggerId: Scalars['Int'];
+};
+
+export type MutationRemoveTriggerFieldArgs = {
+  triggerFieldId: Scalars['Int'];
 };
 
 export type MutationSignInArgs = {
@@ -251,12 +276,20 @@ export type MutationUpdateServiceArgs = {
   searchItems?: InputMaybe<Scalars['String']>;
 };
 
+export type MutationUpdateServiceActionArgs = {
+  serviceAction: ServiceActionInput;
+};
+
 export type MutationUpdateServiceApiArgs = {
   serviceApi: ServiceApiInput;
 };
 
 export type MutationUpdateServiceAuthArgs = {
   service: ServiceAuthInput;
+};
+
+export type MutationUpdateServiceTriggerArgs = {
+  serviceTriggerInput: ServiceTriggerInput;
 };
 
 export type MutationUpdateTriggerFieldArgs = {
@@ -266,10 +299,13 @@ export type MutationUpdateTriggerFieldArgs = {
 export type Query = {
   __typename?: 'Query';
   actionInputField?: Maybe<ActionInputField>;
+  actionInputFields?: Maybe<Array<ActionInputField>>;
   actionOutputField?: Maybe<ActionOutputField>;
+  actions?: Maybe<Array<ServiceAction>>;
   autoFlow?: Maybe<AutoFlow>;
   exposeField?: Maybe<ExposeField>;
   flowsByService?: Maybe<Array<AutoFlow>>;
+  getExposeFields?: Maybe<Array<ExposeField>>;
   mostSearchServices?: Maybe<Array<MostSearchedServiceType>>;
   permission: Scalars['String'];
   searchServices?: Maybe<Array<Service>>;
@@ -277,11 +313,14 @@ export type Query = {
   serviceAction?: Maybe<ServiceAction>;
   serviceApi?: Maybe<ServiceApi>;
   serviceApis: Array<ServiceApi>;
+  serviceAuthBy?: Maybe<ServiceAuth>;
   serviceAuthByTrigger?: Maybe<ServiceAuth>;
+  serviceAuthsBy: Array<ServiceAuth>;
   services: Array<Service>;
   servicesByType?: Maybe<Array<Service>>;
   servicesByUserId?: Maybe<Array<Service>>;
   triggerField?: Maybe<TriggerField>;
+  triggerFieldsBy?: Maybe<Array<TriggerField>>;
   triggers?: Maybe<Array<ServiceTrigger>>;
   userinfo?: Maybe<UserInfo>;
 };
@@ -290,8 +329,16 @@ export type QueryActionInputFieldArgs = {
   actionInputFieldId: Scalars['Int'];
 };
 
+export type QueryActionInputFieldsArgs = {
+  actionId: Scalars['Int'];
+};
+
 export type QueryActionOutputFieldArgs = {
   actionOutputFieldId: Scalars['Int'];
+};
+
+export type QueryActionsArgs = {
+  serviceId: Scalars['Int'];
 };
 
 export type QueryAutoFlowArgs = {
@@ -304,6 +351,10 @@ export type QueryExposeFieldArgs = {
 
 export type QueryFlowsByServiceArgs = {
   serviceId: Scalars['Int'];
+};
+
+export type QueryGetExposeFieldsArgs = {
+  triggerId: Scalars['Int'];
 };
 
 export type QuerySearchServicesArgs = {
@@ -329,8 +380,16 @@ export type QueryServiceApisArgs = {
   serviceId: Scalars['Int'];
 };
 
+export type QueryServiceAuthByArgs = {
+  serviceId: Scalars['Int'];
+};
+
 export type QueryServiceAuthByTriggerArgs = {
   triggerId: Scalars['Int'];
+};
+
+export type QueryServiceAuthsByArgs = {
+  serviceId: Scalars['Int'];
 };
 
 export type QueryServicesByTypeArgs = {
@@ -339,6 +398,10 @@ export type QueryServicesByTypeArgs = {
 
 export type QueryTriggerFieldArgs = {
   triggerFieldId: Scalars['Int'];
+};
+
+export type QueryTriggerFieldsByArgs = {
+  triggerId: Scalars['Int'];
 };
 
 export type QueryTriggersArgs = {
@@ -415,6 +478,7 @@ export type ServiceAuth = {
   accessToken?: Maybe<Scalars['String']>;
   accessTokenTtl?: Maybe<Scalars['Float']>;
   authorizationUrl?: Maybe<Scalars['String']>;
+  category?: Maybe<Scalars['Int']>;
   clientId?: Maybe<Scalars['String']>;
   clientSecret?: Maybe<Scalars['String']>;
   demoAccountLogin?: Maybe<Scalars['String']>;
@@ -427,7 +491,6 @@ export type ServiceAuth = {
   refreshTokenTtl?: Maybe<Scalars['Float']>;
   scope?: Maybe<Scalars['String']>;
   serviceId?: Maybe<Scalars['Int']>;
-  category?: Maybe<Scalars['Int']>;
   tokenSecret?: Maybe<Scalars['String']>;
   tokenUrl?: Maybe<Scalars['String']>;
 };
@@ -436,6 +499,7 @@ export type ServiceAuthInput = {
   accessToken?: InputMaybe<Scalars['String']>;
   accessTokenTtl?: InputMaybe<Scalars['Float']>;
   authorizationUrl?: InputMaybe<Scalars['String']>;
+  category?: InputMaybe<Scalars['Int']>;
   clientId?: InputMaybe<Scalars['String']>;
   clientSecret?: InputMaybe<Scalars['String']>;
   demoAccountLogin?: InputMaybe<Scalars['String']>;
@@ -448,7 +512,6 @@ export type ServiceAuthInput = {
   refreshTokenTtl?: InputMaybe<Scalars['Float']>;
   scope?: InputMaybe<Scalars['String']>;
   serviceId: Scalars['Int'];
-  category: Scalars['Int'];
   tokenSecret?: InputMaybe<Scalars['String']>;
   tokenUrl?: InputMaybe<Scalars['String']>;
 };
@@ -479,6 +542,8 @@ export type TriggerField = {
   deleted?: Maybe<Scalars['Int']>;
   helperText?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
+  inputSourceApi?: Maybe<Scalars['String']>;
+  inputSourceType?: Maybe<Scalars['Int']>;
   inputType?: Maybe<Scalars['Int']>;
   keyName?: Maybe<Scalars['String']>;
   label?: Maybe<Scalars['String']>;
@@ -491,6 +556,8 @@ export type TriggerFieldInput = {
   deleted?: InputMaybe<Scalars['Int']>;
   helperText?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['Int']>;
+  inputSourceApi?: InputMaybe<Scalars['String']>;
+  inputSourceType?: InputMaybe<Scalars['Int']>;
   inputType?: InputMaybe<Scalars['Int']>;
   keyName?: InputMaybe<Scalars['String']>;
   label?: InputMaybe<Scalars['String']>;

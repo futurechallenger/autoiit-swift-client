@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  Input,
   Button,
   CheckIcon,
   Select,
@@ -41,6 +42,8 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
   const [helperText, setHelperText] = useState();
   const [keyName, setkeyName] = useState();
   const [inputType, setInputType] = useState();
+  const [inputSourceType, setInputSourceType] = useState();
+  const [inputSourceApi, setInputSourceApi] = useState();
   const [inputValidataion, setInputValidation] = useState();
   const [validationRule, setValidationRule] = useState();
 
@@ -61,6 +64,10 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
     setHelperText(fieldInfo?.helperText);
     setkeyName(fieldInfo?.keyName);
     setInputType(fieldInfo?.inputType ? '' + fieldInfo?.inputType : undefined);
+    setInputSourceType(
+      fieldInfo?.inputSourceType ? '' + fieldInfo?.inputSourceType : undefined,
+    );
+    setInputType(fieldInfo?.inputSourceApi);
     setInputValidation(
       fieldInfo?.validationRequired ? 'need-validation' : 'no-validation',
     );
@@ -169,6 +176,23 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
           <Select.Item label="Nested dropdown list" value="nexted-dropdown" /> */}
           <Select.Item label="Multiple checkbox selection" value="2" />
         </Select>
+        <InputTitle>Datasource for dropdown list</InputTitle>
+        <Select
+          selectedValue={inputSourceType}
+          accessibilityLabel="Datasource for dropdown list"
+          onValueChange={(value) => setInputSourceType(value)}
+        >
+          <Select.Item label="Options specified here" value="0" />
+          <Select.Item label="Options from your api" value="1" />
+        </Select>
+
+        {inputSourceType === '1' ? (
+          <Input value={inputSourceApi} />
+        ) : (
+          <View>
+            <Text>Set values here</Text>
+          </View>
+        )}
       </VStack>
       {renderValidation()}
       {renderValidationRule()}
@@ -197,6 +221,8 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
                 helperText,
                 keyName,
                 inputType: parseInt(inputType ?? '-1', 10),
+                inputSourceType: parseInt(inputSourceType ?? '0', 10),
+                inputSourceApi,
                 validationRule: convertValidationRule(validationRule),
                 validationRequired: inputValidataion === 'need-validtion',
                 serviceTriggerId: triggerInfo?.id,
