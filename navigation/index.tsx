@@ -121,10 +121,6 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
             name="ServiceDetail"
             component={ServiceDetailScreen}
           />
-          <NavStack.Screen
-            name="CompleteTriggerFields"
-            component={TriggerFieldsScreen}
-          />
         </>
       )}
     </NavStack.Navigator>
