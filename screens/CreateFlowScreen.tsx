@@ -24,7 +24,11 @@ export const CreateFlowScreen = () => {
         <Text fontSize="60" marginRight="10" marginY="5">
           When
         </Text>
-        <Button onPress={() => navigation.navigate('ChooseService')}>
+        <Button
+          onPress={() =>
+            navigation.navigate('ChooseService', { phrase: 'Trigger' })
+          }
+        >
           Add
         </Button>
       </View>
@@ -41,7 +45,13 @@ export const CreateFlowScreen = () => {
         <Text fontSize="60" marginRight="10" marginY="5">
           Then
         </Text>
-        <Button>Add</Button>
+        <Button
+          onPress={() =>
+            navigation.navigate('ChooseService', { phrase: 'Action' })
+          }
+        >
+          Add
+        </Button>
       </View>
     </View>
   );

@@ -14,7 +14,7 @@ const { useEffect } = React;
 
 export const TriggersScreen = () => {
   const route = useRoute();
-  const { item: service } = route.params;
+  const { item: service } = route?.params ?? {};
 
   const dispatch = useAppDispatch();
   const { triggers, error, status } = useAppSelector(
