@@ -42,6 +42,7 @@ import { removeTriggerExposeFieldSlice } from './gql/removeTriggerExpopseFieldSl
 import { getFieldOptionsSlice } from './gql/getFieldOptionsSlice';
 import { addFieldOptionsSlice } from './gql/addFieldOptionsSlice';
 import { updateFieldOptionSlice } from './gql/updateFieldOptionSlice';
+import { AddAutoFlowSlice } from './gql/addAutoFlowSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -86,6 +87,7 @@ export const store = configureStore({
     fieldOptions: getFieldOptionsSlice.reducer,
     addFieldOptions: addFieldOptionsSlice.reducer,
     updateFieldOption: updateFieldOptionSlice.reducer,
+    addAutoFlow: AddAutoFlowSlice.reducer,
   }),
 });
 
