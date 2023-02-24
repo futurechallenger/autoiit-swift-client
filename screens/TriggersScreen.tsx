@@ -40,10 +40,11 @@ export const TriggersScreen = () => {
   const navigation = useNavigation();
 
   const handleItemClick = (item: Types.ServiceTrigger) => {
+    // TODO: Deal with auth completed scenario
     if (!serviceAuth) {
-      navigation.navigate('CompleteTrigger', { trigger: item, service });
+      navigation.navigate('CompleteTrigger', { item, service });
     } else {
-      navigation.navigate('Connection', { trigger: item, service });
+      navigation.navigate('Connection', { item, service });
     }
   };
 

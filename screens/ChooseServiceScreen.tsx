@@ -33,11 +33,11 @@ export const ChooseServiceScreen = () => {
 
   const handleNav = (item) => {
     if (phrase === 'Action') {
-      navigation.navigate('Actions', { item });
+      navigation.navigate('Actions', { item, phrase });
       return;
     }
 
-    navigation.navigate('Triggers', { item });
+    navigation.navigate('Triggers', { item, phrase });
   };
 
   return (
