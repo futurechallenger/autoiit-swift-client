@@ -6,7 +6,11 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 
 import { Picker } from '@react-native-picker/picker';
-import { useRoute } from '@react-navigation/native';
+import {
+  StackActions,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import * as Types from '../../redux/types.generated';
 import { addAutoFlow } from '../../redux/gql/addAutoFlowSlice';
 
@@ -25,6 +29,7 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
 }) => {
   const route = useRoute();
   const { trigger } = route?.params ?? {};
+  const navigation = useNavigation();
 
   const [triggerInfo, setTriggerInfo] = useState({});
 
@@ -37,11 +42,6 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
     status: flowStatus,
     error: flowError,
   } = useAppSelector((state: RootState) => state.addAutoFlow);
-  const {
-    autoFlow: updatedAutoFlow,
-    status: updatedFlowStatus,
-    error: updatedFlowError,
-  } = useAppSelector((state: RootState) => state.updateAutoFlow);
 
   useEffect(() => {
     if (!trigger?.id) {
@@ -50,6 +50,14 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
 
     dispatch(getTriggerFields({ triggerId: trigger?.id }));
   }, [trigger]);
+
+  useEffect(() => {
+    if (!autoFlow) {
+      return;
+    }
+
+    navigation.dispatch(StackActions.popToTop());
+  }, [autoFlow]);
 
   const handleCreate = () => {
     dispatch(
@@ -72,12 +80,15 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
     keyName: string,
   ) => {
     const inputCompType = inputType ?? 0;
+
     switch (inputCompType) {
       case -1:
       case 0:
         return (
           <Input
-            onChangeText={(v) => setTriggerInfo({ ...triggerInfo, keyName: v })}
+            onBlur={(ev) =>
+              setTriggerInfo({ ...triggerInfo, [keyName]: ev.target.value })
+            }
           />
         );
       case 1:
@@ -96,11 +107,11 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
 
     return triggerFields.map((field) => {
       return (
-        <>
+        <View key={field?.keyName}>
           <ThemedText>{field.label}</ThemedText>
           {renderInputComp(field.inputType, field.keyName ?? '')}
           <ThemedText>{field.helperText}</ThemedText>
-        </>
+        </View>
       );
     });
   };
