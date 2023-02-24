@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Button,
   View,
@@ -10,24 +10,24 @@ import {
   InputGroup,
   InputLeftAddon,
   HStack,
-} from "native-base";
-import { InputTitle, ThemedTitle } from "../../../components/ThemedTitle";
-import { TextInputDesc } from "../../../components/TextInputDesc";
+} from 'native-base';
+import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
+import { TextInputDesc } from '../../../components/TextInputDesc';
 import {
   useIsFocused,
   useNavigation,
   useRoute,
-} from "@react-navigation/native";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { RootState } from "../../../redux/store";
-import { ThemedSpinner } from "../../../components/ThemedSpinner";
-import { ThemedAlert } from "../../../components/ThemedAlert";
-import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
+} from '@react-navigation/native';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { RootState } from '../../../redux/store';
+import { ThemedSpinner } from '../../../components/ThemedSpinner';
+import { ThemedAlert } from '../../../components/ThemedAlert';
+import { getServiceTriggers } from '../../../redux/gql/getTriggersSlice';
 import {
   addServiceAction,
   resetStatus,
-} from "../../../redux/gql/addActionSlice";
-import { getServiceActinos } from "../../../redux/gql/getActionsSlice";
+} from '../../../redux/gql/addActionSlice';
+import { getServiceActions } from '../../../redux/gql/getActionsSlice';
 
 const { useState, useEffect } = React;
 
@@ -42,7 +42,7 @@ export const CreateActionScene: React.FunctionComponent<Props> = ({
   const [refreshed, setRefreshed] = useState(false);
   const [actionName, setActionName] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();
-  const [endpoint, setEndpoint] = useState("api");
+  const [endpoint, setEndpoint] = useState('api');
   const [endpointPath, setEndpointPath] = useState<string | undefined>();
 
   const isFocused = useIsFocused();
@@ -51,7 +51,7 @@ export const CreateActionScene: React.FunctionComponent<Props> = ({
 
   const dispatch = useAppDispatch();
   const { action, status, error } = useAppSelector(
-    (state: RootState) => state.addServiceAction
+    (state: RootState) => state.addServiceAction,
   );
 
   useEffect(() => {
@@ -61,10 +61,10 @@ export const CreateActionScene: React.FunctionComponent<Props> = ({
   }, [isFocused]);
 
   useEffect(() => {
-    if (status === "succeeded" && serviceApi?.serviceId) {
+    if (status === 'succeeded' && serviceApi?.serviceId) {
       dispatch(resetStatus());
       navigation.goBack();
-      dispatch(getServiceActinos({ serviceId: serviceApi?.serviceId }));
+      dispatch(getServiceActions({ serviceId: serviceApi?.serviceId }));
     }
   }, [status, serviceApi?.serviceId]);
 
@@ -77,7 +77,7 @@ export const CreateActionScene: React.FunctionComponent<Props> = ({
           endpointPath,
           serviceApiId: serviceApi?.id,
         },
-      })
+      }),
     );
   };
 
@@ -111,7 +111,7 @@ export const CreateActionScene: React.FunctionComponent<Props> = ({
       <InputTitle>Endpoint</InputTitle>
 
       <InputGroup>
-        <InputLeftAddon children={"https://"} />
+        <InputLeftAddon children={'https://'} />
         <Input value={endpointPath} onChangeText={handleInput} />
       </InputGroup>
       <Text>Must written in snake_case</Text>
@@ -120,11 +120,11 @@ export const CreateActionScene: React.FunctionComponent<Props> = ({
       <HStack justifyContent="flex-end">
         <Button onPress={handleClick}>Save</Button>
       </HStack>
-      {status === "loading" && <ThemedSpinner />}
+      {status === 'loading' && <ThemedSpinner />}
       {error && (
         <ThemedAlert
           status="error"
-          text={error ?? "Something wrong, please try again later"}
+          text={error ?? 'Something wrong, please try again later'}
         />
       )}
     </View>

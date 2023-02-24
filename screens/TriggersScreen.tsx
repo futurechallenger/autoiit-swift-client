@@ -12,6 +12,10 @@ import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
 
 const { useEffect } = React;
 
+/**
+ * TODO: refactor with `ActionsScreen` use custom hooks
+ */
+
 export const TriggersScreen = () => {
   const route = useRoute();
   const { item: service } = route?.params ?? {};
