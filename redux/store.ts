@@ -43,6 +43,7 @@ import { getFieldOptionsSlice } from './gql/getFieldOptionsSlice';
 import { addFieldOptionsSlice } from './gql/addFieldOptionsSlice';
 import { updateFieldOptionSlice } from './gql/updateFieldOptionSlice';
 import { AddAutoFlowSlice } from './gql/addAutoFlowSlice';
+import { updateAutoFlowSlice } from './gql/updateAutoFlowSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -88,7 +89,7 @@ export const store = configureStore({
     addFieldOptions: addFieldOptionsSlice.reducer,
     updateFieldOption: updateFieldOptionSlice.reducer,
     addAutoFlow: AddAutoFlowSlice.reducer,
-    updateAutoFlow: updateActionInputFieldSlice.reducer,
+    updateAutoFlow: updateAutoFlowSlice.reducer,
   }),
 });
 

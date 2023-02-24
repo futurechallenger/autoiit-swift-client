@@ -37,6 +37,11 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
     status: flowStatus,
     error: flowError,
   } = useAppSelector((state: RootState) => state.addAutoFlow);
+  const {
+    autoFlow: updatedAutoFlow,
+    status: updatedFlowStatus,
+    error: updatedFlowError,
+  } = useAppSelector((state: RootState) => state.updateAutoFlow);
 
   useEffect(() => {
     if (!trigger?.id) {
