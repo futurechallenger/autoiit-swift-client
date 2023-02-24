@@ -90,6 +90,7 @@ export const store = configureStore({
     updateFieldOption: updateFieldOptionSlice.reducer,
     addAutoFlow: AddAutoFlowSlice.reducer,
     updateAutoFlow: updateAutoFlowSlice.reducer,
+    autoFlowById: getAutoFlowsByServiceSlice.reducer,
   }),
 });
 
