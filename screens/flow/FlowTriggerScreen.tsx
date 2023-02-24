@@ -51,7 +51,7 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
       addAutoFlow({
         flow: {
           triggerId: trigger?.id,
-          triggerInfo: JSON.stringify({}),
+          triggerInfo: JSON.stringify(triggerInfo ?? {}),
         },
       }),
     );

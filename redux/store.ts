@@ -88,6 +88,7 @@ export const store = configureStore({
     addFieldOptions: addFieldOptionsSlice.reducer,
     updateFieldOption: updateFieldOptionSlice.reducer,
     addAutoFlow: AddAutoFlowSlice.reducer,
+    updateAutoFlow: updateActionInputFieldSlice.reducer,
   }),
 });
 
