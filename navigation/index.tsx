@@ -34,7 +34,6 @@ import { AccountScreen } from '../screens/Profile/AccountScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { SearchScreen } from '../screens/SearchScreen';
 import { ServiceDetailScreen } from '../screens/ServiceDetailScreen';
-import { TriggerFieldsScreen } from '../screens/TriggerFieldsScreen';
 import { TriggersScreen } from '../screens/TriggersScreen';
 import {
   BottomStackParamList,
@@ -120,10 +119,6 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
           <NavStack.Screen
             name="ServiceDetail"
             component={ServiceDetailScreen}
-          />
-          <NavStack.Screen
-            name="CompleteTriggerFields"
-            component={TriggerFieldsScreen}
           />
         </>
       )}

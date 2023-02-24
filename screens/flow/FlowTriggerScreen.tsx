@@ -6,25 +6,42 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 
 import { Picker } from '@react-native-picker/picker';
-import { useRoute } from '@react-navigation/native';
+import {
+  StackActions,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import * as Types from '../../redux/types.generated';
+import { addAutoFlow } from '../../redux/gql/addAutoFlowSlice';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
 interface Props {
   params: any;
 }
+
+/**
+ * TODO: Complete dropdown / multip checkbox selection handling
+ */
 
 export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
   params,
 }) => {
   const route = useRoute();
   const { trigger } = route?.params ?? {};
+  const navigation = useNavigation();
+
+  const [triggerInfo, setTriggerInfo] = useState({});
 
   const dispatch = useAppDispatch();
   const { triggerFields, status, error } = useAppSelector(
     (state: RootState) => state.triggerFields,
   );
+  const {
+    autoFlow,
+    status: flowStatus,
+    error: flowError,
+  } = useAppSelector((state: RootState) => state.addAutoFlow);
 
   useEffect(() => {
     if (!trigger?.id) {
@@ -34,17 +51,46 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
     dispatch(getTriggerFields({ triggerId: trigger?.id }));
   }, [trigger]);
 
+  useEffect(() => {
+    if (!autoFlow) {
+      return;
+    }
+
+    navigation.dispatch(StackActions.popToTop());
+  }, [autoFlow]);
+
+  const handleCreate = () => {
+    dispatch(
+      addAutoFlow({
+        flow: {
+          triggerId: trigger?.id,
+          triggerInfo: JSON.stringify(triggerInfo ?? {}),
+        },
+      }),
+    );
+  };
+
   /**
    * Render input component according to `inputType`
    * @param inputType, 0: text input, 1: dropdown, 2: multiple checkbox selection
    * @returns
    */
-  const renderInputComp = (inputType: Types.Maybe<number> | undefined) => {
+  const renderInputComp = (
+    inputType: Types.Maybe<number> | undefined,
+    keyName: string,
+  ) => {
     const inputCompType = inputType ?? 0;
+
     switch (inputCompType) {
       case -1:
       case 0:
-        return <Input />;
+        return (
+          <Input
+            onBlur={(ev) =>
+              setTriggerInfo({ ...triggerInfo, [keyName]: ev.target.value })
+            }
+          />
+        );
       case 1:
         return <Picker />;
       case 2:
@@ -61,11 +107,11 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
 
     return triggerFields.map((field) => {
       return (
-        <>
+        <View key={field?.keyName}>
           <ThemedText>{field.label}</ThemedText>
-          {renderInputComp(field.inputType)}
+          {renderInputComp(field.inputType, field.keyName ?? '')}
           <ThemedText>{field.helperText}</ThemedText>
-        </>
+        </View>
       );
     });
   };
@@ -84,7 +130,9 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
         {renderFields()}
       </Box>
       <Box>
-        <Button alignSelf="center">Create trigger</Button>
+        <Button alignSelf="center" onPress={handleCreate}>
+          Create trigger
+        </Button>
       </Box>
     </View>
   );

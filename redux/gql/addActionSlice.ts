@@ -1,17 +1,17 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { sendRequest } from "../baseApi";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { sendRequest } from '../baseApi';
 
-import * as Types from "../types.generated";
-import { addServiceSlice } from "./addServiceSlice";
+import * as Types from '../types.generated';
+import { addServiceSlice } from './addServiceSlice';
 
 export const addServiceAction = createAsyncThunk(
-  "addServiceAction",
+  'addServiceAction',
   async (variables: AddActionMutationVariables) => {
     return sendRequest<AddActionMutation>({
       variables,
       query: AddActionDocument,
     });
-  }
+  },
 );
 
 const initialState: InitialStateType = {
@@ -21,17 +21,17 @@ const initialState: InitialStateType = {
 };
 
 export const addServiceActionSlice = createSlice({
-  name: "addServiceActionSlice",
+  name: 'addServiceActionSlice',
   initialState,
   reducers: {
     resetStatus(state) {
-      state.status = "";
+      state.status = '';
     },
   },
   extraReducers(builder) {
     builder
       .addCase(addServiceAction.pending, (state, action) => {
-        state.status = "loading";
+        state.status = 'loading';
         if (state.error) {
           state.error = undefined;
         }
@@ -39,15 +39,15 @@ export const addServiceActionSlice = createSlice({
       .addCase(addServiceAction.fulfilled, (state, action) => {
         const payload = action.payload;
         if (payload?.errors) {
-          state.status = "failed";
+          state.status = 'failed';
           state.error = payload.errors?.[0]?.message;
         } else {
-          state.status = "succeeded";
+          state.status = 'succeeded';
           state.action = payload?.data?.addServiceAction;
         }
       })
       .addCase(addServiceAction.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.error.message;
       });
   },
@@ -64,9 +64,9 @@ export type AddActionMutationVariables = Types.Exact<{
 }>;
 
 export type AddActionMutation = {
-  __typename?: "Mutation";
+  __typename?: 'Mutation';
   addServiceAction?: {
-    __typename?: "ServiceAction";
+    __typename?: 'ServiceAction';
     id?: number | null;
     name?: string | null;
     description?: string | null;
@@ -86,4 +86,4 @@ export const AddActionDocument = `
   }
 }`;
 
-export const { resetStatus } = addServiceSlice.actions;
+export const { resetStatus } = addServiceActionSlice.actions;
