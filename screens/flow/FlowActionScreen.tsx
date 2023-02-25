@@ -1,5 +1,15 @@
 import * as React from 'react';
-import { View, Text, Divider, Box, Button, Input } from 'native-base';
+import {
+  View,
+  Text,
+  Divider,
+  Box,
+  Button,
+  Input,
+  Popover,
+  FormControl,
+  FlatList,
+} from 'native-base';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
@@ -7,8 +17,9 @@ import { getActionInputFields } from '../../redux/gql/getActionInputFieldsSlice'
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
 import * as Types from '../../redux/types.generated';
 import { Picker } from '@react-native-picker/picker';
+import { getTriggerFields } from '../../redux/gql/getTriggerFieldsSlice';
 
-const { useEffect, useState } = React;
+const { useRef, useEffect, useState } = React;
 
 export const FlowActionScreen = () => {
   const route = useRoute();
@@ -17,7 +28,9 @@ export const FlowActionScreen = () => {
 
   const { item: action } = route?.params ?? {};
 
+  const popoverRef = useRef(null);
   const [actionInfo, setActionInfo] = useState({});
+
   const { actionInputFields, status, error } = useAppSelector(
     (state: RootState) => state.actionInputFields,
   );
@@ -34,13 +47,35 @@ export const FlowActionScreen = () => {
     error: flowError,
   } = useAppSelector((state: RootState) => state.autoFlowById);
 
+  const {
+    autoFlow: addedFlow,
+    status: addedFlowStatus,
+    error: addedFlowError,
+  } = useAppSelector((state: RootState) => state.addAutoFlow);
+
+  const {
+    triggerFields,
+    status: triggerFieldsStatus,
+    error: triggerFieldsError,
+  } = useAppSelector((state: RootState) => state.triggerFields);
+
   useEffect(() => {
     if (action?.id) {
       dispatch(getActionInputFields({ actionId: action?.id }));
     }
+
+    if (addedFlow?.triggerId) {
+      dispatch(getTriggerFields({ triggerId: addedFlow?.triggerId }));
+    }
   }, []);
 
-  const handleCreate = () => {};
+  const handleCreate = () => {
+    console.log('Handle create action');
+  };
+
+  const handleMapping = () => {
+    console.log('Handle mapping');
+  };
 
   /**
    * Render input component according to `inputType`
@@ -57,11 +92,38 @@ export const FlowActionScreen = () => {
       case -1:
       case 0:
         return (
-          <Input
-            onBlur={(ev) =>
-              setActionInfo({ ...actionInfo, [keyName]: ev.target.value })
-            }
-          />
+          <View justifyContent="flex-start" alignItems="flex-start">
+            <Input
+              alignSelf="stretch"
+              onBlur={(ev) =>
+                setActionInfo({ ...actionInfo, [keyName]: ev.target.value })
+              }
+            />
+            <Popover
+              initialFocusRef={popoverRef}
+              trigger={(props) => (
+                <Button {...props} alignSelf="flex-end">
+                  Add mapping
+                </Button>
+              )}
+            >
+              <Popover.Content>
+                <Popover.CloseButton />
+                {/* @ts-ignore */}
+                <Popover.Header>Personal Details</Popover.Header>
+                <Popover.Body>
+                  <FlatList
+                    data={triggerFields ?? []}
+                    renderItem={({ item }) => (
+                      <View>
+                        <Text>{item?.name}</Text>
+                      </View>
+                    )}
+                  />
+                </Popover.Body>
+              </Popover.Content>
+            </Popover>
+          </View>
         );
       case 1:
         return <Picker />;
