@@ -58,6 +58,11 @@ export const FlowActionScreen = () => {
     status: triggerFieldsStatus,
     error: triggerFieldsError,
   } = useAppSelector((state: RootState) => state.triggerFields);
+  const {
+    triggers,
+    status: triggerStatus,
+    error: triggerError,
+  } = useAppSelector((state: RootState) => state.serviceTriggers);
 
   useEffect(() => {
     if (action?.id) {
@@ -116,7 +121,7 @@ export const FlowActionScreen = () => {
                     data={triggerFields ?? []}
                     renderItem={({ item }) => (
                       <View>
-                        <Text>{item?.name}</Text>
+                        <Text>{item?.label}</Text>
                       </View>
                     )}
                   />
