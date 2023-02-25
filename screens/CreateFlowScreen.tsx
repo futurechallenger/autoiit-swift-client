@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, Text, View } from 'native-base';
 import * as React from 'react';
+import { useAppSelector } from '../redux/hooks';
+import { RootState } from '../redux/store';
 
 const VerticalDivider = () => {
   return <View width="2" h="16" bg="red.500" />;
@@ -8,6 +10,9 @@ const VerticalDivider = () => {
 
 export const CreateFlowScreen = () => {
   const navigation = useNavigation();
+  const { autoFlow, status, error } = useAppSelector(
+    (state: RootState) => state.addAutoFlow,
+  );
 
   return (
     <View h="full" w="full" justifyContent="flex-start" alignItems="center">
@@ -24,7 +29,11 @@ export const CreateFlowScreen = () => {
         <Text fontSize="60" marginRight="10" marginY="5">
           When
         </Text>
-        <Button onPress={() => navigation.navigate('ChooseService')}>
+        <Button
+          onPress={() =>
+            navigation.navigate('ChooseService', { phrase: 'Trigger' })
+          }
+        >
           Add
         </Button>
       </View>
@@ -41,7 +50,15 @@ export const CreateFlowScreen = () => {
         <Text fontSize="60" marginRight="10" marginY="5">
           Then
         </Text>
-        <Button>Add</Button>
+        <Button
+          disabled={!autoFlow}
+          bgColor={!autoFlow ? 'muted.500' : null}
+          onPress={() =>
+            navigation.navigate('ChooseService', { phrase: 'Action' })
+          }
+        >
+          Add
+        </Button>
       </View>
     </View>
   );

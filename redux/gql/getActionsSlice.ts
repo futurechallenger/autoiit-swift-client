@@ -1,16 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { sendRequest } from "../baseApi";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { sendRequest } from '../baseApi';
 
-import * as Types from "../types.generated";
+import * as Types from '../types.generated';
 
-export const getServiceActinos = createAsyncThunk(
-  "getServiceActinos",
+export const getServiceActions = createAsyncThunk(
+  'getServiceActinos',
   async (variables: GetActionsByServiceIdQueryVariables) => {
     return sendRequest<GetActionsByServiceIdQuery>({
       variables,
       query: GetActionsByServiceIdDocument,
     });
-  }
+  },
 );
 
 const initialState: InitialStateType = {
@@ -20,29 +20,29 @@ const initialState: InitialStateType = {
 };
 
 export const getServiceActionsSlice = createSlice({
-  name: "getServiceActionsSlice",
+  name: 'getServiceActionsSlice',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getServiceActinos.pending, (state, action) => {
-        state.status = "loading";
+      .addCase(getServiceActions.pending, (state, action) => {
+        state.status = 'loading';
         if (state.error) {
           state.error = undefined;
         }
       })
-      .addCase(getServiceActinos.fulfilled, (state, action) => {
+      .addCase(getServiceActions.fulfilled, (state, action) => {
         const payload = action.payload;
         if (payload?.errors) {
-          state.status = "failed";
+          state.status = 'failed';
           state.error = payload.errors?.[0]?.message;
         } else {
-          state.status = "succeeded";
+          state.status = 'succeeded';
           state.actions = payload?.data?.actions ?? [];
         }
       })
-      .addCase(getServiceActinos.rejected, (state, action) => {
-        state.status = "failed";
+      .addCase(getServiceActions.rejected, (state, action) => {
+        state.status = 'failed';
         state.error = action.error.message;
       });
   },
@@ -55,13 +55,13 @@ interface InitialStateType {
 }
 
 export type GetActionsByServiceIdQueryVariables = Types.Exact<{
-  serviceId: Types.Scalars["Int"];
+  serviceId: Types.Scalars['Int'];
 }>;
 
 export type GetActionsByServiceIdQuery = {
-  __typename?: "Query";
+  __typename?: 'Query';
   actions?: Array<{
-    __typename?: "ServiceAction";
+    __typename?: 'ServiceAction';
     id?: number | null;
     name?: string | null;
     description?: string | null;

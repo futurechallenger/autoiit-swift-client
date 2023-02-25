@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ListRenderItem, ListRenderItemInfo, Pressable } from 'react-native';
 import { EditableCell } from '../../../components/EditableCell';
 import { ThemedTitle } from '../../../components/ThemedTitle';
-import { getServiceActinos } from '../../../redux/gql/getActionsSlice';
+import { getServiceActions } from '../../../redux/gql/getActionsSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { RootState } from '../../../redux/store';
 import * as Types from '../../../redux/types.generated';
@@ -32,7 +32,7 @@ export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
       return;
     }
 
-    dispatch(getServiceActinos({ serviceId: serviceApi?.serviceId }));
+    dispatch(getServiceActions({ serviceId: serviceApi?.serviceId }));
   }, [serviceApi?.serviceId /*,isFocused*/]);
 
   const renderItem: ListRenderItem<Types.ServiceTrigger> = ({

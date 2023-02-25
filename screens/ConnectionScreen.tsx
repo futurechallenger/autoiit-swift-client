@@ -28,7 +28,7 @@ export const ConnectionScreen = () => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   const route = useRoute();
-  const { trigger, service: routeService } = route?.params ?? {};
+  const { item, service: routeService, phrase } = route?.params ?? {};
   const [connection, setConnection] = useState('');
 
   const { serviceAuth, status, error } = useAppSelector(
@@ -59,7 +59,11 @@ export const ConnectionScreen = () => {
 
   useEffect(() => {
     if (connection === 'success') {
-      navigation.navigate('CompleteTrigger', { trigger });
+      if (phrase === 'Trigger') {
+        navigation.navigate('CompleteTrigger', { item, phrase });
+      } else {
+        navigation.navigate('CompleteAction', { item, phrase });
+      }
     }
   }, [connection]);
 
@@ -96,7 +100,11 @@ export const ConnectionScreen = () => {
     // }
     // TODO: for test only
 
-    navigation.navigate('CompleteTrigger', { trigger });
+    if (phrase === 'Trigger') {
+      navigation.navigate('CompleteTrigger', { trigger: item, phrase });
+    } else {
+      navigation.navigate('CompleteAction', { item, phrase });
+    }
   };
   const description = routeService?.description ?? routeService?.name ?? '';
 

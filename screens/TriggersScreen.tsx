@@ -12,9 +12,13 @@ import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
 
 const { useEffect } = React;
 
+/**
+ * TODO: refactor with `ActionsScreen` use custom hooks
+ */
+
 export const TriggersScreen = () => {
   const route = useRoute();
-  const { item: service } = route.params;
+  const { item: service } = route?.params ?? {};
 
   const dispatch = useAppDispatch();
   const { triggers, error, status } = useAppSelector(
@@ -36,10 +40,15 @@ export const TriggersScreen = () => {
   const navigation = useNavigation();
 
   const handleItemClick = (item: Types.ServiceTrigger) => {
+    // TODO: Deal with auth completed scenario
     if (!serviceAuth) {
-      navigation.navigate('CompleteTrigger', { trigger: item, service });
+      navigation.navigate('CompleteTrigger', {
+        item,
+        service,
+        phrase: 'Trigger',
+      });
     } else {
-      navigation.navigate('Connection', { trigger: item, service });
+      navigation.navigate('Connection', { item, service, phrase: 'Trigger' });
     }
   };
 
