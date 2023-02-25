@@ -45,6 +45,7 @@ import { updateFieldOptionSlice } from './gql/updateFieldOptionSlice';
 import { AddAutoFlowSlice } from './gql/addAutoFlowSlice';
 import { updateAutoFlowSlice } from './gql/updateAutoFlowSlice';
 import { getAutoFlowByIdSlice } from './gql/getAutoFlowByIdSlice';
+import { getServiceTriggerByIdSlice } from './gql/getTriggerByIdSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -67,6 +68,7 @@ export const store = configureStore({
     getServiceAuth: getServiceAuthSlice.reducer,
     updateServiceAuth: updateServiceAuthSlice.reducer,
     serviceTriggers: getServiceTriggerSlice.reducer,
+    serviceTriggerById: getServiceTriggerByIdSlice.reducer,
     addTrigger: addServiceTriggerSlice.reducer,
     triggerFields: getTriggerFieldsSlice.reducer,
     addTriggerField: addTriggerFieldSlice.reducer,
