@@ -1,23 +1,26 @@
-import * as React from 'react';
+import { Picker } from '@react-native-picker/picker';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
-  View,
-  Text,
-  Divider,
   Box,
   Button,
+  Divider,
+  FlatList,
   Input,
   Popover,
-  FormControl,
-  FlatList,
+  Text,
+  View,
 } from 'native-base';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import * as React from 'react';
+import { Pressable } from 'react-native';
+import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
+import {
+  ActionInputFieldsDocument,
+  getActionInputFields,
+} from '../../redux/gql/getActionInputFieldsSlice';
+import { getTriggerExposeFields } from '../../redux/gql/getTriggerExposeFieldsSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
-import { getActionInputFields } from '../../redux/gql/getActionInputFieldsSlice';
-import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
 import * as Types from '../../redux/types.generated';
-import { Picker } from '@react-native-picker/picker';
-import { getTriggerFields } from '../../redux/gql/getTriggerFieldsSlice';
 
 const { useRef, useEffect, useState } = React;
 
@@ -54,15 +57,15 @@ export const FlowActionScreen = () => {
   } = useAppSelector((state: RootState) => state.addAutoFlow);
 
   const {
-    triggerFields,
-    status: triggerFieldsStatus,
-    error: triggerFieldsError,
-  } = useAppSelector((state: RootState) => state.triggerFields);
+    exposeFields,
+    status: exposeFieldsStatus,
+    error: exposeFieldsError,
+  } = useAppSelector((state: RootState) => state.exposeFields);
   const {
-    triggers,
+    trigger,
     status: triggerStatus,
     error: triggerError,
-  } = useAppSelector((state: RootState) => state.serviceTriggers);
+  } = useAppSelector((state: RootState) => state.serviceTriggerById);
 
   useEffect(() => {
     if (action?.id) {
@@ -70,7 +73,7 @@ export const FlowActionScreen = () => {
     }
 
     if (addedFlow?.triggerId) {
-      dispatch(getTriggerFields({ triggerId: addedFlow?.triggerId }));
+      dispatch(getTriggerExposeFields({ triggerId: addedFlow?.triggerId }));
     }
   }, []);
 
@@ -78,8 +81,18 @@ export const FlowActionScreen = () => {
     console.log('Handle create action');
   };
 
-  const handleMapping = () => {
-    console.log('Handle mapping');
+  const handleItemClick = (
+    actionField: Types.ActionInputField,
+    item: Types.ExposeField,
+  ) => {
+    console.log('>>>>>>Handle mapping, item >>', item);
+    if (!actionField || !actionField?.id) {
+      return;
+    }
+    const items: Types.ExposeField[] = (actionInfo[`${actionField.id}`] ??
+      []) as Types.ExposeField[];
+    items.push(item);
+    setActionInfo({ ...actionInfo, [`${actionField.id}`]: [...items] });
   };
 
   /**
@@ -89,9 +102,12 @@ export const FlowActionScreen = () => {
    */
   const renderInputComp = (
     inputType: Types.Maybe<number> | undefined,
-    keyName: string,
+    actionField: Types.ActionInputField,
   ) => {
     const inputCompType = inputType ?? 0;
+    const keyName = actionField?.keyName ?? '';
+    const items = actionInfo[`${actionField.id}`] ?? [];
+    const fieldValue = items.map((el) => `{{${el.label}}}`).join();
 
     switch (inputCompType) {
       case -1:
@@ -99,6 +115,7 @@ export const FlowActionScreen = () => {
         return (
           <View justifyContent="flex-start" alignItems="flex-start">
             <Input
+              value={fieldValue ?? ''}
               alignSelf="stretch"
               onBlur={(ev) =>
                 setActionInfo({ ...actionInfo, [keyName]: ev.target.value })
@@ -114,15 +131,18 @@ export const FlowActionScreen = () => {
             >
               <Popover.Content>
                 <Popover.CloseButton />
-                {/* @ts-ignore */}
-                <Popover.Header>Personal Details</Popover.Header>
+                <Popover.Header>{trigger?.name}</Popover.Header>
                 <Popover.Body>
                   <FlatList
-                    data={triggerFields ?? []}
+                    data={exposeFields ?? []}
                     renderItem={({ item }) => (
-                      <View>
-                        <Text>{item?.label}</Text>
-                      </View>
+                      <Pressable
+                        onPress={() => handleItemClick(actionField, item)}
+                      >
+                        <View>
+                          <Text>{item?.label}</Text>
+                        </View>
+                      </Pressable>
                     )}
                   />
                 </Popover.Body>
@@ -148,7 +168,7 @@ export const FlowActionScreen = () => {
       return (
         <View key={field?.keyName}>
           <ThemedText>{field?.label}</ThemedText>
-          {renderInputComp(field.fieldType, field.keyName ?? '')}
+          {renderInputComp(field.fieldType, field)}
           <ThemedText>{field?.helperText}</ThemedText>
         </View>
       );
