@@ -32,7 +32,11 @@ export const FlowActionScreen = () => {
   const { item: action } = route?.params ?? {};
 
   const popoverRef = useRef(null);
-  const [actionInfo, setActionInfo] = useState({});
+  const [textSlice, setTextSlice] = useState<string>();
+  const [actionInfo, setActionInfo] = useState<{
+    id: string;
+    items: Array<Types.ExposeField | string>;
+  }>({});
 
   const { actionInputFields, status, error } = useAppSelector(
     (state: RootState) => state.actionInputFields,
@@ -105,7 +109,7 @@ export const FlowActionScreen = () => {
     actionField: Types.ActionInputField,
   ) => {
     const inputCompType = inputType ?? 0;
-    const keyName = actionField?.keyName ?? '';
+    // const keyName = actionField?.keyName ?? '';
     const items = actionInfo[`${actionField.id}`] ?? [];
     const fieldValue = items.map((el) => `{{${el.label}}}`).join();
 
@@ -115,11 +119,20 @@ export const FlowActionScreen = () => {
         return (
           <View justifyContent="flex-start" alignItems="flex-start">
             <Input
-              value={fieldValue ?? ''}
+              value={textSlice}
               alignSelf="stretch"
-              onBlur={(ev) =>
-                setActionInfo({ ...actionInfo, [keyName]: ev.target.value })
-              }
+              onChangeText={(ev) => setTextSlice(ev)}
+              // onBlur={() => {
+              //   const items: Types.ExposeField[] = (actionInfo[
+              //     `${actionField.id}`
+              //   ] ?? []) as Types.ExposeField[];
+              //   items.push(textSlice ?? '');
+              //   setActionInfo({
+              //     ...actionInfo,
+              //     [`${actionField?.id}`]: [...items],
+              //   });
+              //   setTextSlice('');
+              // }}
             />
             <Popover
               initialFocusRef={popoverRef}
