@@ -12,11 +12,9 @@ import {
 } from 'native-base';
 import * as React from 'react';
 import { Pressable } from 'react-native';
+import { FieldsMapping } from '../../components/FieldsMapping';
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
-import {
-  ActionInputFieldsDocument,
-  getActionInputFields,
-} from '../../redux/gql/getActionInputFieldsSlice';
+import { getActionInputFields } from '../../redux/gql/getActionInputFieldsSlice';
 import { getTriggerExposeFields } from '../../redux/gql/getTriggerExposeFieldsSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
@@ -29,10 +27,22 @@ export const FlowActionScreen = () => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
 
-  const { item: action } = route?.params ?? {};
+  // const { item: action } = route?.params ?? {};
+
+  // TODO: for test only
+  const action: Types.ServiceAction = {
+    id: 1,
+    name: 'github-issue-trello',
+    serviceApiId: 4,
+    description: 'github issues added to trello cards',
+    endpointPath: '/1/cards',
+    // endpointType: 1,
+    // invokeType: 0,
+  };
 
   const popoverRef = useRef(null);
   const [textSlice, setTextSlice] = useState<string>();
+  const [currentText, setCurrentText] = useState<string>('');
   const [actionInfo, setActionInfo] = useState<{
     id: string;
     items: Array<Types.ExposeField | string>;
@@ -97,6 +107,16 @@ export const FlowActionScreen = () => {
       []) as Types.ExposeField[];
     items.push(item);
     setActionInfo({ ...actionInfo, [`${actionField.id}`]: [...items] });
+    const presentationText = items
+      .map((el) => {
+        if (el?.id) {
+          return el.label;
+        }
+
+        return el;
+      })
+      .join();
+    setTextSlice(presentationText);
   };
 
   /**
@@ -110,29 +130,35 @@ export const FlowActionScreen = () => {
   ) => {
     const inputCompType = inputType ?? 0;
     // const keyName = actionField?.keyName ?? '';
-    const items = actionInfo[`${actionField.id}`] ?? [];
-    const fieldValue = items.map((el) => `{{${el.label}}}`).join();
 
     switch (inputCompType) {
       case -1:
       case 0:
         return (
           <View justifyContent="flex-start" alignItems="flex-start">
-            <Input
+            <FieldsMapping exposeFields={exposeFields} />
+            {/* <Input
               value={textSlice}
               alignSelf="stretch"
               onChangeText={(ev) => setTextSlice(ev)}
-              // onBlur={() => {
-              //   const items: Types.ExposeField[] = (actionInfo[
-              //     `${actionField.id}`
-              //   ] ?? []) as Types.ExposeField[];
-              //   items.push(textSlice ?? '');
-              //   setActionInfo({
-              //     ...actionInfo,
-              //     [`${actionField?.id}`]: [...items],
-              //   });
-              //   setTextSlice('');
-              // }}
+              onBlur={() => {
+                if (textSlice?.trim() === '') {
+                  setActionInfo({
+                    ...actionInfo,
+                    [`${actionField?.id}`]: [],
+                  });
+                } else {
+                  const items: Types.ExposeField[] = (actionInfo[
+                    `${actionField.id}`
+                  ] ?? []) as Types.ExposeField[];
+                  items.push(textSlice ?? '');
+                  setActionInfo({
+                    ...actionInfo,
+                    [`${actionField?.id}`]: [...items],
+                  });
+                  setTextSlice(items.join(''));
+                }
+              }}
             />
             <Popover
               initialFocusRef={popoverRef}
@@ -160,7 +186,7 @@ export const FlowActionScreen = () => {
                   />
                 </Popover.Body>
               </Popover.Content>
-            </Popover>
+            </Popover> */}
           </View>
         );
       case 1:
@@ -179,7 +205,7 @@ export const FlowActionScreen = () => {
 
     return actionInputFields.map((field) => {
       return (
-        <View key={field?.keyName}>
+        <View key={field?.keyName} marginTop="5">
           <ThemedText>{field?.label}</ThemedText>
           {renderInputComp(field.fieldType, field)}
           <ThemedText>{field?.helperText}</ThemedText>
