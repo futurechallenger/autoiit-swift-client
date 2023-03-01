@@ -17,7 +17,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     setFields(exposeFields);
-  });
+  }, []);
 
   const handleAdd = () => {
     console.log('Add element is clicked');
@@ -52,7 +52,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
               data={fields ?? []}
               renderItem={({ item }) => (
                 <View>
-                  <Text>{item?.name}</Text>
+                  <Text>{item?.label}</Text>
                 </View>
               )}
             />

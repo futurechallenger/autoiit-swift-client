@@ -64,11 +64,18 @@ export const FlowActionScreen = () => {
     error: flowError,
   } = useAppSelector((state: RootState) => state.autoFlowById);
 
-  const {
-    autoFlow: addedFlow,
-    status: addedFlowStatus,
-    error: addedFlowError,
-  } = useAppSelector((state: RootState) => state.addAutoFlow);
+  // TODO: donot delete
+  // const {
+  //   autoFlow: addedFlow,
+  //   status: addedFlowStatus,
+  //   error: addedFlowError,
+  // } = useAppSelector((state: RootState) => state.addAutoFlow);
+  const addedFlow: Types.AutoFlow = {
+    id: 5,
+    triggerId: 1,
+    actionId: 1,
+    title: 'if ... then ...',
+  };
 
   const {
     exposeFields,
