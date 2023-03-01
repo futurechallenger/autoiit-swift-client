@@ -13,6 +13,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 }) => {
   const [fields, setFields] = useState<Types.ExposeField[]>();
   const [text, setText] = useState<string | undefined>();
+  const mappingInputRef = useRef(null);
 
   useEffect(() => {
     setFields(exposeFields);
@@ -28,6 +29,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
   const handleMappingSave = () => {
     console.log('>>> on click field mapping save button');
+    setText(mappingInputRef.current?.value);
   };
 
   const focusRef = useRef(null);
@@ -45,7 +47,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
         <Popover.Content>
           <Popover.Header>Fields</Popover.Header>
           <Popover.Body>
-            <Input onChangeText={(t) => setText(t)} />
+            <Input ref={mappingInputRef} />
             <FlatList
               data={fields ?? []}
               renderItem={({ item }) => (
