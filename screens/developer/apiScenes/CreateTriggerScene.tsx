@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Button,
   View,
@@ -10,41 +10,48 @@ import {
   InputGroup,
   InputLeftAddon,
   HStack,
-} from "native-base";
-import { InputTitle, ThemedTitle } from "../../../components/ThemedTitle";
-import { TextInputDesc } from "../../../components/TextInputDesc";
+} from 'native-base';
+import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
+import { TextInputDesc } from '../../../components/TextInputDesc';
 import {
   useIsFocused,
   useNavigation,
   useRoute,
-} from "@react-navigation/native";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+} from '@react-navigation/native';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import {
   addServiceTrigger,
   resetStatus,
-} from "../../../redux/gql/addTriggerSlice";
-import { RootState } from "../../../redux/store";
-import { ThemedSpinner } from "../../../components/ThemedSpinner";
-import { ThemedAlert } from "../../../components/ThemedAlert";
-import { getServiceTriggers } from "../../../redux/gql/getTriggersSlice";
+} from '../../../redux/gql/addTriggerSlice';
+import { RootState } from '../../../redux/store';
+import { ThemedSpinner } from '../../../components/ThemedSpinner';
+import { ThemedAlert } from '../../../components/ThemedAlert';
+import { getServiceTriggers } from '../../../redux/gql/getTriggersSlice';
 
 const { useState, useEffect } = React;
 
-export const CreateTriggerScene = () => {
+interface Props {
+  params: any;
+}
+
+export const CreateTriggerScene: React.FunctionComponent<Props> = ({
+  params,
+}) => {
   const [refreshed, setRefreshed] = useState(false);
   const [triggerName, setTriggerName] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();
-  const [endpoint, setEndpoint] = useState("api");
+  const [endpoint, setEndpoint] = useState('api');
   const [endpointPath, setEndpointPath] = useState<string | undefined>();
+  const { serviceApi } = params ?? {};
 
   const isFocused = useIsFocused();
   const navigation = useNavigation();
-  const route = useRoute();
-  const { serviceApi } = route.params ?? {};
+  // const route = useRoute();
+  // const { serviceApi } = route.params ?? {};
 
   const dispatch = useAppDispatch();
   const { trigger, status, error } = useAppSelector(
-    (state: RootState) => state.addTrigger
+    (state: RootState) => state.addTrigger,
   );
 
   useEffect(() => {
@@ -54,7 +61,7 @@ export const CreateTriggerScene = () => {
   }, [isFocused]);
 
   useEffect(() => {
-    if (status === "succeeded" && serviceApi?.serviceId) {
+    if (status === 'succeeded' && serviceApi?.serviceId) {
       dispatch(resetStatus());
       navigation.goBack();
       dispatch(getServiceTriggers({ serviceId: serviceApi?.serviceId }));
@@ -68,11 +75,11 @@ export const CreateTriggerScene = () => {
           name: triggerName,
           description,
           endpointPath,
-          endpointType: endpoint === "api" ? 0 : 1,
+          endpointType: endpoint === 'api' ? 0 : 1,
           serviceApiId: serviceApi?.id,
           fields: [],
         },
-      })
+      }),
     );
   };
 
@@ -114,10 +121,10 @@ export const CreateTriggerScene = () => {
           <Radio value="feed">Feed(RSS or Atom)</Radio>
         </Radio.Group>
       </VStack>
-      {endpoint === "api" && (
+      {endpoint === 'api' && (
         <>
           <InputGroup>
-            <InputLeftAddon children={"https://"} />
+            <InputLeftAddon children={'https://'} />
             <Input value={endpointPath} onChangeText={handleInput} />
           </InputGroup>
           <Text>
@@ -131,11 +138,11 @@ export const CreateTriggerScene = () => {
       <HStack justifyContent="flex-end">
         <Button onPress={handleClick}>Save</Button>
       </HStack>
-      {status === "loading" && <ThemedSpinner />}
+      {status === 'loading' && <ThemedSpinner />}
       {error && (
         <ThemedAlert
           status="error"
-          text={error ?? "Something wrong, please try again later"}
+          text={error ?? 'Something wrong, please try again later'}
         />
       )}
     </View>
