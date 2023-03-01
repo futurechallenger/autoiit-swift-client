@@ -35,17 +35,12 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
   return (
     <View>
       <View>
-        <Text>Preview:</Text>
+        <Text>Preview: {text}</Text>
         <View></View>
       </View>
       <Popover
         initialFocusRef={focusRef}
-        trigger={(props) => (
-          // <Button {...props} onPress={handleAdd}>
-          //   Add
-          // </Button>
-          <Button {...props}>Add</Button>
-        )}
+        trigger={(props) => <Button {...props}>Add</Button>}
       >
         <Popover.Content>
           <Popover.Header>Fields</Popover.Header>
