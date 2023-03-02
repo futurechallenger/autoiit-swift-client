@@ -1,5 +1,13 @@
 import * as React from 'react';
-import { Input, Button, View, Text, Popover, FlatList } from 'native-base';
+import {
+  Input,
+  Button,
+  View,
+  Text,
+  Popover,
+  FlatList,
+  Pressable,
+} from 'native-base';
 import * as Types from '../redux/types.generated';
 
 interface Props {
@@ -8,16 +16,23 @@ interface Props {
 
 const { useRef, useState, useEffect } = React;
 
+type FieldMappingType = string | Types.ExposeField;
+
 export const FieldsMapping: React.FunctionComponent<Props> = ({
   exposeFields,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [fields, setFields] = useState<Types.ExposeField[]>();
-  const [text, setText] = useState<string | undefined>();
+  const [fieldMapping, setFieldMapping] = useState<FieldMappingType[]>([]);
   const mappingInputRef = useRef(null);
 
   useEffect(() => {
-    setFields(exposeFields);
+    return () => setIsOpen(false);
   }, []);
+
+  useEffect(() => {
+    setFields(exposeFields);
+  }, [exposeFields]);
 
   const handleAdd = () => {
     console.log('Add element is clicked');
@@ -29,20 +44,57 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
   const handleMappingSave = () => {
     console.log('>>> on click field mapping save button');
-    setText(mappingInputRef.current?.value);
+    // setText(mappingInputRef.current?.value);
+    if (!mappingInputRef.current?.value) {
+      return;
+    }
+
+    setFieldMapping([...fieldMapping, mappingInputRef.current?.value]);
   };
 
   const focusRef = useRef(null);
 
+  const renderFieldPresentation = () => {
+    if (!fieldMapping || fieldMapping.length <= 0) {
+      return;
+    }
+
+    return fieldMapping.map((fi) => {
+      if (fi?.id) {
+        return (
+          <Pressable key={fi?.id}>
+            <Text>{fi?.label}</Text>
+          </Pressable>
+        );
+      }
+      return (
+        <Pressable key={`string-${fi}`}>
+          <Text>{fi}</Text>
+        </Pressable>
+      );
+    });
+  };
+
+  const handleItemClick = (item) => {
+    console.log('item clicked');
+    setFieldMapping([...fieldMapping, item]);
+  };
+
   return (
     <View>
       <View>
-        <Text>Preview: {text}</Text>
-        <View></View>
+        <Text>Preview: </Text>
+        <View>{renderFieldPresentation()}</View>
       </View>
       <Popover
         initialFocusRef={focusRef}
-        trigger={(props) => <Button {...props}>Add</Button>}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(!isOpen)}
+        trigger={(props) => (
+          <Button {...props} onPress={() => setIsOpen(true)}>
+            Add
+          </Button>
+        )}
       >
         <Popover.Content>
           <Popover.Header>Fields</Popover.Header>
@@ -51,15 +103,21 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
             <FlatList
               data={fields ?? []}
               renderItem={({ item }) => (
-                <View>
-                  <Text>{item?.label}</Text>
-                </View>
+                <Pressable onPress={() => handleItemClick(item)}>
+                  <View>
+                    <Text>{item?.label}</Text>
+                  </View>
+                </Pressable>
               )}
             />
           </Popover.Body>
           <Popover.Footer>
             <Button.Group>
-              <Button colorScheme="coolGray" variant="ghost">
+              <Button
+                colorScheme="coolGray"
+                variant="ghost"
+                onPress={() => setIsOpen(false)}
+              >
                 Cancel
               </Button>
               <Button onPress={handleMappingSave}>Save</Button>
