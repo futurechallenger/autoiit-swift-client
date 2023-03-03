@@ -1,20 +1,13 @@
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import {
-  Box,
-  Button,
-  Divider,
-  FlatList,
-  Input,
-  Popover,
-  Text,
-  View,
-} from 'native-base';
+import { Box, Button, Divider, Text, View } from 'native-base';
 import * as React from 'react';
-import { Pressable } from 'react-native';
+
 import { FieldsMapping } from '../../components/FieldsMapping';
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
+import { addFieldMappingItems } from '../../redux/gql/addFieldMappingItemsSlice';
 import { getActionInputFields } from '../../redux/gql/getActionInputFieldsSlice';
+import { getFieldMappingItems } from '../../redux/gql/getFieldMappingItemsSlice';
 import { getTriggerExposeFields } from '../../redux/gql/getTriggerExposeFieldsSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
@@ -40,9 +33,6 @@ export const FlowActionScreen = () => {
     // invokeType: 0,
   };
 
-  const popoverRef = useRef(null);
-  const [textSlice, setTextSlice] = useState<string>();
-  const [currentText, setCurrentText] = useState<string>('');
   const [actionInfo, setActionInfo] = useState<{
     id: string;
     items: Array<Types.ExposeField | string>;
@@ -88,6 +78,14 @@ export const FlowActionScreen = () => {
     error: triggerError,
   } = useAppSelector((state: RootState) => state.serviceTriggerById);
 
+  const handleAddMapping = (items) => {
+    dispatch(addFieldMappingItems({ mappingItems: items }));
+  };
+
+  const handleUpdateMappingItem = (item) => {
+    console.log('Update field mapping item', item);
+  };
+
   useEffect(() => {
     if (action?.id) {
       dispatch(getActionInputFields({ actionId: action?.id }));
@@ -123,7 +121,7 @@ export const FlowActionScreen = () => {
         return el;
       })
       .join();
-    setTextSlice(presentationText);
+    // setTextSlice(presentationText);
   };
 
   /**
@@ -144,8 +142,10 @@ export const FlowActionScreen = () => {
         return (
           <View justifyContent="flex-start" alignItems="flex-start">
             <FieldsMapping
-              actionField={actionField?.id}
+              actionField={actionField}
               exposeFields={exposeFields}
+              onSave={handleAddMapping}
+              onUpdate={handleUpdateMappingItem}
             />
             {/* <Input
               value={textSlice}

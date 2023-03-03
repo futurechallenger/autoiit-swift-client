@@ -13,10 +13,13 @@ import { ActionFieldInput } from '../screens/developer/actions/ActionFieldInput'
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
 import { addFieldOptions } from '../redux/gql/addFieldOptionsSlice';
+import { getFieldMappingItems } from '../redux/gql/getFieldMappingItemsSlice';
 
 interface Props {
   actionField: Types.ActionInputField;
   exposeFields: Types.ExposeField[];
+  onSave: (items) => void;
+  onUpdate: (item) => void;
 }
 
 const { useRef, useState, useEffect } = React;
@@ -26,6 +29,8 @@ type FieldMappingType = { key: string; item: string | Types.ExposeField };
 export const FieldsMapping: React.FunctionComponent<Props> = ({
   actionField,
   exposeFields,
+  onSave,
+  onUpdate,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [fields, setFields] = useState<Types.ExposeField[]>();
@@ -39,6 +44,12 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     (state: RootState) => state.addFieldOptions,
   );
 
+  const {
+    fieldMappingItems,
+    status: mappingStatus,
+    error: mappingError,
+  } = useAppSelector((state: RootState) => state.fieldMappingItems);
+
   useEffect(() => {
     return () => setIsOpen(false);
   }, []);
@@ -47,6 +58,34 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     setFields(exposeFields);
   }, [exposeFields]);
 
+  useEffect(() => {
+    if (actionField?.id) {
+      dispatch(getFieldMappingItems({ actionFieldId: actionField?.id }));
+    }
+  }, [actionField]);
+
+  // TODO: set field mapping items to state `fieldMapping`.
+  // useEffect(() => {
+  //   if (!fieldMappingItems) {
+  //     return;
+  //   }
+
+  //   setFieldMapping({});
+  // }, [fieldMappingItems]);
+
+  const handleMappingSave = () => {
+    console.log('>>> on click field mapping save button');
+    if (!mappingInputRef.current?.value) {
+      // TODO: remove this item
+      return;
+    }
+
+    setFieldMapping({
+      ...fieldMapping,
+      [generateKey()]: mappingInputRef.current?.value,
+    });
+  };
+
   const handleAdd = () => {
     console.log('Add element is clicked');
   };
@@ -54,16 +93,28 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
   const handleOK = () => {
     console.log('OK is clicked');
     const fieldOptions = Object.entries(fieldMapping ?? {}).map(
-      ([key, value]) => ({
-        actionId: actionField?.serviceApiActionId,
-        label: '',
-        value: '',
-      }),
+      ([_, value]) => {
+        if (value?.id) {
+          return {
+            exposeFieldId: value?.id,
+            exposeLabel: value?.keyName,
+            actionInputFieldId: actionField?.id,
+          };
+        }
+
+        return {
+          value,
+          actionInputFieldId: actionField?.id,
+        };
+      },
     );
-    dispatch(addFieldOptions({ fieldOptions }));
+
+    if (onSave) {
+      onSave(fieldOptions);
+    }
   };
 
-  const handleMappingSave = () => {
+  const handle = () => {
     console.log('>>> on click field mapping save button');
     if (!mappingInputRef.current?.value) {
       // TODO: remove this item
