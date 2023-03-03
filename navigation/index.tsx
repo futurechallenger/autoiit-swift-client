@@ -243,9 +243,18 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Create" // Create flow
         component={CreateFlowScreen}
+        options={{
+          title: 'Create Flow',
+          tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
+        }}
+      /> */}
+      {/* TODO: this is only for test */}
+      <BottomTab.Screen
+        name="Create" // Create flow
+        component={FlowActionScreen}
         options={{
           title: 'Create Flow',
           tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
