@@ -10,9 +10,12 @@ import {
 } from 'native-base';
 import * as Types from '../redux/types.generated';
 import { ActionFieldInput } from '../screens/developer/actions/ActionFieldInput';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { RootState } from '../redux/store';
+import { addFieldOptions } from '../redux/gql/addFieldOptionsSlice';
 
 interface Props {
-  actionFieldId: number;
+  actionField: Types.ActionInputField;
   exposeFields: Types.ExposeField[];
 }
 
@@ -21,7 +24,7 @@ const { useRef, useState, useEffect } = React;
 type FieldMappingType = { key: string; item: string | Types.ExposeField };
 
 export const FieldsMapping: React.FunctionComponent<Props> = ({
-  actionFieldId,
+  actionField,
   exposeFields,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +33,11 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
   const refCount = useRef(0);
   const popoverRef = useRef(null);
   const mappingInputRef = useRef(null);
+
+  const dispatch = useAppDispatch();
+  const { count, status, error } = useAppSelector(
+    (state: RootState) => state.addFieldOptions,
+  );
 
   useEffect(() => {
     return () => setIsOpen(false);
@@ -45,6 +53,14 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
   const handleOK = () => {
     console.log('OK is clicked');
+    const fieldOptions = Object.entries(fieldMapping ?? {}).map(
+      ([key, value]) => ({
+        actionId: actionField?.serviceApiActionId,
+        label: '',
+        value: '',
+      }),
+    );
+    dispatch(addFieldOptions({ fieldOptions }));
   };
 
   const handleMappingSave = () => {
@@ -87,7 +103,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     setFieldMapping({ ...fieldMapping, [generateKey()]: item });
   };
 
-  const generateKey = () => `${actionFieldId}-${refCount.current++}`;
+  const generateKey = () => `${actionField?.id}-${refCount.current++}`;
 
   return (
     <View>
@@ -108,7 +124,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
         <Popover.Content>
           <Popover.Header>Fields</Popover.Header>
           <Popover.Body>
-            <Input ref={mappingInputRef} id={`${actionFieldId}`} />
+            <Input ref={mappingInputRef} id={`${actionField?.id}`} />
             <FlatList
               data={fields ?? []}
               renderItem={({ item }) => (

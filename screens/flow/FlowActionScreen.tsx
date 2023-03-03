@@ -144,7 +144,7 @@ export const FlowActionScreen = () => {
         return (
           <View justifyContent="flex-start" alignItems="flex-start">
             <FieldsMapping
-              actionFieldId={actionField?.id}
+              actionField={actionField?.id}
               exposeFields={exposeFields}
             />
             {/* <Input
