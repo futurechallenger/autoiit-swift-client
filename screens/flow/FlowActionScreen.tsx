@@ -143,7 +143,10 @@ export const FlowActionScreen = () => {
       case 0:
         return (
           <View justifyContent="flex-start" alignItems="flex-start">
-            <FieldsMapping exposeFields={exposeFields} />
+            <FieldsMapping
+              actionFieldId={actionField?.id}
+              exposeFields={exposeFields}
+            />
             {/* <Input
               value={textSlice}
               alignSelf="stretch"

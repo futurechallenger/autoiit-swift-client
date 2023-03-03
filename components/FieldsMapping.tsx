@@ -9,21 +9,26 @@ import {
   Pressable,
 } from 'native-base';
 import * as Types from '../redux/types.generated';
+import { ActionFieldInput } from '../screens/developer/actions/ActionFieldInput';
 
 interface Props {
+  actionFieldId: number;
   exposeFields: Types.ExposeField[];
 }
 
 const { useRef, useState, useEffect } = React;
 
-type FieldMappingType = string | Types.ExposeField;
+type FieldMappingType = { key: string; item: string | Types.ExposeField };
 
 export const FieldsMapping: React.FunctionComponent<Props> = ({
+  actionFieldId,
   exposeFields,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [fields, setFields] = useState<Types.ExposeField[]>();
-  const [fieldMapping, setFieldMapping] = useState<FieldMappingType[]>([]);
+  const [fieldMapping, setFieldMapping] = useState<{ [x: string]: any }>();
+  const refCount = useRef(0);
+  const popoverRef = useRef(null);
   const mappingInputRef = useRef(null);
 
   useEffect(() => {
@@ -44,41 +49,45 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
   const handleMappingSave = () => {
     console.log('>>> on click field mapping save button');
-    // setText(mappingInputRef.current?.value);
     if (!mappingInputRef.current?.value) {
+      // TODO: remove this item
       return;
     }
 
-    setFieldMapping([...fieldMapping, mappingInputRef.current?.value]);
+    setFieldMapping({
+      ...fieldMapping,
+      [generateKey()]: mappingInputRef.current?.value,
+    });
   };
-
-  const focusRef = useRef(null);
 
   const renderFieldPresentation = () => {
     if (!fieldMapping || fieldMapping.length <= 0) {
       return;
     }
 
-    return fieldMapping.map((fi) => {
+    return Object.entries(fieldMapping).map(([key, value]) => {
+      const fi = value;
       if (fi?.id) {
         return (
-          <Pressable key={fi?.id}>
+          <Pressable key={key}>
             <Text>{fi?.label}</Text>
           </Pressable>
         );
       }
       return (
-        <Pressable key={`string-${fi}`}>
+        <Pressable key={key}>
           <Text>{fi}</Text>
         </Pressable>
       );
     });
   };
 
-  const handleItemClick = (item) => {
+  const handleItemClick = (item: Types.ExposeField) => {
     console.log('item clicked');
-    setFieldMapping([...fieldMapping, item]);
+    setFieldMapping({ ...fieldMapping, [generateKey()]: item });
   };
+
+  const generateKey = () => `${actionFieldId}-${refCount.current++}`;
 
   return (
     <View>
@@ -87,7 +96,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
         <View>{renderFieldPresentation()}</View>
       </View>
       <Popover
-        initialFocusRef={focusRef}
+        initialFocusRef={popoverRef}
         isOpen={isOpen}
         onClose={() => setIsOpen(!isOpen)}
         trigger={(props) => (
@@ -99,7 +108,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
         <Popover.Content>
           <Popover.Header>Fields</Popover.Header>
           <Popover.Body>
-            <Input ref={mappingInputRef} />
+            <Input ref={mappingInputRef} id={`${actionFieldId}`} />
             <FlatList
               data={fields ?? []}
               renderItem={({ item }) => (
