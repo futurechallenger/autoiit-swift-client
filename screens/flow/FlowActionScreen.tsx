@@ -100,29 +100,29 @@ export const FlowActionScreen = () => {
     console.log('Handle create action');
   };
 
-  const handleItemClick = (
-    actionField: Types.ActionInputField,
-    item: Types.ExposeField,
-  ) => {
-    console.log('>>>>>>Handle mapping, item >>', item);
-    if (!actionField || !actionField?.id) {
-      return;
-    }
-    const items: Types.ExposeField[] = (actionInfo[`${actionField.id}`] ??
-      []) as Types.ExposeField[];
-    items.push(item);
-    setActionInfo({ ...actionInfo, [`${actionField.id}`]: [...items] });
-    const presentationText = items
-      .map((el) => {
-        if (el?.id) {
-          return el.label;
-        }
+  // const handleItemClick = (
+  //   actionField: Types.ActionInputField,
+  //   item: Types.ExposeField,
+  // ) => {
+  //   console.log('>>>>>>Handle mapping, item >>', item);
+  //   if (!actionField || !actionField?.id) {
+  //     return;
+  //   }
+  //   const items: Types.ExposeField[] = (actionInfo[`${actionField.id}`] ??
+  //     []) as Types.ExposeField[];
+  //   items.push(item);
+  //   setActionInfo({ ...actionInfo, [`${actionField.id}`]: [...items] });
+  //   const presentationText = items
+  //     .map((el) => {
+  //       if (el?.id) {
+  //         return el.label;
+  //       }
 
-        return el;
-      })
-      .join();
-    // setTextSlice(presentationText);
-  };
+  //       return el;
+  //     })
+  //     .join();
+  //   // setTextSlice(presentationText);
+  // };
 
   /**
    * Render input component according to `inputType`
