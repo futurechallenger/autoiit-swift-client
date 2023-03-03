@@ -1,3 +1,5 @@
+import { getFieldMappingItemsSlice } from './gql/getFieldMappingItemsSlice';
+import { addFieldMappingItemsSlice } from './gql/addFieldMappingItemsSlice';
 import { getServiceTriggerSlice } from './gql/getTriggersSlice';
 import { updateServiceAuthSlice } from './gql/updateServiceAuthSlice';
 import { getServiceAuthSlice } from './gql/getServiceAuthBySlice';
@@ -94,6 +96,8 @@ export const store = configureStore({
     addAutoFlow: AddAutoFlowSlice.reducer,
     updateAutoFlow: updateAutoFlowSlice.reducer,
     autoFlowById: getAutoFlowByIdSlice.reducer,
+    addFieldMappingItems: addFieldMappingItemsSlice.reducer,
+    fieldMappingItems: getFieldMappingItemsSlice.reducer,
   }),
 });
 
