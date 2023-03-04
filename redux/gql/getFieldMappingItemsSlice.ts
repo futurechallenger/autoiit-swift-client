@@ -55,7 +55,7 @@ interface InitialStateType {
 }
 
 export type GetFieldMappingItemsQueryVariables = Types.Exact<{
-  actionFieldId: Types.Scalars['Int'];
+  actionFieldIds: Array<Types.Scalars['Int']> | Types.Scalars['Int'];
 }>;
 
 
@@ -63,8 +63,8 @@ export type GetFieldMappingItemsQuery = { __typename?: 'Query', fieldMappingItem
 
 
 export const GetFieldMappingItemsDocument = `
-    query getFieldMappingItems($actionFieldId: Int!) {
-  fieldMappingItems(actionInputFieldId: $actionFieldId) {
+    query getFieldMappingItems($actionFieldIds: [Int!]!) {
+  fieldMappingItems(actionInputFieldIds: $actionFieldIds) {
     id
     value
     exposeFieldId

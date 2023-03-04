@@ -447,7 +447,7 @@ export type QueryExposeFieldArgs = {
 
 
 export type QueryFieldMappingItemsArgs = {
-  actionInputFieldId: Scalars['Int'];
+  actionInputFieldIds: Array<Scalars['Int']>;
 };
 
 
