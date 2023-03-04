@@ -64,14 +64,14 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     }
   }, [actionField]);
 
-  // TODO: set field mapping items to state `fieldMapping`.
-  // useEffect(() => {
-  //   if (!fieldMappingItems) {
-  //     return;
-  //   }
+  useEffect(() => {
+    if (!fieldMappingItems) {
+      setFieldMapping({});
+      return;
+    }
 
-  //   setFieldMapping({});
-  // }, [fieldMappingItems]);
+    setFieldMapping({});
+  }, [fieldMappingItems]);
 
   const handleMappingSave = () => {
     console.log('>>> on click field mapping save button');
