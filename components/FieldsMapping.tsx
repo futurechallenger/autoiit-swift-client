@@ -1,19 +1,10 @@
+import { Button, FlatList, Input, Popover, Pressable, Text, View } from 'native-base';
 import * as React from 'react';
-import {
-  Input,
-  Button,
-  View,
-  Text,
-  Popover,
-  FlatList,
-  Pressable,
-} from 'native-base';
-import * as Types from '../redux/types.generated';
-import { ActionFieldInput } from '../screens/developer/actions/ActionFieldInput';
+
+import { getFieldMappingItemsByFieldId } from '../redux/gql/getFieldMappingItemsByFieldIdSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
-import { addFieldOptions } from '../redux/gql/addFieldOptionsSlice';
-import { getFieldMappingItems } from '../redux/gql/getFieldMappingItemsSlice';
+import * as Types from '../redux/types.generated';
 
 interface Props {
   actionField: Types.ActionInputField;
@@ -26,12 +17,7 @@ const { useRef, useState, useEffect } = React;
 
 type FieldMappingType = { key: string; item: string | Types.ExposeField };
 
-export const FieldsMapping: React.FunctionComponent<Props> = ({
-  actionField,
-  exposeFields,
-  onSave,
-  onUpdate,
-}) => {
+export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exposeFields, onSave, onUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [fields, setFields] = useState<Types.ExposeField[]>();
   const [fieldMapping, setFieldMapping] = useState<{ [x: string]: any }>();
@@ -40,15 +26,13 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
   const mappingInputRef = useRef(null);
 
   const dispatch = useAppDispatch();
-  const { count, status, error } = useAppSelector(
-    (state: RootState) => state.addFieldOptions,
-  );
+  const { count, status, error } = useAppSelector((state: RootState) => state.addFieldOptions);
 
   const {
     fieldMappingItems,
     status: mappingStatus,
     error: mappingError,
-  } = useAppSelector((state: RootState) => state.fieldMappingItems);
+  } = useAppSelector((state: RootState) => state.fieldMappingItemsByFieldId);
 
   useEffect(() => {
     return () => setIsOpen(false);
@@ -60,18 +44,27 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     if (actionField?.id) {
-      dispatch(getFieldMappingItems({ actionFieldId: actionField?.id }));
+      dispatch(getFieldMappingItemsByFieldId({ actionInputFieldId: actionField?.id }));
     }
   }, [actionField]);
 
   useEffect(() => {
+    if (!actionField?.id) {
+      return;
+    }
+
     if (!fieldMappingItems) {
       setFieldMapping({});
       return;
     }
 
-    setFieldMapping({});
-  }, [fieldMappingItems]);
+    const mappings = {};
+    fieldMappingItems[`${actionField.id}`]?.forEach((el) => {
+      mappings[`${el.id}`] = (!el?.exposeFieldId ? el.value : el.exposeLabel) as string;
+    });
+
+    setFieldMapping(mappings ?? {});
+  }, [fieldMappingItems, actionField]);
 
   const handleMappingSave = () => {
     console.log('>>> on click field mapping save button');
@@ -92,22 +85,20 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
   const handleOK = () => {
     console.log('OK is clicked');
-    const fieldOptions = Object.entries(fieldMapping ?? {}).map(
-      ([_, value]) => {
-        if (value?.id) {
-          return {
-            exposeFieldId: value?.id,
-            exposeLabel: value?.keyName,
-            actionInputFieldId: actionField?.id,
-          };
-        }
-
+    const fieldOptions = Object.entries(fieldMapping ?? {}).map(([_, value]) => {
+      if (value?.id) {
         return {
-          value,
+          exposeFieldId: value?.id,
+          exposeLabel: value?.keyName,
           actionInputFieldId: actionField?.id,
         };
-      },
-    );
+      }
+
+      return {
+        value,
+        actionInputFieldId: actionField?.id,
+      };
+    });
 
     if (onSave) {
       onSave(fieldOptions);
@@ -154,7 +145,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     setFieldMapping({ ...fieldMapping, [generateKey()]: item });
   };
 
-  const generateKey = () => `${actionField?.id}-${refCount.current++}`;
+  const generateKey = (itemId?: number) => `${actionField?.id}-${itemId ?? refCount.current++}`;
 
   return (
     <View>
@@ -189,11 +180,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
           </Popover.Body>
           <Popover.Footer>
             <Button.Group>
-              <Button
-                colorScheme="coolGray"
-                variant="ghost"
-                onPress={() => setIsOpen(false)}
-              >
+              <Button colorScheme="coolGray" variant="ghost" onPress={() => setIsOpen(false)}>
                 Cancel
               </Button>
               <Button onPress={handleMappingSave}>Save</Button>
