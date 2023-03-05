@@ -1,3 +1,4 @@
+import { ActionInputField } from './../types.generated';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { sendRequest } from '../baseApi';
 
@@ -14,7 +15,7 @@ export const getFieldMappingItemsByFieldId = createAsyncThunk(
 );
 
 const initialState: InitialStateType = {
-  fieldMappingItems: [],
+  fieldMappingItems: {},
   status: undefined,
   error: undefined,
 };
@@ -38,7 +39,10 @@ export const getFieldMappingItemsByFieldIdSlice= createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = 'succeeded';
-          state.fieldMappingItems= payload?.data?.fieldMappingItemsByFieldId ?? [];
+          // state.fieldMappingItems= payload?.data?.fieldMappingItemsByFieldId ?? [];
+          if(action.meta.arg.actionInputFieldId) {
+            state.fieldMappingItems[`${action.meta.arg.actionInputFieldId}`] = (payload?.data?.fieldMappingItemsByFieldId ?? []) as Types.FieldMappingItem[];
+          }
         }
       })
       .addCase(getFieldMappingItemsByFieldId.rejected, (state, action) => {
@@ -49,7 +53,7 @@ export const getFieldMappingItemsByFieldIdSlice= createSlice({
 });
 
 interface InitialStateType {
-  fieldMappingItems: Types.FieldMappingItem[];
+  fieldMappingItems: {actionInputFieldId: number,  items: Types.FieldMappingItem[]};
   status: string | undefined;
   error: string | undefined;
 }

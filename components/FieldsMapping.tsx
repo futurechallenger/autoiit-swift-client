@@ -1,19 +1,18 @@
-import * as React from 'react';
 import {
-  Input,
   Button,
-  View,
-  Text,
-  Popover,
   FlatList,
+  Input,
+  Popover,
   Pressable,
+  Text,
+  View,
 } from 'native-base';
-import * as Types from '../redux/types.generated';
-import { ActionFieldInput } from '../screens/developer/actions/ActionFieldInput';
+import * as React from 'react';
+
+import { getFieldMappingItemsByFieldId } from '../redux/gql/getFieldMappingItemsByFieldIdSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
-import { addFieldOptions } from '../redux/gql/addFieldOptionsSlice';
-import { getFieldMappingItems } from '../redux/gql/getFieldMappingItemsSlice';
+import * as Types from '../redux/types.generated';
 
 interface Props {
   actionField: Types.ActionInputField;
@@ -48,7 +47,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     fieldMappingItems,
     status: mappingStatus,
     error: mappingError,
-  } = useAppSelector((state: RootState) => state.fieldMappingItems);
+  } = useAppSelector((state: RootState) => state.fieldMappingItemsByFieldId);
 
   useEffect(() => {
     return () => setIsOpen(false);
@@ -60,7 +59,9 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     if (actionField?.id) {
-      dispatch(getFieldMappingItems({ actionFieldId: actionField?.id }));
+      dispatch(
+        getFieldMappingItemsByFieldId({ actionInputFieldId: actionField?.id }),
+      );
     }
   }, [actionField]);
 
@@ -70,7 +71,14 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
       return;
     }
 
-    setFieldMapping({});
+    const mappings: { [x: string]: string } = {};
+    // fieldMappingItems.forEach((el) => {
+    //   mappings[`${generateKey(el.id)}`] = (
+    //     !el?.exposeFieldId ? el.value : el.exposeLabel
+    //   ) as string;
+    // });
+
+    setFieldMapping(mappings ?? {});
   }, [fieldMappingItems]);
 
   const handleMappingSave = () => {
@@ -154,7 +162,8 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     setFieldMapping({ ...fieldMapping, [generateKey()]: item });
   };
 
-  const generateKey = () => `${actionField?.id}-${refCount.current++}`;
+  const generateKey = (itemId?: number) =>
+    `${actionField?.id}-${itemId ?? refCount.current++}`;
 
   return (
     <View>
