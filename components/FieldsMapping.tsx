@@ -1,12 +1,4 @@
-import {
-  Button,
-  FlatList,
-  Input,
-  Popover,
-  Pressable,
-  Text,
-  View,
-} from 'native-base';
+import { Button, FlatList, Input, Popover, Pressable, Text, View } from 'native-base';
 import * as React from 'react';
 
 import { getFieldMappingItemsByFieldId } from '../redux/gql/getFieldMappingItemsByFieldIdSlice';
@@ -25,12 +17,7 @@ const { useRef, useState, useEffect } = React;
 
 type FieldMappingType = { key: string; item: string | Types.ExposeField };
 
-export const FieldsMapping: React.FunctionComponent<Props> = ({
-  actionField,
-  exposeFields,
-  onSave,
-  onUpdate,
-}) => {
+export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exposeFields, onSave, onUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [fields, setFields] = useState<Types.ExposeField[]>();
   const [fieldMapping, setFieldMapping] = useState<{ [x: string]: any }>();
@@ -39,9 +26,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
   const mappingInputRef = useRef(null);
 
   const dispatch = useAppDispatch();
-  const { count, status, error } = useAppSelector(
-    (state: RootState) => state.addFieldOptions,
-  );
+  const { count, status, error } = useAppSelector((state: RootState) => state.addFieldOptions);
 
   const {
     fieldMappingItems,
@@ -59,27 +44,27 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     if (actionField?.id) {
-      dispatch(
-        getFieldMappingItemsByFieldId({ actionInputFieldId: actionField?.id }),
-      );
+      dispatch(getFieldMappingItemsByFieldId({ actionInputFieldId: actionField?.id }));
     }
   }, [actionField]);
 
   useEffect(() => {
+    if (!actionField?.id) {
+      return;
+    }
+
     if (!fieldMappingItems) {
       setFieldMapping({});
       return;
     }
 
-    const mappings: { [x: string]: string } = {};
-    // fieldMappingItems.forEach((el) => {
-    //   mappings[`${generateKey(el.id)}`] = (
-    //     !el?.exposeFieldId ? el.value : el.exposeLabel
-    //   ) as string;
-    // });
+    const mappings = {};
+    fieldMappingItems[`${actionField.id}`]?.forEach((el) => {
+      mappings[`${el.id}`] = (!el?.exposeFieldId ? el.value : el.exposeLabel) as string;
+    });
 
     setFieldMapping(mappings ?? {});
-  }, [fieldMappingItems]);
+  }, [fieldMappingItems, actionField]);
 
   const handleMappingSave = () => {
     console.log('>>> on click field mapping save button');
@@ -100,22 +85,20 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
   const handleOK = () => {
     console.log('OK is clicked');
-    const fieldOptions = Object.entries(fieldMapping ?? {}).map(
-      ([_, value]) => {
-        if (value?.id) {
-          return {
-            exposeFieldId: value?.id,
-            exposeLabel: value?.keyName,
-            actionInputFieldId: actionField?.id,
-          };
-        }
-
+    const fieldOptions = Object.entries(fieldMapping ?? {}).map(([_, value]) => {
+      if (value?.id) {
         return {
-          value,
+          exposeFieldId: value?.id,
+          exposeLabel: value?.keyName,
           actionInputFieldId: actionField?.id,
         };
-      },
-    );
+      }
+
+      return {
+        value,
+        actionInputFieldId: actionField?.id,
+      };
+    });
 
     if (onSave) {
       onSave(fieldOptions);
@@ -162,8 +145,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     setFieldMapping({ ...fieldMapping, [generateKey()]: item });
   };
 
-  const generateKey = (itemId?: number) =>
-    `${actionField?.id}-${itemId ?? refCount.current++}`;
+  const generateKey = (itemId?: number) => `${actionField?.id}-${itemId ?? refCount.current++}`;
 
   return (
     <View>
@@ -198,11 +180,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
           </Popover.Body>
           <Popover.Footer>
             <Button.Group>
-              <Button
-                colorScheme="coolGray"
-                variant="ghost"
-                onPress={() => setIsOpen(false)}
-              >
+              <Button colorScheme="coolGray" variant="ghost" onPress={() => setIsOpen(false)}>
                 Cancel
               </Button>
               <Button onPress={handleMappingSave}>Save</Button>

@@ -39,7 +39,6 @@ export const getFieldMappingItemsByFieldIdSlice= createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = 'succeeded';
-          // state.fieldMappingItems= payload?.data?.fieldMappingItemsByFieldId ?? [];
           if(action.meta.arg.actionInputFieldId) {
             state.fieldMappingItems[`${action.meta.arg.actionInputFieldId}`] = (payload?.data?.fieldMappingItemsByFieldId ?? []) as Types.FieldMappingItem[];
           }
