@@ -92,7 +92,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
 
     setFieldMapping({
       ...fieldMapping,
-      [generateKey()]: mappingInputRef.current?.value,
+      [generateKey(mappingInputRef.current?.value)]: mappingInputRef.current?.value,
     });
   };
 
@@ -102,12 +102,12 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
 
   const handleOK = () => {
     console.log('OK is clicked');
-    const fieldOptions = Object.entries(fieldMapping ?? {}).map(([_, value]) => {
-      const isToUpdate = value?.id?.indexOf('-') < 0;
+    const fieldOptions = Object.entries(fieldMapping ?? {}).map(([key, value]) => {
+      const isToUpdate = key?.indexOf('-') < 0;
 
       if (value?.id) {
         return {
-          id: isToUpdate ? value?.id : null,
+          id: isToUpdate ? key : null,
           exposeFieldId: /*isToUpdate ? value?.exposeFieldId :*/ value?.id,
           exposeLabel: /*isToUpdate ? value?.exposeLabel : */ value?.keyName,
           actionInputFieldId: isToUpdate ? value?.actionInputFieldId : actionField?.id,
@@ -140,8 +140,8 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
       const fi = value;
 
       return (
-        <HStack>
-          <Pressable key={key}>
+        <HStack key={key}>
+          <Pressable>
             <Text>{value?.label ?? value?.value ?? value?.exposeLabel}</Text>
           </Pressable>
           <IconButton
@@ -156,10 +156,10 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
 
   const handleItemClick = (item: Types.ExposeField) => {
     console.log('item clicked');
-    setFieldMapping({ ...fieldMapping, [generateKey()]: item });
+    setFieldMapping({ ...fieldMapping, [generateKey(item?.id ?? '')]: item });
   };
 
-  const generateKey = (itemId?: number) => `${actionField?.id}-${itemId ?? refCount.current++}`;
+  const generateKey = (itemId: number | string) => `${actionField?.id}-${itemId}-${refCount.current++}`;
 
   return (
     <View>
