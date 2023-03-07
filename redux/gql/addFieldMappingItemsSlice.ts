@@ -3,13 +3,12 @@ import { sendRequest } from '../baseApi';
 
 import * as Types from '../types.generated';
 
-
 export const addFieldMappingItems = createAsyncThunk(
   'addFieldMappingItems',
   async (variables: AddFieldMappingItemsMutationVariables) => {
     return sendRequest<AddFieldMappingItemsMutation>({
       variables,
-      query:AddFieldMappingItemsDocument,
+      query: AddFieldMappingItemsDocument,
     });
   },
 );
@@ -63,11 +62,13 @@ export type AddFieldMappingItemsMutationVariables = Types.Exact<{
   mappingItems: Array<Types.FieldMappingItemInput> | Types.FieldMappingItemInput;
 }>;
 
+export type AddFieldMappingItemsMutation = { __typename?: 'Mutation'; addFieldMappingItems: number };
 
-export type AddFieldMappingItemsMutation = { __typename?: 'Mutation', addFieldMappingItems: number };
-
-
+// export const AddFieldMappingItemsDocument = `
+//     mutation addFieldMappingItems($mappingItems: [FieldMappingItemInput!]!) {
+//   addFieldMappingItems(mappingItems: $mappingItems)
+// }`;
 export const AddFieldMappingItemsDocument = `
-    mutation addFieldMappingItems($mappingItems: [FieldMappingItemInput!]!) {
-  addFieldMappingItems(mappingItems: $mappingItems)
+mutation createFieldMappingItems($mappingItems: [FieldMappingItemInput!]!) {
+  createUpdateFieldMappingItems(mappingItems: $mappingItems)
 }`;
