@@ -68,7 +68,8 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
 
     const mappings = {};
     fieldMappingItems[actionField.id]?.forEach((el: Types.FieldMappingItem) => {
-      mappings[`${el.id}`] = (!el?.exposeFieldId ? el.value : el.exposeLabel) as string;
+      // mappings[`${el.id}`] = (!el?.exposeFieldId ? el.value : el.exposeLabel) as string;
+      mappings[`${el.id}`] = el;
     });
 
     setFieldMapping(mappings ?? {});
@@ -102,17 +103,21 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
   const handleOK = () => {
     console.log('OK is clicked');
     const fieldOptions = Object.entries(fieldMapping ?? {}).map(([_, value]) => {
+      const isToUpdate = value?.id?.indexOf('-') < 0;
+
       if (value?.id) {
         return {
-          exposeFieldId: value?.id,
-          exposeLabel: value?.keyName,
-          actionInputFieldId: actionField?.id,
+          id: isToUpdate ? value?.id : null,
+          exposeFieldId: /*isToUpdate ? value?.exposeFieldId :*/ value?.id,
+          exposeLabel: /*isToUpdate ? value?.exposeLabel : */ value?.keyName,
+          actionInputFieldId: isToUpdate ? value?.actionInputFieldId : actionField?.id,
         };
       }
 
       return {
+        id: isToUpdate ? value?.id : null,
         value,
-        actionInputFieldId: actionField?.id,
+        actionInputFieldId: isToUpdate ? value?.actionInputFieldId : actionField?.id,
       };
     });
 
@@ -137,7 +142,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
       return (
         <HStack>
           <Pressable key={key}>
-            <Text>{value}</Text>
+            <Text>{value?.label ?? value?.value ?? value?.exposeLabel}</Text>
           </Pressable>
           <IconButton
             icon={<Ionicons name="remove-circle" size={20} />}
