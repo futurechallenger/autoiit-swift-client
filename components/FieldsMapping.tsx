@@ -59,7 +59,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
     }
 
     const mappings = {};
-    fieldMappingItems[`${actionField.id}`]?.forEach((el) => {
+    fieldMappingItems[actionField.id]?.forEach((el: Types.FieldMappingItem) => {
       mappings[`${el.id}`] = (!el?.exposeFieldId ? el.value : el.exposeLabel) as string;
     });
 
