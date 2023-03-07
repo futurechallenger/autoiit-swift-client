@@ -1,3 +1,4 @@
+import { removeFieldMappingItemSlice } from './gql/removeFieldMappingItemSlice';
 import { getFieldMappingItemsByFieldIdSlice } from './gql/getFieldMappingItemsByFieldIdSlice';
 import { updateFieldMappingItemSlice } from './gql/updateFieldMappingItemSlice';
 import { getFieldMappingItemsSlice } from './gql/getFieldMappingItemsSlice';
@@ -102,6 +103,7 @@ export const store = configureStore({
     fieldMappingItems: getFieldMappingItemsSlice.reducer,
     fieldMappingItemsByFieldId: getFieldMappingItemsByFieldIdSlice.reducer,
     updateFieldMappingItem: updateFieldMappingItemSlice.reducer,
+    removeFieldMappingItem: removeFieldMappingItemSlice.reducer,
   }),
 });
 
