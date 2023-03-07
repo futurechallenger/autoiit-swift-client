@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
 import * as Types from '../redux/types.generated';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { removeFieldMappingItem, RemoveFieldMappingItemDocument } from '../redux/gql/removeFieldMappingItemSlice';
 
 interface Props {
   actionField: Types.ActionInputField;
@@ -34,6 +35,12 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
     status: mappingStatus,
     error: mappingError,
   } = useAppSelector((state: RootState) => state.fieldMappingItemsByFieldId);
+
+  const {
+    fieldMappingItem: removedMappingItem,
+    status: removedStatus,
+    error: removedError,
+  } = useAppSelector((state: RootState) => state.removeFieldMappingItem);
 
   useEffect(() => {
     return () => setIsOpen(false);
@@ -66,6 +73,14 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
 
     setFieldMapping(mappings ?? {});
   }, [fieldMappingItems, actionField]);
+
+  useEffect(() => {
+    if (!removedMappingItem || !actionField?.id) {
+      return;
+    }
+
+    dispatch(getFieldMappingItemsByFieldId({ actionInputFieldId: actionField?.id }));
+  }, [removedMappingItem, actionField]);
 
   const handleMappingSave = () => {
     console.log('>>> on click field mapping save button');
@@ -106,22 +121,9 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
     }
   };
 
-  // const handle = () => {
-  //   console.log('>>> on click field mapping save button');
-  //   if (!mappingInputRef.current?.value) {
-  //     // TODO: remove this item
-  //     return;
-  //   }
-
-  //   setFieldMapping({
-  //     ...fieldMapping,
-  //     [generateKey()]: mappingInputRef.current?.value,
-  //   });
-  // };
-
   const handleRemoveMapping = (mappingId: string) => {
-    console.log('remove field mappings');
-    dispatch();
+    console.log('remove field mappings', mappingId);
+    dispatch(removeFieldMappingItem({ mappingId: parseInt(mappingId, 10) }));
   };
 
   const renderFieldPresentation = () => {
