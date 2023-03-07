@@ -1,10 +1,11 @@
-import { Button, FlatList, Input, Popover, Pressable, Text, View } from 'native-base';
+import { Button, FlatList, HStack, IconButton, Input, Popover, Pressable, Text, View } from 'native-base';
 import * as React from 'react';
 
 import { getFieldMappingItemsByFieldId } from '../redux/gql/getFieldMappingItemsByFieldIdSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
 import * as Types from '../redux/types.generated';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 interface Props {
   actionField: Types.ActionInputField;
@@ -105,17 +106,22 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
     }
   };
 
-  const handle = () => {
-    console.log('>>> on click field mapping save button');
-    if (!mappingInputRef.current?.value) {
-      // TODO: remove this item
-      return;
-    }
+  // const handle = () => {
+  //   console.log('>>> on click field mapping save button');
+  //   if (!mappingInputRef.current?.value) {
+  //     // TODO: remove this item
+  //     return;
+  //   }
 
-    setFieldMapping({
-      ...fieldMapping,
-      [generateKey()]: mappingInputRef.current?.value,
-    });
+  //   setFieldMapping({
+  //     ...fieldMapping,
+  //     [generateKey()]: mappingInputRef.current?.value,
+  //   });
+  // };
+
+  const handleRemoveMapping = (mappingId: string) => {
+    console.log('remove field mappings');
+    dispatch();
   };
 
   const renderFieldPresentation = () => {
@@ -125,17 +131,18 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
 
     return Object.entries(fieldMapping).map(([key, value]) => {
       const fi = value;
-      if (fi?.id) {
-        return (
-          <Pressable key={key}>
-            <Text>{fi?.label}</Text>
-          </Pressable>
-        );
-      }
+
       return (
-        <Pressable key={key}>
-          <Text>{fi}</Text>
-        </Pressable>
+        <HStack>
+          <Pressable key={key}>
+            <Text>{value}</Text>
+          </Pressable>
+          <IconButton
+            icon={<Ionicons name="remove-circle" size={20} />}
+            borderRadius="full"
+            onPress={() => handleRemoveMapping(key)}
+          />
+        </HStack>
       );
     });
   };
