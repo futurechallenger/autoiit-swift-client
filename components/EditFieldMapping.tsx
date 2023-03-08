@@ -7,16 +7,28 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 const { useRef, useState } = React;
 
 interface Props {
+  mappingItem: { key: string; value: Types.FieldMappingItem | {} };
   fields?: Types.FieldMappingItem[];
+  onSave: (item) => void;
 }
 
-export const EditFieldMapping: React.FunctionComponent<Props> = ({ fields }) => {
+export const EditFieldMapping: React.FunctionComponent<Props> = ({ mappingItem, fields, onSave }) => {
   const popoverRef = useRef(null);
   const mappingInputRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [currentItem, setCurrentItem] = useState();
 
-  const handleItemClick = () => {};
-  const handleMappingSave = () => {};
+  const handleItemClick = (item) => {
+    console.log('>>> edit mapping', item);
+    setCurrentItem(item);
+  };
+
+  const handleMappingSave = () => {
+    console.log('handle mapping save');
+    if (onSave) {
+      onSave(currentItem);
+    }
+  };
 
   return (
     <View>

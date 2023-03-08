@@ -8,6 +8,7 @@ import * as Types from '../redux/types.generated';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { removeFieldMappingItem, RemoveFieldMappingItemDocument } from '../redux/gql/removeFieldMappingItemSlice';
 import { EditFieldMapping } from './EditFieldMapping';
+import { updateFieldMappingItem } from '../redux/gql/updateFieldMappingItemSlice';
 
 interface Props {
   actionField: Types.ActionInputField;
@@ -136,6 +137,10 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
     dispatch(removeFieldMappingItem({ mappingId: parseInt(mappingId, 10) }));
   };
 
+  const handleUpdateItem = (mappingItem: Types.FieldMappingItem) => {
+    dispatch(updateFieldMappingItem({ mappingItem }));
+  };
+
   const handleUpdateMapping = (mapping) => {
     console.log('update field mapping');
   };
@@ -158,7 +163,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
             borderRadius="full"
             onPress={() => handleRemoveMapping(key)}
           />
-          <EditFieldMapping />
+          <EditFieldMapping fields={fields} mappingItem={{ key, value }} onSave={handleUpdateItem} />
         </HStack>
       );
     });
