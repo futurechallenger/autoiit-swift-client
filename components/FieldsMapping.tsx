@@ -7,6 +7,7 @@ import { RootState } from '../redux/store';
 import * as Types from '../redux/types.generated';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { removeFieldMappingItem, RemoveFieldMappingItemDocument } from '../redux/gql/removeFieldMappingItemSlice';
+import { EditFieldMapping } from './EditFieldMapping';
 
 interface Props {
   actionField: Types.ActionInputField;
@@ -157,45 +158,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
             borderRadius="full"
             onPress={() => handleRemoveMapping(key)}
           />
-
-          <Popover
-            initialFocusRef={popoverRef}
-            isOpen={isOpen}
-            onClose={() => setIsEditOpen(!isOpen)}
-            trigger={(props) => (
-              <IconButton
-                {...props}
-                icon={<Ionicons name="ios-folder-sharp" size={20} />}
-                borderRadius="full"
-                onPress={() => setIsEditOpen(true)}
-              />
-            )}
-          >
-            <Popover.Content>
-              <Popover.Header>Fields</Popover.Header>
-              <Popover.Body>
-                <Input ref={mappingInputRef} />
-                <FlatList
-                  data={fields ?? []}
-                  renderItem={({ item }) => (
-                    <Pressable onPress={() => handleItemClick(item)}>
-                      <View>
-                        <Text>{item?.label}</Text>
-                      </View>
-                    </Pressable>
-                  )}
-                />
-              </Popover.Body>
-              <Popover.Footer>
-                <Button.Group>
-                  <Button colorScheme="coolGray" variant="ghost" onPress={() => setIsEditOpen(false)}>
-                    Cancel
-                  </Button>
-                  <Button onPress={handleMappingSave}>Save</Button>
-                </Button.Group>
-              </Popover.Footer>
-            </Popover.Content>
-          </Popover>
+          <EditFieldMapping />
         </HStack>
       );
     });
