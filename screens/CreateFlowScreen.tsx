@@ -10,9 +10,12 @@ const VerticalDivider = () => {
 
 export const CreateFlowScreen = () => {
   const navigation = useNavigation();
-  const { autoFlow, status, error } = useAppSelector(
-    (state: RootState) => state.addAutoFlow,
-  );
+  const { autoFlow, status, error } = useAppSelector((state: RootState) => state.addAutoFlow);
+
+  const handleContinue = () => {
+    // TODO: navigate to `Review and finish` screen
+    navigation.navigate('ReviewFinish');
+  };
 
   return (
     <View h="full" w="full" justifyContent="flex-start" alignItems="center">
@@ -29,13 +32,7 @@ export const CreateFlowScreen = () => {
         <Text fontSize="60" marginRight="10" marginY="5">
           When
         </Text>
-        <Button
-          onPress={() =>
-            navigation.navigate('ChooseService', { phrase: 'Trigger' })
-          }
-        >
-          Add
-        </Button>
+        <Button onPress={() => navigation.navigate('ChooseService', { phrase: 'Trigger' })}>Add</Button>
       </View>
       <VerticalDivider />
       <View
@@ -53,12 +50,13 @@ export const CreateFlowScreen = () => {
         <Button
           disabled={!autoFlow}
           bgColor={!autoFlow ? 'muted.500' : null}
-          onPress={() =>
-            navigation.navigate('ChooseService', { phrase: 'Action' })
-          }
+          onPress={() => navigation.navigate('ChooseService', { phrase: 'Action' })}
         >
           Add
         </Button>
+      </View>
+      <View>
+        <Button onPress={handleContinue}>Continue</Button>
       </View>
     </View>
   );
