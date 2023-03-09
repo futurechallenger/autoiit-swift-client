@@ -1,3 +1,4 @@
+import { getCurrentUserInfoSlice } from './gql/getCurrentUserInfoSlice';
 import { removeFieldMappingItemSlice } from './gql/removeFieldMappingItemSlice';
 import { getFieldMappingItemsByFieldIdSlice } from './gql/getFieldMappingItemsByFieldIdSlice';
 import { updateFieldMappingItemSlice } from './gql/updateFieldMappingItemSlice';
@@ -16,10 +17,7 @@ import { getServicesSlice } from './gql/chooseServices';
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from '@reduxjs/toolkit';
 import { loginSlice } from './gql/loginService';
-import {
-  searchServiceSlice,
-  mostSearchedServicesSlice,
-} from './gql/searchService';
+import { searchServiceSlice, mostSearchedServicesSlice } from './gql/searchService';
 import { serviceInfoSlice } from './gql/serviceInfoService';
 import { signInSlice } from './gql/signInService';
 import { userInfoSlice } from './gql/userInfoService';
@@ -104,6 +102,7 @@ export const store = configureStore({
     fieldMappingItemsByFieldId: getFieldMappingItemsByFieldIdSlice.reducer,
     updateFieldMappingItem: updateFieldMappingItemSlice.reducer,
     removeFieldMappingItem: removeFieldMappingItemSlice.reducer,
+    currentUserInfo: getCurrentUserInfoSlice.reducer,
   }),
 });
 
