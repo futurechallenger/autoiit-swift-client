@@ -5,11 +5,7 @@
  */
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-} from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Platform, Pressable } from 'react-native';
@@ -35,12 +31,7 @@ import { ProfileScreen } from '../screens/ProfileScreen';
 import { SearchScreen } from '../screens/SearchScreen';
 import { ServiceDetailScreen } from '../screens/ServiceDetailScreen';
 import { TriggersScreen } from '../screens/TriggersScreen';
-import {
-  BottomStackParamList,
-  MainTabScreenProps,
-  RootTabParamList,
-  StackNavigatorParamList,
-} from '../types';
+import { BottomStackParamList, MainTabScreenProps, RootTabParamList, StackNavigatorParamList } from '../types';
 import { AuthContext } from './AuthContext';
 import LinkingConfiguration from './LinkingConfiguration';
 import { ConnectionScreen } from '../screens/ConnectionScreen';
@@ -57,35 +48,15 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
     <NavStack.Navigator>
       {!isSignedIn ? (
         <>
-          <NavStack.Screen
-            name="Root"
-            component={AuthScreen}
-            options={{ headerShown: false }}
-          />
-          <NavStack.Screen
-            name="Email"
-            component={EmailScreen}
-            options={{ headerShown: true }}
-          />
-          <NavStack.Screen
-            name="Password"
-            component={PasswordScreen}
-            options={{ headerShown: true }}
-          />
+          <NavStack.Screen name="Root" component={AuthScreen} options={{ headerShown: false }} />
+          <NavStack.Screen name="Email" component={EmailScreen} options={{ headerShown: true }} />
+          <NavStack.Screen name="Password" component={PasswordScreen} options={{ headerShown: true }} />
         </>
       ) : (
         <>
-          <NavStack.Screen
-            name="Tabs"
-            component={RootNavigator}
-            options={{ headerShown: false }}
-          />
+          <NavStack.Screen name="Tabs" component={RootNavigator} options={{ headerShown: false }} />
           <NavStack.Screen name="Account" component={AccountScreen} />
-          <NavStack.Screen
-            name="Search"
-            component={SearchScreen}
-            options={{ animation: 'fade', headerShown: false }}
-          />
+          <NavStack.Screen name="Search" component={SearchScreen} options={{ animation: 'fade', headerShown: false }} />
 
           <NavStack.Group
             screenOptions={{
@@ -93,11 +64,7 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
               headerBackVisible: false,
             }}
           >
-            <NavStack.Screen
-              name="Connect"
-              component={PopupScreen}
-              options={{ headerBackVisible: false }}
-            />
+            <NavStack.Screen name="Connect" component={PopupScreen} options={{ headerBackVisible: false }} />
           </NavStack.Group>
           <NavStack.Group
             screenOptions={{
@@ -108,33 +75,20 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
             <NavStack.Screen name="NewService" component={NewServiceScreen} />
           </NavStack.Group>
           <NavStack.Screen name="Create" component={CreateFlowScreen} />
-          <NavStack.Screen
-            name="ChooseService"
-            component={ChooseServiceScreen}
-          />
+          <NavStack.Screen name="ChooseService" component={ChooseServiceScreen} />
           <NavStack.Screen name="Triggers" component={TriggersScreen} />
           <NavStack.Screen name="Actions" component={ActionsScreen} />
           <NavStack.Screen name="Connection" component={ConnectionScreen} />
-          <NavStack.Screen
-            name="CompleteTrigger"
-            component={FlowTriggerScreen}
-          />
+          <NavStack.Screen name="CompleteTrigger" component={FlowTriggerScreen} />
           <NavStack.Screen name="CompleteAction" component={FlowActionScreen} />
-          <NavStack.Screen
-            name="ServiceDetail"
-            component={ServiceDetailScreen}
-          />
+          <NavStack.Screen name="ServiceDetail" component={ServiceDetailScreen} />
         </>
       )}
     </NavStack.Navigator>
   );
 };
 
-export default function Navigation({
-  colorScheme,
-}: {
-  colorScheme: ColorSchemeName;
-}) {
+export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
@@ -157,13 +111,8 @@ export default function Navigation({
   };
 
   return (
-    <AuthContext.Provider
-      value={{ token: token ?? '', setAuthToken: (token) => setToken(token) }}
-    >
-      <NavigationContainer
-        linking={LinkingConfiguration}
-        theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-      >
+    <AuthContext.Provider value={{ token: token ?? '', setAuthToken: (token) => setToken(token) }}>
+      <NavigationContainer linking={LinkingConfiguration} theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         {renderNavigator(token)}
       </NavigationContainer>
     </AuthContext.Provider>
@@ -179,16 +128,8 @@ const Stack = createNativeStackNavigator<BottomStackParamList>();
 export function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: 'Oops!' }}
-      />
+      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -225,12 +166,7 @@ function BottomTabNavigator() {
                 opacity: pressed ? 0.5 : 1,
               })}
             >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
+              <FontAwesome name="info-circle" size={25} color={Colors[colorScheme].text} style={{ marginRight: 15 }} />
             </Pressable>
           ),
         })}
@@ -243,18 +179,9 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
-      {/* <BottomTab.Screen
-        name="Create" // Create flow
-        component={CreateFlowScreen}
-        options={{
-          title: 'Create Flow',
-          tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
-        }}
-      /> */}
-      {/* TODO: this is only for test */}
       <BottomTab.Screen
         name="Create" // Create flow
-        component={FlowActionScreen}
+        component={CreateFlowScreen}
         options={{
           title: 'Create Flow',
           tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
@@ -293,9 +220,6 @@ function BottomTabNavigator() {
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
+function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>['name']; color: string }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
