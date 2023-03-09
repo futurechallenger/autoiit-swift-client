@@ -7,8 +7,8 @@ import { FieldsMapping } from '../../components/FieldsMapping';
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
 import { addFieldMappingItems } from '../../redux/gql/addFieldMappingItemsSlice';
 import { getActionInputFields } from '../../redux/gql/getActionInputFieldsSlice';
-import { getFieldMappingItems } from '../../redux/gql/getFieldMappingItemsSlice';
 import { getTriggerExposeFields } from '../../redux/gql/getTriggerExposeFieldsSlice';
+import { updateAutoFlow } from '../../redux/gql/updateAutoFlowSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import * as Types from '../../redux/types.generated';
@@ -20,18 +20,7 @@ export const FlowActionScreen = () => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
 
-  // const { item: action } = route?.params ?? {};
-
-  // TODO: for test only
-  const action: Types.ServiceAction = {
-    id: 1,
-    name: 'github-issue-trello',
-    serviceApiId: 4,
-    description: 'github issues added to trello cards',
-    endpointPath: '/1/cards',
-    // endpointType: 1,
-    // invokeType: 0,
-  };
+  const { item: action } = route?.params ?? {};
 
   const [actionInfo, setActionInfo] = useState<{
     id: string;
@@ -48,18 +37,11 @@ export const FlowActionScreen = () => {
 
   const { autoFlow, status: flowStatus, error: flowError } = useAppSelector((state: RootState) => state.autoFlowById);
 
-  // TODO: donot delete
-  // const {
-  //   autoFlow: addedFlow,
-  //   status: addedFlowStatus,
-  //   error: addedFlowError,
-  // } = useAppSelector((state: RootState) => state.addAutoFlow);
-  const addedFlow: Types.AutoFlow = {
-    id: 5,
-    triggerId: 1,
-    actionId: 1,
-    title: 'if ... then ...',
-  };
+  const {
+    autoFlow: addedFlow,
+    status: addedFlowStatus,
+    error: addedFlowError,
+  } = useAppSelector((state: RootState) => state.addAutoFlow);
 
   const {
     exposeFields,
@@ -92,31 +74,19 @@ export const FlowActionScreen = () => {
 
   const handleCreate = () => {
     console.log('Handle create action');
+    if (!autoFlow?.id) {
+      console.error('ERR: autoflow Id is invalid');
+      return;
+    }
+    dispatch(
+      updateAutoFlow({
+        autoFlow: {
+          id: autoFlow?.id,
+          actionId: action.id,
+        },
+      }),
+    );
   };
-
-  // const handleItemClick = (
-  //   actionField: Types.ActionInputField,
-  //   item: Types.ExposeField,
-  // ) => {
-  //   console.log('>>>>>>Handle mapping, item >>', item);
-  //   if (!actionField || !actionField?.id) {
-  //     return;
-  //   }
-  //   const items: Types.ExposeField[] = (actionInfo[`${actionField.id}`] ??
-  //     []) as Types.ExposeField[];
-  //   items.push(item);
-  //   setActionInfo({ ...actionInfo, [`${actionField.id}`]: [...items] });
-  //   const presentationText = items
-  //     .map((el) => {
-  //       if (el?.id) {
-  //         return el.label;
-  //       }
-
-  //       return el;
-  //     })
-  //     .join();
-  //   // setTextSlice(presentationText);
-  // };
 
   /**
    * Render input component according to `inputType`
