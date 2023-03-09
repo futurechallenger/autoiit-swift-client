@@ -1,5 +1,4 @@
 import { Picker } from '@react-native-picker/picker';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { Box, Button, Divider, Text, View } from 'native-base';
 import * as React from 'react';
 
@@ -12,6 +11,7 @@ import { updateAutoFlow } from '../../redux/gql/updateAutoFlowSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import * as Types from '../../redux/types.generated';
+import { StackActions, useNavigation, useRoute } from '@react-navigation/native';
 
 const { useRef, useEffect, useState } = React;
 
@@ -71,6 +71,14 @@ export const FlowActionScreen = () => {
       dispatch(getTriggerExposeFields({ triggerId: addedFlow?.triggerId }));
     }
   }, []);
+
+  useEffect(() => {
+    if (!updatedFlow) {
+      return;
+    }
+
+    navigation.dispatch(StackActions.popToTop());
+  }, [updatedFlow]);
 
   const handleCreate = () => {
     console.log('Handle create action');

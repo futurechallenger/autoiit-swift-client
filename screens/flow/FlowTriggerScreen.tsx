@@ -6,11 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 
 import { Picker } from '@react-native-picker/picker';
-import {
-  StackActions,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import { StackActions, useNavigation, useRoute } from '@react-navigation/native';
 import * as Types from '../../redux/types.generated';
 import { addAutoFlow } from '../../redux/gql/addAutoFlowSlice';
 
@@ -24,9 +20,7 @@ interface Props {
  * TODO: Complete dropdown / multip checkbox selection handling
  */
 
-export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
-  params,
-}) => {
+export const FlowTriggerScreen: React.FunctionComponent<Props> = ({ params }) => {
   const route = useRoute();
   const { trigger } = route?.params ?? {};
   const navigation = useNavigation();
@@ -34,14 +28,8 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
   const [triggerInfo, setTriggerInfo] = useState({});
 
   const dispatch = useAppDispatch();
-  const { triggerFields, status, error } = useAppSelector(
-    (state: RootState) => state.triggerFields,
-  );
-  const {
-    autoFlow,
-    status: flowStatus,
-    error: flowError,
-  } = useAppSelector((state: RootState) => state.addAutoFlow);
+  const { triggerFields, status, error } = useAppSelector((state: RootState) => state.triggerFields);
+  const { autoFlow, status: flowStatus, error: flowError } = useAppSelector((state: RootState) => state.addAutoFlow);
 
   useEffect(() => {
     if (!trigger?.id) {
@@ -75,22 +63,13 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({
    * @param inputType, 0: text input, 1: dropdown, 2: multiple checkbox selection
    * @returns
    */
-  const renderInputComp = (
-    inputType: Types.Maybe<number> | undefined,
-    keyName: string,
-  ) => {
+  const renderInputComp = (inputType: Types.Maybe<number> | undefined, keyName: string) => {
     const inputCompType = inputType ?? 0;
 
     switch (inputCompType) {
       case -1:
       case 0:
-        return (
-          <Input
-            onBlur={(ev) =>
-              setTriggerInfo({ ...triggerInfo, [keyName]: ev.target.value })
-            }
-          />
-        );
+        return <Input onBlur={(ev) => setTriggerInfo({ ...triggerInfo, [keyName]: ev.target.value })} />;
       case 1:
         return <Picker />;
       case 2:
