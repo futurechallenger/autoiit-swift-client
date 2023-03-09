@@ -7,6 +7,8 @@ import { RootState } from '../redux/store';
 import * as Types from '../redux/types.generated';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { removeFieldMappingItem, RemoveFieldMappingItemDocument } from '../redux/gql/removeFieldMappingItemSlice';
+import { EditFieldMapping } from './EditFieldMapping';
+import { updateFieldMappingItem } from '../redux/gql/updateFieldMappingItemSlice';
 
 interface Props {
   actionField: Types.ActionInputField;
@@ -21,6 +23,7 @@ type FieldMappingType = { key: string; item: string | Types.ExposeField };
 
 export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exposeFields, onSave, onUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [fields, setFields] = useState<Types.ExposeField[]>();
   const [fieldMapping, setFieldMapping] = useState<{ [x: string]: any }>();
   const refCount = useRef(0);
@@ -43,7 +46,10 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
   } = useAppSelector((state: RootState) => state.removeFieldMappingItem);
 
   useEffect(() => {
-    return () => setIsOpen(false);
+    return () => {
+      setIsOpen(false);
+      setIsEditOpen(false);
+    };
   }, []);
 
   useEffect(() => {
@@ -131,6 +137,20 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
     dispatch(removeFieldMappingItem({ mappingId: parseInt(mappingId, 10) }));
   };
 
+  const handleUpdateItem = (mappingItem: { key: string; value: Types.FieldMappingItem | {} }) => {
+    const { key, value } = mappingItem;
+    if (key.indexOf('-') > 0) {
+      setFieldMapping({ ...fieldMapping, [key]: value });
+    } else {
+      console.log('>>>>>update object in state');
+      dispatch(updateFieldMappingItem({ mappingItem: value }));
+    }
+  };
+
+  const handleUpdateMapping = (mapping) => {
+    console.log('update field mapping');
+  };
+
   const renderFieldPresentation = () => {
     if (!fieldMapping || fieldMapping.length <= 0) {
       return;
@@ -149,6 +169,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
             borderRadius="full"
             onPress={() => handleRemoveMapping(key)}
           />
+          <EditFieldMapping fields={fields} mappingItem={{ key, value }} onSave={handleUpdateItem} />
         </HStack>
       );
     });
@@ -180,13 +201,13 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
         <Popover.Content>
           <Popover.Header>Fields</Popover.Header>
           <Popover.Body>
-            <Input ref={mappingInputRef} id={`${actionField?.id}`} />
+            <Input ref={mappingInputRef} />
             <FlatList
               data={fields ?? []}
               renderItem={({ item }) => (
                 <Pressable onPress={() => handleItemClick(item)}>
                   <View>
-                    <Text>{item?.label}</Text>
+                    <Text>{item?.keyName}</Text>
                   </View>
                 </Pressable>
               )}

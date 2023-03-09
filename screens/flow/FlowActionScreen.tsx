@@ -38,9 +38,7 @@ export const FlowActionScreen = () => {
     items: Array<Types.ExposeField | string>;
   }>({});
 
-  const { actionInputFields, status, error } = useAppSelector(
-    (state: RootState) => state.actionInputFields,
-  );
+  const { actionInputFields, status, error } = useAppSelector((state: RootState) => state.actionInputFields);
 
   const {
     autoFlow: updatedFlow,
@@ -48,11 +46,7 @@ export const FlowActionScreen = () => {
     error: updatedFlowError,
   } = useAppSelector((state: RootState) => state.updateAutoFlow);
 
-  const {
-    autoFlow,
-    status: flowStatus,
-    error: flowError,
-  } = useAppSelector((state: RootState) => state.autoFlowById);
+  const { autoFlow, status: flowStatus, error: flowError } = useAppSelector((state: RootState) => state.autoFlowById);
 
   // TODO: donot delete
   // const {
@@ -129,10 +123,7 @@ export const FlowActionScreen = () => {
    * @param inputType, 0: text input, 1: dropdown, 2: multiple checkbox selection
    * @returns
    */
-  const renderInputComp = (
-    inputType: Types.Maybe<number> | undefined,
-    actionField: Types.ActionInputField,
-  ) => {
+  const renderInputComp = (inputType: Types.Maybe<number> | undefined, actionField: Types.ActionInputField) => {
     const inputCompType = inputType ?? 0;
     // const keyName = actionField?.keyName ?? '';
 
@@ -147,56 +138,6 @@ export const FlowActionScreen = () => {
               onSave={handleAddMapping}
               onUpdate={handleUpdateMappingItem}
             />
-            {/* <Input
-              value={textSlice}
-              alignSelf="stretch"
-              onChangeText={(ev) => setTextSlice(ev)}
-              onBlur={() => {
-                if (textSlice?.trim() === '') {
-                  setActionInfo({
-                    ...actionInfo,
-                    [`${actionField?.id}`]: [],
-                  });
-                } else {
-                  const items: Types.ExposeField[] = (actionInfo[
-                    `${actionField.id}`
-                  ] ?? []) as Types.ExposeField[];
-                  items.push(textSlice ?? '');
-                  setActionInfo({
-                    ...actionInfo,
-                    [`${actionField?.id}`]: [...items],
-                  });
-                  setTextSlice(items.join(''));
-                }
-              }}
-            />
-            <Popover
-              initialFocusRef={popoverRef}
-              trigger={(props) => (
-                <Button {...props} alignSelf="flex-end">
-                  Add mapping
-                </Button>
-              )}
-            >
-              <Popover.Content>
-                <Popover.CloseButton />
-                <Popover.Header>{trigger?.name}</Popover.Header>
-                <Popover.Body>
-                  <FlatList
-                    data={exposeFields ?? []}
-                    renderItem={({ item }) => (
-                      <Pressable
-                        onPress={() => handleItemClick(actionField, item)}
-                      >
-                        <View>
-                          <Text>{item?.label}</Text>
-                        </View>
-                      </Pressable>
-                    )}
-                  />
-                </Popover.Body>
-              </Popover.Content>
-            </Popover> */}
           </View>
         );
       case 1:
