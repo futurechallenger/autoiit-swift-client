@@ -1,23 +1,34 @@
+import { useNavigation } from '@react-navigation/native';
+import { Button, Divider, Text, View, VStack } from 'native-base';
 import * as React from 'react';
-import { View, Text, Button, VStack, Divider } from 'native-base';
+
 import { ThemedTitle } from '../../components/ThemedTitle';
+import { getCurrentUserInfo } from '../../redux/gql/getCurrentUserInfoSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
-import { getUserInfo } from '../../redux/gql/userInfoService';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { useEffect } = React;
 
 export const FlowReviewScreen = () => {
   const { autoFlow, status, error } = useAppSelector((state: RootState) => state.updateAutoFlow);
-  const {} = useAppSelector((state: RootState) => state.userInfo);
+  const {
+    userInfo,
+    status: userStatus,
+    error: userError,
+  } = useAppSelector((state: RootState) => state.currentUserInfo);
 
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
 
   useEffect(() => {
-    // const email = AsyncStorage();
-    dispatch(getUserInfo());
+    dispatch(getCurrentUserInfo());
   }, []);
+
+  const handlePress = () => {
+    console.log('>>finish button is clicked');
+    // TODO: navigate to flow-detail-screen
+    // navigation.navigate();
+  };
 
   return (
     <View>
@@ -29,10 +40,10 @@ export const FlowReviewScreen = () => {
           {/* Autoiit flow title */}
           {autoFlow?.title}
         </Text>
-        <Text>by {/* username */}</Text>
+        <Text>by {userInfo?.name}</Text>
         <Divider />
         {/* TODO: Review notifications when this flow runs */}
-        <Button>Finish</Button>
+        <Button onPress={handlePress}>Finish</Button>
       </VStack>
     </View>
   );

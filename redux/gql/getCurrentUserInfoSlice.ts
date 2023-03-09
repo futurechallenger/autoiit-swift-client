@@ -5,7 +5,7 @@ import * as Types from '../types.generated';
 
 export const getCurrentUserInfo = createAsyncThunk(
   'getCurrentUserInfo',
-  async (variables: GetCurrentUserInfoQueryVariables) => {
+  async (variables?: GetCurrentUserInfoQueryVariables) => {
     return sendRequest<GetCurrentUserInfoQuery>({
       variables,
       query: GetCurrentUserInfoDocument,
