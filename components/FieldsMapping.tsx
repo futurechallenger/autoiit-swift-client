@@ -137,8 +137,14 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
     dispatch(removeFieldMappingItem({ mappingId: parseInt(mappingId, 10) }));
   };
 
-  const handleUpdateItem = (mappingItem: Types.FieldMappingItem) => {
-    dispatch(updateFieldMappingItem({ mappingItem }));
+  const handleUpdateItem = (mappingItem: { key: string; value: Types.FieldMappingItem | {} }) => {
+    const { key, value } = mappingItem;
+    if (key.indexOf('-') > 0) {
+      setFieldMapping({ ...fieldMapping, [key]: value });
+    } else {
+      console.log('>>>>>update object in state');
+      dispatch(updateFieldMappingItem({ mappingItem: value }));
+    }
   };
 
   const handleUpdateMapping = (mapping) => {
@@ -201,7 +207,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
               renderItem={({ item }) => (
                 <Pressable onPress={() => handleItemClick(item)}>
                   <View>
-                    <Text>{item?.label}</Text>
+                    <Text>{item?.keyName}</Text>
                   </View>
                 </Pressable>
               )}

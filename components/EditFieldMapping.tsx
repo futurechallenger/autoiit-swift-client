@@ -4,7 +4,7 @@ import { Pressable, FlatList, Input, Button, View, Text, Popover, IconButton } f
 import * as Types from '../redux/types.generated';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-const { useRef, useState } = React;
+const { useRef, useState, useEffect } = React;
 
 interface Props {
   mappingItem: { key: string; value: Types.FieldMappingItem | {} };
@@ -18,9 +18,25 @@ export const EditFieldMapping: React.FunctionComponent<Props> = ({ mappingItem, 
   const [isOpen, setIsOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState();
 
+  useEffect(() => {
+    if (!mappingItem) {
+      return;
+    }
+
+    setCurrentItem(mappingItem);
+  }, [mappingItem]);
+
   const handleItemClick = (item) => {
     console.log('>>> edit mapping', item);
-    setCurrentItem(item);
+    setCurrentItem({
+      key: currentItem.key,
+      value: {
+        id: parseInt(currentItem.key, 10),
+        exposeFieldId: item.id,
+        exposeLabel: item.keyName,
+        actionInputFieldId: currentItem.value.actionInputFieldId,
+      },
+    });
   };
 
   const handleMappingSave = () => {
@@ -54,7 +70,7 @@ export const EditFieldMapping: React.FunctionComponent<Props> = ({ mappingItem, 
               renderItem={({ item }) => (
                 <Pressable onPress={() => handleItemClick(item)}>
                   <View>
-                    <Text>{item?.label}</Text>
+                    <Text>{item?.keyName}</Text>
                   </View>
                 </Pressable>
               )}
