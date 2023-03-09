@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { sendRequest } from '../baseApi';
 
 import * as Types from '../types.generated';
-import { GetActionsByServiceIdDocument } from './getActionsSlice';
 
 export const getAutoFlowsByService = createAsyncThunk(
   'getAutoFlowsByService',

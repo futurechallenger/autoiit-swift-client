@@ -38,7 +38,7 @@ import { ConnectionScreen } from '../screens/ConnectionScreen';
 import { FlowTriggerScreen } from '../screens/flow/FlowTriggerScreen';
 import { ActionsScreen } from '../screens/flow/ActionsScreen';
 import { FlowActionScreen } from '../screens/flow/FlowActionScreen';
-import { FlowReviewScreen } from '../screens/flow/FlowReivewScreen';
+import { FlowReviewScreen } from '../screens/flow/FlowReviewScreen';
 
 const { useState, useEffect } = React;
 
