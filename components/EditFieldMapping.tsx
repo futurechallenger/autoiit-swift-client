@@ -29,12 +29,12 @@ export const EditFieldMapping: React.FunctionComponent<Props> = ({ mappingItem, 
   const handleItemClick = (item) => {
     console.log('>>> edit mapping', item);
     setCurrentItem({
-      key: currentItem.key,
+      key: currentItem?.key,
       value: {
-        id: parseInt(currentItem.key, 10),
+        id: currentItem?.key.indexOf('-') > 0 ? null : parseInt(currentItem?.key, 10),
         exposeFieldId: item.id,
         exposeLabel: item.keyName,
-        actionInputFieldId: currentItem.value.actionInputFieldId,
+        actionInputFieldId: currentItem?.value.actionInputFieldId,
       },
     });
   };
@@ -42,6 +42,18 @@ export const EditFieldMapping: React.FunctionComponent<Props> = ({ mappingItem, 
   const handleMappingSave = () => {
     console.log('handle mapping save');
     if (onSave) {
+      if (mappingInputRef.current?.value) {
+        onSave({
+          key: currentItem?.key,
+          value: {
+            id: currentItem?.key?.indexOf('-') > 0 ? null : parseInt(currentItem?.key, 10),
+            value: mappingInputRef.current?.value,
+            actionInputFieldId: currentItem?.value.actionInputFieldId,
+          },
+        });
+
+        return;
+      }
       onSave(currentItem);
     }
   };
