@@ -74,14 +74,14 @@ export const FlowActionScreen = () => {
 
   const handleCreate = () => {
     console.log('Handle create action');
-    if (!autoFlow?.id) {
+    if (!addedFlow?.id) {
       console.error('ERR: autoflow Id is invalid');
       return;
     }
     dispatch(
       updateAutoFlow({
         autoFlow: {
-          id: autoFlow?.id,
+          id: addedFlow?.id,
           actionId: action.id,
         },
       }),
