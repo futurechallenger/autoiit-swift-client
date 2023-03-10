@@ -1,8 +1,14 @@
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -64,6 +70,7 @@ export type AutoFlow = {
   __typename?: 'AutoFlow';
   actionId?: Maybe<Scalars['Int']>;
   actionInfo?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
   triggerId?: Maybe<Scalars['Int']>;
@@ -74,6 +81,7 @@ export type AutoFlow = {
 export type AutoFlowInput = {
   actionId?: InputMaybe<Scalars['Int']>;
   actionInfo?: InputMaybe<Scalars['String']>;
+  code?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['Int']>;
   title?: InputMaybe<Scalars['String']>;
   triggerId?: InputMaybe<Scalars['Int']>;
@@ -164,7 +172,9 @@ export type Mutation = {
   addTriggerField?: Maybe<TriggerField>;
   addTriggerFields?: Maybe<Scalars['Int']>;
   addUser?: Maybe<UserInfo>;
+  createUpdateFieldMappingItems?: Maybe<Scalars['Int']>;
   deleteActionOutputField?: Maybe<ActionOutputField>;
+  deleteFieldMappingItem?: Maybe<FieldMappingItem>;
   deleteServiceAction?: Maybe<ServiceAction>;
   loginIn: Scalars['String'];
   removeActionInputField?: Maybe<ActionInputField>;
@@ -189,167 +199,142 @@ export type Mutation = {
   updateTriggerField?: Maybe<TriggerField>;
 };
 
-
 export type MutationActivateFlowArgs = {
   flowId: Scalars['Int'];
 };
-
 
 export type MutationAddActionInputFieldArgs = {
   actionInputField: ActionInputFieldInput;
 };
 
-
 export type MutationAddActionOutputFieldArgs = {
   actionOutputField: ActionOutputFieldInput;
 };
-
 
 export type MutationAddAutoFlowArgs = {
   af: AutoFlowInput;
 };
 
-
 export type MutationAddExposeFieldArgs = {
   exposeField: ExposeFieldInput;
 };
-
 
 export type MutationAddExposeFieldsArgs = {
   exposeFields: Array<ExposeFieldInput>;
 };
 
-
 export type MutationAddFieldMappingItemsArgs = {
   mappingItems: Array<FieldMappingItemInput>;
 };
 
-
 export type MutationAddFieldOptionsArgs = {
   options: Array<FieldOptionInput>;
 };
-
 
 export type MutationAddServiceArgs = {
   description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
 };
 
-
 export type MutationAddServiceActionArgs = {
   serviceAction: ServiceActionInput;
 };
-
 
 export type MutationAddServiceApiArgs = {
   serviceApi: ServiceApiInput;
 };
 
-
 export type MutationAddServiceAuthArgs = {
   service: ServiceAuthInput;
 };
-
 
 export type MutationAddServiceTriggerArgs = {
   serviceTrigger: ServiceTriggerInput;
 };
 
-
 export type MutationAddTriggerFieldArgs = {
   triggerField: TriggerFieldInput;
 };
-
 
 export type MutationAddTriggerFieldsArgs = {
   triggerFieldList: Array<TriggerFieldInput>;
 };
 
-
 export type MutationAddUserArgs = {
   user: UserInfoInput;
 };
 
+export type MutationCreateUpdateFieldMappingItemsArgs = {
+  mappingItems: Array<FieldMappingItemInput>;
+};
 
 export type MutationDeleteActionOutputFieldArgs = {
   actionOutputFieldId: Scalars['Int'];
 };
 
+export type MutationDeleteFieldMappingItemArgs = {
+  mappingId: Scalars['Int'];
+};
 
 export type MutationDeleteServiceActionArgs = {
   serviceActionId: Scalars['Int'];
 };
 
-
 export type MutationLoginInArgs = {
   userInfo: UserInfoInput;
 };
-
 
 export type MutationRemoveActionInputFieldArgs = {
   actionInputFieldId: Scalars['Int'];
 };
 
-
 export type MutationRemoveAutoFlowArgs = {
   autoFlowId: Scalars['Int'];
 };
-
 
 export type MutationRemoveExposeFieldArgs = {
   fieldId: Scalars['Int'];
 };
 
-
 export type MutationRemoveServiceTriggerArgs = {
   triggerId: Scalars['Int'];
 };
-
 
 export type MutationRemoveTriggerFieldArgs = {
   triggerFieldId: Scalars['Int'];
 };
 
-
 export type MutationSignInArgs = {
   userInfo: UserInfoInput;
 };
-
 
 export type MutationUpdateActionInputFieldArgs = {
   actionInputField: ActionInputFieldInput;
 };
 
-
 export type MutationUpdateActionOutputFieldArgs = {
   actionOutputField: ActionOutputFieldInput;
 };
-
 
 export type MutationUpdateAutoFlowArgs = {
   af: AutoFlowInput;
 };
 
-
 export type MutationUpdateExposeFieldArgs = {
   exposeField: ExposeFieldInput;
 };
-
 
 export type MutationUpdateFieldMappingItemArgs = {
   mappingItem: FieldMappingItemInput;
 };
 
-
 export type MutationUpdateFieldOptionArgs = {
   option: FieldOptionInput;
 };
 
-
 export type MutationUpdateMostSearchedServiceArgs = {
   serviceType: Scalars['String'];
 };
-
 
 export type MutationUpdateServiceArgs = {
   deleted?: Scalars['Int'];
@@ -359,26 +344,21 @@ export type MutationUpdateServiceArgs = {
   searchItems?: InputMaybe<Scalars['String']>;
 };
 
-
 export type MutationUpdateServiceActionArgs = {
   serviceAction: ServiceActionInput;
 };
-
 
 export type MutationUpdateServiceApiArgs = {
   serviceApi: ServiceApiInput;
 };
 
-
 export type MutationUpdateServiceAuthArgs = {
   service: ServiceAuthInput;
 };
 
-
 export type MutationUpdateServiceTriggerArgs = {
   serviceTriggerInput: ServiceTriggerInput;
 };
-
 
 export type MutationUpdateTriggerFieldArgs = {
   triggerField: TriggerFieldInput;
@@ -391,8 +371,10 @@ export type Query = {
   actionOutputField?: Maybe<ActionOutputField>;
   actions?: Maybe<Array<ServiceAction>>;
   autoFlow?: Maybe<AutoFlow>;
+  currentUserInfo?: Maybe<UserInfo>;
   exposeField?: Maybe<ExposeField>;
   fieldMappingItems?: Maybe<Array<FieldMappingItem>>;
+  fieldMappingItemsByFieldId?: Maybe<Array<FieldMappingItem>>;
   fieldOptionsByType?: Maybe<Array<FieldOption>>;
   flowsByService?: Maybe<Array<AutoFlow>>;
   getExposeFields?: Maybe<Array<ExposeField>>;
@@ -415,57 +397,50 @@ export type Query = {
   userinfo?: Maybe<UserInfo>;
 };
 
-
 export type QueryActionInputFieldArgs = {
   actionInputFieldId: Scalars['Int'];
 };
-
 
 export type QueryActionInputFieldsArgs = {
   actionId: Scalars['Int'];
 };
 
-
 export type QueryActionOutputFieldArgs = {
   actionOutputFieldId: Scalars['Int'];
 };
-
 
 export type QueryActionsArgs = {
   serviceId: Scalars['Int'];
 };
 
-
 export type QueryAutoFlowArgs = {
   flowId: Scalars['Int'];
 };
-
 
 export type QueryExposeFieldArgs = {
   exposeFieldId: Scalars['Int'];
 };
 
-
 export type QueryFieldMappingItemsArgs = {
   actionInputFieldIds: Array<Scalars['Int']>;
 };
 
+export type QueryFieldMappingItemsByFieldIdArgs = {
+  actionInputFieldId: Scalars['Int'];
+};
 
 export type QueryFieldOptionsByTypeArgs = {
   relationId: Scalars['Int'];
   typeId: Scalars['Int'];
 };
 
-
 export type QueryFlowsByServiceArgs = {
   serviceId: Scalars['Int'];
 };
 
-
 export type QueryGetExposeFieldsArgs = {
   triggerId: Scalars['Int'];
 };
-
 
 export type QuerySearchServicesArgs = {
   name: Scalars['String'];
@@ -474,61 +449,49 @@ export type QuerySearchServicesArgs = {
   untilId?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type QueryServiceArgs = {
   id: Scalars['Int'];
 };
-
 
 export type QueryServiceActionArgs = {
   serviceActionId: Scalars['Int'];
 };
 
-
 export type QueryServiceApiArgs = {
   serviceApiId: Scalars['Int'];
 };
-
 
 export type QueryServiceApisArgs = {
   serviceId: Scalars['Int'];
 };
 
-
 export type QueryServiceAuthByArgs = {
   serviceId: Scalars['Int'];
 };
-
 
 export type QueryServiceAuthByTriggerArgs = {
   triggerId: Scalars['Int'];
 };
 
-
 export type QueryServiceAuthsByArgs = {
   serviceId: Scalars['Int'];
 };
-
 
 export type QueryServicesByTypeArgs = {
   serviceType: Scalars['String'];
 };
 
-
 export type QueryTriggerFieldArgs = {
   triggerFieldId: Scalars['Int'];
 };
-
 
 export type QueryTriggerFieldsByArgs = {
   triggerId: Scalars['Int'];
 };
 
-
 export type QueryTriggersArgs = {
   serviceId: Scalars['Int'];
 };
-
 
 export type QueryUserinfoArgs = {
   email: Scalars['String'];

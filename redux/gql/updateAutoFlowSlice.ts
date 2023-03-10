@@ -60,22 +60,14 @@ export type UpdateAutoFlowMutationVariables = Types.Exact<{
 
 export type UpdateAutoFlowMutation = {
   __typename?: 'Mutation';
-  updateAutoFlow?: {
-    __typename?: 'AutoFlow';
-    id?: number | null;
-    title?: string | null;
-    triggerId?: number | null;
-    triggerInfo?: string | null;
-    actionId?: number | null;
-    actionInfo?: string | null;
-    userId?: number | null;
-  } | null;
+  updateAutoFlow?: Types.AutoFlow | null;
 };
 
 export const UpdateAutoFlowDocument = `
     mutation updateAutoFlow($autoFlow: AutoFlowInput!) {
   updateAutoFlow(af: $autoFlow) {
     id
+    code
     title
     triggerId
     triggerInfo

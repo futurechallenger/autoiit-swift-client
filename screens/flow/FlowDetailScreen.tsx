@@ -41,7 +41,7 @@ export const FlowDetailScreen = () => {
         {/* Connected date */}
         {/* Never run ->> runned or not */}
         <Divider />
-        {/* Notify me when this runs - switch  */}
+        {/* TODO: Notify me when this runs - switch  */}
         <Divider />
         <HStack>
           <ThemedTitle>Check log of the flow</ThemedTitle>
@@ -55,7 +55,7 @@ export const FlowDetailScreen = () => {
           <Button>Archive</Button>
         </Box>
       </VStack>
-      <ThemedText>ID: asdjk123TT{/* Flow ID */}</ThemedText>
+      <ThemedText>ID: {autoFlow?.id}</ThemedText>
       <Box>
         <ThemedTitle>More like this</ThemedTitle>
         {/* FlatList of services with the same trigger or action */}
