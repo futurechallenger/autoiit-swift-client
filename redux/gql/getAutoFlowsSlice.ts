@@ -68,6 +68,7 @@ export const GetAllFlowsDocument = `
   flowsByService(serviceId: $serviceId) {
     id
     code
+    archived
     triggerId
     actionId
     triggerInfo

@@ -81,6 +81,7 @@ export const AddAutoFlowDocument = `
   addAutoFlow(af: $flow) {
     id
     title
+    archived
     triggerId
     triggerInfo
     actionId

@@ -68,6 +68,7 @@ export const UpdateAutoFlowDocument = `
   updateAutoFlow(af: $autoFlow) {
     id
     code
+    archived
     title
     triggerId
     triggerInfo
