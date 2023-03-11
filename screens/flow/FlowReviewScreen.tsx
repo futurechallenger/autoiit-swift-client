@@ -27,7 +27,7 @@ export const FlowReviewScreen = () => {
   const handlePress = () => {
     console.log('>>finish button is clicked');
     // TODO: navigate to flow-detail-screen
-    // navigation.navigate();
+    navigation.navigate('FlowDetail', { autoFlow });
   };
 
   return (

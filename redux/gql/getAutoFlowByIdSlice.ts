@@ -60,22 +60,15 @@ export type AutoFlowByIdQueryVariables = Types.Exact<{
 
 export type AutoFlowByIdQuery = {
   __typename?: 'Query';
-  autoFlow?: {
-    __typename?: 'AutoFlow';
-    id?: number | null;
-    title?: string | null;
-    triggerId?: number | null;
-    triggerInfo?: string | null;
-    actionId?: number | null;
-    actionInfo?: string | null;
-    userId?: number | null;
-  } | null;
+  autoFlow?: Types.AutoFlow | null;
 };
 
 export const AutoFlowByIdDocument = `
     query autoFlowById($flowId: Int!) {
   autoFlow(flowId: $flowId) {
     id
+    code
+    archived
     title
     triggerId
     triggerInfo
