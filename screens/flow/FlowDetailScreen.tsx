@@ -1,15 +1,18 @@
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import { Box, Button, Divider, HStack, Text, View, VStack } from 'native-base';
 import * as React from 'react';
 
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
-import { getCurrentUserInfo } from '../../redux/gql/getCurrentUserInfoSlice';
+import { updateAutoFlow } from '../../redux/gql/updateAutoFlowSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 
 const { useEffect } = React;
 
 export const FlowDetailScreen = () => {
+  const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+
   const { autoFlow, status, error } = useAppSelector((state: RootState) => state.updateAutoFlow);
   const {
     userInfo,
@@ -22,11 +25,22 @@ export const FlowDetailScreen = () => {
   };
 
   const handlePublish = () => {
-    // publish this flow
+    dispatch(updateAutoFlow({ autoFlow: { id: autoFlow?.id, published: 1 } }));
+  };
+
+  const handleArchive = () => {
+    dispatch(updateAutoFlow({ autoFlow: { id: autoFlow?.id, archived: 1 } }));
+  };
+
+  const handleSettings = () => {
+    navigation.dispatch(StackActions.popToTop());
   };
 
   return (
     <View>
+      <View>
+        <Button onPress={handleSettings}>Settings</Button>
+      </View>
       <ThemedTitle>Review and finish</ThemedTitle>
       <VStack>
         {/* Autoiit flow title */}
@@ -56,7 +70,7 @@ export const FlowDetailScreen = () => {
           <Button onPress={handlePublish}>Publish</Button>
         </HStack>
         <Box>
-          <Button>Archive</Button>
+          <Button onPress={handleArchive}>Archive</Button>
         </Box>
       </VStack>
       <ThemedText>{`ID:  ${autoFlow?.id}`}</ThemedText>
