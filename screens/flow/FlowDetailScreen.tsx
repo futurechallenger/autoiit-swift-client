@@ -21,6 +21,10 @@ export const FlowDetailScreen = () => {
     console.log('>>Click connect / connected button');
   };
 
+  const handlePublish = () => {
+    // publish this flow
+  };
+
   return (
     <View>
       <ThemedTitle>Review and finish</ThemedTitle>
@@ -49,17 +53,16 @@ export const FlowDetailScreen = () => {
         </HStack>
         <HStack>
           <ThemedTitle>Publish this flow so others can use this flow</ThemedTitle>
-          <Button>Publish</Button>
+          <Button onPress={handlePublish}>Publish</Button>
         </HStack>
         <Box>
           <Button>Archive</Button>
         </Box>
       </VStack>
-      <ThemedText>ID: {autoFlow?.id}</ThemedText>
-      <Box>
+      <ThemedText>{`ID:  ${autoFlow?.id}`}</ThemedText>
+      {/* <Box>
         <ThemedTitle>More like this</ThemedTitle>
-        {/* FlatList of services with the same trigger or action */}
-      </Box>
+      </Box> */}
     </View>
   );
 };
