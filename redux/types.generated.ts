@@ -67,6 +67,7 @@ export type AutoFlow = {
   archived?: Maybe<Scalars['Int']>;
   code?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
+  published?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
   triggerId?: Maybe<Scalars['Int']>;
   triggerInfo?: Maybe<Scalars['String']>;
@@ -79,6 +80,7 @@ export type AutoFlowInput = {
   archived?: InputMaybe<Scalars['Int']>;
   code?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['Int']>;
+  published?: InputMaybe<Scalars['Int']>;
   title?: InputMaybe<Scalars['String']>;
   triggerId?: InputMaybe<Scalars['Int']>;
   triggerInfo?: InputMaybe<Scalars['String']>;

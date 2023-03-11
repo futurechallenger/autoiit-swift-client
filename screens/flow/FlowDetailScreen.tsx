@@ -4,12 +4,14 @@ import * as React from 'react';
 
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
 import { getCurrentUserInfo } from '../../redux/gql/getCurrentUserInfoSlice';
+import { updateAutoFlow } from '../../redux/gql/updateAutoFlowSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 
 const { useEffect } = React;
 
 export const FlowDetailScreen = () => {
+  const dispatch = useAppDispatch();
   const { autoFlow, status, error } = useAppSelector((state: RootState) => state.updateAutoFlow);
   const {
     userInfo,
@@ -22,7 +24,11 @@ export const FlowDetailScreen = () => {
   };
 
   const handlePublish = () => {
-    // publish this flow
+    dispatch(updateAutoFlow({ autoFlow: { id: autoFlow?.id, published: 1 } }));
+  };
+
+  const handleArchive = () => {
+    dispatch(updateAutoFlow({ autoFlow: { id: autoFlow?.id, archived: 1 } }));
   };
 
   return (
@@ -56,7 +62,7 @@ export const FlowDetailScreen = () => {
           <Button onPress={handlePublish}>Publish</Button>
         </HStack>
         <Box>
-          <Button>Archive</Button>
+          <Button onPress={handleArchive}>Archive</Button>
         </Box>
       </VStack>
       <ThemedText>{`ID:  ${autoFlow?.id}`}</ThemedText>
