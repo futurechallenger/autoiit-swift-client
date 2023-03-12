@@ -1,28 +1,20 @@
+import { Spinner, View } from 'native-base';
 import * as React from 'react';
-import { View, Text, Spinner } from 'native-base';
+
 import { DrawerContainer, DrawerScene } from '../../components/DrawerContainer';
-import { RootState } from '../../redux/store';
-import { GeneralScene } from './apiScenes/GeneralScene';
-import { AuthScene } from './apiScenes/AuthScene';
-import { TriggersScene } from './apiScenes/TriggersScene';
-import { ActionsScene } from './actions/ActionsScene';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { getServiceApis } from '../../redux/gql/getServiceApisSlice';
-import { PublishedFlowScene } from './flows/PublishedFlowScene';
-import { ArchivedFlowScene } from './flows/ArchivedFlowScene';
 import { getAutoFlowsByService } from '../../redux/gql/getAutoFlowsSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { RootState } from '../../redux/store';
 import * as Types from '../../redux/types.generated';
+import { ArchivedFlowScene } from './flows/ArchivedFlowScene';
+import { PublishedFlowScene } from './flows/PublishedFlowScene';
 
 const { useEffect, useState } = React;
 
 export const DeveloperFlowScreen = () => {
-  const { service, status, error } = useAppSelector(
-    (state: RootState) => state.serviceById,
-  );
+  const { service, status, error } = useAppSelector((state: RootState) => state.serviceById);
 
-  const [published, setPublished] = useState<(Types.AutoFlow | undefined)[]>(
-    [],
-  );
+  const [published, setPublished] = useState<(Types.AutoFlow | undefined)[]>([]);
   const [archived, setArchived] = useState<(Types.AutoFlow | undefined)[]>([]);
 
   const dispatch = useAppDispatch();
@@ -38,7 +30,7 @@ export const DeveloperFlowScreen = () => {
     }
 
     dispatch(getAutoFlowsByService({ serviceId: service?.id }));
-  }, [service]);
+  }, [service?.id]);
 
   useEffect(() => {
     if (!autoFlows || autoFlows.length <= 0) return;
@@ -50,11 +42,7 @@ export const DeveloperFlowScreen = () => {
   return (
     <View h="full" w="100%" overflowY="auto" overflowX="hidden">
       <DrawerContainer>
-        <DrawerScene
-          name="Published"
-          component={PublishedFlowScene}
-          params={{ service, published }}
-        />
+        <DrawerScene name="Published" component={PublishedFlowScene} params={{ service, published }} />
         {/* <DrawerScene
           name="Suggested"
           component={AuthScene}
@@ -65,11 +53,7 @@ export const DeveloperFlowScreen = () => {
           component={TriggersScene}
           params={{ serviceApi: serviceApis[0] }}
         /> */}
-        <DrawerScene
-          name="Archived"
-          component={ArchivedFlowScene}
-          params={{ service, archived }}
-        />
+        <DrawerScene name="Archived" component={ArchivedFlowScene} params={{ service, archived }} />
       </DrawerContainer>
       {status === 'loading' ||
         (flowStatus === 'loading' && (

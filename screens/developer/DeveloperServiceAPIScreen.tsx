@@ -9,7 +9,7 @@ import { ActionsScene } from './actions/ActionsScene';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getServiceApis } from '../../redux/gql/getServiceApisSlice';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
 export const DeveloperServiceAPIScreen = () => {
   const {
@@ -18,9 +18,8 @@ export const DeveloperServiceAPIScreen = () => {
     error: serviceError,
   } = useAppSelector((state: RootState) => state.serviceById);
 
-  const { serviceApis, status, error } = useAppSelector(
-    (state: RootState) => state.serviceApis,
-  );
+  const { serviceApis, status, error } = useAppSelector((state: RootState) => state.serviceApis);
+  const [serviceApi, setServiceApi] = useState();
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -29,29 +28,21 @@ export const DeveloperServiceAPIScreen = () => {
     }
   }, [service?.id]);
 
+  useEffect(() => {
+    if (status === 'failed') {
+      setServiceApi({});
+    } else if (status === 'succeeded') {
+      setServiceApi(serviceApis?.[0] ?? {});
+    }
+  }, [serviceApis, status]);
+
   return (
     <View h="full" w="100%" overflowY="auto" overflowX="hidden">
       <DrawerContainer>
-        <DrawerScene
-          name="General"
-          component={GeneralScene}
-          params={{ serviceApi: serviceApis[0] }}
-        />
-        <DrawerScene
-          name="Authentication"
-          component={AuthScene}
-          params={{ service }}
-        />
-        <DrawerScene
-          name="Triggers"
-          component={TriggersScene}
-          params={{ serviceApi: serviceApis[0] }}
-        />
-        <DrawerScene
-          name="Actions"
-          component={ActionsScene}
-          params={{ serviceApi: serviceApis[0] }}
-        />
+        <DrawerScene name="General" component={GeneralScene} params={{ serviceApi }} />
+        <DrawerScene name="Authentication" component={AuthScene} params={{ service }} />
+        <DrawerScene name="Triggers" component={TriggersScene} params={{ serviceApi }} />
+        <DrawerScene name="Actions" component={ActionsScene} params={{ serviceApi }} />
       </DrawerContainer>
       {(status === 'loading' || serviceStatus === 'loading') && (
         <View>
