@@ -1,81 +1,59 @@
-import * as React from "react";
-import { StyleSheet } from "react-native";
-import {
-  Spinner,
-  VStack,
-  Box,
-  Button,
-  Input,
-  Pressable,
-  View,
-  Text,
-  Divider,
-} from "native-base";
-import { TextInputDesc } from "../../../components/TextInputDesc";
-import { ThemedTitle } from "../../../components/ThemedTitle";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import type { RootState } from "../../../redux/store";
-import { updateService } from "../../../redux/gql/updateServiceSlice";
-import { InputMaybe, Maybe, Scalars } from "../../../redux/types.generated";
-import { getServiceApis } from "../../../redux/gql/getServiceApisSlice";
-import { updateServiceApi } from "../../../redux/gql/updateServiceApiSlice";
+import { Box, Button, Divider, Spinner, View, VStack } from 'native-base';
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
 
+import { TextInputDesc } from '../../../components/TextInputDesc';
+import { ThemedTitle } from '../../../components/ThemedTitle';
+import { getServiceApis } from '../../../redux/gql/getServiceApisSlice';
+import { updateServiceApi } from '../../../redux/gql/updateServiceApiSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { Maybe, Scalars } from '../../../redux/types.generated';
+
+import type { RootState } from '../../../redux/store';
 const { useState, useEffect } = React;
 
 export const GeneralScene = ({ params }: { params: any }) => {
   const { serviceApi } = params ?? {};
-
-  const {
-    serviceApis: serviceApiInfoList,
-    status,
-    error,
-  } = useAppSelector((state: RootState) => state.serviceApis);
-  const {
-    serviceApi: updateRet,
-    status: updateStatus,
-    error: updateError,
-  } = useAppSelector((state: RootState) => state.updateServiceApi);
-  const [apiUrl, setApiUrl] = useState<Maybe<string> | undefined>(
-    serviceApiInfoList?.[0]?.url
-  );
-  const [desc, setDesc] = useState<Maybe<string> | undefined>(
-    serviceApiInfoList?.[0]?.description
-  );
+  const [currentServiceApi, setCurrentServiceApi] = useState();
 
   const dispatch = useAppDispatch();
-  // const {
-  //   service: newService,
-  //   status,
-  //   error,
-  // } = useAppSelector((state: RootState) => state.updateService);
+
+  const {
+    serviceApi: updatedRet,
+    status: updatedStatus,
+    error: updatedError,
+  } = useAppSelector((state: RootState) => state.updateServiceApi);
+  const [apiUrl, setApiUrl] = useState<Maybe<string> | undefined>(serviceApi?.url);
+  const [desc, setDesc] = useState<Maybe<string> | undefined>(serviceApi?.description);
 
   useEffect(() => {
-    if (!serviceApi?.serviceId) {
+    setCurrentServiceApi(serviceApi);
+
+    setDesc(serviceApi?.description ?? '');
+    setApiUrl(serviceApi?.url ?? '');
+  }, [serviceApi]);
+
+  useEffect(() => {
+    if (!updatedRet) {
       return;
     }
 
-    dispatch(getServiceApis({ serviceId: serviceApi?.serviceId }));
-  }, [serviceApi?.serviceId]);
+    setCurrentServiceApi(updatedRet);
 
-  useEffect(() => {
-    if (!serviceApiInfoList?.[0]?.id) {
-      return;
-    }
-
-    setDesc(serviceApiInfoList?.[0]?.description);
-    setApiUrl(serviceApiInfoList?.[0]?.url);
-  }, [serviceApiInfoList]);
+    setDesc(updatedRet?.description ?? '');
+    setApiUrl(updatedRet?.url ?? '');
+  }, [updatedRet]);
 
   const handleClick = () => {
     dispatch(
       updateServiceApi({
         serviceApi: {
-          id: serviceApiInfoList?.[0]?.id as Scalars["Int"],
-          serviceId: serviceApiInfoList?.[0]?.serviceId as Scalars["Int"],
+          id: serviceApi?.id as Scalars['Int'],
+          serviceId: serviceApi?.serviceId as Scalars['Int'],
           url: apiUrl,
           description: desc,
         },
-      })
+      }),
     );
   };
 
@@ -87,21 +65,21 @@ export const GeneralScene = ({ params }: { params: any }) => {
         <TextInputDesc
           marginTop={10}
           text="API URL"
-          value={apiUrl ?? ""}
+          value={apiUrl ?? ''}
           numberOfLines={1}
           description="If you do not have a single server, you don't need fill in this."
           onTextChanged={(url: string | undefined) => {
-            setApiUrl(url ?? "");
+            setApiUrl(url ?? '');
           }}
         />
         <TextInputDesc
           marginTop={10}
           text="Description"
-          value={desc ?? ""}
+          value={desc ?? ''}
           numberOfLines={4}
           description="A 3-4 sentence description of your service"
           onTextChanged={(description: string | undefined) => {
-            setDesc(description ?? "");
+            setDesc(description ?? '');
           }}
         />
         <Divider marginTop={15} />
@@ -111,9 +89,7 @@ export const GeneralScene = ({ params }: { params: any }) => {
           </Button>
         </Box>
       </VStack>
-      {(status === "loading" || updateStatus === "loading") && (
-        <Spinner size="lg" />
-      )}
+      {(status === 'loading' || updatedStatus === 'loading') && <Spinner size="lg" />}
     </View>
   );
 };
@@ -121,8 +97,8 @@ export const GeneralScene = ({ params }: { params: any }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
   button: {
     width: 90,

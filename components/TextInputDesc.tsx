@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Box, Input, HStack, View, Text, Divider } from 'native-base';
 import { InputTitle, ThemedDescription, ThemedText } from './ThemedTitle';
 
-const { useState } = React;
+const { useRef, useImperativeHandle, forwardRef } = React;
 
 interface TextInputDescProps {
   text: string;
@@ -26,17 +26,18 @@ export const TextInputDesc: React.FunctionComponent<TextInputDescProps> = ({
   placeholder,
   onTextChanged,
 }) => {
-  const [inputVal, setInputVal] = useState<string | undefined>(undefined);
+  const inputRef = useRef(0);
+
   return (
     <Box style={{ ...styles.container, marginTop }}>
       <InputTitle>{text ?? ''}</InputTitle>
       {subTitle && <ThemedText type="description">{subTitle}</ThemedText>}
       <Input
-        value={inputVal ?? value}
+        ref={inputRef}
+        value={value ?? ''}
         numberOfLines={numberOfLines ?? 0}
         placeholder={placeholder ?? ''}
         onChangeText={(v) => {
-          setInputVal(v);
           onTextChanged(v);
         }}
       />

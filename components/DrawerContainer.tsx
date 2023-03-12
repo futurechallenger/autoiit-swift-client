@@ -14,9 +14,7 @@ interface DrawerContainerProps {
   children: Array<React.ReactElement<any, any>>;
 }
 
-export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
-  children,
-}) => {
+export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({ children }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const handlePress = (index: number) => {
     setSelectedIndex(index);
@@ -24,26 +22,16 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
 
   return (
     <HStack w="full" h="full" bg="blue.100">
-      <VStack bg="pink.100" marginX="5" h="full" w={110} marginRight={20}>
+      <VStack bg="pink.100" marginX="5" h="full" w={110} marginRight={10}>
         {React.Children.map(children, (child: any, i) => (
           <Pressable onPress={() => handlePress(i)}>
-            <View
-              marginY={5}
-              style={selectedIndex === i ? { ...styles.active } : {}}
-            >
+            <View marginY={5} style={selectedIndex === i ? { ...styles.active } : {}}>
               <Text style={styles.menuText}>{child?.props?.name ?? ''}</Text>
             </View>
           </Pressable>
         ))}
       </VStack>
-      <Box
-        bg="green.100"
-        w="80%"
-        h="full"
-        marginRight={10}
-        justifyContent="flex-start"
-        alignItems="flex-start"
-      >
+      <Box bg="green.100" w="80%" h="full" marginRight={10} justifyContent="flex-start" alignItems="flex-start">
         {React.Children.map(children, (child: any, i: number) => {
           const params = child?.props?.params;
           return (
@@ -65,10 +53,7 @@ export const DrawerContainer: React.FunctionComponent<DrawerContainerProps> = ({
   );
 };
 
-export const DrawerScene: React.FunctionComponent<ChildProps> = ({
-  name,
-  component,
-}) => {
+export const DrawerScene: React.FunctionComponent<ChildProps> = ({ name, component }) => {
   return (
     <View height="100%">
       <Text>{name}</Text>
