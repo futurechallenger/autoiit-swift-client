@@ -76,7 +76,7 @@ export const AuthScene = ({ params }: { params: any }) => {
   }, [serviceAuth, updatedServiceAuth]);
 
   const handleClick = () => {
-    if (!serviceAuth) {
+    if (!serviceAuth?.id) {
       dispatch(
         addServiceAuth({
           auth: {
