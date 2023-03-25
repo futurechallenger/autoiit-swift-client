@@ -26,6 +26,9 @@ const { useState, useEffect } = React;
 export const AuthScene = ({ params }: { params: any }) => {
   const { service } = params;
   const dispatch = useAppDispatch();
+  const [currentServiceAuth, setCurrentServiceAuth] = useState<
+    Types.ServiceAuth | undefined | null
+  >();
   const { serviceAuth, status, error } = useAppSelector(
     (state: RootState) => state.getServiceAuth,
   );
@@ -34,6 +37,11 @@ export const AuthScene = ({ params }: { params: any }) => {
     status: updatedStatus,
     error: updatedError,
   } = useAppSelector((state: RootState) => state.updateServiceAuth);
+  const {
+    serviceAuth: addedServiceAuth,
+    status: addedStatus,
+    error: addedError,
+  } = useAppSelector((state: RootState) => state.addServiceAuth);
 
   const [authUrl, setAuthUrl] = React.useState<
     Types.Maybe<string> | undefined
@@ -60,23 +68,19 @@ export const AuthScene = ({ params }: { params: any }) => {
   }, [service?.id]);
 
   useEffect(() => {
-    const authInfo: Types.ServiceAuth | undefined | null =
-      serviceAuth ?? updatedServiceAuth;
+    const currentAuth = updatedServiceAuth ?? addedServiceAuth ?? serviceAuth;
+    setCurrentServiceAuth(currentAuth);
 
-    // if (!authInfo?.id) {
-    //   return;
-    // }
-
-    setCategory((authInfo?.category ?? '') + '');
-    setClientId(authInfo?.clientId ?? '');
-    setClientSecret(authInfo?.clientSecret ?? '');
-    setTokenUrl(authInfo?.tokenUrl ?? '');
-    setRedirectUrl(authInfo?.redirectUrl ?? '');
-    setAuthUrl(authInfo?.authorizationUrl ?? '');
-  }, [serviceAuth, updatedServiceAuth]);
+    setCategory((currentAuth?.category ?? '') + '');
+    setClientId(currentAuth?.clientId ?? '');
+    setClientSecret(currentAuth?.clientSecret ?? '');
+    setTokenUrl(currentAuth?.tokenUrl ?? '');
+    setRedirectUrl(currentAuth?.redirectUrl ?? '');
+    setAuthUrl(currentAuth?.authorizationUrl ?? '');
+  }, [serviceAuth, addedServiceAuth, updatedServiceAuth]);
 
   const handleClick = () => {
-    if (!serviceAuth?.id) {
+    if (!currentServiceAuth) {
       dispatch(
         addServiceAuth({
           auth: {
