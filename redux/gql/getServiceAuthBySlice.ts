@@ -38,7 +38,7 @@ export const getServiceAuthSlice = createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = 'succeeded';
-          state.serviceAuth = payload?.data?.serviceAuthsBy?.[0] ?? {};
+          state.serviceAuth = payload?.data?.serviceAuthsBy?.[0] ?? undefined;
         }
       })
       .addCase(getServiceAuth.rejected, (state, action) => {
@@ -49,7 +49,7 @@ export const getServiceAuthSlice = createSlice({
 });
 
 interface InitialStateType {
-  serviceAuth: Types.ServiceAuth;
+  serviceAuth: Types.ServiceAuth | undefined;
   status: string | undefined;
   error: string | undefined;
 }
