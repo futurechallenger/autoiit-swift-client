@@ -1,15 +1,5 @@
 import * as React from 'react';
-import {
-  Button,
-  VStack,
-  Divider,
-  View,
-  Text,
-  Radio,
-  HStack,
-  Box,
-  Spinner,
-} from 'native-base';
+import { Button, VStack, Divider, View, Text, Radio, HStack, Box, Spinner } from 'native-base';
 import { useIsFocused } from '@react-navigation/native';
 import { ThemedTitle } from '../../../components/ThemedTitle';
 import { StyleSheet } from 'react-native';
@@ -26,12 +16,8 @@ const { useState, useEffect } = React;
 export const AuthScene = ({ params }: { params: any }) => {
   const { service } = params;
   const dispatch = useAppDispatch();
-  const [currentServiceAuth, setCurrentServiceAuth] = useState<
-    Types.ServiceAuth | undefined | null
-  >();
-  const { serviceAuth, status, error } = useAppSelector(
-    (state: RootState) => state.getServiceAuth,
-  );
+  const [currentServiceAuth, setCurrentServiceAuth] = useState<Types.ServiceAuth | undefined | null>();
+  const { serviceAuth, status, error } = useAppSelector((state: RootState) => state.getServiceAuth);
   const {
     serviceAuth: updatedServiceAuth,
     status: updatedStatus,
@@ -43,21 +29,15 @@ export const AuthScene = ({ params }: { params: any }) => {
     error: addedError,
   } = useAppSelector((state: RootState) => state.addServiceAuth);
 
-  const [authUrl, setAuthUrl] = React.useState<
-    Types.Maybe<string> | undefined
-  >();
+  const [authUrl, setAuthUrl] = React.useState<Types.Maybe<string> | undefined>();
 
   const isFocused = useIsFocused();
   const [category, setCategory] = useState<Types.Maybe<string> | undefined>();
   // const [radioValue, setRadioValue] = useState('no-auth');
   const [clientId, setClientId] = useState<Types.Maybe<string> | undefined>();
-  const [clientSecret, setClientSecret] = useState<
-    Types.Maybe<string> | undefined
-  >();
+  const [clientSecret, setClientSecret] = useState<Types.Maybe<string> | undefined>();
   const [tokenUrl, setTokenUrl] = useState<Types.Maybe<string> | undefined>();
-  const [redirectUrl, setRedirectUrl] = useState<
-    Types.Maybe<string> | undefined
-  >();
+  const [redirectUrl, setRedirectUrl] = useState<Types.Maybe<string> | undefined>();
 
   useEffect(() => {
     if (!service?.id) {
@@ -65,18 +45,19 @@ export const AuthScene = ({ params }: { params: any }) => {
     }
 
     dispatch(getServiceAuth({ serviceId: service?.id }));
-  }, [service?.id]);
+  }, [service?.id, addedServiceAuth, updatedServiceAuth]);
 
+  // TODO: After creating / updating, getting `serviceAuth` again is not efficiency
+  // TODO: Fix this later
   useEffect(() => {
-    const currentAuth = updatedServiceAuth ?? addedServiceAuth ?? serviceAuth;
-    setCurrentServiceAuth(currentAuth);
+    setCurrentServiceAuth(serviceAuth);
 
-    setCategory((currentAuth?.category ?? '') + '');
-    setClientId(currentAuth?.clientId ?? '');
-    setClientSecret(currentAuth?.clientSecret ?? '');
-    setTokenUrl(currentAuth?.tokenUrl ?? '');
-    setRedirectUrl(currentAuth?.redirectUrl ?? '');
-    setAuthUrl(currentAuth?.authorizationUrl ?? '');
+    setCategory((serviceAuth?.category ?? '') + '');
+    setClientId(serviceAuth?.clientId ?? '');
+    setClientSecret(serviceAuth?.clientSecret ?? '');
+    setTokenUrl(serviceAuth?.tokenUrl ?? '');
+    setRedirectUrl(serviceAuth?.redirectUrl ?? '');
+    setAuthUrl(serviceAuth?.authorizationUrl ?? '');
   }, [serviceAuth, addedServiceAuth, updatedServiceAuth]);
 
   const handleClick = () => {
