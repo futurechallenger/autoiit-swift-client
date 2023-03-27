@@ -85,5 +85,6 @@ export const UpdateServiceAuthDocument = `
     serviceId
     tokenSecret
     tokenUrl
+    category
   }
 }`;
