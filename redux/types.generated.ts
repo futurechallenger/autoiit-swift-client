@@ -515,6 +515,7 @@ export type ServiceApi = {
   id?: Maybe<Scalars['Int']>;
   inviteUrl?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  serviceKey?: Maybe<Scalars['String']>;
   serviceId?: Maybe<Scalars['Int']>;
   servicePath?: Maybe<Scalars['String']>;
   serviceTriggers?: Maybe<Array<ServiceTrigger>>;
