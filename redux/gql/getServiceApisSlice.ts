@@ -65,6 +65,7 @@ export type GetServiceApisQuery = {
     id?: number | null;
     serviceId?: number | null;
     name?: string | null;
+    serviceKey?: string | null;
     description?: string | null;
     url?: string | null;
     category?: number | null;
@@ -79,6 +80,7 @@ export const GetServiceApisDocument = `
   serviceApis(serviceId: $serviceId) {
     id
     name
+    serviceKey
     description
     url
     category

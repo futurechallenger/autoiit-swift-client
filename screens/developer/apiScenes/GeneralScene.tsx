@@ -24,6 +24,7 @@ export const GeneralScene = ({ params }: { params: any }) => {
     error: updatedError,
   } = useAppSelector((state: RootState) => state.updateServiceApi);
   const [apiUrl, setApiUrl] = useState<Maybe<string> | undefined>(serviceApi?.url);
+  const [serviceKey, setServiceKey] = useState<Maybe<string> | undefined>(serviceApi?.serviceKey);
   const [desc, setDesc] = useState<Maybe<string> | undefined>(serviceApi?.description);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export const GeneralScene = ({ params }: { params: any }) => {
 
     setDesc(serviceApi?.description ?? '');
     setApiUrl(serviceApi?.url ?? '');
+    setServiceKey(serviceApi?.serviceKey ?? '');
   }, [serviceApi]);
 
   useEffect(() => {
@@ -42,6 +44,7 @@ export const GeneralScene = ({ params }: { params: any }) => {
 
     setDesc(updatedRet?.description ?? '');
     setApiUrl(updatedRet?.url ?? '');
+    setServiceKey(serviceApi?.serviceKey ?? '');
   }, [updatedRet]);
 
   const handleClick = () => {
@@ -68,6 +71,16 @@ export const GeneralScene = ({ params }: { params: any }) => {
           value={apiUrl ?? ''}
           numberOfLines={1}
           description="If you do not have a single server, you don't need fill in this."
+          onTextChanged={(url: string | undefined) => {
+            setApiUrl(url ?? '');
+          }}
+        />
+        <TextInputDesc
+          marginTop={10}
+          text="Service key"
+          value={serviceKey ?? ''}
+          numberOfLines={1}
+          description="Keep this key a secret. If it needs to be regenerated, contact us"
           onTextChanged={(url: string | undefined) => {
             setApiUrl(url ?? '');
           }}
