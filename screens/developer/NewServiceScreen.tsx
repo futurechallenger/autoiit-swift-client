@@ -1,38 +1,27 @@
-import * as React from "react";
-import { StyleSheet } from "react-native";
-import {
-  Box,
-  Button,
-  View,
-  Text,
-  Divider,
-  VStack,
-  HStack,
-  Spinner,
-} from "native-base";
-import { TextInputDesc } from "../../components/TextInputDesc";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { addService } from "../../redux/gql/addServiceSlice";
-import { RootState } from "../../redux/store";
-import Navigation from "../../navigation";
-import { useNavigation } from "@react-navigation/native";
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
+import { Box, Button, View, Text, Divider, VStack, HStack, Spinner } from 'native-base';
+import { TextInputDesc } from '../../components/TextInputDesc';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { addService } from '../../redux/gql/addServiceSlice';
+import { RootState } from '../../redux/store';
+import Navigation from '../../navigation';
+import { useNavigation } from '@react-navigation/native';
 
 const { useState, useEffect } = React;
 
 export const NewServiceScreen = () => {
-  const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
+  const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
 
   const navigation = useNavigation();
 
   const dispatch = useAppDispatch();
-  const { serviceId, error, status } = useAppSelector(
-    (state: RootState) => state.addService
-  );
+  const { serviceId, error, status } = useAppSelector((state: RootState) => state.addService);
 
   useEffect(() => {
-    if (status === "succeeded") {
-      navigation.navigate("Developers", { serviceId });
+    if (status === 'succeeded') {
+      navigation.navigate('Developers', { serviceId });
     }
   }, [status]);
 
@@ -54,18 +43,20 @@ export const NewServiceScreen = () => {
           marginTop={20}
           text="Service name"
           numberOfLines={1}
+          value={name}
           description="Your product name or service name"
           onTextChanged={(serviceName: string | undefined) => {
-            setName(serviceName ?? "");
+            setName(serviceName ?? '');
           }}
         />
         <TextInputDesc
           marginTop={20}
           text="Description"
+          value={desc}
           numberOfLines={4}
           description="A 3-4 sentence description of your service"
           onTextChanged={(description: string | undefined) => {
-            setDesc(description ?? "");
+            setDesc(description ?? '');
           }}
         />
         <Divider style={styles.divider} />
@@ -79,7 +70,7 @@ export const NewServiceScreen = () => {
             </Button>
           </HStack>
         </Box>
-        {status === "loading" && (
+        {status === 'loading' && (
           <Box style={styles.spinner}>
             <Spinner size="lg" />
           </Box>
@@ -92,23 +83,23 @@ export const NewServiceScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     padding: 10,
-    justifyContent: "flex-start",
-    alignItems: "center",
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   content: {
-    width: "50%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
     width: 90,
     marginRight: 20,
   },
   spinner: {
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   divider: {
     marginVertical: 30,
