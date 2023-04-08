@@ -1,16 +1,7 @@
-import * as React from "react";
-import {
-  Center,
-  Text,
-  VStack,
-  Button,
-  Box,
-  Container,
-  Heading,
-  Actionsheet,
-} from "native-base";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
+import * as React from 'react';
+import { Center, Text, VStack, Button, Box, Container, Heading, Actionsheet, HStack } from 'native-base';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 
 const { useState } = React;
 
@@ -28,11 +19,11 @@ const AuthScreen = () => {
   };
   const handleSelect = (selected: string) => {
     switch (selected) {
-      case "email":
+      case 'email':
         if (isOpen) setIsOpen(false);
-        navigation.navigate("Email");
+        navigation.navigate('Email');
         break;
-      case "cancel":
+      case 'cancel':
         setIsOpen(false);
         break;
       default:
@@ -40,20 +31,19 @@ const AuthScreen = () => {
     }
   };
 
+  const handleRegister = () => {};
+
   return (
     <SafeAreaView>
       <VStack space="2.5" mt="4" padding={4}>
-        <Heading>Introduction of the app</Heading>
+        <HStack justifyContent="space-between">
+          <Heading>Introduction of the app</Heading>
+          <Button onPress={handleRegister}>Register</Button>
+        </HStack>
         <Box>
-          <Text>
-            Stack aligns items vertically or horizontally based on the direction
-            prop.
-          </Text>
+          <Text>Stack aligns items vertically or horizontally based on the direction prop.</Text>
         </Box>
-        <Center
-          bg="primary.100"
-          _text={{ color: "white", fontWeight: "bold" }}
-        ></Center>
+        <Center bg="primary.100" _text={{ color: 'white', fontWeight: 'bold' }}></Center>
         <Container>
           <Button onPress={handleClick}>Continue</Button>
         </Container>
@@ -62,14 +52,10 @@ const AuthScreen = () => {
             <Box w="100%" px={4} h={60} justifyContent="center">
               Continue with
             </Box>
-            <Actionsheet.Item onPress={() => handleSelect("email")}>
-              Email
-            </Actionsheet.Item>
+            <Actionsheet.Item onPress={() => handleSelect('email')}>Email</Actionsheet.Item>
             <Actionsheet.Item isDisabled>Share</Actionsheet.Item>
             <Actionsheet.Item>Play</Actionsheet.Item>
-            <Actionsheet.Item onPress={() => handleSelect("cancel")}>
-              Cancel
-            </Actionsheet.Item>
+            <Actionsheet.Item onPress={() => handleSelect('cancel')}>Cancel</Actionsheet.Item>
           </Actionsheet.Content>
         </Actionsheet>
       </VStack>
