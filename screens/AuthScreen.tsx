@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Platform } from 'react-native';
 import {
   Center,
   Text,
@@ -15,29 +16,46 @@ import {
 } from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { useAppDispatch } from '../redux/hooks';
-import { addUser } from '../redux/gql/addUserSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { PasswordInput } from '../components/PasswordInput';
+import { signIn } from '../redux/gql/signInService';
+import { RootState } from '../redux/store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const { useState, useRef } = React;
+const { useState, useRef, useEffect } = React;
 
 const AuthScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const nameInputRef = useRef(null);
-  const emailInputRef = useRef(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
   const finalRef = useRef(null);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
+
+  const { token, status, error } = useAppSelector((state: RootState) => state.signIn);
+
+  useEffect(() => {
+    const storeItem = async () => {
+      if (token?.signIn) {
+        await AsyncStorage.setItem('@token', token?.signIn);
+      }
+    };
+
+    storeItem();
+  }, [token]);
 
   const handleClick = () => {
     if (!isOpen) {
       setIsOpen(true);
     }
   };
+
   const handleClose = () => {
     setIsOpen(false);
   };
+
   const handleSelect = (selected: string) => {
     switch (selected) {
       case 'email':
@@ -53,8 +71,24 @@ const AuthScreen = () => {
   };
 
   const handleRegister = () => {
-    // dispatch(addUser({ user: {} }));
-    setModalVisible(!modalVisible);
+    setModalVisible(false);
+    const name = nameInputRef.current?.value;
+    const email = emailInputRef.current?.value;
+    const password = passwordInputRef.current?.value;
+
+    if (!email || !password) {
+      return;
+    }
+
+    dispatch(
+      signIn({
+        userInfo: {
+          name,
+          email,
+          password,
+        },
+      }),
+    );
   };
 
   return (
@@ -62,7 +96,7 @@ const AuthScreen = () => {
       <VStack space="2.5" mt="4" padding={4}>
         <HStack justifyContent="space-between">
           <Heading>Introduction of the app</Heading>
-          <Button onPress={() => setModalVisible(!modalVisible)}>Register</Button>
+          {Platform.OS !== 'web' && <Button onPress={() => setModalVisible(!modalVisible)}>Register</Button>}
         </HStack>
         <Box>
           <Text>Stack aligns items vertically or horizontally based on the direction prop.</Text>
@@ -94,12 +128,16 @@ const AuthScreen = () => {
           <Modal.Header>Contact Us</Modal.Header>
           <Modal.Body>
             <FormControl>
-              <FormControl.Label>Email</FormControl.Label>
+              <FormControl.Label>Name</FormControl.Label>
               <Input ref={nameInputRef} />
+            </FormControl>
+            <FormControl>
+              <FormControl.Label>Email</FormControl.Label>
+              <Input ref={emailInputRef} />
             </FormControl>
             <FormControl mt="3">
               <FormControl.Label>Password</FormControl.Label>
-              <PasswordInput ref={emailInputRef} />
+              <PasswordInput ref={passwordInputRef} />
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
@@ -113,13 +151,7 @@ const AuthScreen = () => {
               >
                 Cancel
               </Button>
-              <Button
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-              >
-                Save
-              </Button>
+              <Button onPress={handleRegister}>Save</Button>
             </Button.Group>
           </Modal.Footer>
         </Modal.Content>

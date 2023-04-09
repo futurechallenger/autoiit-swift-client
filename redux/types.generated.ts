@@ -169,7 +169,6 @@ export type Mutation = {
   addServiceTrigger?: Maybe<ServiceTrigger>;
   addTriggerField?: Maybe<TriggerField>;
   addTriggerFields?: Maybe<Scalars['Int']>;
-  addUser?: Maybe<UserInfo>;
   createUpdateFieldMappingItems?: Maybe<Scalars['Int']>;
   deleteActionOutputField?: Maybe<ActionOutputField>;
   deleteFieldMappingItem?: Maybe<FieldMappingItem>;
@@ -256,10 +255,6 @@ export type MutationAddTriggerFieldArgs = {
 
 export type MutationAddTriggerFieldsArgs = {
   triggerFieldList: Array<TriggerFieldInput>;
-};
-
-export type MutationAddUserArgs = {
-  user: UserInfoInput;
 };
 
 export type MutationCreateUpdateFieldMappingItemsArgs = {

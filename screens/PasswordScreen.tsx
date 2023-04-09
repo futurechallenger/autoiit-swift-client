@@ -1,14 +1,15 @@
-import * as React from 'react';
-import { Text, VStack, Heading, Input, Button, Box, Pressable, Icon, ZStack, Spinner } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { PasswordScreenRouteProp } from '../types';
+import { Box, Button, Heading, Icon, Input, Pressable, Spinner, Text, VStack, ZStack } from 'native-base';
+import * as React from 'react';
+
 import { AuthContext } from '../navigation/AuthContext';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { login } from '../redux/gql/loginService';
 import { signIn } from '../redux/gql/signInService';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
+import { PasswordScreenRouteProp } from '../types';
 
 const { useState } = React;
 
@@ -33,11 +34,7 @@ const PasswordScreen = () => {
         return;
       }
 
-      const t = await AsyncStorage.getItem('@token');
-
-      if (!t) {
-        await AsyncStorage.setItem('@token', token);
-      }
+      await AsyncStorage.setItem('@token', token);
       authContext.setAuthToken(token);
     };
 

@@ -1,4 +1,3 @@
-import { addUserSlice } from './gql/addUserSlice';
 import { getCurrentUserInfoSlice } from './gql/getCurrentUserInfoSlice';
 import { removeFieldMappingItemSlice } from './gql/removeFieldMappingItemSlice';
 import { getFieldMappingItemsByFieldIdSlice } from './gql/getFieldMappingItemsByFieldIdSlice';
@@ -104,7 +103,6 @@ export const store = configureStore({
     updateFieldMappingItem: updateFieldMappingItemSlice.reducer,
     removeFieldMappingItem: removeFieldMappingItemSlice.reducer,
     currentUserInfo: getCurrentUserInfoSlice.reducer,
-    addUser: addUserSlice.reducer,
   }),
 });
 
