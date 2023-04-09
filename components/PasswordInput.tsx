@@ -13,8 +13,8 @@ const PasswordInput_ = (props: any, ref: React.ForwardedRef<HTMLInputElement>) =
         {...props}
         ref={ref}
         w={{
-          base: '75%',
-          md: '25%',
+          base: '100%',
+          md: '50%',
         }}
         type={show ? 'text' : 'password'}
         InputRightElement={

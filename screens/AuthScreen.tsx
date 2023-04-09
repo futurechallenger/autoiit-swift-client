@@ -17,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch } from '../redux/hooks';
 import { addUser } from '../redux/gql/addUserSlice';
+import { PasswordInput } from '../components/PasswordInput';
 
 const { useState, useRef } = React;
 
@@ -93,12 +94,12 @@ const AuthScreen = () => {
           <Modal.Header>Contact Us</Modal.Header>
           <Modal.Body>
             <FormControl>
-              <FormControl.Label>Name</FormControl.Label>
+              <FormControl.Label>Email</FormControl.Label>
               <Input ref={nameInputRef} />
             </FormControl>
             <FormControl mt="3">
-              <FormControl.Label>Email</FormControl.Label>
-              <Input ref={emailInputRef} />
+              <FormControl.Label>Password</FormControl.Label>
+              <PasswordInput ref={emailInputRef} />
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
