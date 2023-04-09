@@ -1,13 +1,32 @@
 import * as React from 'react';
-import { Center, Text, VStack, Button, Box, Container, Heading, Actionsheet, HStack } from 'native-base';
+import {
+  Center,
+  Text,
+  VStack,
+  Button,
+  Box,
+  Container,
+  Heading,
+  Actionsheet,
+  HStack,
+  Modal,
+  FormControl,
+  Input,
+} from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import { useAppDispatch } from '../redux/hooks';
+import { addUser } from '../redux/gql/addUserSlice';
 
-const { useState } = React;
+const { useState, useRef } = React;
 
 const AuthScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
   const navigation = useNavigation();
+  const dispatch = useAppDispatch();
 
   const handleClick = () => {
     if (!isOpen) {
@@ -31,7 +50,10 @@ const AuthScreen = () => {
     }
   };
 
-  const handleRegister = () => {};
+  const handleRegister = () => {
+    // dispatch(addUser({ user: {} }));
+    setModalVisible(!modalVisible);
+  };
 
   return (
     <SafeAreaView>
@@ -59,6 +81,47 @@ const AuthScreen = () => {
           </Actionsheet.Content>
         </Actionsheet>
       </VStack>
+      <Modal
+        isOpen={modalVisible}
+        onClose={() => setModalVisible(false)}
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+      >
+        <Modal.Content>
+          <Modal.CloseButton />
+          <Modal.Header>Contact Us</Modal.Header>
+          <Modal.Body>
+            <FormControl>
+              <FormControl.Label>Name</FormControl.Label>
+              <Input ref={initialRef} />
+            </FormControl>
+            <FormControl mt="3">
+              <FormControl.Label>Email</FormControl.Label>
+              <Input />
+            </FormControl>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button.Group space={2}>
+              <Button
+                variant="ghost"
+                colorScheme="blueGray"
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+              >
+                Save
+              </Button>
+            </Button.Group>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
     </SafeAreaView>
   );
 };
