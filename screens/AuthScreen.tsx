@@ -23,7 +23,8 @@ const { useState, useRef } = React;
 const AuthScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const initialRef = useRef(null);
+  const nameInputRef = useRef(null);
+  const emailInputRef = useRef(null);
   const finalRef = useRef(null);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
@@ -60,7 +61,7 @@ const AuthScreen = () => {
       <VStack space="2.5" mt="4" padding={4}>
         <HStack justifyContent="space-between">
           <Heading>Introduction of the app</Heading>
-          <Button onPress={handleRegister}>Register</Button>
+          <Button onPress={() => setModalVisible(!modalVisible)}>Register</Button>
         </HStack>
         <Box>
           <Text>Stack aligns items vertically or horizontally based on the direction prop.</Text>
@@ -84,7 +85,7 @@ const AuthScreen = () => {
       <Modal
         isOpen={modalVisible}
         onClose={() => setModalVisible(false)}
-        initialFocusRef={initialRef}
+        initialFocusRef={nameInputRef}
         finalFocusRef={finalRef}
       >
         <Modal.Content>
@@ -93,11 +94,11 @@ const AuthScreen = () => {
           <Modal.Body>
             <FormControl>
               <FormControl.Label>Name</FormControl.Label>
-              <Input ref={initialRef} />
+              <Input ref={nameInputRef} />
             </FormControl>
             <FormControl mt="3">
               <FormControl.Label>Email</FormControl.Label>
-              <Input />
+              <Input ref={emailInputRef} />
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
