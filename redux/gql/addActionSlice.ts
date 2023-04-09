@@ -1,8 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { sendRequest } from '../baseApi';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { sendRequest } from '../baseApi';
 import * as Types from '../types.generated';
-import { addServiceSlice } from './addServiceSlice';
 
 export const addServiceAction = createAsyncThunk(
   'addServiceAction',
