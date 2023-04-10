@@ -13,6 +13,7 @@ const { useState, useEffect } = React;
 export const NewServiceScreen = () => {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
+  const [serviceCode, setServiceCode] = useState('');
 
   const navigation = useNavigation();
 
@@ -28,7 +29,7 @@ export const NewServiceScreen = () => {
   const handleCancel = () => {};
 
   const handleClick = () => {
-    dispatch(addService({ name, description: desc }));
+    dispatch(addService({ name, description: desc, serviceCode }));
   };
 
   return (
@@ -42,11 +43,22 @@ export const NewServiceScreen = () => {
         <TextInputDesc
           marginTop={20}
           text="Service name"
+          value={name}
           numberOfLines={1}
           value={name}
           description="Your product name or service name"
           onTextChanged={(serviceName: string | undefined) => {
             setName(serviceName ?? '');
+          }}
+        />
+        <TextInputDesc
+          marginTop={20}
+          text="Autoiit service code"
+          value={serviceCode}
+          numberOfLines={1}
+          description="A short, unique code for your service URLs"
+          onTextChanged={(serviceCode: string | undefined) => {
+            setServiceCode(serviceCode ?? '');
           }}
         />
         <TextInputDesc
@@ -59,6 +71,7 @@ export const NewServiceScreen = () => {
             setDesc(description ?? '');
           }}
         />
+
         <Divider style={styles.divider} />
         <Box alignSelf="flex-end" marginTop={15}>
           <HStack>
