@@ -1,7 +1,7 @@
-import * as React from "react";
-import { View, Text } from "native-base";
-import { WebView } from "react-native-webview";
-import { SERVER_URL } from "../Lib/config";
+import * as React from 'react';
+import { View, Text } from 'native-base';
+import { WebView } from 'react-native-webview';
+import { SERVER_URL } from '../Lib/config';
 
 export const PopupScreen = () => {
   return (

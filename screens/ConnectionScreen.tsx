@@ -1,23 +1,11 @@
 import * as React from 'react';
 
-import { SERVER_URL } from '../Lib/config';
-import {
-  View,
-  Text,
-  Spinner,
-  FlatList,
-  Divider,
-  Box,
-  Button,
-} from 'native-base';
-import {
-  NavigationContainerRefContext,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import { NavigationContainerRefContext, useNavigation, useRoute } from '@react-navigation/native';
+import { Box, Button, Divider, FlatList, Spinner, Text, View } from 'native-base';
 import { Platform } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { SERVER_URL } from '../Lib/config';
 import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
 
 let popup: Window | null = null;
@@ -31,9 +19,7 @@ export const ConnectionScreen = () => {
   const { item, service: routeService, phrase } = route?.params ?? {};
   const [connection, setConnection] = useState('');
 
-  const { serviceAuth, status, error } = useAppSelector(
-    (state: RootState) => state.getServiceAuth,
-  );
+  const { serviceAuth, status, error } = useAppSelector((state: RootState) => state.getServiceAuth);
 
   useEffect(() => {
     if (!routeService?.id) {
@@ -86,25 +72,25 @@ export const ConnectionScreen = () => {
   };
 
   const handleConnect = () => {
-    // if (connection === 'success') {
-    //   return;
-    // }
-    // if (Platform.OS !== 'web') {
-    //   navigation.navigate('Connect');
-    // } else {
-    //   popup = window.open(
-    //     `${SERVER_URL}/login/${routeService?.id}/service`,
-    //     'popUpWindow',
-    //     'height=600,width=900,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes',
-    //   );
-    // }
-    // TODO: for test only
-
-    if (phrase === 'Trigger') {
-      navigation.navigate('CompleteTrigger', { trigger: item, phrase });
-    } else {
-      navigation.navigate('CompleteAction', { item, phrase });
+    if (connection === 'success') {
+      return;
     }
+    if (Platform.OS !== 'web') {
+      navigation.navigate('Connect');
+    } else {
+      popup = window.open(
+        `${SERVER_URL}/login/${routeService?.id}/service`,
+        'popUpWindow',
+        'height=600,width=900,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes',
+      );
+    }
+    //
+    // TODO: for test only
+    // if (phrase === 'Trigger') {
+    //   navigation.navigate('CompleteTrigger', { trigger: item, phrase });
+    // } else {
+    //   navigation.navigate('CompleteAction', { item, phrase });
+    // }
   };
   const description = routeService?.description ?? routeService?.name ?? '';
 
