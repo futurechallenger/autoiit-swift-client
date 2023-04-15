@@ -61,10 +61,6 @@ export const CreateTriggerScene: React.FunctionComponent<Props> = ({ params }) =
     );
   };
 
-  const handleInput = (input: string) => {
-    setEndpointPath(input);
-  };
-
   return (
     <View bg="green.50" h="full" marginRight={20}>
       <ThemedTitle>Create a new trigger</ThemedTitle>
@@ -99,7 +95,7 @@ export const CreateTriggerScene: React.FunctionComponent<Props> = ({ params }) =
         <>
           <InputGroup>
             <InputLeftAddon children={'.../autoiit/v1/triggers/'} />
-            <Input value={endpointPath} onChangeText={handleInput} />
+            <Input value={endpointPath} onChangeText={(input: string) => setEndpointPath(input)} />
           </InputGroup>
           <Text>API endpoint for this trigger. Must be in snake_case and begin with a letter.</Text>
         </>

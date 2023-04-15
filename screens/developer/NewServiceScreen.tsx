@@ -26,7 +26,9 @@ export const NewServiceScreen = () => {
     }
   }, [status]);
 
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    navigation.goBack();
+  };
 
   const handleClick = () => {
     dispatch(addService({ name, description: desc, serviceCode }));
