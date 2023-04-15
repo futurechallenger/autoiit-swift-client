@@ -1,32 +1,14 @@
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
+import { Button, Divider, HStack, Input, InputGroup, InputLeftAddon, Radio, Text, VStack, View } from 'native-base';
 import * as React from 'react';
-import {
-  Button,
-  View,
-  Text,
-  Divider,
-  VStack,
-  Radio,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  HStack,
-} from 'native-base';
-import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
 import { TextInputDesc } from '../../../components/TextInputDesc';
-import {
-  useIsFocused,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import {
-  addServiceTrigger,
-  resetStatus,
-} from '../../../redux/gql/addTriggerSlice';
-import { RootState } from '../../../redux/store';
-import { ThemedSpinner } from '../../../components/ThemedSpinner';
 import { ThemedAlert } from '../../../components/ThemedAlert';
+import { ThemedSpinner } from '../../../components/ThemedSpinner';
+import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
+import { addServiceTrigger, resetStatus } from '../../../redux/gql/addTriggerSlice';
 import { getServiceTriggers } from '../../../redux/gql/getTriggersSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { RootState } from '../../../redux/store';
 
 const { useState, useEffect } = React;
 
@@ -34,9 +16,7 @@ interface Props {
   params: any;
 }
 
-export const CreateTriggerScene: React.FunctionComponent<Props> = ({
-  params,
-}) => {
+export const CreateTriggerScene: React.FunctionComponent<Props> = ({ params }) => {
   const [refreshed, setRefreshed] = useState(false);
   const [triggerName, setTriggerName] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();
@@ -50,9 +30,7 @@ export const CreateTriggerScene: React.FunctionComponent<Props> = ({
   // const { serviceApi } = route.params ?? {};
 
   const dispatch = useAppDispatch();
-  const { trigger, status, error } = useAppSelector(
-    (state: RootState) => state.addTrigger,
-  );
+  const { trigger, status, error } = useAppSelector((state: RootState) => state.addTrigger);
 
   useEffect(() => {
     if (isFocused && !refreshed) {
@@ -112,11 +90,7 @@ export const CreateTriggerScene: React.FunctionComponent<Props> = ({
       />
       <VStack>
         <InputTitle>Endpoint</InputTitle>
-        <Radio.Group
-          name="endpoint"
-          value={endpoint}
-          onChange={(nextValue) => setEndpoint(nextValue)}
-        >
+        <Radio.Group name="endpoint" value={endpoint} onChange={(nextValue) => setEndpoint(nextValue)}>
           <Radio value="api">API</Radio>
           <Radio value="feed">Feed(RSS or Atom)</Radio>
         </Radio.Group>
@@ -124,13 +98,10 @@ export const CreateTriggerScene: React.FunctionComponent<Props> = ({
       {endpoint === 'api' && (
         <>
           <InputGroup>
-            <InputLeftAddon children={'https://'} />
+            <InputLeftAddon children={'.../autoiit/v1/triggers/'} />
             <Input value={endpointPath} onChangeText={handleInput} />
           </InputGroup>
-          <Text>
-            API endpoint for this trigger. Must be in snake_case and begin with
-            a letter.
-          </Text>
+          <Text>API endpoint for this trigger. Must be in snake_case and begin with a letter.</Text>
         </>
       )}
 
@@ -139,12 +110,7 @@ export const CreateTriggerScene: React.FunctionComponent<Props> = ({
         <Button onPress={handleClick}>Save</Button>
       </HStack>
       {status === 'loading' && <ThemedSpinner />}
-      {error && (
-        <ThemedAlert
-          status="error"
-          text={error ?? 'Something wrong, please try again later'}
-        />
-      )}
+      {error && <ThemedAlert status="error" text={error ?? 'Something wrong, please try again later'} />}
     </View>
   );
 };

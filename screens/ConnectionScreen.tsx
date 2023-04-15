@@ -76,7 +76,7 @@ export const ConnectionScreen = () => {
       return;
     }
     if (Platform.OS !== 'web') {
-      navigation.navigate('Connect');
+      navigation.navigate('Connect', { serviceId: routeService?.id });
     } else {
       popup = window.open(
         `${SERVER_URL}/login/${routeService?.id}/service`,
