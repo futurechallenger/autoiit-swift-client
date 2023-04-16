@@ -25,6 +25,7 @@ export const addTriggerExposeFieldSlice = createSlice({
   reducers: {
     resetStatus(state) {
       state.status = '';
+      state.error = undefined;
     },
   },
   extraReducers(builder) {
