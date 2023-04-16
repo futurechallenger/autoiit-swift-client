@@ -61,6 +61,10 @@ export const CreateTriggerScene: React.FunctionComponent<Props> = ({ params }) =
     );
   };
 
+  const handleCloseAlert = () => {
+    dispatch(resetStatus());
+  };
+
   return (
     <View bg="green.50" h="full" marginRight={20}>
       <ThemedTitle>Create a new trigger</ThemedTitle>
@@ -106,7 +110,12 @@ export const CreateTriggerScene: React.FunctionComponent<Props> = ({ params }) =
         <Button onPress={handleClick}>Save</Button>
       </HStack>
       {status === 'loading' && <ThemedSpinner />}
-      {error && <ThemedAlert status="error" text={error ?? 'Something wrong, please try again later'} />}
+      <ThemedAlert
+        open={!!error}
+        onClose={handleCloseAlert}
+        status="error"
+        text={error ?? 'Something wrong, please try again later'}
+      />
     </View>
   );
 };

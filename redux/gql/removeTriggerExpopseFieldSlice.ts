@@ -25,6 +25,7 @@ export const removeTriggerExposeFieldSlice = createSlice({
   reducers: {
     resetStatus(state) {
       state.status = '';
+      state.error = undefined;
     },
   },
   extraReducers(builder) {
@@ -74,5 +75,4 @@ export const RemoveExposeFieldDocument = `
   }
 }`;
 
-export const { resetStatus: resetRemovedExposeFieldStatus } =
-  removeTriggerExposeFieldSlice.actions;
+export const { resetStatus: resetRemovedExposeFieldStatus } = removeTriggerExposeFieldSlice.actions;
