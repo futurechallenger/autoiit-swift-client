@@ -1,24 +1,9 @@
 import * as React from 'react';
-import {
-  Input,
-  Button,
-  CheckIcon,
-  Select,
-  View,
-  Text,
-  VStack,
-  HStack,
-  Pressable,
-} from 'native-base';
+import { Input, Button, CheckIcon, Select, View, Text, VStack, HStack, Pressable } from 'native-base';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle } from '../../../components/ThemedTitle';
 import * as Types from '../../../redux/types.generated';
-import {
-  convertValidationRule,
-  InputType,
-  reverseValidationRule,
-  ValidationRule,
-} from '../../../constants/Trigger';
+import { convertValidationRule, InputType, reverseValidationRule, ValidationRule } from '../../../constants/Trigger';
 import { DropdownLabelValueInput } from '../../../components/DropdownLabelValueInput';
 
 const { useState, useEffect } = React;
@@ -65,13 +50,9 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
     setHelperText(fieldInfo?.helperText);
     setkeyName(fieldInfo?.keyName);
     setInputType(fieldInfo?.inputType ? '' + fieldInfo?.inputType : undefined);
-    setInputSourceType(
-      fieldInfo?.inputSourceType ? '' + fieldInfo?.inputSourceType : undefined,
-    );
+    setInputSourceType(fieldInfo?.inputSourceType ? '' + fieldInfo?.inputSourceType : undefined);
     setInputType(fieldInfo?.inputSourceApi);
-    setInputValidation(
-      fieldInfo?.validationRequired ? 'need-validation' : 'no-validation',
-    );
+    setInputValidation(fieldInfo?.validationRequired ? 'need-validation' : 'no-validation');
     setValidationRule(reverseValidationRule(fieldInfo?.validationRule));
   }, [fieldInfo?.id]);
 
@@ -100,10 +81,7 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
   };
 
   const renderValidationRule = () => {
-    if (
-      inputType === InputType.TextInput &&
-      inputValidataion === 'need-validation'
-    ) {
+    if (inputType === InputType.TextInput && inputValidataion === 'need-validation') {
       return (
         <VStack marginTop={10}>
           <InputTitle>Validation rule</InputTitle>
@@ -119,16 +97,28 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
             onValueChange={(itemValue) => setValidationRule(itemValue)}
           >
             <Select.Item label="Text is not blank" value="no-blank" />
-            <Select.Item
-              label="Text with a custom regex"
-              value="custom-regex"
-            />
-            <Select.Item
-              label="Validate text using a service"
-              value="by-service"
-            />
+            <Select.Item label="Text with a custom regex" value="custom-regex" />
+            <Select.Item label="Validate text using a service" value="by-service" />
           </Select>
         </VStack>
+      );
+    }
+  };
+
+  const renderDataSource = () => {
+    if (inputType === InputType.DropdownList || inputType === InputType.MultipleCheckboxSelection) {
+      return (
+        <>
+          <InputTitle>Datasource for dropdown list</InputTitle>
+          <Select
+            selectedValue={inputSourceType}
+            accessibilityLabel="Datasource for dropdown list"
+            onValueChange={(value) => setInputSourceType(value)}
+          >
+            <Select.Item label="Options specified here" value="0" />
+            <Select.Item label="Options from your api" value="1" />
+          </Select>
+        </>
       );
     }
   };
@@ -177,30 +167,12 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
           <Select.Item label="Nested dropdown list" value="nexted-dropdown" /> */}
           <Select.Item label="Multiple checkbox selection" value="2" />
         </Select>
-        <InputTitle>Datasource for dropdown list</InputTitle>
-        <Select
-          selectedValue={inputSourceType}
-          accessibilityLabel="Datasource for dropdown list"
-          onValueChange={(value) => setInputSourceType(value)}
-        >
-          <Select.Item label="Options specified here" value="0" />
-          <Select.Item label="Options from your api" value="1" />
-        </Select>
-
-        {inputSourceType === '1' ? (
-          <Input value={inputSourceApi} />
-        ) : (
-          <DropdownLabelValueInput />
-        )}
+        {renderDataSource()}
+        {inputSourceType === '1' ? <Input value={inputSourceApi} /> : <DropdownLabelValueInput />}
       </VStack>
       {renderValidation()}
       {renderValidationRule()}
-      <HStack
-        w="full"
-        justifyContent="space-between"
-        alignItems="center"
-        marginY={10}
-      >
+      <HStack w="full" justifyContent="space-between" alignItems="center" marginY={10}>
         {fieldInfo ? (
           <Pressable onPress={handleDelete}>
             <Text>Delete</Text>
