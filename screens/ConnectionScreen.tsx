@@ -46,7 +46,7 @@ export const ConnectionScreen = () => {
   useEffect(() => {
     if (connection === 'success') {
       if (phrase === 'Trigger') {
-        navigation.navigate('CompleteTrigger', { item, phrase });
+        navigation.navigate('CompleteTrigger', { trigger: item, phrase });
       } else {
         navigation.navigate('CompleteAction', { item, phrase });
       }
@@ -72,25 +72,25 @@ export const ConnectionScreen = () => {
   };
 
   const handleConnect = () => {
-    if (connection === 'success') {
-      return;
-    }
-    if (Platform.OS !== 'web') {
-      navigation.navigate('Connect', { serviceId: routeService?.id });
-    } else {
-      popup = window.open(
-        `${SERVER_URL}/login/${routeService?.id}/service`,
-        'popUpWindow',
-        'height=600,width=900,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes',
-      );
-    }
-    //
-    // TODO: for test only
-    // if (phrase === 'Trigger') {
-    //   navigation.navigate('CompleteTrigger', { trigger: item, phrase });
-    // } else {
-    //   navigation.navigate('CompleteAction', { item, phrase });
+    // if (connection === 'success') {
+    //   return;
     // }
+    // if (Platform.OS !== 'web') {
+    //   navigation.navigate('Connect', { serviceId: routeService?.id });
+    // } else {
+    //   popup = window.open(
+    //     `${SERVER_URL}/login/${routeService?.id}/service`,
+    //     'popUpWindow',
+    //     'height=600,width=900,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes',
+    //   );
+    // }
+
+    //TODO: for test only
+    if (phrase === 'Trigger') {
+      navigation.navigate('CompleteTrigger', { trigger: item, phrase });
+    } else {
+      navigation.navigate('CompleteAction', { item, phrase });
+    }
   };
   const description = routeService?.description ?? routeService?.name ?? '';
 
