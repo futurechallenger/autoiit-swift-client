@@ -18,10 +18,7 @@ import { StyleSheet } from 'react-native';
 import { EditableCell } from '../../../components/EditableCell';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
-import {
-  addTriggerExposeField,
-  resetStatus,
-} from '../../../redux/gql/addTriggerExposeFieldSlice';
+import { addTriggerExposeField, resetStatus } from '../../../redux/gql/addTriggerExposeFieldSlice';
 import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
 import { getTriggerExposeFields } from '../../../redux/gql/getTriggerExposeFieldsSlice';
 import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
@@ -54,16 +51,12 @@ interface Props {
   params: any;
 }
 
-export const TriggerDetailScene: React.FunctionComponent<Props> = ({
-  params,
-}) => {
+export const TriggerDetailScene: React.FunctionComponent<Props> = ({ params }) => {
   const { serviceApi, sceneParams, setScene } = params ?? {};
   const trigger = sceneParams;
 
   const dispatch = useAppDispatch();
-  const { triggerFields, status, error } = useAppSelector(
-    (state: RootState) => state.triggerFields,
-  );
+  const { triggerFields, status, error } = useAppSelector((state: RootState) => state.triggerFields);
   const {
     triggerField: addedField,
     status: addedStatus,
@@ -102,12 +95,8 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
   } = useAppSelector((state: RootState) => state.removeExposeField);
 
   const [name, setName] = useState();
-  const [currentField, setCurrentField] = useState<
-    Types.TriggerField | undefined
-  >();
-  const [currentExposeField, setCurrentExposeField] = useState<
-    Types.ExposeField | undefined
-  >();
+  const [currentField, setCurrentField] = useState<Types.TriggerField | undefined>();
+  const [currentExposeField, setCurrentExposeField] = useState<Types.ExposeField | undefined>();
   const [description, setDescription] = useState();
   const [endpointType, setEndpointType] = useState();
   const [endpointPath, setEndpointPath] = useState();
@@ -128,21 +117,14 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
   }, [trigger]);
 
   useEffect(() => {
-    if (
-      (addedStatus === 'succeeded' || updatedStatus === 'succeeded') &&
-      trigger?.id
-    ) {
+    if ((addedStatus === 'succeeded' || updatedStatus === 'succeeded') && trigger?.id) {
       dispatch(getTriggerFields({ triggerId: trigger?.id }));
     }
   }, [addedStatus, updatedStatus, trigger?.id]);
 
   // TODO: refactor this logic to customized hooks
   useEffect(() => {
-    if (
-      (addedExposeFieldStatus === 'succeeded' ||
-        updatedExposeFieldStatus === 'succeeded') &&
-      trigger?.id
-    ) {
+    if ((addedExposeFieldStatus === 'succeeded' || updatedExposeFieldStatus === 'succeeded') && trigger?.id) {
       dispatch(resetStatus());
       dispatch(resetUpdateExposeFieldStatus());
       dispatch(getTriggerExposeFields({ triggerId: trigger?.id }));
@@ -150,11 +132,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
   }, [addedExposeFieldStatus, updatedExposeFieldStatus, trigger?.id]);
 
   useEffect(() => {
-    if (
-      addedStatus === 'succeeded' ||
-      updatedStatus === 'succeeded' ||
-      removedStatus === 'succeeded'
-    ) {
+    if (addedStatus === 'succeeded' || updatedStatus === 'succeeded' || removedStatus === 'succeeded') {
       dispatch(resetStatus());
       dispatch(resetUpdateTriggerFieldStatus());
       dispatch(resetRemoveTriggerFieldStatus());
@@ -177,11 +155,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
       setShowEditExposeField(false);
       dispatch(getTriggerExposeFields({ triggerId: trigger?.id }));
     }
-  }, [
-    addedExposeFieldStatus,
-    updatedExposeFieldStatus,
-    removedExposeFieldStatus,
-  ]);
+  }, [addedExposeFieldStatus, updatedExposeFieldStatus, removedExposeFieldStatus]);
 
   const handleInput = (nextValue) => {
     setEndpointPath(nextValue);
@@ -320,22 +294,13 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
       <VStack>
         <InputTitle>Endpoint</InputTitle>
         <InputGroup>
-          <InputLeftAddon children={'https://'} />
+          <InputLeftAddon children={'.../autoiit/v1/triggers/'} />
           <Input value={endpointPath} onChangeText={handleInput} />
         </InputGroup>
-        <Text>
-          API endpoint for this trigger. Must be in snake_case and begin with a
-          letter.
-        </Text>
+        <Text>API endpoint for this trigger. Must be in snake_case and begin with a letter.</Text>
       </VStack>
       <Divider marginTop={5} />
-      <HStack
-        justifyContent="space-between"
-        alignItems="center"
-        w="100%"
-        h={60}
-        marginY={5}
-      >
+      <HStack justifyContent="space-between" alignItems="center" w="100%" h={60} marginY={5}>
         <Pressable onPress={handleDeleteTrigger}>
           <View style={styles.deleteButton}>
             <Ionicons name="trash" size={28} color="muted.50" />
@@ -347,10 +312,9 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
       <Box marginY={5}>
         <ThemedTitle>Trigger fields</ThemedTitle>
         <Text>
-          To make triggers as relevant to the user as possible you can let users
-          provide one or more trigger fields. For example, the "New tweet by you
-          with hashtag" trigger would require a trigger field to specify the
-          hashtag to look for. Read the full documentation on trigger fields.
+          To make triggers as relevant to the user as possible you can let users provide one or more trigger fields. For
+          example, the "New tweet by you with hashtag" trigger would require a trigger field to specify the hashtag to
+          look for. Read the full documentation on trigger fields.
         </Text>
 
         {triggerFields && (
@@ -370,9 +334,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
 
         {showCreateField && showEditField ? null : (
           <View style={styles.addFields}>
-            <Button onPress={() => setShowCreateField(true)}>
-              Add trigger fields
-            </Button>
+            <Button onPress={() => setShowCreateField(true)}>Add trigger fields</Button>
           </View>
         )}
 
@@ -382,10 +344,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
       </Box>
       <Box marginY={5}>
         <ThemedTitle>Expose fields</ThemedTitle>
-        <Text>
-          Expose fields are parts of data that about to expose to `if-then`
-          action.
-        </Text>
+        <Text>Expose fields are parts of data that about to expose to `if-then` action.</Text>
 
         {exposeFields && (
           <FlatList
@@ -404,9 +363,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({
 
         {showCreateExposeField && showEditExposeField ? null : (
           <View style={styles.addFields}>
-            <Button onPress={() => setShowCreateExposeField(true)}>
-              Add expose fields
-            </Button>
+            <Button onPress={() => setShowCreateExposeField(true)}>Add expose fields</Button>
           </View>
         )}
 
