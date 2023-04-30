@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { NavigationContainerRefContext, useNavigation, useRoute } from '@react-navigation/native';
-import { Box, Button, Divider, FlatList, Spinner, Text, View } from 'native-base';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { Box, Button, Divider, Text, View } from 'native-base';
 import { Platform } from 'react-native';
-import { SERVER_URL } from '../Lib/config';
 import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
+import { SERVER_URL } from '../Lib/config';
 
 let popup: Window | null = null;
 
@@ -72,25 +72,25 @@ export const ConnectionScreen = () => {
   };
 
   const handleConnect = () => {
-    // if (connection === 'success') {
-    //   return;
-    // }
-    // if (Platform.OS !== 'web') {
-    //   navigation.navigate('Connect', { serviceId: routeService?.id });
-    // } else {
-    //   popup = window.open(
-    //     `${SERVER_URL}/login/${routeService?.id}/service`,
-    //     'popUpWindow',
-    //     'height=600,width=900,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes',
-    //   );
-    // }
+    if (connection === 'success') {
+      return;
+    }
+    if (Platform.OS !== 'web') {
+      navigation.navigate('Connect', { serviceId: routeService?.id });
+    } else {
+      popup = window.open(
+        `${SERVER_URL}/login/${routeService?.id}/service`,
+        'popUpWindow',
+        'height=600,width=900,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes',
+      );
+    }
 
     //TODO: for test only
-    if (phrase === 'Trigger') {
-      navigation.navigate('CompleteTrigger', { trigger: item, phrase });
-    } else {
-      navigation.navigate('CompleteAction', { item, phrase });
-    }
+    // if (phrase === 'Trigger') {
+    //   navigation.navigate('CompleteTrigger', { trigger: item, phrase });
+    // } else {
+    //   navigation.navigate('CompleteAction', { item, phrase });
+    // }
   };
   const description = routeService?.description ?? routeService?.name ?? '';
 

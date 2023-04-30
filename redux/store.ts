@@ -49,6 +49,7 @@ import { AddAutoFlowSlice } from './gql/addAutoFlowSlice';
 import { updateAutoFlowSlice } from './gql/updateAutoFlowSlice';
 import { getAutoFlowByIdSlice } from './gql/getAutoFlowByIdSlice';
 import { getServiceTriggerByIdSlice } from './gql/getTriggerByIdSlice';
+import { getConnectionStatusSlice } from './gql/getConnectionStatusSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -103,6 +104,7 @@ export const store = configureStore({
     updateFieldMappingItem: updateFieldMappingItemSlice.reducer,
     removeFieldMappingItem: removeFieldMappingItemSlice.reducer,
     currentUserInfo: getCurrentUserInfoSlice.reducer,
+    connectionStatus: getConnectionStatusSlice.reducer,
   }),
 });
 
