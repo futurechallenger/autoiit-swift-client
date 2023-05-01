@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-  Button,
-  View,
-  Text,
-  FlatList,
-  Pressable,
-  Input,
-  HStack,
-} from 'native-base';
+import { Button, View, Text, FlatList, Pressable, Input, HStack } from 'native-base';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
 import { getServices, getServicesSlice } from '../redux/gql/chooseServices';
@@ -20,9 +12,7 @@ export const ChooseServiceScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { phrase } = route.params ?? {};
-  const { services, error, status } = useAppSelector(
-    (state: RootState) => state.services,
-  );
+  const { services, error, status } = useAppSelector((state: RootState) => state.services);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -67,13 +57,7 @@ export const ChooseServiceScreen = () => {
         data={services ?? []}
         renderItem={({ item }) => (
           <Pressable onPress={() => handleNav(item)}>
-            <View
-              w="full"
-              h={60}
-              bg="pink.100"
-              justifyContent="center"
-              alignItems="center"
-            >
+            <View w="full" h={60} bg="pink.100" justifyContent="center" alignItems="center">
               <Text>{item.name}</Text>
             </View>
           </Pressable>

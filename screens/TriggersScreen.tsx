@@ -21,9 +21,7 @@ export const TriggersScreen = () => {
   const { item: service } = route?.params ?? {};
 
   const dispatch = useAppDispatch();
-  const { triggers, error, status } = useAppSelector(
-    (state: RootState) => state.serviceTriggers,
-  );
+  const { triggers, error, status } = useAppSelector((state: RootState) => state.serviceTriggers);
   const {
     serviceAuth,
     status: gettingAuthStatus,
@@ -42,13 +40,13 @@ export const TriggersScreen = () => {
   const handleItemClick = (item: Types.ServiceTrigger) => {
     // TODO: Deal with auth completed scenario
     if (!serviceAuth) {
+      navigation.navigate('Connection', { item, service, phrase: 'Trigger' });
+    } else {
       navigation.navigate('CompleteTrigger', {
         item,
         service,
         phrase: 'Trigger',
       });
-    } else {
-      navigation.navigate('Connection', { item, service, phrase: 'Trigger' });
     }
   };
 
