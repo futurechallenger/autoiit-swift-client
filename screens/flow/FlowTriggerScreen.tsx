@@ -22,7 +22,7 @@ interface Props {
 
 export const FlowTriggerScreen: React.FunctionComponent<Props> = ({ params }) => {
   const route = useRoute();
-  const { trigger } = route?.params ?? {};
+  const { item: trigger } = route?.params ?? {};
   const navigation = useNavigation();
 
   const [triggerInfo, setTriggerInfo] = useState({});
