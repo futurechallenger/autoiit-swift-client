@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Input, Text, View } from 'native-base';
+import { Box, Button, Center, Divider, Input, Text, View } from 'native-base';
 import * as React from 'react';
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
 import { getTriggerFields } from '../../redux/gql/getTriggerFieldsSlice';
@@ -97,22 +97,26 @@ export const FlowTriggerScreen: React.FunctionComponent<Props> = ({ params }) =>
 
   return (
     <View>
-      <ThemedTitle>Complete trigger fields</ThemedTitle>
-      <Divider />
-      <Box>
-        {/* Branding logo */}
-        <Text>{trigger?.name}</Text>
-        <Text>{trigger?.description}</Text>
-      </Box>
-      <Box>
-        {/* show trigger fields according to config */}
-        {renderFields()}
-      </Box>
-      <Box>
-        <Button alignSelf="center" onPress={handleCreate}>
-          Create trigger
-        </Button>
-      </Box>
+      <Center>
+        {/* <ThemedTitle>Complete trigger fields</ThemedTitle>
+        <Divider /> */}
+        <Box>
+          {/* Branding logo */}
+          <Text fontSize={48} fontWeight={700}>
+            {trigger?.name}
+          </Text>
+          <Text>{trigger?.description}</Text>
+        </Box>
+        <Box marginTop={36}>
+          {/* show trigger fields according to config */}
+          {renderFields()}
+        </Box>
+        <Box marginTop={36}>
+          <Button alignSelf="center" onPress={handleCreate}>
+            Create trigger
+          </Button>
+        </Box>
+      </Center>
     </View>
   );
 };
