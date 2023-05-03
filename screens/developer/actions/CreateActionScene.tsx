@@ -1,32 +1,14 @@
 import * as React from 'react';
-import {
-  Button,
-  View,
-  Text,
-  Divider,
-  VStack,
-  Radio,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  HStack,
-} from 'native-base';
+import { Button, View, Text, Divider, VStack, Radio, Input, InputGroup, InputLeftAddon, HStack } from 'native-base';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
 import { TextInputDesc } from '../../../components/TextInputDesc';
-import {
-  useIsFocused,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { RootState } from '../../../redux/store';
 import { ThemedSpinner } from '../../../components/ThemedSpinner';
 import { ThemedAlert } from '../../../components/ThemedAlert';
 import { getServiceTriggers } from '../../../redux/gql/getTriggersSlice';
-import {
-  addServiceAction,
-  resetStatus,
-} from '../../../redux/gql/addActionSlice';
+import { addServiceAction, resetStatus } from '../../../redux/gql/addActionSlice';
 import { getServiceActions } from '../../../redux/gql/getActionsSlice';
 
 const { useState, useEffect } = React;
@@ -35,9 +17,7 @@ interface Props {
   params: any;
 }
 
-export const CreateActionScene: React.FunctionComponent<Props> = ({
-  params,
-}) => {
+export const CreateActionScene: React.FunctionComponent<Props> = ({ params }) => {
   const { serviceApi, setScene } = params ?? {};
   const [refreshed, setRefreshed] = useState(false);
   const [actionName, setActionName] = useState<string | undefined>();
@@ -50,9 +30,7 @@ export const CreateActionScene: React.FunctionComponent<Props> = ({
   const route = useRoute();
 
   const dispatch = useAppDispatch();
-  const { action, status, error } = useAppSelector(
-    (state: RootState) => state.addServiceAction,
-  );
+  const { action, status, error } = useAppSelector((state: RootState) => state.addServiceAction);
 
   useEffect(() => {
     if (isFocused && !refreshed) {
@@ -111,7 +89,7 @@ export const CreateActionScene: React.FunctionComponent<Props> = ({
       <InputTitle>Endpoint</InputTitle>
 
       <InputGroup>
-        <InputLeftAddon children={'https://'} />
+        <InputLeftAddon children={'.../autoiit/v1/actions/'} />
         <Input value={endpointPath} onChangeText={handleInput} />
       </InputGroup>
       <Text>Must written in snake_case</Text>
@@ -121,12 +99,7 @@ export const CreateActionScene: React.FunctionComponent<Props> = ({
         <Button onPress={handleClick}>Save</Button>
       </HStack>
       {status === 'loading' && <ThemedSpinner />}
-      {error && (
-        <ThemedAlert
-          status="error"
-          text={error ?? 'Something wrong, please try again later'}
-        />
-      )}
+      {error && <ThemedAlert status="error" text={error ?? 'Something wrong, please try again later'} />}
     </View>
   );
 };
