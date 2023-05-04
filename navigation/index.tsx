@@ -5,7 +5,7 @@
  */
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer, NavigationContainerRefContext } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Platform, Pressable } from 'react-native';
@@ -174,6 +174,11 @@ function BottomTabNavigator() {
             </Pressable>
           ),
         })}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            console.log('Tab pressed: ', navigation.getState());
+          },
+        })}
       />
       <BottomTab.Screen
         name="Explore"
@@ -182,6 +187,11 @@ function BottomTabNavigator() {
           title: 'Explore',
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            console.log('Tab pressed: ', navigation.getState());
+          },
+        })}
       />
       <BottomTab.Screen
         name="Create" // Create flow
@@ -190,6 +200,11 @@ function BottomTabNavigator() {
           title: 'Create Flow',
           tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
         }}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            console.log('Tab pressed: ', navigation.getState());
+          },
+        })}
       />
       {Platform.OS === 'web' && (
         <BottomTab.Screen
@@ -199,6 +214,11 @@ function BottomTabNavigator() {
             title: 'Create Service',
             tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           }}
+          listeners={({ navigation, route }) => ({
+            tabPress: (e) => {
+              console.log('Tab pressed: ', navigation.getState());
+            },
+          })}
         />
       )}
       <BottomTab.Screen
@@ -208,6 +228,11 @@ function BottomTabNavigator() {
           title: 'Activity',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            console.log('Tab pressed: ', navigation.getState());
+          },
+        })}
       />
       <BottomTab.Screen
         name="Profile"
@@ -216,6 +241,11 @@ function BottomTabNavigator() {
           title: 'Profile',
           tabBarIcon: ({ color }) => <TabBarIcon name="user-o" color={color} />,
         }}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            console.log('Tab pressed: ', navigation.getState());
+          },
+        })}
       />
     </BottomTab.Navigator>
   );
