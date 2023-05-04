@@ -96,7 +96,14 @@ export const AuthScene = ({ params }: { params: any }) => {
 
   const renderAuthContent = () => {
     if (!category || category === '1') {
-      return <Box style={{ height: '100%', width: '100%' }} />;
+      // return <Box style={{ height: '100%', width: '100%' }} />;
+      return (
+        <Box alignSelf="flex-end" marginTop={15}>
+          <Button w="90" onPress={handleClick}>
+            Save
+          </Button>
+        </Box>
+      );
     } else {
       // auth-expires or auth-no-expires
       return (
@@ -164,7 +171,7 @@ export const AuthScene = ({ params }: { params: any }) => {
       <Radio.Group
         name="myRadioGroup"
         accessibilityLabel="favorite number"
-        value={category}
+        value={category || '1'}
         onChange={(nextValue) => {
           setCategory(nextValue);
         }}
