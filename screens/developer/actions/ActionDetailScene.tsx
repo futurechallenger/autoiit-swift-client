@@ -18,10 +18,7 @@ import { StyleSheet } from 'react-native';
 import { EditableCell } from '../../../components/EditableCell';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
-import {
-  addActionInputField,
-  resetStatus,
-} from '../../../redux/gql/addActionInputFieldSlice';
+import { addActionInputField, resetStatus } from '../../../redux/gql/addActionInputFieldSlice';
 import { getActionInputFields } from '../../../redux/gql/getActionInputFieldsSlice';
 import {
   removeActionInputField,
@@ -44,17 +41,13 @@ interface Props {
   params: any;
 }
 
-export const ActionDetailScene: React.FunctionComponent<Props> = ({
-  params,
-}) => {
+export const ActionDetailScene: React.FunctionComponent<Props> = ({ params }) => {
   const { setScene, sceneParams, serviceApi } = params ?? {};
   // const { action } = sceneParams ?? {};
   const action = sceneParams;
 
   const dispatch = useAppDispatch();
-  const { actionInputFields, status, error } = useAppSelector(
-    (state: RootState) => state.actionInputFields,
-  );
+  const { actionInputFields, status, error } = useAppSelector((state: RootState) => state.actionInputFields);
   const {
     actionInputField: addInputField,
     status: addStatus,
@@ -72,9 +65,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
   } = useAppSelector((state: RootState) => state.removeActionInputField);
 
   const [name, setName] = useState<string | undefined>();
-  const [currentField, setCurrentField] = useState<
-    (Types.ActionInputField & Types.ActionOutputField) | undefined
-  >();
+  const [currentField, setCurrentField] = useState<(Types.ActionInputField & Types.ActionOutputField) | undefined>();
   const [description, setDescription] = useState<string | undefined>();
   // const [endpointType, setEndpointType] = useState<string | undefined>();
   const [endpointPath, setEndpointPath] = useState<string | undefined>();
@@ -92,20 +83,13 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
   }, [action]);
 
   useEffect(() => {
-    if (
-      (addStatus === 'succeeded' || updateStatus === 'succeeded') &&
-      action?.id
-    ) {
+    if ((addStatus === 'succeeded' || updateStatus === 'succeeded') && action?.id) {
       dispatch(getActionInputFields({ actionId: action?.id }));
     }
   }, [addStatus, updateStatus, action?.id]);
 
   useEffect(() => {
-    if (
-      addStatus === 'succeeded' ||
-      updateStatus === 'succeeded' ||
-      removedInputFieldStatus === 'succeeded'
-    ) {
+    if (addStatus === 'succeeded' || updateStatus === 'succeeded' || removedInputFieldStatus === 'succeeded') {
       dispatch(resetStatus());
       dispatch(resetUpdateInputFieldStatus());
       dispatch(resetRemoveInputFieldStatus());
@@ -197,22 +181,13 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
       <VStack>
         <InputTitle>Endpoint</InputTitle>
         <InputGroup>
-          <InputLeftAddon children={'https://'} />
+          <InputLeftAddon children={'.../autoiit/v1/actions/'} />
           <Input value={endpointPath} onChangeText={handleInput} />
         </InputGroup>
-        <Text>
-          API endpoint for this action. Must be in snake_case and begin with a
-          letter.
-        </Text>
+        <Text>API endpoint for this action. Must be in snake_case and begin with a letter.</Text>
       </VStack>
       <Divider marginTop={5} />
-      <HStack
-        justifyContent="space-between"
-        alignItems="center"
-        w="100%"
-        h={60}
-        marginY={5}
-      >
+      <HStack justifyContent="space-between" alignItems="center" w="100%" h={60} marginY={5}>
         <Pressable onPress={handleDeleteAction}>
           <View style={styles.deleteButton}>
             <Ionicons name="trash" size={28} color="muted.50" />
@@ -224,10 +199,9 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
       <Box marginY={5}>
         <ThemedTitle>Action fields</ThemedTitle>
         <Text>
-          To make action as relevant to the user as possible you can let users
-          provide one or more action fields. For example, the "New tweet by you
-          with hashtag" action would require a action field to specify the
-          hashtag to look for. Read the full documentation on action fields.
+          To make action as relevant to the user as possible you can let users provide one or more action fields. For
+          example, the "New tweet by you with hashtag" action would require a action field to specify the hashtag to
+          look for. Read the full documentation on action fields.
         </Text>
 
         {actionInputFields && (
@@ -247,9 +221,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({
 
         {showCreateField && showEditField ? null : (
           <View style={styles.addFields}>
-            <Button onPress={() => setShowCreateField(true)}>
-              Add action fields
-            </Button>
+            <Button onPress={() => setShowCreateField(true)}>Add action fields</Button>
           </View>
         )}
 
