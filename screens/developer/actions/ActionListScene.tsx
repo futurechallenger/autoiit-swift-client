@@ -20,9 +20,7 @@ interface Props {
  */
 export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
   const { serviceApi, sceneParms, setScene } = params ?? {};
-  const { actions, error, status } = useAppSelector(
-    (state: RootState) => state.serviceActions,
-  );
+  const { actions, error, status } = useAppSelector((state: RootState) => state.serviceActions);
 
   const dispatch = useAppDispatch();
   // const isFocused = useIsFocused();
@@ -35,15 +33,10 @@ export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
     dispatch(getServiceActions({ serviceId: serviceApi?.serviceId }));
   }, [serviceApi?.serviceId /*,isFocused*/]);
 
-  const renderItem: ListRenderItem<Types.ServiceTrigger> = ({
-    item,
-  }: ListRenderItemInfo<Types.ServiceTrigger>) => {
+  const renderItem: ListRenderItem<Types.ServiceTrigger> = ({ item }: ListRenderItemInfo<Types.ServiceTrigger>) => {
     return (
       <Pressable>
-        <EditableCell
-          title={item.name ?? ''}
-          onEditClick={() => handleClickItem(item)}
-        />
+        <EditableCell title={item.name ?? ''} onEditClick={() => handleClickItem(item)} />
       </Pressable>
     );
   };
@@ -58,15 +51,10 @@ export const ActionListScene: React.FunctionComponent<Props> = ({ params }) => {
 
   return (
     <View style={{ height: '800' }}>
-      <HStack
-        w="full"
-        marginTop={5}
-        justifyContent="space-between"
-        alignItems="center"
-      >
+      <HStack w="full" marginTop={5} justifyContent="space-between" alignItems="center">
         <ThemedTitle>Actions</ThemedTitle>
         <View>
-          <Button onPress={handleClick}>Add Trigger</Button>
+          <Button onPress={handleClick}>Add Action</Button>
         </View>
       </HStack>
       <Divider marginTop={5} />
