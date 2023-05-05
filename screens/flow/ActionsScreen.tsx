@@ -22,9 +22,7 @@ export const ActionsScreen = () => {
   const { item: service, phrase } = route?.params ?? {};
 
   const dispatch = useAppDispatch();
-  const { actions, status, error } = useAppSelector(
-    (state: RootState) => state.serviceActions,
-  );
+  const { actions, status, error } = useAppSelector((state: RootState) => state.serviceActions);
   const {
     serviceAuth,
     status: gettingAuthStatus,
@@ -40,7 +38,7 @@ export const ActionsScreen = () => {
 
   const handleItemClick = (item: Types.ServiceAction) => {
     // TODO: Deal with auth completed scenario
-    if (!serviceAuth) {
+    if (!serviceAuth || serviceAuth.category === 1) {
       navigation.navigate('CompleteAction', { item, service, phrase });
     } else {
       navigation.navigate('Connection', { item, service, phrase });
