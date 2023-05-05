@@ -60,7 +60,7 @@ export const ConnectionScreen = () => {
   };
 
   const renderConnectionButton = () => {
-    if (!serviceAuth) {
+    if (!serviceAuth || serviceAuth.category === 1) {
       return null;
     }
 
