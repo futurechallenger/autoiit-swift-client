@@ -113,7 +113,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({ actionField, exp
 
       if (value?.id) {
         return {
-          id: isToUpdate ? key : null,
+          id: isToUpdate ? parseInt(key, 10) : null,
           exposeFieldId: /*isToUpdate ? value?.exposeFieldId :*/ value?.id,
           exposeLabel: /*isToUpdate ? value?.exposeLabel : */ value?.keyName,
           actionInputFieldId: isToUpdate ? value?.actionInputFieldId : actionField?.id,
