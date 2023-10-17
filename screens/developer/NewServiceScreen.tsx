@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Box, Button, View, Text, Divider, VStack, HStack, Spinner } from 'native-base';
 import { TextInputDesc } from '../../components/TextInputDesc';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-import { addService } from '../../redux/gql/addServiceSlice';
+import { addService, resetStatus } from '../../redux/gql/addServiceSlice';
 import { RootState } from '../../redux/store';
 import Navigation from '../../navigation';
 import { useNavigation } from '@react-navigation/native';
@@ -22,6 +22,7 @@ export const NewServiceScreen = () => {
 
   useEffect(() => {
     if (status === 'succeeded') {
+      dispatch(resetStatus());
       navigation.navigate('Developers', { serviceId });
     }
   }, [status]);
