@@ -19,7 +19,11 @@ const initialState: InitialStateType = {
 export const addServiceSlice = createSlice({
   name: 'addServiceSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    resetStatus(state) {
+      state.status = '';
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(addService.pending, (state, action) => {
@@ -68,3 +72,5 @@ export const AddServiceDocument = `
     id
   }
 }`;
+
+export const { resetStatus } = addServiceSlice.actions;
