@@ -1,12 +1,7 @@
-import {
-  GestureResponderEvent,
-  ListRenderItem,
-  ListRenderItemInfo,
-  StyleSheet,
-} from "react-native";
+import { GestureResponderEvent, ListRenderItem, ListRenderItemInfo, StyleSheet } from 'react-native';
 
-import { Text, View } from "../components/Themed";
-import { MainTabScreenProps } from "../types";
+import { Text, View } from '../components/Themed';
+import { MainTabScreenProps } from '../types';
 import {
   Spinner,
   Box,
@@ -16,52 +11,41 @@ import {
   FlatList,
   Spacer,
   // Toast,
-} from "native-base";
-import type { ServiceInfo } from "../redux/gql/chooseServices";
-import React, { useContext, useEffect } from "react";
-import { AuthContext } from "../navigation/AuthContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getServiceInfo } from "../redux/gql/serviceInfoService";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { RootState } from "../redux/store";
-import { clearToken as clearLoginToken } from "../redux/gql/loginService";
-import { clearToken as clearSignInToken } from "../redux/gql/signInService";
-import { ServiceCell } from "../components/ServiceCell";
+} from 'native-base';
+import type { ServiceInfo } from '../redux/gql/chooseServices';
+import React, { useContext, useEffect } from 'react';
+import { AuthContext } from '../navigation/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getServiceInfo } from '../redux/gql/serviceInfoService';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { RootState } from '../redux/store';
+import { clearToken as clearLoginToken } from '../redux/gql/loginService';
+import { clearToken as clearSignInToken } from '../redux/gql/signInService';
+import { ServiceCell } from '../components/ServiceCell';
 
-export default function MyFlowScreen({
-  navigation,
-}: MainTabScreenProps<"MyFlow">) {
-  const { services, status, error } = useAppSelector(
-    (state: RootState) => state.serviceInfo
-  );
+export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'>) {
+  const { services, status, error } = useAppSelector((state: RootState) => state.serviceInfo);
   const dispatch = useAppDispatch();
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
-    dispatch(getServiceInfo({ type: "RECOMMENDED" }));
+    dispatch(getServiceInfo({ type: 'RECOMMENDED' }));
   }, []);
 
   const handleItemClick = (item: any) => {
-    if (!item.connected)
-      navigation.navigate("ServiceDetail", { service: item });
+    if (!item.connected) navigation.navigate('ServiceDetail', { service: item });
   };
 
-  const renderItem: ListRenderItem<ServiceInfo> = ({
-    item,
-  }: ListRenderItemInfo<ServiceInfo>) => {
+  const renderItem: ListRenderItem<ServiceInfo> = ({ item }: ListRenderItemInfo<ServiceInfo>) => {
     return <ServiceCell item={item} handleItemClick={handleItemClick} />;
   };
 
   if (error) {
     // TODO: show error message
     // Toast.show({ description: error });
-    if (
-      error === "Signature has expired" ||
-      error === "Signature verification failed" ||
-      error === "Token expired"
-    ) {
-      AsyncStorage.setItem("@token", "");
-      authContext.setAuthToken("");
+    if (error === 'Signature has expired' || error === 'Signature verification failed' || error === 'Token expired') {
+      AsyncStorage.setItem('@token', '');
+      authContext.setAuthToken('');
       dispatch(clearSignInToken());
       dispatch(clearLoginToken());
     }
@@ -69,13 +53,7 @@ export default function MyFlowScreen({
 
   return (
     <View style={styles.container}>
-      <ZStack
-        justifyContent="center"
-        alignItems="center"
-        bg="primary.100"
-        w="full"
-        h="full"
-      >
+      <ZStack justifyContent="center" alignItems="center" bg="primary.100" w="full" h="full">
         <FlatList
           w="full"
           h="full"
@@ -85,8 +63,8 @@ export default function MyFlowScreen({
           ListFooterComponent={<ListFooter />}
           renderItem={renderItem}
         />
-        {status === "loading" && <Spinner size="lg" />}
-        {error && console.error("ERROR", error)}
+        {status === 'loading' && <Spinner size="lg" />}
+        {error && console.error('ERROR', error)}
       </ZStack>
     </View>
   );
@@ -94,13 +72,7 @@ export default function MyFlowScreen({
 
 const ListHeader = () => {
   return (
-    <Box
-      minHeight="30"
-      justifyContent="center"
-      alignItems="flex-start"
-      borderBottomWidth="1"
-      borderColor="muted.500"
-    >
+    <Box minHeight="30" justifyContent="center" alignItems="flex-start" borderBottomWidth="1" borderColor="muted.500">
       <Text>Introduction</Text>
     </Box>
   );
@@ -108,14 +80,8 @@ const ListHeader = () => {
 
 const ListFooter = () => {
   return (
-    <Box
-      justifyContent="center"
-      h="60"
-      maxWidth="120"
-      w="full"
-      alignSelf="center"
-    >
-      <Button>Create</Button>
+    <Box justifyContent="center" h="60" maxWidth="120" w="full" alignSelf="center">
+      <Button onPress={() => console.warn('Not implemented!!!')}>Create</Button>
     </Box>
   );
 };
@@ -123,16 +89,16 @@ const ListFooter = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: "80%",
+    width: '80%',
   },
 });

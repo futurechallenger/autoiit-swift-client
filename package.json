@@ -19,7 +19,7 @@
     "@react-native-picker/picker": "2.4.8",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/material-top-tabs": "^6.6.2",
-    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.3.16",
     "@reduxjs/toolkit": "^1.9.1",
     "@rtk-query/graphql-request-base-query": "^2.2.0",
