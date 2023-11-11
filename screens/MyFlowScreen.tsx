@@ -30,7 +30,7 @@ export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'
   const authContext = useContext(AuthContext);
   const route = useRoute();
 
-  const { refresh } = route?.params ?? {};
+  const { refresh = false } = route?.params ?? {};
 
   useEffect(() => {
     dispatch(getServiceInfo({ type: 'RECOMMENDED' }));
