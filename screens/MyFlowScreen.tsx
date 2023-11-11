@@ -14,6 +14,7 @@ import {
 } from 'native-base';
 import type { ServiceInfo } from '../redux/gql/chooseServices';
 import React, { useContext, useEffect } from 'react';
+import { useRoute } from '@react-navigation/native';
 import { AuthContext } from '../navigation/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getServiceInfo } from '../redux/gql/serviceInfoService';
@@ -27,10 +28,13 @@ export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'
   const { services, status, error } = useAppSelector((state: RootState) => state.serviceInfo);
   const dispatch = useAppDispatch();
   const authContext = useContext(AuthContext);
+  const route = useRoute();
+
+  const { refresh } = route?.params ?? {};
 
   useEffect(() => {
     dispatch(getServiceInfo({ type: 'RECOMMENDED' }));
-  }, []);
+  }, [refresh]);
 
   const handleItemClick = (item: any) => {
     if (!item.connected) navigation.navigate('ServiceDetail', { service: item });

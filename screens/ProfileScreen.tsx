@@ -26,9 +26,6 @@ export const ProfileScreen = () => {
 
   const handleItemPress = (param: string) => {
     if (param === 'Sign out') {
-      // TODO: do logout
-      // AsyncStorage.removeItem('@token');
-      // AsyncStorage.removeItem('@email');
       setModalVisible(true);
 
       return;
@@ -123,13 +120,9 @@ export const ProfileScreen = () => {
       <Modal isOpen={modalVisible} onClose={setModalVisible} size={'md'}>
         <Modal.Content maxH="212">
           <Modal.CloseButton />
-          <Modal.Header>Return Policy</Modal.Header>
+          <Modal.Header>Logout</Modal.Header>
           <Modal.Body>
-            <Text>
-              Create a 'Return Request' under “My Orders” section of App/Website. Follow the screens that come up after
-              tapping on the 'Return’ button. Please make a note of the Return ID that we generate at the end of the
-              process. Keep the item ready for pick up or ship it to us basis on the return mode.
-            </Text>
+            <Text>You will logout your account!</Text>
           </Modal.Body>
           <Modal.Footer>
             <Button.Group space={2}>
@@ -144,7 +137,10 @@ export const ProfileScreen = () => {
               </Button>
               <Button
                 onPress={() => {
+                  AsyncStorage.removeItem('@token');
+                  AsyncStorage.removeItem('@email');
                   setModalVisible(false);
+                  navigation.navigate('MyFlow', { refresh: true });
                 }}
               >
                 Save
