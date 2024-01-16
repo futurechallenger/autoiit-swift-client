@@ -12,51 +12,49 @@ export type Scalars = {
   Float: number;
 };
 
-export type ActionInputField = {
-  __typename?: 'ActionInputField';
+export type ActionMappingField = {
+  __typename?: 'ActionMappingField';
+  actionOutputFieldId?: Maybe<Scalars['Int']>;
+  autoFlowId?: Maybe<Scalars['Int']>;
   deleted?: Maybe<Scalars['Int']>;
-  fieldSourceApi?: Maybe<Scalars['String']>;
-  fieldSourceType?: Maybe<Scalars['Int']>;
-  fieldType?: Maybe<Scalars['Int']>;
-  helperText?: Maybe<Scalars['String']>;
+  exposeFieldInfo?: Maybe<Scalars['String']>;
+  fieldValue?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
-  keyName?: Maybe<Scalars['String']>;
   label?: Maybe<Scalars['String']>;
-  serviceApiActionId?: Maybe<Scalars['Int']>;
+  mapping?: Maybe<Scalars['String']>;
 };
 
-export type ActionInputFieldInput = {
+export type ActionMappingFieldInput = {
+  actionOutputFieldId?: InputMaybe<Scalars['Int']>;
+  autoFlowId?: InputMaybe<Scalars['Int']>;
   deleted?: InputMaybe<Scalars['Int']>;
-  fieldSourceApi?: InputMaybe<Scalars['String']>;
-  fieldSourceType?: InputMaybe<Scalars['Int']>;
-  fieldType?: InputMaybe<Scalars['Int']>;
-  helperText?: InputMaybe<Scalars['String']>;
+  exposeFieldInfo?: InputMaybe<Scalars['String']>;
+  fieldValue?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['Int']>;
-  keyName?: InputMaybe<Scalars['String']>;
   label?: InputMaybe<Scalars['String']>;
-  serviceApiActionId?: InputMaybe<Scalars['Int']>;
+  mapping?: InputMaybe<Scalars['String']>;
 };
 
 export type ActionOutputField = {
   __typename?: 'ActionOutputField';
   deleted?: Maybe<Scalars['Int']>;
+  fieldSourceApi?: Maybe<Scalars['String']>;
   fieldType?: Maybe<Scalars['Int']>;
   helperText?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   keyName?: Maybe<Scalars['String']>;
   label?: Maybe<Scalars['String']>;
-  parserPath?: Maybe<Scalars['String']>;
   serviceApiActionId?: Maybe<Scalars['Int']>;
 };
 
 export type ActionOutputFieldInput = {
   deleted?: InputMaybe<Scalars['Int']>;
+  fieldSourceApi?: InputMaybe<Scalars['String']>;
   fieldType?: InputMaybe<Scalars['Int']>;
   helperText?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['Int']>;
   keyName?: InputMaybe<Scalars['String']>;
   label?: InputMaybe<Scalars['String']>;
-  parserPath?: InputMaybe<Scalars['String']>;
   serviceApiActionId?: InputMaybe<Scalars['Int']>;
 };
 
@@ -95,7 +93,6 @@ export type ExposeField = {
   id?: Maybe<Scalars['Int']>;
   keyName?: Maybe<Scalars['String']>;
   label?: Maybe<Scalars['String']>;
-  parserPath?: Maybe<Scalars['String']>;
   serviceTriggerId?: Maybe<Scalars['Int']>;
 };
 
@@ -106,30 +103,12 @@ export type ExposeFieldInput = {
   id?: InputMaybe<Scalars['Int']>;
   keyName?: InputMaybe<Scalars['String']>;
   label?: InputMaybe<Scalars['String']>;
-  parserPath?: InputMaybe<Scalars['String']>;
   serviceTriggerId?: InputMaybe<Scalars['Int']>;
-};
-
-export type FieldMappingItem = {
-  __typename?: 'FieldMappingItem';
-  actionInputFieldId?: Maybe<Scalars['Int']>;
-  exposeFieldId?: Maybe<Scalars['Int']>;
-  exposeLabel?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['Int']>;
-  value?: Maybe<Scalars['String']>;
-};
-
-export type FieldMappingItemInput = {
-  actionInputFieldId?: InputMaybe<Scalars['Int']>;
-  exposeFieldId?: InputMaybe<Scalars['Int']>;
-  exposeLabel?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['Int']>;
-  value?: InputMaybe<Scalars['String']>;
 };
 
 export type FieldOption = {
   __typename?: 'FieldOption';
-  actionId?: Maybe<Scalars['Int']>;
+  actionOutputFieldId?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   label?: Maybe<Scalars['String']>;
   triggerId?: Maybe<Scalars['Int']>;
@@ -137,7 +116,7 @@ export type FieldOption = {
 };
 
 export type FieldOptionInput = {
-  actionId?: InputMaybe<Scalars['Int']>;
+  actionOutputFieldId?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['Int']>;
   label?: InputMaybe<Scalars['String']>;
   triggerId?: InputMaybe<Scalars['Int']>;
@@ -155,12 +134,11 @@ export type MostSearchedServiceType = {
 export type Mutation = {
   __typename?: 'Mutation';
   activateFlow: Scalars['Boolean'];
-  addActionInputField?: Maybe<ActionInputField>;
+  addActionMappingField?: Maybe<ActionMappingField>;
   addActionOutputField?: Maybe<ActionOutputField>;
   addAutoFlow?: Maybe<AutoFlow>;
   addExposeField?: Maybe<ExposeField>;
   addExposeFields: Scalars['Int'];
-  addFieldMappingItems: Scalars['Int'];
   addFieldOptions?: Maybe<Scalars['Int']>;
   addService: Service;
   addServiceAction?: Maybe<ServiceAction>;
@@ -169,23 +147,21 @@ export type Mutation = {
   addServiceTrigger?: Maybe<ServiceTrigger>;
   addTriggerField?: Maybe<TriggerField>;
   addTriggerFields?: Maybe<Scalars['Int']>;
-  createUpdateFieldMappingItems?: Maybe<Scalars['Int']>;
   deleteActionOutputField?: Maybe<ActionOutputField>;
-  deleteFieldMappingItem?: Maybe<FieldMappingItem>;
   deleteServiceAction?: Maybe<ServiceAction>;
   loginIn: Scalars['String'];
-  removeActionInputField?: Maybe<ActionInputField>;
+  publishArchiveFlow: Scalars['Boolean'];
+  removeActionMappingField?: Maybe<ActionMappingField>;
   removeAutoFlow?: Maybe<AutoFlow>;
   removeExposeField?: Maybe<ExposeField>;
   removeServiceTrigger: Scalars['Boolean'];
   removeTriggerField: Scalars['Boolean'];
   signIn: Scalars['String'];
   testCode: Scalars['Boolean'];
-  updateActionInputField?: Maybe<ActionInputField>;
+  updateActionMappingField?: Maybe<ActionMappingField>;
   updateActionOutputField?: Maybe<ActionOutputField>;
   updateAutoFlow?: Maybe<AutoFlow>;
   updateExposeField?: Maybe<ExposeField>;
-  updateFieldMappingItem?: Maybe<FieldMappingItem>;
   updateFieldOption?: Maybe<FieldOption>;
   updateMostSearchedService: Scalars['Boolean'];
   updateService: Service;
@@ -202,8 +178,8 @@ export type MutationActivateFlowArgs = {
 };
 
 
-export type MutationAddActionInputFieldArgs = {
-  actionInputField: ActionInputFieldInput;
+export type MutationAddActionMappingFieldArgs = {
+  actionMappingField: ActionMappingFieldInput;
 };
 
 
@@ -224,11 +200,6 @@ export type MutationAddExposeFieldArgs = {
 
 export type MutationAddExposeFieldsArgs = {
   exposeFields: Array<ExposeFieldInput>;
-};
-
-
-export type MutationAddFieldMappingItemsArgs = {
-  mappingItems: Array<FieldMappingItemInput>;
 };
 
 
@@ -274,18 +245,8 @@ export type MutationAddTriggerFieldsArgs = {
 };
 
 
-export type MutationCreateUpdateFieldMappingItemsArgs = {
-  mappingItems: Array<FieldMappingItemInput>;
-};
-
-
 export type MutationDeleteActionOutputFieldArgs = {
   actionOutputFieldId: Scalars['Int'];
-};
-
-
-export type MutationDeleteFieldMappingItemArgs = {
-  mappingId: Scalars['Int'];
 };
 
 
@@ -299,8 +260,14 @@ export type MutationLoginInArgs = {
 };
 
 
-export type MutationRemoveActionInputFieldArgs = {
-  actionInputFieldId: Scalars['Int'];
+export type MutationPublishArchiveFlowArgs = {
+  flowId: Scalars['Int'];
+  publishOrArchive: Scalars['Int'];
+};
+
+
+export type MutationRemoveActionMappingFieldArgs = {
+  actionMappingFieldId: Scalars['Int'];
 };
 
 
@@ -329,8 +296,8 @@ export type MutationSignInArgs = {
 };
 
 
-export type MutationUpdateActionInputFieldArgs = {
-  actionInputField: ActionInputFieldInput;
+export type MutationUpdateActionMappingFieldArgs = {
+  actionMappingField: ActionMappingFieldInput;
 };
 
 
@@ -346,11 +313,6 @@ export type MutationUpdateAutoFlowArgs = {
 
 export type MutationUpdateExposeFieldArgs = {
   exposeField: ExposeFieldInput;
-};
-
-
-export type MutationUpdateFieldMappingItemArgs = {
-  mappingItem: FieldMappingItemInput;
 };
 
 
@@ -400,16 +362,14 @@ export type MutationUpdateTriggerFieldArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  actionInputField?: Maybe<ActionInputField>;
-  actionInputFields?: Maybe<Array<ActionInputField>>;
+  actionMappingField?: Maybe<ActionMappingField>;
+  actionMappingFields?: Maybe<Array<ActionMappingField>>;
   actionOutputField?: Maybe<ActionOutputField>;
   actions?: Maybe<Array<ServiceAction>>;
   autoFlow?: Maybe<AutoFlow>;
   connectionStatus: Scalars['Boolean'];
   currentUserInfo?: Maybe<UserInfo>;
   exposeField?: Maybe<ExposeField>;
-  fieldMappingItems?: Maybe<Array<FieldMappingItem>>;
-  fieldMappingItemsByFieldId?: Maybe<Array<FieldMappingItem>>;
   fieldOptionsByType?: Maybe<Array<FieldOption>>;
   flowsByService?: Maybe<Array<AutoFlow>>;
   getExposeFields?: Maybe<Array<ExposeField>>;
@@ -433,13 +393,14 @@ export type Query = {
 };
 
 
-export type QueryActionInputFieldArgs = {
-  actionInputFieldId: Scalars['Int'];
+export type QueryActionMappingFieldArgs = {
+  actionMappingFieldId: Scalars['Int'];
 };
 
 
-export type QueryActionInputFieldsArgs = {
-  actionId: Scalars['Int'];
+export type QueryActionMappingFieldsArgs = {
+  actionOutputFieldId: Scalars['Int'];
+  flowId: Scalars['Int'];
 };
 
 
@@ -465,16 +426,6 @@ export type QueryConnectionStatusArgs = {
 
 export type QueryExposeFieldArgs = {
   exposeFieldId: Scalars['Int'];
-};
-
-
-export type QueryFieldMappingItemsArgs = {
-  actionInputFieldIds: Array<Scalars['Int']>;
-};
-
-
-export type QueryFieldMappingItemsByFieldIdArgs = {
-  actionInputFieldId: Scalars['Int'];
 };
 
 
@@ -609,7 +560,6 @@ export type ServiceAction = {
   description?: Maybe<Scalars['String']>;
   endpointPath?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
-  inputFields?: Maybe<Array<ActionInputField>>;
   name?: Maybe<Scalars['String']>;
   outputFields?: Maybe<Array<ActionOutputField>>;
   serviceApiId?: Maybe<Scalars['Int']>;
@@ -619,7 +569,6 @@ export type ServiceActionInput = {
   description?: InputMaybe<Scalars['String']>;
   endpointPath?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['Int']>;
-  inputFields?: InputMaybe<Array<ActionInputFieldInput>>;
   name?: InputMaybe<Scalars['String']>;
   outputFields?: InputMaybe<Array<ActionOutputFieldInput>>;
   serviceApiId?: InputMaybe<Scalars['Int']>;
