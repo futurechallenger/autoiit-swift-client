@@ -4,7 +4,7 @@ import { sendRequest } from '../baseApi';
 import * as Types from '../types.generated';
 
 export const getServiceActions = createAsyncThunk(
-  'getServiceActinos',
+  'getServiceActions',
   async (variables: GetActionsByServiceIdQueryVariables) => {
     return sendRequest<GetActionsByServiceIdQuery>({
       variables,

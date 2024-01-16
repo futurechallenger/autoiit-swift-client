@@ -18,7 +18,7 @@ import { StyleSheet } from 'react-native';
 import { EditableCell } from '../../../components/EditableCell';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
-import { addActionInputField, resetStatus } from '../../../redux/gql/addActionInputFieldSlice';
+import { addActionOutputField, resetStatus } from '../../../redux/gql/addActionOutputFieldSlice';
 import { getActionInputFields } from '../../../redux/gql/getActionInputFieldsSlice';
 import {
   removeActionInputField,
@@ -112,7 +112,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({ params }) =>
   };
 
   const handleCreateActionInputField = (field: Types.ActionInputField) => {
-    dispatch(addActionInputField({ f: field }));
+    dispatch(addActionOutputField({ f: field }));
   };
 
   const handleEditActionInputField = (field: Types.ActionInputField) => {
