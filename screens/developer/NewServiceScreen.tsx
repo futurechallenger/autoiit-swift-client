@@ -48,7 +48,6 @@ export const NewServiceScreen = () => {
           text="Service name"
           value={name}
           numberOfLines={1}
-          value={name}
           description="Your product name or service name"
           onTextChanged={(serviceName: string | undefined) => {
             setName(serviceName ?? '');
