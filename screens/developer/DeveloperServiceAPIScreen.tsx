@@ -8,6 +8,7 @@ import { TriggersScene } from './apiScenes/TriggersScene';
 import { ActionsScene } from './actions/ActionsScene';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getServiceApis } from '../../redux/gql/getServiceApisSlice';
+import type { ServiceApi } from '../../redux/types.generated';
 
 const { useEffect, useState } = React;
 
@@ -19,7 +20,7 @@ export const DeveloperServiceAPIScreen = () => {
   } = useAppSelector((state: RootState) => state.serviceById);
 
   const { serviceApis, status, error } = useAppSelector((state: RootState) => state.serviceApis);
-  const [serviceApi, setServiceApi] = useState();
+  const [serviceApi, setServiceApi] = useState<ServiceApi>();
 
   const dispatch = useAppDispatch();
   useEffect(() => {

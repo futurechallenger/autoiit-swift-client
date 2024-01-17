@@ -3,12 +3,12 @@ import { sendRequest } from '../baseApi';
 
 import * as Types from '../types.generated';
 
-export const addActionInputField = createAsyncThunk(
+export const addActionOutputField = createAsyncThunk(
   'addActionInputField',
-  async (variables: AddActionInputFieldMutationVariables) => {
-    return sendRequest<AddActionInputFieldMutation>({
+  async (variables: AddActionOutputFieldMutationVariables) => {
+    return sendRequest<AddActionOutputFieldMutation>({
       variables,
-      query: AddActionInputFieldDocument,
+      query: AddActionOutputFieldDocument,
     });
   },
 );
@@ -29,13 +29,13 @@ export const addActionInputFieldSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(addActionInputField.pending, (state, action) => {
+      .addCase(addActionOutputField.pending, (state, action) => {
         state.status = 'loading';
         if (state.error) {
           state.error = undefined;
         }
       })
-      .addCase(addActionInputField.fulfilled, (state, action) => {
+      .addCase(addActionOutputField.fulfilled, (state, action) => {
         const payload = action.payload;
         if (payload?.errors) {
           state.status = 'failed';
@@ -45,7 +45,7 @@ export const addActionInputFieldSlice = createSlice({
           state.actionInputField = payload?.data?.addActionInputField;
         }
       })
-      .addCase(addActionInputField.rejected, (state, action) => {
+      .addCase(addActionOutputField.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
@@ -58,34 +58,26 @@ interface InitialStateType {
   error: string | undefined;
 }
 
-export type AddActionInputFieldMutationVariables = Types.Exact<{
-  f: Types.ActionInputFieldInput;
+export type AddActionOutputFieldMutationVariables = Types.Exact<{
+  actionOutputField: Types.ActionOutputFieldInput;
 }>;
 
-export type AddActionInputFieldMutation = {
-  __typename?: 'Mutation';
-  // addActionInputField?: {
-  //   __typename?: 'ActionInputField';
-  //   id?: number | null;
-  //   keyName?: string | null;
-  //   label?: string | null;
-  //   helperText?: string | null;
-  //   fieldType?: number | null;
-  //   serviceApiActionId?: number | null;
-  // } | null;
-  addActionInputField?: Types.ActionInputField | null;
-};
 
-export const AddActionInputFieldDocument = `
-    mutation addActionInputField($f: ActionInputFieldInput!) {
-  addActionInputField(actionInputField: $f) {
+export type AddActionOutputFieldMutation = { __typename?: 'Mutation', addActionOutputField?: { __typename?: 'ActionOutputField', id?: number | null, keyName?: string | null, label?: string | null, helperText?: string | null, fieldType?: number | null, fieldSourceApi?: string | null, serviceApiActionId?: number | null } | null };
+
+
+export const AddActionOutputFieldDocument = `
+    mutation addActionOutputField($actionOutputField: ActionOutputFieldInput!) {
+  addActionOutputField(actionOutputField: $actionOutputField) {
     id
     keyName
     label
     helperText
     fieldType
+    fieldSourceApi
     serviceApiActionId
   }
-}`;
+}
+    `;
 
 export const { resetStatus } = addActionInputFieldSlice.actions;

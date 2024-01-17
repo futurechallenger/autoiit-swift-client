@@ -34,7 +34,7 @@ import { getServiceActionsSlice } from './gql/getActionsSlice';
 import { updateServiceActionSlice } from './gql/updateActionSlice';
 import { deleteServiceActionSlice } from './gql/removeActionSlice';
 import { getActionInputFieldsSlice } from './gql/getActionInputFieldsSlice';
-import { addActionInputFieldSlice } from './gql/addActionInputFieldSlice';
+import { addActionInputFieldSlice } from './gql/addActionOutputFieldSlice';
 import { updateActionInputFieldSlice } from './gql/updateActionInputFieldSlice';
 import { removeActionInputFieldSlice } from './gql/removeActionInputFieldSlice';
 import { getAutoFlowsByServiceSlice } from './gql/getAutoFlowsSlice';
