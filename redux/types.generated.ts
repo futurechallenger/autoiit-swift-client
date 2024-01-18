@@ -249,6 +249,10 @@ export type MutationDeleteActionOutputFieldArgs = {
   actionOutputFieldId: Scalars['Int'];
 };
 
+export type MutationDeleteFieldMappingItemArgs = {
+  mappingId: Scalars['Int'];
+};
+
 
 export type MutationDeleteServiceActionArgs = {
   serviceActionId: Scalars['Int'];
@@ -314,6 +318,7 @@ export type MutationUpdateAutoFlowArgs = {
 export type MutationUpdateExposeFieldArgs = {
   exposeField: ExposeFieldInput;
 };
+
 
 
 export type MutationUpdateFieldOptionArgs = {
@@ -426,6 +431,16 @@ export type QueryConnectionStatusArgs = {
 
 export type QueryExposeFieldArgs = {
   exposeFieldId: Scalars['Int'];
+};
+
+
+export type QueryFieldMappingItemsArgs = {
+  actionInputFieldIds: Array<Scalars['Int']>;
+};
+
+
+export type QueryFieldMappingItemsByFieldIdArgs = {
+  actionInputFieldId: Scalars['Int'];
 };
 
 

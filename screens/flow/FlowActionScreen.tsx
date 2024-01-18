@@ -5,7 +5,7 @@ import * as React from 'react';
 import { FieldsMapping } from '../../components/FieldsMapping';
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
 import { addFieldMappingItems } from '../../redux/gql/addFieldMappingItemsSlice';
-import { getActionInputFields } from '../../redux/gql/getActionInputFieldsSlice';
+import { getActionInputFields } from '../../redux/gql/getActionOutputFieldSlice';
 import { getTriggerExposeFields } from '../../redux/gql/getTriggerExposeFieldsSlice';
 import { updateAutoFlow } from '../../redux/gql/updateAutoFlowSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';

@@ -19,16 +19,20 @@ import { EditableCell } from '../../../components/EditableCell';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
 import { addActionOutputField, resetStatus } from '../../../redux/gql/addActionOutputFieldSlice';
-import { getActionInputFields } from '../../../redux/gql/getActionInputFieldsSlice';
+import { getActionOutputFieldList } from '../../../redux/gql/getActionOutputFieldListSlice';
 import {
   removeActionInputField,
   resetStatus as resetRemoveInputFieldStatus,
 } from '../../../redux/gql/removeActionInputFieldSlice';
 import { deleteServiceAction } from '../../../redux/gql/removeActionSlice';
+// import {
+//   updateActionInputField,
+//   resetStatus as resetUpdateInputFieldStatus,
+// } from '../../../redux/gql/updateActionInputFieldSlice';
 import {
-  updateActionInputField,
-  resetStatus as resetUpdateInputFieldStatus,
-} from '../../../redux/gql/updateActionInputFieldSlice';
+  updateActionOutputField,
+  resetUpdateActionOutputFieldStatus,
+} from '../../../redux/gql/updateActionOutputFieldSlice';
 import { updateServiceAction } from '../../../redux/gql/updateActionSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { RootState } from '../../../redux/store';
@@ -47,17 +51,17 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({ params }) =>
   const action = sceneParams;
 
   const dispatch = useAppDispatch();
-  const { actionInputFields, status, error } = useAppSelector((state: RootState) => state.actionInputFields);
+  const { actionOutputFieldList, status, error } = useAppSelector((state: RootState) => state.actionOutputFieldList);
   const {
-    actionInputField: addInputField,
+    actionOutputField: addedActionOutputField,
     status: addStatus,
     error: addError,
-  } = useAppSelector((state: RootState) => state.addActionInputField);
+  } = useAppSelector((state: RootState) => state.addActionOutputField);
   const {
-    actionInputField: updateInputField,
+    actionOutputField: updatedActionOutputField,
     status: updateStatus,
     error: updateError,
-  } = useAppSelector((state: RootState) => state.updateActionInputField);
+  } = useAppSelector((state: RootState) => state.updateActionOutputField);
   const {
     actionInputField: removedInputField,
     status: removedInputFieldStatus,
@@ -65,7 +69,7 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({ params }) =>
   } = useAppSelector((state: RootState) => state.removeActionInputField);
 
   const [name, setName] = useState<string | undefined>();
-  const [currentField, setCurrentField] = useState<(Types.ActionInputField & Types.ActionOutputField) | undefined>();
+  const [currentField, setCurrentField] = useState<(Types.ActionOutputField & Types.ActionOutputField) | undefined>();
   const [description, setDescription] = useState<string | undefined>();
   // const [endpointType, setEndpointType] = useState<string | undefined>();
   const [endpointPath, setEndpointPath] = useState<string | undefined>();
@@ -78,25 +82,25 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({ params }) =>
       setDescription(action?.description);
       setEndpointPath(action?.endpointPath);
 
-      dispatch(getActionInputFields({ actionId: action?.id }));
+      dispatch(getActionOutputFieldList({ serviceApiActionId: action?.id }));
     }
   }, [action]);
 
   useEffect(() => {
     if ((addStatus === 'succeeded' || updateStatus === 'succeeded') && action?.id) {
-      dispatch(getActionInputFields({ actionId: action?.id }));
+      dispatch(getActionOutputFieldList({ serviceApiActionId: action?.id }));
     }
   }, [addStatus, updateStatus, action?.id]);
 
   useEffect(() => {
     if (addStatus === 'succeeded' || updateStatus === 'succeeded' || removedInputFieldStatus === 'succeeded') {
       dispatch(resetStatus());
-      dispatch(resetUpdateInputFieldStatus());
+      dispatch(resetUpdateActionOutputFieldStatus());
       dispatch(resetRemoveInputFieldStatus());
       setShowCreateField(false);
       setShowEditField(false);
       if (action?.id) {
-        dispatch(getActionInputFields({ actionId: action?.id }));
+        dispatch(getActionOutputFieldList({ serviceApiActionId: action?.id }));
       }
     }
   }, [addStatus, updateStatus, removedInputFieldStatus]);
@@ -111,12 +115,12 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({ params }) =>
     }
   };
 
-  const handleCreateActionInputField = (field: Types.ActionInputField) => {
-    dispatch(addActionOutputField({ f: field }));
+  const handleCreateActionInputField = (field: Types.ActionOutputField) => {
+    dispatch(addActionOutputField({ actionOutputField: field }));
   };
 
-  const handleEditActionInputField = (field: Types.ActionInputField) => {
-    dispatch(updateActionInputField({ actionInputField: field }));
+  const handleEditActionInputField = (field: Types.ActionOutputField) => {
+    dispatch(updateActionOutputField({ actionOutputField: field }));
   };
 
   const handleDeleteActionInputField = (fieldId: number) => {
@@ -204,9 +208,9 @@ export const ActionDetailScene: React.FunctionComponent<Props> = ({ params }) =>
           look for. Read the full documentation on action fields.
         </Text>
 
-        {actionInputFields && (
+        {actionOutputFieldList && (
           <FlatList
-            data={actionInputFields ?? []}
+            data={actionOutputFieldList ?? []}
             renderItem={({ item }) => (
               <EditableCell
                 title={item?.label ?? ''}
