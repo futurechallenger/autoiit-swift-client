@@ -4,7 +4,7 @@ import { sendRequest } from '../baseApi';
 import * as Types from '../types.generated';
 
 export const addActionOutputField = createAsyncThunk(
-  'addActionInputField',
+  'addActionOutputField',
   async (variables: AddActionOutputFieldMutationVariables) => {
     return sendRequest<AddActionOutputFieldMutation>({
       variables,
@@ -14,13 +14,13 @@ export const addActionOutputField = createAsyncThunk(
 );
 
 const initialState: InitialStateType = {
-  actionInputField: undefined,
+  actionOutputField: undefined,
   status: undefined,
   error: undefined,
 };
 
-export const addActionInputFieldSlice = createSlice({
-  name: 'addActionInputFieldSlice',
+export const addActionOutputFieldSlice = createSlice({
+  name: 'addActionOutputFieldSlice',
   initialState,
   reducers: {
     resetStatus(state) {
@@ -42,7 +42,7 @@ export const addActionInputFieldSlice = createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = 'succeeded';
-          state.actionInputField = payload?.data?.addActionInputField;
+          state.actionOutputField = payload?.data?.addActionOutputField;
         }
       })
       .addCase(addActionOutputField.rejected, (state, action) => {
@@ -53,7 +53,7 @@ export const addActionInputFieldSlice = createSlice({
 });
 
 interface InitialStateType {
-  actionInputField: Types.ActionInputField | undefined;
+  actionOutputField: Types.ActionOutputField | undefined | null;
   status: string | undefined;
   error: string | undefined;
 }
@@ -62,9 +62,19 @@ export type AddActionOutputFieldMutationVariables = Types.Exact<{
   actionOutputField: Types.ActionOutputFieldInput;
 }>;
 
-
-export type AddActionOutputFieldMutation = { __typename?: 'Mutation', addActionOutputField?: { __typename?: 'ActionOutputField', id?: number | null, keyName?: string | null, label?: string | null, helperText?: string | null, fieldType?: number | null, fieldSourceApi?: string | null, serviceApiActionId?: number | null } | null };
-
+export type AddActionOutputFieldMutation = {
+  __typename?: 'Mutation';
+  addActionOutputField?: {
+    __typename?: 'ActionOutputField';
+    id?: number | null;
+    keyName?: string | null;
+    label?: string | null;
+    helperText?: string | null;
+    fieldType?: number | null;
+    fieldSourceApi?: string | null;
+    serviceApiActionId?: number | null;
+  } | null;
+};
 
 export const AddActionOutputFieldDocument = `
     mutation addActionOutputField($actionOutputField: ActionOutputFieldInput!) {
@@ -80,4 +90,4 @@ export const AddActionOutputFieldDocument = `
 }
     `;
 
-export const { resetStatus } = addActionInputFieldSlice.actions;
+export const { resetStatus } = addActionOutputFieldSlice.actions;

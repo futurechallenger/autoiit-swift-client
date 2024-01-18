@@ -33,9 +33,9 @@ import { deleteTriggerSlice } from './gql/removeTriggerSlice';
 import { getServiceActionsSlice } from './gql/getActionsSlice';
 import { updateServiceActionSlice } from './gql/updateActionSlice';
 import { deleteServiceActionSlice } from './gql/removeActionSlice';
-import { getActionInputFieldsSlice } from './gql/getActionInputFieldsSlice';
-import { addActionInputFieldSlice } from './gql/addActionOutputFieldSlice';
-import { updateActionInputFieldSlice } from './gql/updateActionInputFieldSlice';
+import { getActionOutputFieldSlice} from './gql/getActionOutputFieldSlice';
+import { addActionOutputFieldSlice } from './gql/addActionOutputFieldSlice';
+import { getActionOutputFieldListSlice } from './gql/getActionOutputFieldListSlice';
 import { removeActionInputFieldSlice } from './gql/removeActionInputFieldSlice';
 import { getAutoFlowsByServiceSlice } from './gql/getAutoFlowsSlice';
 import { addTriggerExposeFieldSlice } from './gql/addTriggerExposeFieldSlice';
@@ -50,6 +50,7 @@ import { updateAutoFlowSlice } from './gql/updateAutoFlowSlice';
 import { getAutoFlowByIdSlice } from './gql/getAutoFlowByIdSlice';
 import { getServiceTriggerByIdSlice } from './gql/getTriggerByIdSlice';
 import { getConnectionStatusSlice } from './gql/getConnectionStatusSlice';
+import {updateActionOutputFieldSlice} from './gql/updateActionOutputFieldSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -58,6 +59,7 @@ export const store = configureStore({
     signIn: signInSlice.reducer,
     userInfo: userInfoSlice.reducer,
     exploreServices: searchServiceSlice.reducer,
+    actionOutputFieldList: getActionOutputFieldListSlice.reducer,
     mostSearchedServices: mostSearchedServicesSlice.reducer,
     serviceById: getServiceByIdSlice.reducer,
     services: getServicesSlice.reducer,
@@ -83,9 +85,8 @@ export const store = configureStore({
     addServiceAction: addServiceApiSlice.reducer,
     updateServiceAction: updateServiceActionSlice.reducer,
     removeServiceAction: deleteServiceActionSlice.reducer,
-    actionInputFields: getActionInputFieldsSlice.reducer,
-    addActionInputField: addActionInputFieldSlice.reducer,
-    updateActionInputField: updateActionInputFieldSlice.reducer,
+    ActionOutputField:getActionOutputFieldSlice.reducer,
+    addActionOutputField: addActionOutputFieldSlice.reducer,
     removeActionInputField: removeActionInputFieldSlice.reducer,
     autoFlowsByService: getAutoFlowsByServiceSlice.reducer,
     addExposeField: addTriggerExposeFieldSlice.reducer,
@@ -105,6 +106,7 @@ export const store = configureStore({
     removeFieldMappingItem: removeFieldMappingItemSlice.reducer,
     currentUserInfo: getCurrentUserInfoSlice.reducer,
     connectionStatus: getConnectionStatusSlice.reducer,
+    updateActionOutputField: updateActionOutputFieldSlice.reducer,
   }),
 });
 
