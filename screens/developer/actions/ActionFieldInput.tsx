@@ -1,33 +1,19 @@
 import * as React from 'react';
-import {
-  Button,
-  CheckIcon,
-  Select,
-  View,
-  Text,
-  VStack,
-  HStack,
-  Pressable,
-} from 'native-base';
+import { Button, CheckIcon, Select, View, Text, VStack, HStack, Pressable } from 'native-base';
 import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle } from '../../../components/ThemedTitle';
 import * as Types from '../../../redux/types.generated';
-import {
-  convertValidationRule,
-  InputType,
-  reverseValidationRule,
-  ValidationRule,
-} from '../../../constants/Trigger';
+import { convertValidationRule, InputType, reverseValidationRule, ValidationRule } from '../../../constants/Trigger';
 
 const { useState, useEffect } = React;
 
 interface FieldProps {
   actionInfo?: Types.ServiceAction;
-  fieldInfo?: Types.ActionInputField & Types.ActionOutputField;
+  fieldInfo?: Types.ActionOutputField;
   cancelCode?: string;
   onCancel: () => void;
   onDelete?: (fieldId: number) => void;
-  onSave: (field: Types.ActionInputField & Types.ActionOutputField) => void;
+  onSave: (field: Types.ActionOutputField) => void;
 }
 
 export const ActionFieldInput: React.FunctionComponent<FieldProps> = ({
@@ -38,10 +24,8 @@ export const ActionFieldInput: React.FunctionComponent<FieldProps> = ({
   onDelete,
 }) => {
   const [label, setLabel] = useState<Types.Maybe<string> | undefined>();
-  const [helperText, setHelperText] = useState<
-    Types.Maybe<string> | undefined
-  >();
-  const [keyName, setkeyName] = useState<Types.Maybe<string> | undefined>();
+  const [helperText, setHelperText] = useState<Types.Maybe<string> | undefined>();
+  const [keyName, setKeyName] = useState<Types.Maybe<string> | undefined>();
   const [fieldType, setFieldType] = useState<Types.Maybe<string> | undefined>();
   // const [inputValidataion, setInputValidation] = useState();
   // const [validationRule, setValidationRule] = useState();
@@ -61,7 +45,7 @@ export const ActionFieldInput: React.FunctionComponent<FieldProps> = ({
 
     setLabel(fieldInfo?.label);
     setHelperText(fieldInfo?.helperText);
-    setkeyName(fieldInfo?.keyName);
+    setKeyName(fieldInfo?.keyName);
     setFieldType(fieldInfo?.fieldType ? '' + fieldInfo?.fieldType : undefined);
     // setInputValidation(
     //   fieldInfo?.validationRequired ? 'need-validation' : 'no-validation',
@@ -150,12 +134,12 @@ export const ActionFieldInput: React.FunctionComponent<FieldProps> = ({
         value={keyName}
         text="Key name"
         description="in snake_case"
-        onTextChanged={(nextValue) => setkeyName(nextValue)}
+        onTextChanged={(nextValue) => setKeyName(nextValue)}
       />
       <VStack marginTop={10}>
         <InputTitle>Input Type</InputTitle>
         <Select
-          selectedValue={fieldType}
+          selectedValue={`${fieldType ?? fieldInfo?.fieldType}`}
           minWidth="200"
           accessibilityLabel="Choose input type"
           _selectedItem={{
@@ -174,12 +158,7 @@ export const ActionFieldInput: React.FunctionComponent<FieldProps> = ({
       </VStack>
       {/* {renderValidation()}
       {renderValidationRule()} */}
-      <HStack
-        w="full"
-        justifyContent="space-between"
-        alignItems="center"
-        marginY={10}
-      >
+      <HStack w="full" justifyContent="space-between" alignItems="center" marginY={10}>
         {fieldInfo ? (
           <Pressable onPress={handleDelete}>
             <Text>Delete</Text>

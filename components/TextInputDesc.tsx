@@ -8,7 +8,7 @@ const { useRef, useImperativeHandle, forwardRef } = React;
 interface TextInputDescProps {
   text: string;
   subTitle?: string;
-  value?: string;
+  value: string | null | undefined;
   numberOfLines?: number;
   description: string;
   marginTop: number | string;

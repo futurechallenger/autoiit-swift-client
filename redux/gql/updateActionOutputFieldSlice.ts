@@ -19,7 +19,7 @@ const initialState: InitialStateType = {
   error: undefined,
 };
 
-export const updateActionOutputFieldSlice= createSlice({
+export const updateActionOutputFieldSlice = createSlice({
   name: 'updateActionOutputFieldSlice',
   initialState,
   reducers: {
@@ -90,5 +90,4 @@ export const UpdateActionOutputFieldDocument = `
 }
     `;
 
-    export const { resetStatus: resetUpdateActionOutputFieldStatus } =
-  updateActionOutputFieldSlice.actions;
+export const { resetStatus: resetUpdateActionOutputFieldStatus } = updateActionOutputFieldSlice.actions;
