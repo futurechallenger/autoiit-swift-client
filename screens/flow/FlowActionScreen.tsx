@@ -5,7 +5,7 @@ import * as React from 'react';
 import { FieldsMapping } from '../../components/FieldsMapping';
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
 import { addFieldMappingItems } from '../../redux/gql/addFieldMappingItemsSlice';
-import { getActionInputFields } from '../../redux/gql/getActionOutputFieldSlice';
+import { getActionOutputFieldList } from '../../redux/gql/getActionOutputFieldListSlice';
 import { getTriggerExposeFields } from '../../redux/gql/getTriggerExposeFieldsSlice';
 import { updateAutoFlow } from '../../redux/gql/updateAutoFlowSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -27,7 +27,11 @@ export const FlowActionScreen = () => {
     items: Array<Types.ExposeField | string>;
   }>({});
 
-  const { actionInputFields, status, error } = useAppSelector((state: RootState) => state.actionInputFields);
+  const {
+    actionOutputFieldList: actionOutputFields,
+    status,
+    error,
+  } = useAppSelector((state: RootState) => state.actionOutputFieldList);
 
   const {
     autoFlow: updatedFlow,
@@ -64,7 +68,7 @@ export const FlowActionScreen = () => {
 
   useEffect(() => {
     if (action?.id) {
-      dispatch(getActionInputFields({ actionId: action?.id }));
+      dispatch(getActionOutputFieldList({ serviceApiActionId: action?.id }));
     }
 
     if (addedFlow?.triggerId) {
@@ -128,11 +132,11 @@ export const FlowActionScreen = () => {
   };
 
   const renderFields = () => {
-    if (!action?.id || !actionInputFields) {
+    if (!action?.id || !actionOutputFields) {
       return null;
     }
 
-    return actionInputFields.map((field) => {
+    return actionOutputFields.map((field) => {
       return (
         <View key={field?.keyName} marginTop="5">
           <ThemedText>{field?.label}</ThemedText>
