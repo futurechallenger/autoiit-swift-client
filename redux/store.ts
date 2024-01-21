@@ -52,6 +52,7 @@ import { getServiceTriggerByIdSlice } from './gql/getTriggerByIdSlice';
 import { getConnectionStatusSlice } from './gql/getConnectionStatusSlice';
 import { updateActionOutputFieldSlice } from './gql/updateActionOutputFieldSlice';
 import { addActionMappingFieldSlice } from './gql/addActionMappingFieldSlice';
+import { getActionMappingFieldListSlice } from './gql/getActionMappingFieldListSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -109,6 +110,7 @@ export const store = configureStore({
     connectionStatus: getConnectionStatusSlice.reducer,
     updateActionOutputField: updateActionOutputFieldSlice.reducer,
     addActionMappingField: addActionMappingFieldSlice.reducer,
+    actionMappingFieldList: getActionMappingFieldListSlice.reducer,
   }),
 });
 
