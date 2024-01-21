@@ -25,13 +25,13 @@ export const getActionMappingFieldListSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getActionOutputFieldList.pending, (state, action) => {
+      .addCase(getActionMappingFieldList.pending, (state, action) => {
         state.status = 'loading';
         if (state.error) {
           state.error = undefined;
         }
       })
-      .addCase(getActionOutputFieldList.fulfilled, (state, action) => {
+      .addCase(getActionMappingFieldList.fulfilled, (state, action) => {
         const payload = action.payload;
         if (payload?.errors) {
           state.status = 'failed';
@@ -41,7 +41,7 @@ export const getActionMappingFieldListSlice = createSlice({
           state.actionMappingFieldList = payload?.data?.actionMappingFields;
         }
       })
-      .addCase(getActionOutputFieldList.rejected, (state, action) => {
+      .addCase(getActionMappingFieldList.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
