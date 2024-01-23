@@ -1,3 +1,4 @@
+import { updateActionMappingFieldSlice } from './gql/updateActionMappingFieldSlice';
 import { getCurrentUserInfoSlice } from './gql/getCurrentUserInfoSlice';
 import { removeFieldMappingItemSlice } from './gql/removeFieldMappingItemSlice';
 import { getFieldMappingItemsByFieldIdSlice } from './gql/getFieldMappingItemsByFieldIdSlice';
@@ -111,6 +112,7 @@ export const store = configureStore({
     updateActionOutputField: updateActionOutputFieldSlice.reducer,
     addActionMappingField: addActionMappingFieldSlice.reducer,
     actionMappingFieldList: getActionMappingFieldListSlice.reducer,
+    updateActionMappingField: updateActionMappingFieldSlice.reducer,
   }),
 });
 
