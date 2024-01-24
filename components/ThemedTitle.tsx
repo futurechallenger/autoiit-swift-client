@@ -1,29 +1,26 @@
-import * as React from "react";
-import { View, Text } from "native-base";
+import * as React from 'react';
+import { View, Text } from 'native-base';
 
 interface ThemedTextProps {
-  children?: string;
-  type?: "title" | "input-title" | "sub-title" | "description";
+  children: string | undefined | null;
+  type?: 'title' | 'input-title' | 'sub-title' | 'description';
 }
 
-export const ThemedText: React.FunctionComponent<ThemedTextProps> = ({
-  children,
-  type = "description",
-}) => {
+export const ThemedText: React.FunctionComponent<ThemedTextProps> = ({ children, type = 'description' }) => {
   let props = {};
 
   switch (type) {
-    case "title":
-      props = { fontSize: 20, fontWeight: "bold" };
+    case 'title':
+      props = { fontSize: 20, fontWeight: 'bold' };
       break;
-    case "sub-title":
-    case "input-title":
+    case 'sub-title':
+    case 'input-title':
       props = { fontSize: 15 /*fontWeight: "bold"*/ };
       break;
 
-    case "description":
+    case 'description':
     default:
-      props = { color: "muted.500" };
+      props = { color: 'muted.500' };
       break;
   }
 
@@ -34,9 +31,7 @@ interface ThemedTitleProps {
   children: string;
 }
 
-export const ThemedTitle: React.FunctionComponent<ThemedTitleProps> = ({
-  children,
-}) => {
+export const ThemedTitle: React.FunctionComponent<ThemedTitleProps> = ({ children }) => {
   return (
     <Text fontSize="20" fontWeight="bold">
       {children}
@@ -48,9 +43,7 @@ interface InputTitleProps {
   children: string;
 }
 
-export const InputTitle: React.FunctionComponent<InputTitleProps> = ({
-  children,
-}) => {
+export const InputTitle: React.FunctionComponent<InputTitleProps> = ({ children }) => {
   return (
     <Text fontSize={15} color="black" fontWeight="bold">
       {children}
@@ -62,8 +55,6 @@ interface ThemedDescriptionProps {
   children: string;
 }
 
-export const ThemedDescription: React.FunctionComponent<
-  ThemedDescriptionProps
-> = ({ children }) => {
+export const ThemedDescription: React.FunctionComponent<ThemedDescriptionProps> = ({ children }) => {
   return <Text color="muted.500">{children}</Text>;
 };
