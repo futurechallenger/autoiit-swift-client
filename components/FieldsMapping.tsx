@@ -11,7 +11,7 @@ import { EditFieldMapping } from './EditFieldMapping';
 import { updateFieldMappingItem } from '../redux/gql/updateFieldMappingItemSlice';
 
 interface Props {
-  actionField: Types.ActionInputField;
+  actionField: Types.ActionOutputField;
   exposeFields: Types.ExposeField[];
   onSave: (items) => void;
   onUpdate: (item) => void;

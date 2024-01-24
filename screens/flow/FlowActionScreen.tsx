@@ -87,7 +87,7 @@ export const FlowActionScreen = () => {
   const handleCreate = () => {
     console.log('Handle create action');
     if (!addedFlow?.id) {
-      console.error('ERR: autoflow Id is invalid');
+      console.error('ERR: auto-flow Id is invalid');
       return;
     }
     dispatch(
@@ -105,7 +105,7 @@ export const FlowActionScreen = () => {
    * @param inputType, 0: text input, 1: dropdown, 2: multiple checkbox selection
    * @returns
    */
-  const renderInputComp = (inputType: Types.Maybe<number> | undefined, actionField: Types.ActionInputField) => {
+  const renderInputComp = (inputType: Types.Maybe<number> | undefined, actionField: Types.ActionOutputField) => {
     const inputCompType = inputType ?? 0;
     // const keyName = actionField?.keyName ?? '';
 
