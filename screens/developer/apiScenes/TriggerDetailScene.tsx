@@ -180,7 +180,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({ params }) =
   const handleCreateTriggerExposeField = (field: Types.ExposeFieldInput) => {
     dispatch(
       addTriggerExposeField({
-        f: {
+        triggerExposeField: {
           helperText: field.helperText,
           keyName: field.keyName,
           label: field.label,
@@ -194,11 +194,12 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({ params }) =
   const handleEditTriggerExposeField = (field: Types.ExposeFieldInput) => {
     dispatch(
       updateTriggerExposeField({
-        f: {
+        triggerExposeField: {
           id: field.id,
           helperText: field.helperText,
           keyName: field.keyName,
           label: field.label,
+          example: field?.example,
           // parserPath:
           serviceTriggerId: field.serviceTriggerId,
         },

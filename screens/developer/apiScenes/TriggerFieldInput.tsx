@@ -10,7 +10,7 @@ const { useState, useEffect } = React;
 
 interface FieldProps {
   triggerInfo?: Types.ServiceTrigger;
-  fieldInfo?: Types.TriggerField;
+  fieldInfo?: Types.TriggerField | Types.ExposeField;
   cancelCode?: string;
   onCancel: () => void;
   onDelete?: (fieldId: number) => void;
@@ -24,14 +24,14 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
   onSave,
   onDelete,
 }) => {
-  const [label, setLabel] = useState();
-  const [helperText, setHelperText] = useState();
-  const [keyName, setkeyName] = useState();
-  const [inputType, setInputType] = useState();
-  const [inputSourceType, setInputSourceType] = useState();
-  const [inputSourceApi, setInputSourceApi] = useState();
-  const [inputValidataion, setInputValidation] = useState();
-  const [validationRule, setValidationRule] = useState();
+  const [label, setLabel] = useState<string | undefined | null>();
+  const [helperText, setHelperText] = useState<string | undefined | null>();
+  const [keyName, setKeyName] = useState<string | undefined | null>();
+  const [inputType, setInputType] = useState<string | undefined | null>();
+  const [inputSourceType, setInputSourceType] = useState<string | undefined | null>();
+  const [inputSourceApi, setInputSourceApi] = useState<string | undefined | null>();
+  const [inputValidation, setInputValidation] = useState<string | undefined | null>();
+  const [validationRule, setValidationRule] = useState<string | undefined | null>();
 
   const handleCancel = () => {
     if (onCancel) onCancel();
@@ -48,21 +48,21 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
 
     setLabel(fieldInfo?.label);
     setHelperText(fieldInfo?.helperText);
-    setkeyName(fieldInfo?.keyName);
-    setInputType(fieldInfo?.inputType ? '' + fieldInfo?.inputType : undefined);
+    setKeyName(fieldInfo?.keyName);
+    setInputType(fieldInfo?.inputType == null ? undefined : '' + fieldInfo?.inputType);
     setInputSourceType(fieldInfo?.inputSourceType ? '' + fieldInfo?.inputSourceType : undefined);
-    setInputType(fieldInfo?.inputSourceApi);
+    setInputSourceApi(fieldInfo?.inputSourceApi);
     setInputValidation(fieldInfo?.validationRequired ? 'need-validation' : 'no-validation');
-    setValidationRule(reverseValidationRule(fieldInfo?.validationRule));
+    setValidationRule(reverseValidationRule(fieldInfo?.validationRule ?? undefined));
   }, [fieldInfo?.id]);
 
   const renderValidation = () => {
     if (inputType === InputType.TextInput) {
       return (
         <VStack marginTop={10}>
-          <InputTitle>Input validataion</InputTitle>
+          <InputTitle>Input validation</InputTitle>
           <Select
-            selectedValue={inputValidataion}
+            selectedValue={inputValidation ?? undefined}
             minWidth="200"
             accessibilityLabel="Input validation"
             _selectedItem={{
@@ -81,12 +81,12 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
   };
 
   const renderValidationRule = () => {
-    if (inputType === InputType.TextInput && inputValidataion === 'need-validation') {
+    if (inputType === InputType.TextInput && inputValidation === 'need-validation') {
       return (
         <VStack marginTop={10}>
           <InputTitle>Validation rule</InputTitle>
           <Select
-            selectedValue={validationRule}
+            selectedValue={validationRule ?? undefined}
             minWidth="200"
             accessibilityLabel="Validation rule"
             _selectedItem={{
@@ -111,7 +111,7 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
         <>
           <InputTitle>Datasource for dropdown list</InputTitle>
           <Select
-            selectedValue={inputSourceType}
+            selectedValue={inputSourceType ?? undefined}
             accessibilityLabel="Datasource for dropdown list"
             onValueChange={(value) => setInputSourceType(value)}
           >
@@ -130,7 +130,7 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
         value={label}
         text="Label"
         description="Include a leading statement — use a question where possible"
-        onTextChanged={(nextValue: string) => {
+        onTextChanged={(nextValue: string | undefined) => {
           setLabel(nextValue);
         }}
       />
@@ -146,12 +146,12 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
         value={keyName}
         text="Key name"
         description="in snake_case"
-        onTextChanged={(nextValue) => setkeyName(nextValue)}
+        onTextChanged={(nextValue) => setKeyName(nextValue)}
       />
       <VStack marginTop={10}>
         <InputTitle>Input Type</InputTitle>
         <Select
-          selectedValue={inputType}
+          selectedValue={inputType ?? undefined}
           minWidth="200"
           accessibilityLabel="Choose input type"
           _selectedItem={{
@@ -168,7 +168,7 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
           <Select.Item label="Multiple checkbox selection" value="2" />
         </Select>
         {renderDataSource()}
-        {inputSourceType === '1' ? <Input value={inputSourceApi} /> : <DropdownLabelValueInput />}
+        {inputSourceType === '1' ? <Input value={inputSourceApi ?? undefined} /> : <DropdownLabelValueInput />}
       </VStack>
       {renderValidation()}
       {renderValidationRule()}
@@ -194,8 +194,8 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
                 inputType: parseInt(inputType ?? '-1', 10),
                 inputSourceType: parseInt(inputSourceType ?? '0', 10),
                 inputSourceApi,
-                validationRule: convertValidationRule(validationRule),
-                validationRequired: inputValidataion === 'need-validtion',
+                validationRule: convertValidationRule(validationRule ?? undefined),
+                validationRequired: inputValidation === 'need-validation',
                 serviceTriggerId: triggerInfo?.id,
               })
             }
