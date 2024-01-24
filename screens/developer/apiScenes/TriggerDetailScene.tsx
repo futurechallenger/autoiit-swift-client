@@ -20,7 +20,7 @@ import { TextInputDesc } from '../../../components/TextInputDesc';
 import { InputTitle, ThemedTitle } from '../../../components/ThemedTitle';
 import { addTriggerExposeField, resetStatus } from '../../../redux/gql/addTriggerExposeFieldSlice';
 import { addTriggerField } from '../../../redux/gql/addTriggerFieldSlice';
-import { getTriggerExposeFields } from '../../../redux/gql/getTriggerExposeFieldsSlice';
+import { getTriggerExposeFieldList } from '../../../redux/gql/getTriggerExposeFieldListSlice';
 import { getTriggerFields } from '../../../redux/gql/getTriggerFieldsSlice';
 import {
   removeTriggerExposeField,
@@ -77,7 +77,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({ params }) =
     exposeFields,
     status: exposeFieldsStatus,
     error: exposeFieldsError,
-  } = useAppSelector((state: RootState) => state.exposeFields);
+  } = useAppSelector((state: RootState) => state.exposeFieldList);
   const {
     exposeField: addedExposeField,
     status: addedExposeFieldStatus,
@@ -112,7 +112,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({ params }) =
       setEndpointPath(trigger?.endpointPath);
       setEndpointType(trigger?.endpointType);
       dispatch(getTriggerFields({ triggerId: trigger?.id }));
-      dispatch(getTriggerExposeFields({ triggerId: trigger?.id }));
+      dispatch(getTriggerExposeFieldList({ triggerId: trigger?.id }));
     }
   }, [trigger]);
 
@@ -127,7 +127,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({ params }) =
     if ((addedExposeFieldStatus === 'succeeded' || updatedExposeFieldStatus === 'succeeded') && trigger?.id) {
       dispatch(resetStatus());
       dispatch(resetUpdateExposeFieldStatus());
-      dispatch(getTriggerExposeFields({ triggerId: trigger?.id }));
+      dispatch(getTriggerExposeFieldList({ triggerId: trigger?.id }));
     }
   }, [addedExposeFieldStatus, updatedExposeFieldStatus, trigger?.id]);
 
@@ -153,7 +153,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({ params }) =
       dispatch(resetRemovedExposeFieldStatus());
       setShowCreateExposeField(false);
       setShowEditExposeField(false);
-      dispatch(getTriggerExposeFields({ triggerId: trigger?.id }));
+      dispatch(getTriggerExposeFieldList({ triggerId: trigger?.id }));
     }
   }, [addedExposeFieldStatus, updatedExposeFieldStatus, removedExposeFieldStatus]);
 

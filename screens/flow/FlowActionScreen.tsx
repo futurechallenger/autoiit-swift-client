@@ -6,7 +6,7 @@ import { FieldsMapping } from '../../components/FieldsMapping';
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
 import { addFieldMappingItems } from '../../redux/gql/addFieldMappingItemsSlice';
 import { getActionOutputFieldList } from '../../redux/gql/getActionOutputFieldListSlice';
-import { getTriggerExposeFields } from '../../redux/gql/getTriggerExposeFieldsSlice';
+import { getTriggerExposeFieldList } from '../../redux/gql/getTriggerExposeFieldListSlice';
 import { updateAutoFlow } from '../../redux/gql/updateAutoFlowSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
@@ -51,7 +51,7 @@ export const FlowActionScreen = () => {
     exposeFields,
     status: exposeFieldsStatus,
     error: exposeFieldsError,
-  } = useAppSelector((state: RootState) => state.exposeFields);
+  } = useAppSelector((state: RootState) => state.exposeFieldList);
   const {
     trigger,
     status: triggerStatus,
@@ -72,7 +72,7 @@ export const FlowActionScreen = () => {
     }
 
     if (addedFlow?.triggerId) {
-      dispatch(getTriggerExposeFields({ triggerId: addedFlow?.triggerId }));
+      dispatch(getTriggerExposeFieldList({ triggerId: addedFlow?.triggerId }));
     }
   }, []);
 
