@@ -3,12 +3,12 @@ import { sendRequest } from '../baseApi';
 
 import * as Types from '../types.generated';
 
-export const getTriggerExposeFields = createAsyncThunk(
-  'getTriggerExposeFields',
-  async (variables: GetExposeFieldsQueryVariables) => {
-    return sendRequest<GetExposeFieldsQuery>({
+export const getTriggerExposeFieldList = createAsyncThunk(
+  'getTriggerExposeFieldList',
+  async (variables: GetTriggerExposeFieldListQueryVariables) => {
+    return sendRequest<GetTriggerExposeFieldListQuery>({
       variables,
-      query: GetExposeFieldsDocument,
+      query: GetTriggerExposeFieldListDocument,
     });
   },
 );
@@ -19,19 +19,19 @@ const initialState: InitialStateType = {
   error: undefined,
 };
 
-export const getTriggerExposeFieldsSlice = createSlice({
-  name: 'getTriggerExposeFieldsSlice',
+export const getTriggerExposeFieldListSlice = createSlice({
+  name: 'getTriggerExposeFieldListSlice',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getTriggerExposeFields.pending, (state, action) => {
+      .addCase(getTriggerExposeFieldList.pending, (state, action) => {
         state.status = 'loading';
         if (state.error) {
           state.error = undefined;
         }
       })
-      .addCase(getTriggerExposeFields.fulfilled, (state, action) => {
+      .addCase(getTriggerExposeFieldList.fulfilled, (state, action) => {
         const payload = action.payload;
         if (payload?.errors) {
           state.status = 'failed';
@@ -41,7 +41,7 @@ export const getTriggerExposeFieldsSlice = createSlice({
           state.exposeFields = payload?.data?.getExposeFields ?? [];
         }
       })
-      .addCase(getTriggerExposeFields.rejected, (state, action) => {
+      .addCase(getTriggerExposeFieldList.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
@@ -54,33 +54,34 @@ interface InitialStateType {
   error: string | undefined;
 }
 
-export type GetExposeFieldsQueryVariables = Types.Exact<{
+export type GetTriggerExposeFieldListQueryVariables = Types.Exact<{
   triggerId: Types.Scalars['Int'];
 }>;
 
-export type GetExposeFieldsQuery = {
+export type GetTriggerExposeFieldListQuery = {
   __typename?: 'Query';
   getExposeFields?: Array<{
     __typename?: 'ExposeField';
     id?: number | null;
-    keyName?: string | null;
     label?: string | null;
+    keyName?: string | null;
     helperText?: string | null;
+    example?: string | null;
     fieldType?: number | null;
-    parserPath?: string | null;
     serviceTriggerId?: number | null;
   }> | null;
 };
 
-export const GetExposeFieldsDocument = `
-    query getExposeFields($triggerId: Int!) {
+export const GetTriggerExposeFieldListDocument = `
+    query getTriggerExposeFieldList($triggerId: Int!) {
   getExposeFields(triggerId: $triggerId) {
     id
-    keyName
     label
+    keyName
     helperText
+    example
     fieldType
-    parserPath
     serviceTriggerId
   }
-}`;
+}
+    `;

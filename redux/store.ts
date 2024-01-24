@@ -41,7 +41,7 @@ import { removeActionInputFieldSlice } from './gql/removeActionInputFieldSlice';
 import { getAutoFlowsByServiceSlice } from './gql/getAutoFlowsSlice';
 import { addTriggerExposeFieldSlice } from './gql/addTriggerExposeFieldSlice';
 import { updateTriggerExposeFieldSlice } from './gql/updateTriggerExposeFieldSlice';
-import { getTriggerExposeFieldsSlice } from './gql/getTriggerExposeFieldsSlice';
+import { getTriggerExposeFieldListSlice } from './gql/getTriggerExposeFieldListSlice';
 import { removeTriggerExposeFieldSlice } from './gql/removeTriggerExpopseFieldSlice';
 import { getFieldOptionsSlice } from './gql/getFieldOptionsSlice';
 import { addFieldOptionsSlice } from './gql/addFieldOptionsSlice';
@@ -94,7 +94,7 @@ export const store = configureStore({
     autoFlowsByService: getAutoFlowsByServiceSlice.reducer,
     addExposeField: addTriggerExposeFieldSlice.reducer,
     updateExposeField: updateTriggerExposeFieldSlice.reducer,
-    exposeFields: getTriggerExposeFieldsSlice.reducer,
+    exposeFieldList: getTriggerExposeFieldListSlice.reducer,
     removeExposeField: removeTriggerExposeFieldSlice.reducer,
     fieldOptions: getFieldOptionsSlice.reducer,
     addFieldOptions: addFieldOptionsSlice.reducer,

@@ -5,10 +5,10 @@ import * as Types from '../types.generated';
 
 export const addTriggerExposeField = createAsyncThunk(
   'addTriggerExposeField',
-  async (variables: AddExposeFieldMutationVariables) => {
-    return sendRequest<AddExposeFieldMutation>({
+  async (variables: AddTriggerExposeFieldMutationVariables) => {
+    return sendRequest<AddTriggerExposeFieldMutation>({
       variables,
-      query: AddExposeFieldDocument,
+      query: AddTriggerExposeFieldDocument,
     });
   },
 );
@@ -59,25 +59,36 @@ interface InitialStateType {
   error: string | undefined;
 }
 
-export type AddExposeFieldMutationVariables = Types.Exact<{
-  f: Types.ExposeFieldInput;
+export type AddTriggerExposeFieldMutationVariables = Types.Exact<{
+  triggerExposeField: Types.ExposeFieldInput;
 }>;
 
-export type AddExposeFieldMutation = {
+export type AddTriggerExposeFieldMutation = {
   __typename?: 'Mutation';
-  addExposeField?: Types.ExposeField | null;
+  addExposeField?: {
+    __typename?: 'ExposeField';
+    id?: number | null;
+    label?: string | null;
+    keyName?: string | null;
+    helperText?: string | null;
+    example?: string | null;
+    fieldType?: number | null;
+    serviceTriggerId?: number | null;
+  } | null;
 };
 
-export const AddExposeFieldDocument = `
-    mutation addExposeField($f: ExposeFieldInput!) {
-  addExposeField(exposeField: $f) {
+export const AddTriggerExposeFieldDocument = `
+    mutation addTriggerExposeField($triggerExposeField: ExposeFieldInput!) {
+  addExposeField(exposeField: $triggerExposeField) {
     id
+    label
     keyName
     helperText
-    label
-    parserPath
+    example
+    fieldType
     serviceTriggerId
   }
-}`;
+}
+    `;
 
 export const { resetStatus } = addTriggerExposeFieldSlice.actions;
