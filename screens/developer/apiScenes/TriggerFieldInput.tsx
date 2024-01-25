@@ -10,7 +10,7 @@ const { useState, useEffect } = React;
 
 interface FieldProps {
   triggerInfo?: Types.ServiceTrigger;
-  fieldInfo?: Types.TriggerField | Types.ExposeField;
+  fieldInfo?: Types.TriggerField;
   cancelCode?: string;
   onCancel: () => void;
   onDelete?: (fieldId: number) => void;
@@ -46,10 +46,12 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
       return;
     }
 
+    let fieldInputType = fieldInfo?.inputType == null ? undefined : '' + fieldInfo?.inputType;
+
     setLabel(fieldInfo?.label);
     setHelperText(fieldInfo?.helperText);
     setKeyName(fieldInfo?.keyName);
-    setInputType(fieldInfo?.inputType == null ? undefined : '' + fieldInfo?.inputType);
+    setInputType(fieldInputType);
     setInputSourceType(fieldInfo?.inputSourceType ? '' + fieldInfo?.inputSourceType : undefined);
     setInputSourceApi(fieldInfo?.inputSourceApi);
     setInputValidation(fieldInfo?.validationRequired ? 'need-validation' : 'no-validation');
@@ -185,20 +187,25 @@ export const TriggerFieldInput: React.FunctionComponent<FieldProps> = ({
             <Text>Cancel</Text>
           </Pressable>
           <Button
-            onPress={() =>
-              onSave({
+            onPress={() => {
+              let targetValue = {
                 id: fieldInfo?.id,
                 label,
                 helperText,
                 keyName,
-                inputType: parseInt(inputType ?? '-1', 10),
                 inputSourceType: parseInt(inputSourceType ?? '0', 10),
                 inputSourceApi,
                 validationRule: convertValidationRule(validationRule ?? undefined),
                 validationRequired: inputValidation === 'need-validation',
                 serviceTriggerId: triggerInfo?.id,
-              })
-            }
+              };
+              if (!fieldInfo) {
+                targetValue.fieldType = parseInt(inputType ?? '-1', 10);
+              } else {
+                targetValue.inputType = parseInt(inputType ?? '-1', 10);
+              }
+              onSave(targetValue);
+            }}
           >
             Save
           </Button>

@@ -44,6 +44,7 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { RootState } from '../../../redux/store';
 import * as Types from '../../../redux/types.generated';
 import { TriggerFieldInput } from './TriggerFieldInput';
+import { current } from '@reduxjs/toolkit';
 
 const { useState, useEffect } = React;
 
@@ -184,6 +185,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({ params }) =
           helperText: field.helperText,
           keyName: field.keyName,
           label: field.label,
+          fieldType: field?.inputType,
           // parserPath:
           serviceTriggerId: field.serviceTriggerId,
         },
@@ -200,6 +202,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({ params }) =
           keyName: field.keyName,
           label: field.label,
           example: field?.example,
+          fieldType: field?.inputType,
           // parserPath:
           serviceTriggerId: field.serviceTriggerId,
         },
@@ -265,7 +268,7 @@ export const TriggerDetailScene: React.FunctionComponent<Props> = ({ params }) =
         <TriggerFieldInput
           key="edit-field"
           triggerInfo={trigger}
-          fieldInfo={currentExposeField}
+          fieldInfo={{ ...currentExposeField, inputType: currentExposeField?.fieldType }}
           onSave={handleEditTriggerExposeField}
           onDelete={handleDeleteTriggerExposeField}
           onCancel={() => setShowEditExposeField(false)}
