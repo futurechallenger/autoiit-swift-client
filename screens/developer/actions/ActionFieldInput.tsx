@@ -46,7 +46,7 @@ export const ActionFieldInput: React.FunctionComponent<FieldProps> = ({
     setLabel(fieldInfo?.label);
     setHelperText(fieldInfo?.helperText);
     setKeyName(fieldInfo?.keyName);
-    setFieldType(fieldInfo?.fieldType ? '' + fieldInfo?.fieldType : undefined);
+    setFieldType(fieldInfo?.fieldType != null ? '' + fieldInfo?.fieldType : undefined);
     // setInputValidation(
     //   fieldInfo?.validationRequired ? 'need-validation' : 'no-validation',
     // );
