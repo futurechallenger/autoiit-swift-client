@@ -7,8 +7,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 const { useRef, useState, useEffect } = React;
 
 interface Props {
-  mappingItem: { key: string; value: Types.FieldMappingItem | {} };
-  fields?: Types.FieldMappingItem[];
+  mappingItem: { key: string; value: Types.ExposeField | {} };
+  fields?: Types.ExposeField[];
   onSave: (item) => void;
 }
 
@@ -16,7 +16,7 @@ export const EditFieldMapping: React.FunctionComponent<Props> = ({ mappingItem, 
   const popoverRef = useRef(null);
   const mappingInputRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [currentItem, setCurrentItem] = useState();
+  const [currentItem, setCurrentItem] = useState<{ key: string; value: any }>();
 
   useEffect(() => {
     if (!mappingItem) {
@@ -26,15 +26,19 @@ export const EditFieldMapping: React.FunctionComponent<Props> = ({ mappingItem, 
     setCurrentItem(mappingItem);
   }, [mappingItem]);
 
-  const handleItemClick = (item) => {
+  const handleItemClick = (item: Types.ExposeField) => {
     console.log('>>> edit mapping', item);
+    if (!currentItem?.key) {
+      return;
+    }
+
     setCurrentItem({
-      key: currentItem?.key,
+      key: currentItem!.key,
       value: {
-        id: currentItem?.key.indexOf('-') > 0 ? null : parseInt(currentItem?.key, 10),
+        id: currentItem.key.indexOf('-') > 0 ? null : parseInt(currentItem!.key, 10),
         exposeFieldId: item.id,
-        exposeLabel: item.keyName,
-        actionInputFieldId: currentItem?.value.actionInputFieldId,
+        keyName: item.keyName,
+        actionInputFieldId: currentItem?.value?.actionInputFieldId,
       },
     });
   };

@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import * as Types from '../../redux/types.generated';
 import { StackActions, useNavigation, useRoute } from '@react-navigation/native';
+import { getActionMappingFieldList } from '../../redux/gql/getActionMappingFieldListSlice';
 
 const { useRef, useEffect, useState } = React;
 
@@ -105,9 +106,8 @@ export const FlowActionScreen = () => {
    * @param inputType, 0: text input, 1: dropdown, 2: multiple checkbox selection
    * @returns
    */
-  const renderInputComp = (inputType: Types.Maybe<number> | undefined, actionField: Types.ActionOutputField) => {
+  const renderInputComp = (inputType: Types.Maybe<number> | undefined, actionOutputField: Types.ActionOutputField) => {
     const inputCompType = inputType ?? 0;
-    // const keyName = actionField?.keyName ?? '';
 
     switch (inputCompType) {
       case -1:
@@ -115,7 +115,8 @@ export const FlowActionScreen = () => {
         return (
           <View justifyContent="flex-start" alignItems="flex-start">
             <FieldsMapping
-              actionField={actionField}
+              autoFlowId={addedFlow?.id}
+              actionOutputField={actionOutputField}
               exposeFields={exposeFields}
               onSave={handleAddMapping}
               onUpdate={handleUpdateMappingItem}
