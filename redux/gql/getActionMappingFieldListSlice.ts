@@ -38,7 +38,7 @@ export const getActionMappingFieldListSlice = createSlice({
           state.error = payload.errors?.[0]?.message;
         } else {
           state.status = 'succeeded';
-          state.actionMappingFieldList = payload?.data?.actionMappingFields;
+          state.actionMappingFieldList = payload?.data?.actionMappingFieldList;
         }
       })
       .addCase(getActionMappingFieldList.rejected, (state, action) => {
@@ -56,26 +56,15 @@ interface InitialStateType {
 
 export type GetActionMappingFieldsListQueryVariables = Types.Exact<{
   flowId: Types.Scalars['Int'];
-  actionOutputFieldId: Types.Scalars['Int'];
 }>;
 
-export type GetActionMappingFieldsListQuery = {
-  __typename?: 'Query';
-  actionMappingFields?: Array<{
-    __typename?: 'ActionMappingField';
-    id?: number | null;
-    fieldValue?: string | null;
-    label?: string | null;
-    mapping?: string | null;
-    exposeFieldInfo?: string | null;
-    actionOutputFieldId?: number | null;
-    autoFlowId?: number | null;
-  }> | null;
-};
+
+export type GetActionMappingFieldsListQuery = { __typename?: 'Query', actionMappingFieldList?: Array<{ __typename?: 'ActionMappingField', id?: number | null, fieldValue?: string | null, label?: string | null, mapping?: string | null, exposeFieldInfo?: string | null, actionOutputFieldId?: number | null, autoFlowId?: number | null }> | null };
+
 
 export const GetActionMappingFieldsListDocument = `
-    query getActionMappingFieldsList($flowId: Int!, $actionOutputFieldId: Int!) {
-  actionMappingFields(flowId: $flowId, actionOutputFieldId: $actionOutputFieldId) {
+    query getActionMappingFieldsList($flowId: Int!) {
+  actionMappingFieldList(autoFlowId: $flowId) {
     id
     fieldValue
     label
