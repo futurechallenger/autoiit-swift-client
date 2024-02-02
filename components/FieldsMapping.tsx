@@ -13,9 +13,9 @@ interface Props {
   actionOutputField: Types.ActionOutputField;
   actionMappingFieldList: Types.ActionMappingField[] | null | undefined;
   exposeFields: Types.ExposeField[];
-  autoFlowId: Int;
-  onSave: (items) => void;
-  onUpdate: (item) => void;
+  autoFlowId: number;
+  onSave: (items: Types.ActionMappingField) => void;
+  onUpdate: (item: Types.ActionMappingField) => void;
 }
 
 const { useRef, useState, useEffect } = React;
@@ -73,12 +73,6 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     setFields(exposeFields);
   }, [exposeFields]);
 
-  // useEffect(() => {
-  //   if (actionOutputField?.id) {
-  //     dispatch(getFieldMappingItemsByFieldId({ actionInputFieldId: actionOutputField?.id }));
-  //   }
-  // }, [actionOutputField]);
-
   useEffect(() => {
     if (!currentActionMappingField?.id || !currentActionMappingField?.exposeFieldInfo) {
       return;
@@ -117,6 +111,10 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
   const handleOK = () => {
     console.log('OK is clicked');
+    if (!fieldMapping || !currentActionMappingField) {
+      return;
+    }
+
     // const fieldOptions = Object.entries(fieldMapping ?? {}).map(([key, value]) => {
     //   const isToUpdate = key?.indexOf('-') < 0;
 
@@ -136,9 +134,15 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     //   };
     // });
 
-    // if (onSave) {
-    //   onSave(fieldOptions);
-    // }
+    const fieldMappingList = Object.entries(fieldMapping || {}).map(([key, value]) => {
+      return { id: value.id, keyName: value.keyName, name: value.label };
+    });
+    currentActionMappingField.exposeFieldInfo = JSON.stringify(fieldMappingList);
+
+    // setCurrentActionMappingField({...currentActionMappingField});
+    if (onSave) {
+      onSave(currentActionMappingField);
+    }
   };
 
   const handleRemoveMapping = (mappingId: string) => {
