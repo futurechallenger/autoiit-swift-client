@@ -6,8 +6,6 @@ import { RootState } from '../redux/store';
 import * as Types from '../redux/types.generated';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { EditFieldMapping } from './EditFieldMapping';
-import { updateFieldMappingItem } from '../redux/gql/updateFieldMappingItemSlice';
-import { current } from '@reduxjs/toolkit';
 
 interface Props {
   actionOutputField: Types.ActionOutputField;
@@ -18,12 +16,6 @@ interface Props {
 }
 
 const { useRef, useState, useEffect } = React;
-
-// type FieldMappingType = {
-//   id: string | null | undefined;
-//   keyName: string | null | undefined;
-//   name: string | null | undefined;
-// };
 
 export const FieldsMapping: React.FunctionComponent<Props> = ({
   autoFlowId,
@@ -95,23 +87,8 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     setCurrentActionMappingField(theActionMappingField);
   }, [actionMappingFieldList, actionOutputField?.id]);
 
-  // useEffect(() => {
-  //   if (!actionMappingField || !actionOutputField?.id) {
-  //     return;
-  //   }
-  // }, [actionMappingField, actionOutputField]);
-
   const handleMappingSave = () => {
     console.log('>>> on click field mapping save button');
-    // if (!mappingInputRef.current?.value) {
-    //   // TODO: remove this item
-    //   return;
-    // }
-
-    // setFieldMapping({
-    //   ...fieldMapping,
-    //   [generateKey(mappingInputRef.current?.value)]: mappingInputRef.current?.value,
-    // });
   };
 
   const handleAdd = () => {
@@ -124,31 +101,10 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
       return;
     }
 
-    // const fieldOptions = Object.entries(fieldMapping ?? {}).map(([key, value]) => {
-    //   const isToUpdate = key?.indexOf('-') < 0;
-
-    //   if (value?.id) {
-    //     return {
-    //       id: isToUpdate ? parseInt(key, 10) : null,
-    //       exposeFieldId: /*isToUpdate ? value?.exposeFieldId :*/ value?.id,
-    //       exposeLabel: /*isToUpdate ? value?.exposeLabel : */ value?.keyName,
-    //       actionInputFieldId: isToUpdate ? value?.actionInputFieldId : actionOutputField?.id,
-    //     };
-    //   }
-
-    //   return {
-    //     id: isToUpdate ? value?.id : null,
-    //     value,
-    //     actionInputFieldId: isToUpdate ? value?.actionInputFieldId : actionOutputField?.id,
-    //   };
-    // });
-
     const fieldMappingList = Object.entries(fieldMapping || {}).map(([key, value]) => {
       return { id: value.id, keyName: value.keyName, name: value.label };
     });
-    // currentActionMappingField.exposeFieldInfo = JSON.stringify(fieldMappingList);
 
-    // setCurrentActionMappingField({...currentActionMappingField});
     if (onSave) {
       onSave({ ...currentActionMappingField, exposeFieldInfo: JSON.stringify(fieldMappingList) });
     }
@@ -162,19 +118,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     setFieldMapping({ ...fieldMapping });
   };
 
-  const handleUpdateItem = (mappingItem: { key: string; value: Types.ExposeField | {} }) => {
-    // const { key, value } = mappingItem;
-    // if (key.indexOf('-') > 0) {
-    //   setFieldMapping({ ...fieldMapping, [key]: value });
-    // } else {
-    //   console.log('>>>>>update object in state');
-    //   dispatch(updateFieldMappingItem({ mappingItem: value }));
-    // }
-  };
-
-  // const handleUpdateMapping = (mapping) => {
-  //   console.log('update field mapping');
-  // };
+  const handleUpdateItem = (mappingItem: { key: string; value: Types.ExposeField | {} }) => {};
 
   const handleItemClick = (item: Types.ExposeField) => {
     console.log('item clicked');
