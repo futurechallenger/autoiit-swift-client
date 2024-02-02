@@ -4,7 +4,6 @@ import * as React from 'react';
 
 import { FieldsMapping } from '../../components/FieldsMapping';
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
-import { addFieldMappingItems } from '../../redux/gql/addFieldMappingItemsSlice';
 import { getActionOutputFieldList } from '../../redux/gql/getActionOutputFieldListSlice';
 import { getTriggerExposeFieldList } from '../../redux/gql/getTriggerExposeFieldListSlice';
 import { updateAutoFlow } from '../../redux/gql/updateAutoFlowSlice';
@@ -13,8 +12,15 @@ import { RootState } from '../../redux/store';
 import * as Types from '../../redux/types.generated';
 import { StackActions, useNavigation, useRoute } from '@react-navigation/native';
 import { getActionMappingFieldList } from '../../redux/gql/getActionMappingFieldListSlice';
+import { addActionMappingField } from '../../redux/gql/addActionMappingFieldSlice';
+import { updateActionMappingField } from '../../redux/gql/updateActionMappingFieldSlice';
 
 const { useRef, useEffect, useState } = React;
+
+type ActionInfoType = {
+  id: string;
+  items: Types.ExposeField[];
+};
 
 export const FlowActionScreen = () => {
   const route = useRoute();
@@ -23,10 +29,7 @@ export const FlowActionScreen = () => {
 
   const { item: action } = route?.params ?? {};
 
-  const [actionInfo, setActionInfo] = useState<{
-    id: string;
-    items: Array<Types.ExposeField | string>;
-  }>({});
+  const [actionInfo, setActionInfo] = useState<ActionInfoType | undefined>();
 
   const {
     actionOutputFieldList: actionOutputFields,
@@ -63,14 +66,17 @@ export const FlowActionScreen = () => {
     status: actionMappingFieldListStatus,
     error: actionMappingFieldListError,
   } = useAppSelector((state: RootState) => state.actionMappingFieldList);
+  const {
+    actionMappingField: updatedActionMappingField,
+    status: actionMappingFieldStatus,
+    error: actionMappingFieldError,
+  } = useAppSelector((state: RootState) => state.updateActionMappingField);
 
-  const handleAddMapping = (items) => {
-    dispatch(addFieldMappingItems({ mappingItems: items }));
-  };
-
-  const handleUpdateMappingItem = (item) => {
-    console.log('Update field mapping item', item);
-  };
+  const {
+    actionMappingField: addedActionMappingField,
+    status: addedActionMappingFieldStatus,
+    error: addedActionMappingFieldError,
+  } = useAppSelector((state: RootState) => state.addActionMappingField);
 
   useEffect(() => {
     if (action?.id) {
@@ -87,12 +93,28 @@ export const FlowActionScreen = () => {
   }, []);
 
   useEffect(() => {
+    if ((!updatedActionMappingField?.id && !addedActionMappingField?.id) || !addedFlow?.id) {
+      return;
+    }
+
+    dispatch(getActionMappingFieldList({ flowId: addedFlow.id }));
+  }, [addedActionMappingField?.id, updatedActionMappingField?.id]);
+
+  useEffect(() => {
     if (!updatedFlow) {
       return;
     }
 
     navigation.dispatch(StackActions.popToTop());
   }, [updatedFlow]);
+
+  const handleAddOrUpdateMapping = (mappingField: Types.ActionMappingField) => {
+    if (!mappingField?.id) {
+      dispatch(addActionMappingField({ actionMappingField: mappingField }));
+    } else {
+      dispatch(updateActionMappingField({ actionMappingField: mappingField }));
+    }
+  };
 
   const handleCreate = () => {
     console.log('Handle create action');
@@ -128,8 +150,7 @@ export const FlowActionScreen = () => {
               actionOutputField={actionOutputField}
               actionMappingFieldList={actionMappingFieldList}
               exposeFields={exposeFields}
-              onSave={handleAddMapping}
-              onUpdate={handleUpdateMappingItem}
+              onSave={handleAddOrUpdateMapping}
             />
           </View>
         );
