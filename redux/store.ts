@@ -1,6 +1,5 @@
 import { updateActionMappingFieldSlice } from './gql/updateActionMappingFieldSlice';
 import { getCurrentUserInfoSlice } from './gql/getCurrentUserInfoSlice';
-import { getFieldMappingItemsByFieldIdSlice } from './gql/getFieldMappingItemsByFieldIdSlice';
 import { updateFieldMappingItemSlice } from './gql/updateFieldMappingItemSlice';
 import { getFieldMappingItemsSlice } from './gql/getFieldMappingItemsSlice';
 import { addFieldMappingItemsSlice } from './gql/addFieldMappingItemsSlice';
@@ -103,7 +102,6 @@ export const store = configureStore({
     autoFlowById: getAutoFlowByIdSlice.reducer,
     addFieldMappingItems: addFieldMappingItemsSlice.reducer,
     fieldMappingItems: getFieldMappingItemsSlice.reducer,
-    fieldMappingItemsByFieldId: getFieldMappingItemsByFieldIdSlice.reducer,
     updateFieldMappingItem: updateFieldMappingItemSlice.reducer,
     currentUserInfo: getCurrentUserInfoSlice.reducer,
     connectionStatus: getConnectionStatusSlice.reducer,

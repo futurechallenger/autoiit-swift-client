@@ -58,6 +58,11 @@ export const FlowActionScreen = () => {
     status: triggerStatus,
     error: triggerError,
   } = useAppSelector((state: RootState) => state.serviceTriggerById);
+  const {
+    actionMappingFieldList,
+    status: actionMappingFieldListStatus,
+    error: actionMappingFieldListError,
+  } = useAppSelector((state: RootState) => state.actionMappingFieldList);
 
   const handleAddMapping = (items) => {
     dispatch(addFieldMappingItems({ mappingItems: items }));
@@ -74,6 +79,10 @@ export const FlowActionScreen = () => {
 
     if (addedFlow?.triggerId) {
       dispatch(getTriggerExposeFieldList({ triggerId: addedFlow?.triggerId }));
+    }
+
+    if (addedFlow?.id) {
+      dispatch(getActionMappingFieldList({ flowId: addedFlow.id }));
     }
   }, []);
 
@@ -117,6 +126,7 @@ export const FlowActionScreen = () => {
             <FieldsMapping
               autoFlowId={addedFlow?.id}
               actionOutputField={actionOutputField}
+              actionMappingFieldList={actionMappingFieldList}
               exposeFields={exposeFields}
               onSave={handleAddMapping}
               onUpdate={handleUpdateMappingItem}
