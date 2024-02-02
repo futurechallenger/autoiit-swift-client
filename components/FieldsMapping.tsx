@@ -13,18 +13,17 @@ interface Props {
   actionOutputField: Types.ActionOutputField;
   actionMappingFieldList: Types.ActionMappingField[] | null | undefined;
   exposeFields: Types.ExposeField[];
-  autoFlowId: number;
+  autoFlowId: number | null | undefined;
   onSave: (items: Types.ActionMappingField) => void;
-  onUpdate: (item: Types.ActionMappingField) => void;
 }
 
 const { useRef, useState, useEffect } = React;
 
-type FieldMappingType = {
-  id: string | null | undefined;
-  keyName: string | null | undefined;
-  name: string | null | undefined;
-};
+// type FieldMappingType = {
+//   id: string | null | undefined;
+//   keyName: string | null | undefined;
+//   name: string | null | undefined;
+// };
 
 export const FieldsMapping: React.FunctionComponent<Props> = ({
   autoFlowId,
@@ -32,7 +31,6 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
   actionOutputField,
   exposeFields,
   onSave,
-  onUpdate,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -55,14 +53,6 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
   } = useAppSelector((state: RootState) => state.updateActionMappingField);
 
   useEffect(() => {
-    if (actionOutputField.id && actionMappingFieldList) {
-      for (const actionMappingField of actionMappingFieldList) {
-        if (actionMappingField?.actionOutputFieldId === actionOutputField.id) {
-          setCurrentActionMappingField(actionMappingField);
-        }
-      }
-    }
-
     return () => {
       setIsOpen(false);
       setIsEditOpen(false);
@@ -85,6 +75,25 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
 
     setFieldMapping(parsedFieldMapping);
   }, [currentActionMappingField?.id]);
+
+  useEffect(() => {
+    let theActionMappingField: Types.ActionMappingField | undefined = undefined;
+
+    if (actionOutputField?.id && actionMappingFieldList) {
+      for (const actionMappingField of actionMappingFieldList) {
+        if (actionMappingField?.actionOutputFieldId === actionOutputField.id) {
+          theActionMappingField = actionMappingField;
+          break;
+        }
+      }
+    }
+
+    if (!theActionMappingField) {
+      theActionMappingField = { actionOutputFieldId: actionOutputField.id!, autoFlowId };
+    }
+
+    setCurrentActionMappingField(theActionMappingField);
+  }, [actionMappingFieldList, actionOutputField?.id]);
 
   // useEffect(() => {
   //   if (!actionMappingField || !actionOutputField?.id) {
@@ -137,11 +146,11 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
     const fieldMappingList = Object.entries(fieldMapping || {}).map(([key, value]) => {
       return { id: value.id, keyName: value.keyName, name: value.label };
     });
-    currentActionMappingField.exposeFieldInfo = JSON.stringify(fieldMappingList);
+    // currentActionMappingField.exposeFieldInfo = JSON.stringify(fieldMappingList);
 
     // setCurrentActionMappingField({...currentActionMappingField});
     if (onSave) {
-      onSave(currentActionMappingField);
+      onSave({ ...currentActionMappingField, exposeFieldInfo: JSON.stringify(fieldMappingList) });
     }
   };
 
