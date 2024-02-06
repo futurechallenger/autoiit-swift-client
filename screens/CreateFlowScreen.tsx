@@ -1,15 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, Text, View } from 'native-base';
 import * as React from 'react';
-import { useAppSelector } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
 import { useIsFocused } from '@react-navigation/native';
+import { removeAutoFlow } from '../redux/gql/removeAutoFlowSlice';
 
 const VerticalDivider = () => {
   return <View width="2" h="16" bg="red.500" />;
 };
 
 export const CreateFlowScreen = () => {
+  const dispatch = useAppDispatch();
+
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const { autoFlow, status, error } = useAppSelector((state: RootState) => state.addAutoFlow);
@@ -17,6 +20,12 @@ export const CreateFlowScreen = () => {
   const handleContinue = () => {
     // TODO: navigate to `Review and finish` screen
     navigation.navigate('ReviewFinish');
+  };
+
+  const handleCancel = () => {
+    if (autoFlow?.id) {
+      dispatch(removeAutoFlow({ flowId: autoFlow?.id }));
+    }
   };
 
   return (
@@ -59,6 +68,7 @@ export const CreateFlowScreen = () => {
         </Button>
       </View>
       <View marginTop={36}>
+        <Button onPress={handleCancel}>Cancel</Button>
         <Button onPress={handleContinue}>Continue</Button>
       </View>
     </View>
