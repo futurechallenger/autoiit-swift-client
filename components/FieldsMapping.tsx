@@ -139,7 +139,7 @@ export const FieldsMapping: React.FunctionComponent<Props> = ({
       return (
         <HStack key={key}>
           <Pressable>
-            <Text>{value.label ?? ''}</Text>
+            <Text>{value?.name ?? value?.label ?? ''}</Text>
           </Pressable>
           <IconButton
             icon={<Ionicons name="remove-circle" size={20} />}
