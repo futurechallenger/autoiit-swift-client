@@ -247,6 +247,19 @@ function BottomTabNavigator() {
           },
         })}
       />
+      <BottomTab.Screen
+        name="Test"
+        component={FlowReviewScreen}
+        options={{
+          title: 'Test Only',
+          tabBarIcon: ({ color }) => <TabBarIcon name="user-o" color={color} />,
+        }}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            console.log('Tab pressed: ', navigation.getState());
+          },
+        })}
+      />
     </BottomTab.Navigator>
   );
 }
