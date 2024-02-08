@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Button, Divider, Text, View, VStack } from 'native-base';
+import { Box, Button, Divider, HStack, Text, TextArea, View, VStack } from 'native-base';
 import * as React from 'react';
 
 import { ThemedTitle } from '../../components/ThemedTitle';
@@ -7,7 +7,7 @@ import { getCurrentUserInfo } from '../../redux/gql/getCurrentUserInfoSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
 export const FlowReviewScreen = () => {
   const { autoFlow, status, error } = useAppSelector((state: RootState) => state.updateAutoFlow);
@@ -20,6 +20,9 @@ export const FlowReviewScreen = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
 
+  const [charNum, setCharNum] = useState<number>(0);
+  const [flowTitle, setFlowTitle] = useState<string | null | undefined>();
+
   useEffect(() => {
     dispatch(getCurrentUserInfo());
   }, []);
@@ -31,20 +34,32 @@ export const FlowReviewScreen = () => {
   };
 
   return (
-    <View>
+    <Box h="full" w="full" alignItems="center" alignContent="center">
       <ThemedTitle>Review and finish</ThemedTitle>
-      <VStack>
+      <Divider />
+      <VStack bgColor="blue.100" w="1/2">
         {/* Autoiit flow title */}
-        <Text>Auto flow Title</Text>
-        <Text>
-          {/* Autoiit flow title */}
-          {autoFlow?.title}
+        <Text bgColor="red.100" w="full" fontSize={15}>
+          Title
         </Text>
-        <Text>by {userInfo?.name}</Text>
-        <Divider />
+        <TextArea
+          marginTop={2}
+          autoCompleteType=""
+          h={20}
+          value={autoFlow?.title ?? ''}
+          onChange={(e) => setFlowTitle(e.currentTarget.value)} // for web
+          onChangeText={(text) => setFlowTitle(text)}
+        />
+        <HStack w="full" justifyContent="space-between">
+          <Text>{userInfo?.name && ` by ${userInfo.name}`}</Text>
+          <Text>{charNum} / 140</Text>
+        </HStack>
+
         {/* TODO: Review notifications when this flow runs */}
-        <Button onPress={handlePress}>Finish</Button>
       </VStack>
-    </View>
+      <Box minWidth={100} width={200} marginTop={50}>
+        <Button onPress={handlePress}>Finish</Button>
+      </Box>
+    </Box>
   );
 };
