@@ -7,11 +7,13 @@ import { updateAutoFlow } from '../../redux/gql/updateAutoFlowSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
 export const FlowDetailScreen = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
+
+  const [editTitle, setEditTitle] = useState<Boolean>(false);
 
   const { autoFlow, status, error } = useAppSelector((state: RootState) => state.updateAutoFlow);
   const {
