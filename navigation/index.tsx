@@ -249,7 +249,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Test"
-        component={FlowReviewScreen}
+        component={FlowDetailScreen}
         options={{
           title: 'Test Only',
           tabBarIcon: ({ color }) => <TabBarIcon name="user-o" color={color} />,

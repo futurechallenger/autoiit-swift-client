@@ -6,6 +6,7 @@ import { ThemedTitle } from '../../components/ThemedTitle';
 import { getCurrentUserInfo } from '../../redux/gql/getCurrentUserInfoSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
+import { updateAutoFlow } from '../../redux/gql/updateAutoFlowSlice';
 
 const { useEffect, useState } = React;
 
@@ -25,12 +26,32 @@ export const FlowReviewScreen = () => {
 
   useEffect(() => {
     dispatch(getCurrentUserInfo());
+    setFlowTitle(autoFlow?.title ?? '');
   }, []);
+
+  useEffect(() => {
+    if (!status) {
+      return;
+    }
+
+    if (status === 'succeeded') {
+      navigation.navigate('FlowDetail', { autoFlow });
+    }
+  }, [status]);
 
   const handlePress = () => {
     console.log('>>finish button is clicked');
+    dispatch(updateAutoFlow({ autoFlow: { title: flowTitle } }));
     // TODO: navigate to flow-detail-screen
-    navigation.navigate('FlowDetail', { autoFlow });
+    // navigation.navigate('FlowDetail', { autoFlow });
+  };
+
+  const handleChange = (e) => {
+    setFlowTitle(e.currentTarget.value);
+  };
+
+  const handleChangeText = (text) => {
+    setFlowTitle(text);
   };
 
   return (
@@ -46,13 +67,13 @@ export const FlowReviewScreen = () => {
           marginTop={2}
           autoCompleteType=""
           h={20}
-          value={autoFlow?.title ?? ''}
-          onChange={(e) => setFlowTitle(e.currentTarget.value)} // for web
-          onChangeText={(text) => setFlowTitle(text)}
+          value={flowTitle ?? ''}
+          onChange={handleChange} // for web
+          onChangeText={handleChangeText}
         />
         <HStack w="full" justifyContent="space-between">
           <Text>{userInfo?.name && ` by ${userInfo.name}`}</Text>
-          <Text>{charNum} / 140</Text>
+          <Text>{flowTitle?.length ?? 0} / 140</Text>
         </HStack>
 
         {/* TODO: Review notifications when this flow runs */}
