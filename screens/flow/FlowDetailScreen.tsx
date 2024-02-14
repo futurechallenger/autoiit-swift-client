@@ -1,11 +1,12 @@
 import { StackActions, useNavigation } from '@react-navigation/native';
-import { Box, Button, Divider, HStack, Text, View, VStack } from 'native-base';
+import { Box, Button, Divider, HStack, Text, TextArea, View, VStack } from 'native-base';
 import * as React from 'react';
 
 import { ThemedText, ThemedTitle } from '../../components/ThemedTitle';
-import { updateAutoFlow } from '../../redux/gql/updateAutoFlowSlice';
+import { updateAutoFlow, resetStatus } from '../../redux/gql/updateAutoFlowSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
+import { getAutoFlowById } from '../../redux/gql/getAutoFlowByIdSlice';
 
 const { useEffect, useState } = React;
 
@@ -13,8 +14,15 @@ export const FlowDetailScreen = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
 
+  const [title, setTitle] = useState<string | null | undefined>();
   const [editTitle, setEditTitle] = useState<Boolean>(false);
 
+  // TODO: for test only
+  // const {
+  //   autoFlow: autoFlowInfo,
+  //   status: flowInfoStatus,
+  //   error: flowInfoError,
+  // } = useAppSelector((state: RootState) => state.autoFlowById);
   const { autoFlow, status, error } = useAppSelector((state: RootState) => state.updateAutoFlow);
   const {
     userInfo,
@@ -22,20 +30,78 @@ export const FlowDetailScreen = () => {
     error: userError,
   } = useAppSelector((state: RootState) => state.currentUserInfo);
 
-  const handlePress = () => {
+  // useEffect(() => {
+  //   dispatch(getAutoFlowById({ flowId: TEST_FLOW_ID }));
+  // }, []);
+
+  useEffect(() => {
+    if (autoFlow?.title /*|| autoFlowInfo?.title*/) {
+      setTitle(autoFlow?.title /*|| autoFlowInfo?.title*/);
+    }
+  }, [autoFlow?.title /*, autoFlowInfo?.title*/]);
+
+  useEffect(() => {
+    if (editTitle && status === 'succeeded') {
+      setEditTitle(false);
+      resetStatus();
+    }
+  }, [editTitle, status]);
+
+  const handleConnect = () => {
     console.log('>>Click connect / connected button');
   };
 
   const handlePublish = () => {
-    dispatch(updateAutoFlow({ autoFlow: { id: autoFlow?.id, published: 1 } }));
+    const autoFlowId = autoFlow?.id; /*?? autoFlowInfo?.id*/
+    dispatch(updateAutoFlow({ autoFlow: { id: autoFlowId, published: 1 } }));
   };
 
   const handleArchive = () => {
-    dispatch(updateAutoFlow({ autoFlow: { id: autoFlow?.id, archived: 1 } }));
+    const autoFlowId = autoFlow?.id; /*?? autoFlowInfo?.id*/
+    dispatch(updateAutoFlow({ autoFlow: { id: autoFlowId, archived: 1 } }));
   };
 
   const handleSettings = () => {
     navigation.dispatch(StackActions.popToTop());
+  };
+
+  const handleChange = (e: any) => {
+    setTitle(e.currentTarget.value);
+  };
+
+  const handleChangeText = (text: string) => {
+    setTitle(text);
+  };
+
+  const handleEditTitleClick = () => {
+    setEditTitle(!editTitle);
+  };
+
+  const handleEditTitleDone = () => {
+    const autoFlowId = autoFlow?.id; /*?? autoFlowInfo?.id*/
+    dispatch(updateAutoFlow({ autoFlow: { id: autoFlowId, title } }));
+  };
+
+  const renderTitle = () => {
+    if (!editTitle) {
+      return (
+        <VStack>
+          <Text>{title}</Text>
+          <Button maxW={100} minW={60} onPress={handleEditTitleClick}>
+            Edit title
+          </Button>
+        </VStack>
+      );
+    }
+
+    return (
+      <>
+        <TextArea autoCompleteType="" value={title ?? ''} onChange={handleChange} onChangeText={handleChangeText} />
+        <Button maxW={100} minW={60} onPress={handleEditTitleDone}>
+          Done
+        </Button>
+      </>
+    );
   };
 
   return (
@@ -46,20 +112,17 @@ export const FlowDetailScreen = () => {
       <ThemedTitle>Review and finish</ThemedTitle>
       <VStack>
         {/* Autoiit flow title */}
-        <Text>Auto flow Title</Text>
-        <Text>
-          {/* Autoiit flow title */}
-          {autoFlow?.title}
-        </Text>
-        <Text>by {userInfo?.name}</Text>
+        {/* <Text>Auto flow Title</Text> */}
+        {renderTitle()}
+        <Text>by {userInfo?.name ?? ''}</Text>
         <Divider />
       </VStack>
       {/* TODO: Review notifications when this flow runs */}
-      <Button onPress={handlePress}>Connect</Button>
+      <Button onPress={handleConnect}>Connect</Button>
       <VStack>
         <ThemedText>More details</ThemedText>
         {/* Connected date */}
-        {/* Never run ->> runned or not */}
+        {/* Never run ->> run or not */}
         <Divider />
         {/* TODO: Notify me when this runs - switch  */}
         <Divider />

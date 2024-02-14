@@ -49,7 +49,7 @@ export const getAutoFlowByIdSlice = createSlice({
 });
 
 interface InitialStateType {
-  autoFlow: Types.AutoFlow[] | undefined;
+  autoFlow: Types.AutoFlow | null | undefined;
   status: string | undefined;
   error: string | undefined;
 }
