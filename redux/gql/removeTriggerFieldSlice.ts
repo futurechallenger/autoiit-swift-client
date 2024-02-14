@@ -4,7 +4,7 @@ import { sendRequest } from '../baseApi';
 import * as Types from '../types.generated';
 
 export const deleteTriggerField = createAsyncThunk(
-  'remvoeTriggerField',
+  'removeTriggerField',
   async (variables: DeleteTriggerFieldMutationVariables) => {
     return sendRequest<DeleteTriggerFieldMutation>({
       variables,
