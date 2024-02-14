@@ -3,15 +3,12 @@ import { sendRequest } from '../baseApi';
 
 import * as Types from '../types.generated';
 
-export const updateAutoFlow = createAsyncThunk(
-  'updateAutoFlow',
-  async (variables: UpdateAutoFlowMutationVariables) => {
-    return sendRequest<UpdateAutoFlowMutation>({
-      variables,
-      query: UpdateAutoFlowDocument,
-    });
-  },
-);
+export const updateAutoFlow = createAsyncThunk('updateAutoFlow', async (variables: UpdateAutoFlowMutationVariables) => {
+  return sendRequest<UpdateAutoFlowMutation>({
+    variables,
+    query: UpdateAutoFlowDocument,
+  });
+});
 
 const initialState: InitialStateType = {
   autoFlow: undefined,
@@ -22,7 +19,11 @@ const initialState: InitialStateType = {
 export const updateAutoFlowSlice = createSlice({
   name: 'updateAutoFlowSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    resetStatus(state) {
+      state.status = '';
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(updateAutoFlow.pending, (state, action) => {
@@ -77,3 +78,5 @@ export const UpdateAutoFlowDocument = `
     userId
   }
 }`;
+
+export const { resetStatus } = updateAutoFlowSlice.actions;
