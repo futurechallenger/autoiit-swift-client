@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 const profileItems = [
   'avatar',
   'Account',
+  'My Flows',
   'My services',
   'Archive',
   'Widgets',
@@ -28,6 +29,9 @@ export const ProfileScreen = () => {
     if (param === 'Sign out') {
       setModalVisible(true);
 
+      return;
+    } else if (param === 'My Flows') {
+      navigation.navigate('FlowList');
       return;
     }
 

@@ -329,11 +329,12 @@ export type MutationUpdateTriggerFieldArgs = {
 export type Query = {
   __typename?: 'Query';
   actionMappingField?: Maybe<ActionMappingField>;
-  actionMappingFields?: Maybe<Array<ActionMappingField>>;
+  actionMappingFieldList?: Maybe<Array<ActionMappingField>>;
   actionOutputField?: Maybe<ActionOutputField>;
   actionOutputFieldList?: Maybe<Array<ActionOutputField>>;
   actions?: Maybe<Array<ServiceAction>>;
   autoFlow?: Maybe<AutoFlow>;
+  autoFlowListByUser?: Maybe<Array<AutoFlow>>;
   connectionStatus: Scalars['Boolean'];
   currentUserInfo?: Maybe<UserInfo>;
   exposeField?: Maybe<ExposeField>;
@@ -363,9 +364,8 @@ export type QueryActionMappingFieldArgs = {
   actionMappingFieldId: Scalars['Int'];
 };
 
-export type QueryActionMappingFieldsArgs = {
-  actionOutputFieldId: Scalars['Int'];
-  flowId: Scalars['Int'];
+export type QueryActionMappingFieldListArgs = {
+  autoFlowId: Scalars['Int'];
 };
 
 export type QueryActionOutputFieldArgs = {
@@ -382,6 +382,10 @@ export type QueryActionsArgs = {
 
 export type QueryAutoFlowArgs = {
   flowId: Scalars['Int'];
+};
+
+export type QueryAutoFlowListByUserArgs = {
+  userId: Scalars['Int'];
 };
 
 export type QueryConnectionStatusArgs = {
