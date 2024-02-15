@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 const profileItems = [
   'avatar',
   'Account',
+  'My Flows',
   'My services',
   'Archive',
   'Widgets',
