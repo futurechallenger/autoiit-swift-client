@@ -50,6 +50,7 @@ import { getConnectionStatusSlice } from './gql/getConnectionStatusSlice';
 import { updateActionOutputFieldSlice } from './gql/updateActionOutputFieldSlice';
 import { addActionMappingFieldSlice } from './gql/addActionMappingFieldSlice';
 import { getActionMappingFieldListSlice } from './gql/getActionMappingFieldListSlice';
+import { getAutoFlowListByUserSlice } from './gql/getAutoFlowListByUserSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -105,6 +106,7 @@ export const store = configureStore({
     addActionMappingField: addActionMappingFieldSlice.reducer,
     actionMappingFieldList: getActionMappingFieldListSlice.reducer,
     updateActionMappingField: updateActionMappingFieldSlice.reducer,
+    autoFlowListByUser: getAutoFlowListByUserSlice.reducer,
   }),
 });
 

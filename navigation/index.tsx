@@ -40,6 +40,7 @@ import { ActionsScreen } from '../screens/flow/ActionsScreen';
 import { FlowActionScreen } from '../screens/flow/FlowActionScreen';
 import { FlowReviewScreen } from '../screens/flow/FlowReviewScreen';
 import { FlowDetailScreen } from '../screens/flow/FlowDetailScreen';
+import { FlowListScreen } from '../screens/flow/FlowListScreen';
 
 const { useState, useEffect } = React;
 
@@ -86,6 +87,7 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
           <NavStack.Screen name="ServiceDetail" component={ServiceDetailScreen} />
           <NavStack.Screen name="ReviewFinish" component={FlowReviewScreen} />
           <NavStack.Screen name="FlowDetail" component={FlowDetailScreen} />
+          <NavStack.Screen name="FlowList" component={FlowListScreen} />
         </>
       )}
     </NavStack.Navigator>

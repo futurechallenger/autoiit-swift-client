@@ -30,6 +30,9 @@ export const ProfileScreen = () => {
       setModalVisible(true);
 
       return;
+    } else if (param === 'My Flows') {
+      navigation.navigate('FlowList');
+      return;
     }
 
     navigation.navigate('Account');
