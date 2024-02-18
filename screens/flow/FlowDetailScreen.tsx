@@ -21,12 +21,7 @@ export const FlowDetailScreen = () => {
   const [editTitle, setEditTitle] = useState<Boolean>(false);
 
   // TODO: for test only
-  // const {
-  //   autoFlow: autoFlowInfo,
-  //   status: flowInfoStatus,
-  //   error: flowInfoError,
-  // } = useAppSelector((state: RootState) => state.autoFlowById);
-  const { autoFlow, status, error } = useAppSelector((state: RootState) => state.updateAutoFlow);
+  const { autoFlow, status, error } = useAppSelector((state: RootState) => state.autoFlowById);
   const {
     userInfo,
     status: userStatus,
