@@ -1,4 +1,4 @@
-import { StackActions, useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation, useRoute } from '@react-navigation/native';
 import { Box, Button, Divider, HStack, Text, TextArea, View, VStack } from 'native-base';
 import * as React from 'react';
 
@@ -14,25 +14,24 @@ export const FlowDetailScreen = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
 
+  const route = useRoute();
+  const { flowId } = route.params ?? {};
+
   const [title, setTitle] = useState<string | null | undefined>();
   const [editTitle, setEditTitle] = useState<Boolean>(false);
 
   // TODO: for test only
-  // const {
-  //   autoFlow: autoFlowInfo,
-  //   status: flowInfoStatus,
-  //   error: flowInfoError,
-  // } = useAppSelector((state: RootState) => state.autoFlowById);
-  const { autoFlow, status, error } = useAppSelector((state: RootState) => state.updateAutoFlow);
+  const { autoFlow, status, error } = useAppSelector((state: RootState) => state.autoFlowById);
   const {
     userInfo,
     status: userStatus,
     error: userError,
   } = useAppSelector((state: RootState) => state.currentUserInfo);
 
-  // useEffect(() => {
-  //   dispatch(getAutoFlowById({ flowId: TEST_FLOW_ID }));
-  // }, []);
+  useEffect(() => {
+    if (!flowId) return;
+    dispatch(getAutoFlowById({ flowId }));
+  }, []);
 
   useEffect(() => {
     if (autoFlow?.title /*|| autoFlowInfo?.title*/) {
