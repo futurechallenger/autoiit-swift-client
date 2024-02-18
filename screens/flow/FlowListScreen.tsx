@@ -1,5 +1,5 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { Box, Container, FlatList, Text, View, ZStack } from 'native-base';
 import * as React from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
@@ -8,6 +8,7 @@ import { getAutoFlowListByUser } from '../../redux/gql/getAutoFlowListByUserSlic
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import * as Types from '../../redux/types.generated';
+import { useFlowListCategory } from './hooks/useFlowListCategory';
 
 const { useEffect, useState } = React;
 
@@ -20,9 +21,13 @@ export const FlowListScreen = () => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    dispatch(getAutoFlowListByUser({ userId: TEST_USER_ID }));
-  }, []);
+    if (isFocused) {
+      dispatch(getAutoFlowListByUser({ userId: TEST_USER_ID }));
+    }
+  }, [isFocused]);
 
   const renderActivityIndicator = () => {
     if (status === 'loading') {
@@ -71,33 +76,7 @@ const AllFlows = (params: any) => {
     },
   } = params;
 
-  const [data, setData] = useState<(Types.AutoFlow | undefined)[]>([]);
-
-  useEffect(() => {
-    let flowList: (Types.AutoFlow | undefined)[] = [];
-    switch (cat) {
-      case 'all':
-        flowList = [...autoFlowList];
-      case 'published':
-        autoFlowList.forEach((f) => {
-          if (f.published) {
-            flowList.push(f);
-          }
-        });
-        break;
-      case 'archive':
-        autoFlowList.forEach((f) => {
-          if (f.archived) {
-            flowList.push(f);
-          }
-        });
-        break;
-      default:
-        console.error('No such category');
-        break;
-    }
-    setData([...(flowList ?? [])]);
-  }, [cat, autoFlowList]);
+  const data = useFlowListCategory(cat, autoFlowList);
 
   return (
     <Container width="full" flex={1} alignSelf="center">
