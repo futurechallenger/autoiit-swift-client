@@ -249,7 +249,7 @@ function BottomTabNavigator() {
           },
         })}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Test"
         component={FlowDetailScreen}
         options={{
@@ -261,7 +261,7 @@ function BottomTabNavigator() {
             console.log('Tab pressed: ', navigation.getState());
           },
         })}
-      />
+      /> */}
     </BottomTab.Navigator>
   );
 }

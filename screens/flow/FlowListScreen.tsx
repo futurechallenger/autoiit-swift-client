@@ -1,27 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
-import {
-  Box,
-  Button,
-  Center,
-  Container,
-  Divider,
-  FlatList,
-  HStack,
-  Text,
-  TextArea,
-  View,
-  VStack,
-  ZStack,
-} from 'native-base';
-import * as React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useNavigation } from '@react-navigation/native';
+import { Box, Container, FlatList, Text, View, ZStack } from 'native-base';
+import * as React from 'react';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
+import { ThemedTitle } from '../../components/ThemedTitle';
+import { getAutoFlowListByUser } from '../../redux/gql/getAutoFlowListByUserSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import * as Types from '../../redux/types.generated';
-import { ActivityIndicator, TouchableOpacity } from 'react-native';
-import { AddActionMappingFieldDocument } from '../../redux/gql/addActionMappingFieldSlice';
-import { getAutoFlowListByUser } from '../../redux/gql/getAutoFlowListByUserSlice';
-import { ThemedTitle } from '../../components/ThemedTitle';
 
 const { useEffect, useState } = React;
 
@@ -38,10 +24,6 @@ export const FlowListScreen = () => {
     dispatch(getAutoFlowListByUser({ userId: TEST_USER_ID }));
   }, []);
 
-  // const handleItemClick = (item: Types.AutoFlow) => {
-  //   console.log(`Item clicked ${item.id}`);
-  // };
-
   const renderActivityIndicator = () => {
     if (status === 'loading') {
       return (
@@ -57,26 +39,10 @@ export const FlowListScreen = () => {
       <Container alignSelf="center">
         <ThemedTitle>My Flows</ThemedTitle>
       </Container>
-      {/* <HStack width="full" alignContent="space-between" bgColor="yellow.100">
-        <Box flexDirection="row" bgColor="green.100" width="1/2" justifyContent="space-around">
-          <VStack>
-            <TouchableOpacity>All(0/0)</TouchableOpacity>
-            <View bgColor="blue.100" h={2} />
-          </VStack>
-          <VStack>
-            <TouchableOpacity>Published</TouchableOpacity>
-            <View bgColor="blue.100" h={2} />
-          </VStack>
-          <VStack>
-            <TouchableOpacity>Archive</TouchableOpacity>
-            <View bgColor="blue.100" h={2} />
-          </VStack>
-        </Box>
-      </HStack> */}
       <Tab.Navigator>
-        <Tab.Screen name="All (0 / 0)" component={AllFlows} />
-        <Tab.Screen name="Published" component={TempScreen} />
-        <Tab.Screen name="Archive" component={TempScreen} />
+        <Tab.Screen name="All (0 / 0)" component={AllFlows} initialParams={{ cat: 'all' }} />
+        <Tab.Screen name="Published" component={AllFlows} initialParams={{ cat: 'published' }} />
+        <Tab.Screen name="Archive" component={AllFlows} initialParams={{ cat: 'archive' }} />
       </Tab.Navigator>
 
       {renderActivityIndicator()}
@@ -100,10 +66,38 @@ const AllFlows = (params: any) => {
   const { autoFlowList, status, error } = useAppSelector((state: RootState) => state.autoFlowListByUser);
   const {
     navigation,
-    // route: {
-    //   params: { autoFlowList },
-    // },
+    route: {
+      params: { cat },
+    },
   } = params;
+
+  const [data, setData] = useState<(Types.AutoFlow | undefined)[]>([]);
+
+  useEffect(() => {
+    let flowList: (Types.AutoFlow | undefined)[] = [];
+    switch (cat) {
+      case 'all':
+        flowList = [...autoFlowList];
+      case 'published':
+        autoFlowList.forEach((f) => {
+          if (f.published) {
+            flowList.push(f);
+          }
+        });
+        break;
+      case 'archive':
+        autoFlowList.forEach((f) => {
+          if (f.archived) {
+            flowList.push(f);
+          }
+        });
+        break;
+      default:
+        console.error('No such category');
+        break;
+    }
+    setData([...(flowList ?? [])]);
+  }, [cat, autoFlowList]);
 
   return (
     <Container width="full" flex={1} alignSelf="center">
@@ -112,7 +106,7 @@ const AllFlows = (params: any) => {
         marginTop={5}
         w="full"
         flex={1}
-        data={autoFlowList ?? []}
+        data={data ?? []}
         renderItem={({ item }: { item: Types.AutoFlow }) => {
           return (
             <TouchableOpacity
