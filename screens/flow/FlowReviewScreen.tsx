@@ -35,7 +35,7 @@ export const FlowReviewScreen = () => {
     }
 
     if (status === 'succeeded') {
-      navigation.navigate('FlowDetail', { autoFlow });
+      navigation.navigate('FlowDetail', { flowId });
     }
   }, [status]);
 
