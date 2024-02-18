@@ -1,5 +1,5 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { Box, Container, FlatList, Text, View, ZStack } from 'native-base';
 import * as React from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
@@ -21,9 +21,13 @@ export const FlowListScreen = () => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    dispatch(getAutoFlowListByUser({ userId: TEST_USER_ID }));
-  }, []);
+    if (isFocused) {
+      dispatch(getAutoFlowListByUser({ userId: TEST_USER_ID }));
+    }
+  }, [isFocused]);
 
   const renderActivityIndicator = () => {
     if (status === 'loading') {
