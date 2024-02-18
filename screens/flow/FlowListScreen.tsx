@@ -8,6 +8,7 @@ import { getAutoFlowListByUser } from '../../redux/gql/getAutoFlowListByUserSlic
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import * as Types from '../../redux/types.generated';
+import { useFlowListCategory } from './hooks/useFlowListCategory';
 
 const { useEffect, useState } = React;
 
@@ -71,33 +72,7 @@ const AllFlows = (params: any) => {
     },
   } = params;
 
-  const [data, setData] = useState<(Types.AutoFlow | undefined)[]>([]);
-
-  useEffect(() => {
-    let flowList: (Types.AutoFlow | undefined)[] = [];
-    switch (cat) {
-      case 'all':
-        flowList = [...autoFlowList];
-      case 'published':
-        autoFlowList.forEach((f) => {
-          if (f.published) {
-            flowList.push(f);
-          }
-        });
-        break;
-      case 'archive':
-        autoFlowList.forEach((f) => {
-          if (f.archived) {
-            flowList.push(f);
-          }
-        });
-        break;
-      default:
-        console.error('No such category');
-        break;
-    }
-    setData([...(flowList ?? [])]);
-  }, [cat, autoFlowList]);
+  const data = useFlowListCategory(cat, autoFlowList);
 
   return (
     <Container width="full" flex={1} alignSelf="center">
