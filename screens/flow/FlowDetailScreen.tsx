@@ -133,7 +133,7 @@ export const FlowDetailScreen = () => {
           <ThemedTitle>Publish this flow so others can use this flow</ThemedTitle>
           <Button onPress={handlePublish}>Publish</Button>
         </HStack>
-        <Box>
+        <Box maxWidth={120} minWidth={80} marginTop={10} alignSelf="center">
           <Button onPress={handleArchive}>Archive</Button>
         </Box>
       </VStack>
