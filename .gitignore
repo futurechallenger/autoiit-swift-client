@@ -14,3 +14,4 @@ web-build/
 .DS_Store
 .cxx
 .package-lock.json
+.env
