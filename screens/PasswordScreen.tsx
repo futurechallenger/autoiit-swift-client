@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Box, Button, Heading, Icon, Input, Pressable, Spinner, Text, VStack, ZStack } from 'native-base';
+import { Box, Button, Heading, Icon, Input, Pressable, Spinner, Text, VStack, ZStack, useToast } from 'native-base';
 import * as React from 'react';
 
 import { AuthContext } from '../navigation/AuthContext';
@@ -23,6 +23,8 @@ const PasswordScreen = () => {
   const [error, setError] = useState(null);
   const navigation = useNavigation();
   const authContext = React.useContext(AuthContext);
+
+  const toast = useToast();
 
   const route = useRoute<PasswordScreenRouteProp>();
   const { exists } = route.params;
@@ -107,6 +109,16 @@ const PasswordScreen = () => {
         </Box>
       </VStack>
       {(signInStatus === 'loading' || loginStatus === 'loading') && <Spinner size="lg" />}
+      {signInStatus === 'error' &&
+        toast.show({
+          render: () => {
+            return (
+              <Box bg="emerald.500" px="2" py="1" rounded="sm" mb={5}>
+                Hello! Have a nice day
+              </Box>
+            );
+          },
+        })}
     </ZStack>
   );
 };
