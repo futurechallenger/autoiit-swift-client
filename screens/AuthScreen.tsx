@@ -4,7 +4,6 @@ import {
   Center,
   Text,
   VStack,
-  Button,
   Box,
   Container,
   Heading,
@@ -14,6 +13,7 @@ import {
   FormControl,
   Input,
 } from 'native-base';
+import { Button } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
@@ -96,14 +96,21 @@ const AuthScreen = () => {
       <VStack space="2.5" mt="4" padding={4}>
         <HStack justifyContent="space-between">
           <Heading>Introduction of the app</Heading>
-          {Platform.OS !== 'web' && <Button onPress={() => setModalVisible(!modalVisible)}>Register</Button>}
+          {Platform.OS !== 'web' && (
+            <Button mode="elevated" onPress={() => setModalVisible(!modalVisible)}>
+              Register
+            </Button>
+          )}
         </HStack>
         <Box>
+          {/* TODO: replace this text */}
           <Text>Stack aligns items vertically or horizontally based on the direction prop.</Text>
         </Box>
         <Center bg="primary.100" _text={{ color: 'white', fontWeight: 'bold' }}></Center>
         <Container>
-          <Button onPress={handleClick}>Continue</Button>
+          <Button mode="elevated" onPress={handleClick}>
+            Continue
+          </Button>
         </Container>
         <Actionsheet isOpen={isOpen} onClose={handleClose}>
           <Actionsheet.Content>
@@ -141,18 +148,19 @@ const AuthScreen = () => {
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
-            <Button.Group space={2}>
-              <Button
-                variant="ghost"
-                colorScheme="blueGray"
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-              >
-                Cancel
-              </Button>
-              <Button onPress={handleRegister}>Save</Button>
-            </Button.Group>
+            {/* <Button.Group space={2}> */}
+            <Button
+              mode="elevated"
+              onPress={() => {
+                setModalVisible(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button mode="elevated" onPress={handleRegister}>
+              Save
+            </Button>
+            {/* </Button.Group> */}
           </Modal.Footer>
         </Modal.Content>
       </Modal>
