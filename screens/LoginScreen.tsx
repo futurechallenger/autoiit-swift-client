@@ -1,18 +1,19 @@
-import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
-import { View } from "../components/Themed";
+import React, { useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet } from 'react-native';
+import { View } from '../components/Themed';
 
-import { request, gql } from "graphql-request";
-import { Actionsheet, Box, Text, Button } from "native-base";
-import { SERVER_URL } from "../Lib/config";
+import { request, gql } from 'graphql-request';
+import { Actionsheet, Box, Text } from 'native-base';
+import { Button } from 'react-native-pager';
+import { SERVER_URL } from '../Lib/config';
 
 const loginGql = gql`
   mutation login($userInfo: UserInfoInput!) {
     loginIn(userInfo: $userInfo)
   }
 `;
-const variables = { userInfo: { email: "bruce@test.com", password: "123" } };
+const variables = { userInfo: { email: 'bruce@test.com', password: '123' } };
 
 export const LoginScreen = () => {
   const [showError, setShowError] = useState(false);
@@ -22,7 +23,7 @@ export const LoginScreen = () => {
     try {
       const res = await request(`${SERVER_URL}/graphql`, loginGql, variables);
     } catch (e) {
-      console.error("ERROR in login", e);
+      console.error('ERROR in login', e);
       setShowError(true);
     }
   };
@@ -32,8 +33,12 @@ export const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      <Button onPress={handleLogin}>Login</Button>
-      <Button onPress={handleSignIn}>SignIn</Button>
+      <Button mode="contained" onPress={handleLogin}>
+        Login
+      </Button>
+      <Button mode="contained" onPress={handleSignIn}>
+        SignIn
+      </Button>
 
       <Actionsheet isOpen={openSheet}>
         <Actionsheet.Content>
@@ -42,7 +47,7 @@ export const LoginScreen = () => {
               fontSize="16"
               color="gray.500"
               _dark={{
-                color: "gray.300",
+                color: 'gray.300',
               }}
             >
               Albums
@@ -59,9 +64,9 @@ export const LoginScreen = () => {
       {showError && (
         <View
           style={{
-            position: "absolute",
+            position: 'absolute',
             zIndex: 1000,
-            backgroundColor: "red",
+            backgroundColor: 'red',
             left: 0,
             right: 0,
             bottom: 50,
@@ -77,16 +82,16 @@ export const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: "80%",
+    width: '80%',
   },
 });
