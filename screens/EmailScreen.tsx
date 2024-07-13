@@ -1,21 +1,13 @@
-import * as React from "react";
-import {
-  VStack,
-  Heading,
-  Input,
-  Button,
-  Box,
-  useToast,
-  Spinner,
-  ZStack,
-} from "native-base";
-import { View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { EmailScreenNavigationProp } from "../types";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { getUserInfo } from "../redux/gql/userInfoService";
-import { RootState } from "../redux/store";
+import * as React from 'react';
+import { VStack, Box, useToast, Spinner, ZStack } from 'native-base';
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { EmailScreenNavigationProp } from '../types';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { getUserInfo } from '../redux/gql/userInfoService';
+import { RootState } from '../redux/store';
+import { Button, Headline, TextInput } from 'react-native-paper';
 
 const { useState } = React;
 
@@ -30,17 +22,15 @@ const { useState } = React;
  */
 const EmailScreen = () => {
   const dispatch = useAppDispatch();
-  const { userInfo, status } = useAppSelector(
-    (state: RootState) => state.userInfo
-  );
+  const { userInfo, status } = useAppSelector((state: RootState) => state.userInfo);
   const navigation = useNavigation<EmailScreenNavigationProp>();
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>('');
   const toast = useToast();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
 
   React.useEffect(() => {
-    if (!email || !status || status === "loading") return;
-    navigation.navigate("Password", { exists: userInfo });
+    if (!email || !status || status === 'loading') return;
+    navigation.navigate('Password', { exists: userInfo });
   }, [email, status]);
 
   const handleClick = async () => {
@@ -49,13 +39,13 @@ const EmailScreen = () => {
     }
 
     try {
-      await AsyncStorage.setItem("@email", text ?? "");
+      await AsyncStorage.setItem('@email', text ?? '');
       setEmail(text);
 
       dispatch(getUserInfo({ email: text }));
     } catch (e) {
-      console.error("E:", e);
-      toast.show({ description: "Error" });
+      console.error('E:', e);
+      toast.show({ description: 'Error' });
     }
   };
 
@@ -68,35 +58,25 @@ const EmailScreen = () => {
     <View
       style={{
         flex: 1,
-        height: "100%",
-        width: "100%",
+        height: '100%',
+        width: '100%',
       }}
     >
       <VStack flex="1">
-        <ZStack
-          flex="1"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <VStack
-            paddingX="4"
-            paddingTop={5}
-            w="full"
-            space="10"
-            position="absolute"
-            top="0"
-          >
-            <Heading>What's your email</Heading>
+        <ZStack flex="1" flexDirection="column" justifyContent="center" alignItems="center">
+          <VStack paddingX="4" paddingTop={5} w="full" space="10" position="absolute" top="0">
+            <Headline>What's your email</Headline>
             <Box>
-              <Input placeholder="Your email" onChangeText={handleChangeText} />
+              <TextInput mode="outlined" label="Email" placeholder="Your email" onChangeText={handleChangeText} />
             </Box>
           </VStack>
 
-          {status === "loading" && <Spinner size="lg" />}
+          {status === 'loading' && <Spinner size="lg" />}
         </ZStack>
         <Box paddingBottom={10} paddingX="5">
-          <Button onPress={handleClick}>Continue</Button>
+          <Button mode="elevated" onPress={handleClick}>
+            Continue
+          </Button>
         </Box>
       </VStack>
     </View>
