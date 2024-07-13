@@ -1,8 +1,10 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Box, Button, Heading, Icon, Input, Pressable, Spinner, Text, VStack, ZStack, useToast } from 'native-base';
+import { Box, Icon, Spinner, Text, VStack, ZStack, useToast } from 'native-base';
 import * as React from 'react';
+import { Pressable } from 'react-native';
+import { Button, Headline, TextInput } from 'react-native-paper';
 
 import { AuthContext } from '../navigation/AuthContext';
 import { login } from '../redux/gql/loginService';
@@ -90,9 +92,10 @@ const PasswordScreen = () => {
   return (
     <ZStack flex="1" justifyContent="center" alignItems="center">
       <VStack paddingX="4" space="10" paddingY="5" position="absolute" top="0" w="full">
-        <Heading>{headingText}</Heading>
+        <Headline>{headingText}</Headline>
         <Box>
-          <Input
+          <TextInput
+            mode="outlined"
             type={show ? 'text' : 'password'}
             placeholder="Your password"
             InputRightElement={<PasswordToggle show={show} toggleShow={() => setShow(!show)} />}
@@ -100,11 +103,11 @@ const PasswordScreen = () => {
           />
         </Box>
         <Box>
-          <Button onPress={handleClick}>{buttonTitle}</Button>
+          <Button mode="outlined" onPress={handleClick}>
+            {buttonTitle}
+          </Button>
           <Pressable onPress={handlePress} alignSelf="center" paddingY={2}>
-            <Text fontWeight="bold" fontSize="11">
-              Forget password?
-            </Text>
+            <Text variant="labelSmall">Forget password?</Text>
           </Pressable>
         </Box>
       </VStack>

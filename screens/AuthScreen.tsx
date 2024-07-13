@@ -1,19 +1,7 @@
 import * as React from 'react';
 import { Platform } from 'react-native';
-import {
-  Center,
-  Text,
-  VStack,
-  Box,
-  Container,
-  Heading,
-  Actionsheet,
-  HStack,
-  Modal,
-  FormControl,
-  Input,
-} from 'native-base';
-import { Button } from 'react-native-paper';
+import { Center, Text, VStack, Box, Container, Actionsheet, HStack, Modal, FormControl, Input } from 'native-base';
+import { Button, Headline } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
@@ -95,7 +83,7 @@ const AuthScreen = () => {
     <SafeAreaView>
       <VStack space="2.5" mt="4" padding={4}>
         <HStack justifyContent="space-between">
-          <Heading>Introduction of the app</Heading>
+          <Headline>Introduction of the app</Headline>
           {Platform.OS !== 'web' && (
             <Button mode="elevated" onPress={() => setModalVisible(!modalVisible)}>
               Register
