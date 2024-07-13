@@ -96,9 +96,9 @@ const PasswordScreen = () => {
         <Box>
           <TextInput
             mode="outlined"
-            type={show ? 'text' : 'password'}
+            secureTextEntry={!show}
             placeholder="Your password"
-            InputRightElement={<PasswordToggle show={show} toggleShow={() => setShow(!show)} />}
+            right={<TextInput.Icon icon="eye" onPress={() => setShow(!show)} />}
             onChangeText={handleChangeText}
           />
         </Box>
