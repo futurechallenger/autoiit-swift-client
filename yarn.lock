@@ -5279,6 +5279,7 @@ __metadata:
     react-native-svg: "npm:15.2.0"
     react-native-svg-transformer: "npm:^1.5.0"
     react-native-tab-view: "npm:^3.5.2"
+    react-native-toast-message: "npm:^2.2.0"
     react-native-vector-icons: "npm:^10.1.0"
     react-native-web: "npm:~0.19.6"
     react-native-webview: "npm:13.8.6"
@@ -13226,6 +13227,16 @@ __metadata:
     react-native: "*"
     react-native-pager-view: "*"
   checksum: 10c0/f243afcb1ee49642f6d13039725634cd3cc4205cef611b27fc305d99a0064566fbaabeea8ef12367fbf4c13095f5b48e20b517ad3885ced3827fd57c6190e3e4
+  languageName: node
+  linkType: hard
+
+"react-native-toast-message@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "react-native-toast-message@npm:2.2.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/02c2507efba0875a85cecde616e60144daea4ea6b9e7f153f23b3f513a8f3c6c90181ee2d10aeb8093605957ba5bd415c4fa3ae8ed06691810c2f4b9599ea0c8
   languageName: node
   linkType: hard
 
