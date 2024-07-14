@@ -7,7 +7,8 @@ import { EmailScreenNavigationProp } from '../types';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getUserInfo } from '../redux/gql/userInfoService';
 import { RootState } from '../redux/store';
-import { Button, Headline, TextInput } from 'react-native-paper';
+import { Button, Headline, TextInput, Snackbar, Text } from 'react-native-paper';
+import Toast from 'react-native-toast-message';
 
 const { useState } = React;
 
@@ -30,7 +31,10 @@ const EmailScreen = () => {
 
   React.useEffect(() => {
     if (!email || !status || status === 'loading') return;
-    navigation.navigate('Password', { exists: userInfo });
+    if (status === 'success') {
+      navigation.navigate('Password', { exists: userInfo });
+      return;
+    }
   }, [email, status]);
 
   const handleClick = async () => {
@@ -53,6 +57,8 @@ const EmailScreen = () => {
     // TODO: check if it is a valid email address
     setText(newText);
   };
+
+  const dismissHandler = () => {};
 
   return (
     <View
@@ -79,6 +85,8 @@ const EmailScreen = () => {
           </Button>
         </Box>
       </VStack>
+      {/* {status === 'failed' && <Toast />} */}
+      <Toast />
     </View>
   );
 };
