@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
 import { PasswordScreenRouteProp } from '../types';
 
-const { useState } = React;
+const { useState, useContext, useEffect } = React;
 
 const PasswordScreen = () => {
   const dispatch = useAppDispatch();
@@ -24,14 +24,14 @@ const PasswordScreen = () => {
   const [text, setText] = useState('');
   const [error, setError] = useState(null);
   const navigation = useNavigation();
-  const authContext = React.useContext(AuthContext);
+  const authContext = useContext(AuthContext);
 
   const toast = useToast();
 
   const route = useRoute<PasswordScreenRouteProp>();
   const { exists } = route.params;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const storeItem = async () => {
       const token = signInToken?.signIn || loginToken?.loginIn;
       if (!token) {
@@ -40,10 +40,11 @@ const PasswordScreen = () => {
 
       await AsyncStorage.setItem('@token', token);
       authContext.setAuthToken(token);
+
+      navigation.replace('Tabs');
     };
 
     storeItem();
-    // navigation.reset("Tabs");
   }, [signInToken, loginToken]);
 
   const handleClick = async () => {
@@ -53,7 +54,7 @@ const PasswordScreen = () => {
         return;
       }
 
-      if (!exists?.userinfo) {
+      if (!exists?.userInfo) {
         // res = await signIn({ userInfo: { email, password: text } }).unwrap();
         dispatch(signIn({ userInfo: { email, password: text } }));
       } else {
@@ -86,8 +87,8 @@ const PasswordScreen = () => {
     // TODO: forget password
   };
 
-  const headingText = exists?.userinfo ? "Welcome back! What's your password" : 'Create your password';
-  const buttonTitle = exists?.userinfo ? 'Login' : 'SignIn';
+  const headingText = exists?.userInfo ? "Welcome back! What's your password" : 'Create your password';
+  const buttonTitle = exists?.userInfo ? 'Login' : 'SignIn';
 
   return (
     <ZStack flex="1" justifyContent="center" alignItems="center">
