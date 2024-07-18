@@ -10,7 +10,7 @@ import { RootState } from '../redux/store';
 import { Button, Headline, TextInput, Snackbar, Text } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
 /**
  * TODO:
@@ -29,9 +29,11 @@ const EmailScreen = () => {
   const toast = useToast();
   const [email, setEmail] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!email || !status || status === 'loading') return;
-    if (status === 'success') {
+    if (status === 'succeeded') {
+      console.log('Status value is succeeded');
+
       navigation.navigate('Password', { exists: userInfo });
       return;
     }
