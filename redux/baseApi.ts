@@ -1,6 +1,6 @@
-import { SERVER_URL } from "../Lib/config";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import type { APIResponse } from "../types";
+import { SERVER_URL } from '../Lib/config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { APIResponse } from '../types';
 
 type RequestParam = {
   query: string;
@@ -13,31 +13,33 @@ async function sendRequest<DataType>({
   variables = undefined,
   operationName = undefined,
 }: RequestParam): Promise<APIResponse<DataType>> {
-  const token = await AsyncStorage.getItem("@token");
+  const token = await AsyncStorage.getItem('@token');
 
   const headers: { [index: string]: string } = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
   };
 
   if (token) {
-    headers["authorization"] = token;
+    headers['authorization'] = token;
   }
 
   const body: { [index: string]: string } = {};
 
-  body["query"] = query;
+  body['query'] = query;
   if (operationName) {
-    body["operationName"] = operationName;
+    body['operationName'] = operationName;
   }
   if (variables) {
-    body["variables"] = variables;
+    body['variables'] = variables;
   }
 
+  console.log(`Start requesting ${SERVER_URL}`);
+
   const res = await fetch(`${SERVER_URL}/graphql`, {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
     headers: { ...headers },
     body: JSON.stringify(body),
   });
