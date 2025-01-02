@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VStack, Box, useToast, Spinner, ZStack } from 'native-base';
+import { VStack, Box, useToast, Spinner, ZStack, Button, Heading, Input as TextInput, Row as  Snackbar, Text } from 'native-base';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,7 +7,6 @@ import { EmailScreenNavigationProp } from '../types';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getUserInfo } from '../redux/gql/userInfoService';
 import { RootState } from '../redux/store';
-import { Button, Headline, TextInput, Snackbar, Text } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 
 const { useState, useEffect } = React;
@@ -73,16 +72,16 @@ const EmailScreen = () => {
       <VStack flex="1">
         <ZStack flex="1" flexDirection="column" justifyContent="center" alignItems="center">
           <VStack paddingX="4" paddingTop={5} w="full" space="10" position="absolute" top="0">
-            <Headline>What's your email</Headline>
+            <Heading>What's your email</Heading>
             <Box>
-              <TextInput mode="outlined" label="Email" placeholder="Your email" onChangeText={handleChangeText} />
+              <TextInput placeholder="Your email" onChangeText={handleChangeText} />
             </Box>
           </VStack>
 
           {status === 'loading' && <Spinner size="lg" />}
         </ZStack>
         <Box paddingBottom={10} paddingX="5">
-          <Button mode="elevated" onPress={handleClick}>
+          <Button onPress={handleClick}>
             Continue
           </Button>
         </Box>

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Platform } from 'react-native';
-import { Center, Text, VStack, Box, Container, Actionsheet, HStack, Modal, FormControl, Input } from 'native-base';
-import { Button, Headline } from 'react-native-paper';
+import { Heading, Center, Text, VStack, Box, Container, Actionsheet, HStack, Modal, FormControl, Input, Button } from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
@@ -83,9 +82,9 @@ const AuthScreen = () => {
     <SafeAreaView>
       <VStack space="2.5" mt="4" padding={4}>
         <HStack justifyContent="space-between">
-          <Headline>Introduction of the app</Headline>
+          <Heading>Introduction of the app</Heading>
           {Platform.OS !== 'web' && (
-            <Button mode="elevated" onPress={() => setModalVisible(!modalVisible)}>
+            <Button onPress={() => setModalVisible(!modalVisible)}>
               Register
             </Button>
           )}
@@ -96,7 +95,7 @@ const AuthScreen = () => {
         </Box>
         <Center bg="primary.100" _text={{ color: 'white', fontWeight: 'bold' }}></Center>
         <Container>
-          <Button mode="elevated" onPress={handleClick}>
+          <Button onPress={handleClick}>
             Continue
           </Button>
         </Container>
@@ -120,7 +119,7 @@ const AuthScreen = () => {
       >
         <Modal.Content>
           <Modal.CloseButton />
-          <Modal.Header>Contact Us</Modal.Header>
+          <Modal.Header>Register</Modal.Header>
           <Modal.Body>
             <FormControl>
               <FormControl.Label>Name</FormControl.Label>
@@ -138,14 +137,13 @@ const AuthScreen = () => {
           <Modal.Footer>
             {/* <Button.Group space={2}> */}
             <Button
-              mode="elevated"
               onPress={() => {
                 setModalVisible(false);
               }}
             >
               Cancel
             </Button>
-            <Button mode="elevated" onPress={handleRegister}>
+            <Button onPress={handleRegister}>
               Save
             </Button>
             {/* </Button.Group> */}
