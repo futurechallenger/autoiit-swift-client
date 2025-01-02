@@ -6,7 +6,6 @@ import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import { Provider } from 'react-redux';
 import { NativeBaseProvider } from 'native-base';
-import { PaperProvider } from 'react-native-paper';
 import { store } from './redux/store';
 // TODO: Theme
 // import { theme } from "./constants/theme";
@@ -21,12 +20,10 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <Provider store={store}>
-          <PaperProvider>
-            <NativeBaseProvider>
-              <Navigation colorScheme={colorScheme} />
-              <StatusBar />
-            </NativeBaseProvider>
-          </PaperProvider>
+          <NativeBaseProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </NativeBaseProvider>
         </Provider>
       </SafeAreaProvider>
     );
