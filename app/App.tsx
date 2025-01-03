@@ -7,6 +7,7 @@ import Navigation from './navigation';
 import { Provider } from 'react-redux';
 import { NativeBaseProvider } from 'native-base';
 import { store } from './redux/store';
+import "../global.css";
 // TODO: Theme
 // import { theme } from "./constants/theme";
 
