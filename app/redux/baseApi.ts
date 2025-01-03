@@ -35,6 +35,8 @@ async function sendRequest<DataType>({
   }
 
   console.log(`Start requesting ${SERVER_URL}`);
+  console.log(`Query / mutation is: ${query}`);
+  console.log(`Variables is: ${JSON.stringify(variables ?? {}, null, 2)}`);
 
   const res = await fetch(`${SERVER_URL}/graphql`, {
     method: 'POST',
