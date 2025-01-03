@@ -7,7 +7,8 @@ import Navigation from './navigation';
 import { Provider } from 'react-redux';
 import { NativeBaseProvider } from 'native-base';
 import { store } from './redux/store';
-import "../global.css";
+import '../global.css';
+import { GluestackUIProvider } from './components/ui/gluestack-ui-provider';
 // TODO: Theme
 // import { theme } from "./constants/theme";
 
@@ -22,8 +23,10 @@ export default function App() {
       <SafeAreaProvider>
         <Provider store={store}>
           <NativeBaseProvider>
-            <Navigation colorScheme={colorScheme} />
-            <StatusBar />
+            <GluestackUIProvider>
+              <Navigation colorScheme={colorScheme} />
+              <StatusBar />
+            </GluestackUIProvider>
           </NativeBaseProvider>
         </Provider>
       </SafeAreaProvider>
