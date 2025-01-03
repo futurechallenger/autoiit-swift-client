@@ -1,6 +1,6 @@
 import { SERVER_URL } from '../Lib/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { APIResponse } from '../types';
+import { APIResponse } from '../types';
 
 type RequestParam = {
   query: string;
