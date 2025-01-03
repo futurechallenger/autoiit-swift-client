@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { Platform } from 'react-native';
 import {
-  Heading,
   Center,
   Text,
-  Button,
+  // Button,
   VStack,
   Box,
   Container,
@@ -21,6 +20,8 @@ import { PasswordInput } from '../components/PasswordInput';
 import { signIn } from '../redux/gql/signInService';
 import { RootState } from '../redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Button } from '@/app/components/ui/button';
+import { Heading } from '@/app/components/ui/heading';
 
 const { useState, useRef, useEffect } = React;
 
@@ -150,9 +151,7 @@ const AuthScreen = () => {
             >
               Cancel
             </Button>
-            <Button onPress={handleRegister}>
-              Save
-            </Button>
+            <Button onPress={handleRegister}>Save</Button>
             {/* </Button.Group> */}
           </Modal.Footer>
         </Modal.Content>

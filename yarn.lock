@@ -2248,6 +2248,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gluestack-ui/button@npm:^1.0.8":
+  version: 1.0.8
+  resolution: "@gluestack-ui/button@npm:1.0.8"
+  dependencies:
+    "@gluestack-ui/utils": "npm:0.1.14"
+    "@react-native-aria/focus": "npm:^0.2.9"
+    "@react-native-aria/interactions": "npm:0.2.13"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/9df673648d93c5b4700aed0996d9a788d5f5543d3a9a8238c2fd7f193a8a763ec6d95f4d6c48b35563c61c3c75541f607b6342eaa3ee576323328b07d95ce33e
+  languageName: node
+  linkType: hard
+
+"@gluestack-ui/hooks@npm:0.1.12":
+  version: 0.1.12
+  resolution: "@gluestack-ui/hooks@npm:0.1.12"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/9e02dc6683724b3af6dca9bffecdfbe0ea426b703d35faad0fa3881300de72494f9aa83d6d9c84e8b88eed326d6ae9246b5508cdb1827e905cc613324112fb73
+  languageName: node
+  linkType: hard
+
+"@gluestack-ui/icon@npm:^0.1.25":
+  version: 0.1.25
+  resolution: "@gluestack-ui/icon@npm:0.1.25"
+  dependencies:
+    "@gluestack-ui/provider": "npm:^0.1.13"
+    "@gluestack-ui/utils": "npm:^0.1.14"
+    "@react-native-aria/focus": "npm:^0.2.9"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/1aa3cc15f30534bb056af13101b4dca42a33da5dca94a3957e5eb9291d6b7ba2e16a8559bece3373ca4bd50baaa334245102273f736b35a11cc76065632543c3
+  languageName: node
+  linkType: hard
+
 "@gluestack-ui/nativewind-utils@npm:1.0.26":
   version: 1.0.26
   resolution: "@gluestack-ui/nativewind-utils@npm:1.0.26"
@@ -2262,7 +2300,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gluestack-ui/overlay@npm:0.1.16":
+"@gluestack-ui/overlay@npm:0.1.16, @gluestack-ui/overlay@npm:^0.1.16":
   version: 0.1.16
   resolution: "@gluestack-ui/overlay@npm:0.1.16"
   dependencies:
@@ -2273,6 +2311,75 @@ __metadata:
     react: ">=16"
     react-dom: ">=16"
   checksum: 10c0/07cc59495908f5c06543975d6cef175b5aa3da0d347769a471b7cb4c12d989b3d563a98a21a03691e8c7947a266135ff048077364b206ecbb3ad57f690ada7a0
+  languageName: node
+  linkType: hard
+
+"@gluestack-ui/provider@npm:^0.1.13":
+  version: 0.1.13
+  resolution: "@gluestack-ui/provider@npm:0.1.13"
+  dependencies:
+    "@react-native-aria/interactions": "npm:0.2.13"
+    tsconfig: "npm:7"
+    typescript: "npm:^5.6.3"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/534fc7bbf37169a037004ea93b30c21159054a74f2c472c690e9b12a2ce2f24e35978aae614e9ce2121b123dc12f8c3480eb8f89756ed75945b8fd1091915e5e
+  languageName: node
+  linkType: hard
+
+"@gluestack-ui/react-native-aria@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "@gluestack-ui/react-native-aria@npm:0.1.6"
+  dependencies:
+    "@react-native-aria/focus": "npm:^0.2.9"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/037650e7f1a9d5d633aa3c4fd9c155adeb8fac23adfc4be5a7aea055788bd654cccea6c496aa968e105ffe8d25ba9dba875bdf49c568a629f59290747cba485f
+  languageName: node
+  linkType: hard
+
+"@gluestack-ui/toast@npm:1.0.8":
+  version: 1.0.8
+  resolution: "@gluestack-ui/toast@npm:1.0.8"
+  dependencies:
+    "@gluestack-ui/hooks": "npm:0.1.12"
+    "@gluestack-ui/overlay": "npm:^0.1.16"
+    "@gluestack-ui/transitions": "npm:^0.1.11"
+    "@gluestack-ui/utils": "npm:^0.1.14"
+    "@react-native-aria/focus": "npm:^0.2.9"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/38c2c6960beb881dd46d26de3780f885f87dbae1520e9098b1b000966ef7c743a6d05a0cebf9a57f0095c03033da9e46868c4040867463084c2820fbdedb4b16
+  languageName: node
+  linkType: hard
+
+"@gluestack-ui/transitions@npm:^0.1.11":
+  version: 0.1.11
+  resolution: "@gluestack-ui/transitions@npm:0.1.11"
+  dependencies:
+    "@gluestack-ui/overlay": "npm:^0.1.16"
+    "@gluestack-ui/react-native-aria": "npm:^0.1.6"
+    "@gluestack-ui/utils": "npm:^0.1.14"
+    "@react-native-aria/focus": "npm:^0.2.9"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/5af71e8a974c3e09098b9fc615b972bd3effe3aac14fea41cbcbdd89ea6a7e54ce92baa325e4d5c6f7b232a81440e80098b3f2cf89d389d0108d71755893890d
+  languageName: node
+  linkType: hard
+
+"@gluestack-ui/utils@npm:0.1.14, @gluestack-ui/utils@npm:^0.1.14":
+  version: 0.1.14
+  resolution: "@gluestack-ui/utils@npm:0.1.14"
+  dependencies:
+    "@react-native-aria/focus": "npm:^0.2.9"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/b7f31a44b45f5404726b28362b613458713284492b0a4c33e5f0435fb73e1c8912a647bd5f2e53680338a2b55c1b8c2521401035a0d146e125194218c6832d7e
   languageName: node
   linkType: hard
 
@@ -4672,6 +4779,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/strip-bom@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@types/strip-bom@npm:3.0.0"
+  checksum: 10c0/6638635fb52dc1f7a4aa596445170ffc731f3bea307d25d79709dcce14f80870128a6f0304032863b9d1a86b4b5f45d48bcaf96abe81f42e61f0a3eb18a1b996
+  languageName: node
+  linkType: hard
+
+"@types/strip-json-comments@npm:0.0.30":
+  version: 0.0.30
+  resolution: "@types/strip-json-comments@npm:0.0.30"
+  checksum: 10c0/90509e345ac16c79f7aa7d7ef52e388e5be923f3456cf8052d36ee0eb4abc5ec4080c5f010f78cf01f5599546577eb3724256bc698663e86f0fe08a5a3fb7f68
+  languageName: node
+  linkType: hard
+
 "@types/tough-cookie@npm:*":
   version: 4.0.5
   resolution: "@types/tough-cookie@npm:4.0.5"
@@ -5337,8 +5458,11 @@ __metadata:
     "@babel/core": "npm:^7.26.0"
     "@expo/vector-icons": "npm:^14.0.2"
     "@expo/webpack-config": "npm:~19.0.1"
+    "@gluestack-ui/button": "npm:^1.0.8"
+    "@gluestack-ui/icon": "npm:^0.1.25"
     "@gluestack-ui/nativewind-utils": "npm:1.0.26"
     "@gluestack-ui/overlay": "npm:0.1.16"
+    "@gluestack-ui/toast": "npm:1.0.8"
     "@react-native-async-storage/async-storage": "npm:1.23.1"
     "@react-native-picker/picker": "npm:2.9.0"
     "@react-navigation/bottom-tabs": "npm:^6.5.7"
@@ -14814,6 +14938,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strip-bom@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "strip-bom@npm:3.0.0"
+  checksum: 10c0/51201f50e021ef16672593d7434ca239441b7b760e905d9f33df6e4f3954ff54ec0e0a06f100d028af0982d6f25c35cd5cda2ce34eaebccd0250b8befb90d8f1
+  languageName: node
+  linkType: hard
+
 "strip-bom@npm:^4.0.0":
   version: 4.0.0
   resolution: "strip-bom@npm:4.0.0"
@@ -14835,17 +14966,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strip-json-comments@npm:^2.0.0, strip-json-comments@npm:~2.0.1":
+  version: 2.0.1
+  resolution: "strip-json-comments@npm:2.0.1"
+  checksum: 10c0/b509231cbdee45064ff4f9fd73609e2bcc4e84a4d508e9dd0f31f70356473fde18abfb5838c17d56fb236f5a06b102ef115438de0600b749e818a35fbbc48c43
+  languageName: node
+  linkType: hard
+
 "strip-json-comments@npm:^3.1.1":
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: 10c0/9681a6257b925a7fa0f285851c0e613cc934a50661fa7bb41ca9cbbff89686bb4a0ee366e6ecedc4daafd01e83eee0720111ab294366fe7c185e935475ebcecd
-  languageName: node
-  linkType: hard
-
-"strip-json-comments@npm:~2.0.1":
-  version: 2.0.1
-  resolution: "strip-json-comments@npm:2.0.1"
-  checksum: 10c0/b509231cbdee45064ff4f9fd73609e2bcc4e84a4d508e9dd0f31f70356473fde18abfb5838c17d56fb236f5a06b102ef115438de0600b749e818a35fbbc48c43
   languageName: node
   linkType: hard
 
@@ -15359,6 +15490,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tsconfig@npm:7":
+  version: 7.0.0
+  resolution: "tsconfig@npm:7.0.0"
+  dependencies:
+    "@types/strip-bom": "npm:^3.0.0"
+    "@types/strip-json-comments": "npm:0.0.30"
+    strip-bom: "npm:^3.0.0"
+    strip-json-comments: "npm:^2.0.0"
+  checksum: 10c0/7a5dec94b9e42017d93041b1962c174afde00fd8f3066eea81a5e5b743065e95f3bedebff0edbe215b2517f8cdace8c9f15651a78d5eb7409cad2fc107e5eb98
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.4.0":
   version: 2.6.3
   resolution: "tslib@npm:2.6.3"
@@ -15411,6 +15554,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:^5.6.3":
+  version: 5.7.2
+  resolution: "typescript@npm:5.7.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/a873118b5201b2ef332127ef5c63fb9d9c155e6fdbe211cbd9d8e65877283797cca76546bad742eea36ed7efbe3424a30376818f79c7318512064e8625d61622
+  languageName: node
+  linkType: hard
+
 "typescript@npm:~5.3.3":
   version: 5.3.3
   resolution: "typescript@npm:5.3.3"
@@ -15418,6 +15571,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/e33cef99d82573624fc0f854a2980322714986bc35b9cb4d1ce736ed182aeab78e2cb32b385efa493b2a976ef52c53e20d6c6918312353a91850e2b76f1ea44f
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^5.6.3#optional!builtin<compat/typescript>":
+  version: 5.7.2
+  resolution: "typescript@patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=379a07"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/c891ccf04008bc1305ba34053db951f8a4584b4a1bf2f68fd972c4a354df3dc5e62c8bfed4f6ac2d12e5b3b1c49af312c83a651048f818cd5b4949d17baacd79
   languageName: node
   linkType: hard
 
