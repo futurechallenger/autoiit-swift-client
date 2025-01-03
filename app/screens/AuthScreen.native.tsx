@@ -1,6 +1,17 @@
 import * as React from 'react';
 import { Platform } from 'react-native';
-import { Heading, Center, Text, VStack, Box, Container, Actionsheet, HStack, Modal, FormControl, Input, Button } from 'native-base';
+import {
+  Center,
+  Text,
+  VStack,
+  Box,
+  Container,
+  Actionsheet,
+  HStack,
+  Modal,
+  FormControl,
+  Input,
+} from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
@@ -8,6 +19,8 @@ import { PasswordInput } from '../components/PasswordInput';
 import { signIn } from '../redux/gql/signInService';
 import { RootState } from '../redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Button, ButtonText } from '@/app/components/ui/button';
+import { Heading } from '@/app/components/ui/heading';
 
 const { useState, useRef, useEffect } = React;
 
@@ -83,11 +96,9 @@ const AuthScreen = () => {
       <VStack space="2.5" mt="4" padding={4}>
         <HStack justifyContent="space-between">
           <Heading>Introduction of the app</Heading>
-          {Platform.OS !== 'web' && (
-            <Button onPress={() => setModalVisible(!modalVisible)}>
-              Register
-            </Button>
-          )}
+          {Platform.OS !== 'web' && <Button onPress={() => setModalVisible(!modalVisible)}>
+            <ButtonText>Register</ButtonText>
+            </Button>}
         </HStack>
         <Box>
           {/* TODO: replace this text */}
@@ -96,7 +107,7 @@ const AuthScreen = () => {
         <Center bg="primary.100" _text={{ color: 'white', fontWeight: 'bold' }}></Center>
         <Container>
           <Button onPress={handleClick}>
-            Continue
+            <ButtonText>Continue</ButtonText>
           </Button>
         </Container>
         <Actionsheet isOpen={isOpen} onClose={handleClose}>
@@ -141,10 +152,10 @@ const AuthScreen = () => {
                 setModalVisible(false);
               }}
             >
-              Cancel
+              <ButtonText>Cancel</ButtonText>
             </Button>
             <Button onPress={handleRegister}>
-              Save
+              <ButtonText>Save</ButtonText>
             </Button>
             {/* </Button.Group> */}
           </Modal.Footer>

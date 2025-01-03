@@ -1932,6 +1932,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expo/html-elements@npm:0.11.0":
+  version: 0.11.0
+  resolution: "@expo/html-elements@npm:0.11.0"
+  checksum: 10c0/993fc32cb52af4240eb04d5ec300428860d3fe8d14028685a8339f147addb717ea42b9fb863cb372a10b2ee1231d83abc345ac7ccfdf4667abfa043181937e7d
+  languageName: node
+  linkType: hard
+
 "@expo/image-utils@npm:0.3.23":
   version: 0.3.23
   resolution: "@expo/image-utils@npm:0.3.23"
@@ -5456,6 +5463,7 @@ __metadata:
   resolution: "autoiit-client@workspace:."
   dependencies:
     "@babel/core": "npm:^7.26.0"
+    "@expo/html-elements": "npm:0.11.0"
     "@expo/vector-icons": "npm:^14.0.2"
     "@expo/webpack-config": "npm:~19.0.1"
     "@gluestack-ui/button": "npm:^1.0.8"
