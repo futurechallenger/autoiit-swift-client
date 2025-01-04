@@ -5,7 +5,7 @@ import { View } from '../components/Themed';
 
 import { request, gql } from 'graphql-request';
 import { Actionsheet, Box, Text } from 'native-base';
-import { Button } from 'react-native-pager';
+import { Button, ButtonText } from '@/app/components/ui/button';
 import { SERVER_URL } from '../Lib/config';
 
 const loginGql = gql`
@@ -33,11 +33,11 @@ export const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      <Button mode="contained" onPress={handleLogin}>
-        Login
+      <Button onPress={handleLogin}>
+        <ButtonText>Login</ButtonText>
       </Button>
-      <Button mode="contained" onPress={handleSignIn}>
-        SignIn
+      <Button onPress={handleSignIn}>
+        <ButtonText>SignIn</ButtonText>
       </Button>
 
       <Actionsheet isOpen={openSheet}>
