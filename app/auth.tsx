@@ -1,36 +1,29 @@
 import * as React from 'react';
-import { Platform } from 'react-native';
-import {
-  Center,
-  Text,
-  // Button,
-  VStack,
-  Box,
-  Container,
-  Actionsheet,
-  HStack,
-  Modal,
-  FormControl,
-  Input,
-} from 'native-base';
+import { Platform, TextInput } from 'react-native';
+import { Center, Text, VStack, Box, Container, Actionsheet, HStack, Modal, FormControl } from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { PasswordInput } from '../components/PasswordInput';
-import { signIn } from '../redux/gql/signInService';
-import { RootState } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { PasswordInput } from '@/components/PasswordInput';
+import { signIn } from '@/redux/gql/signInService';
+import { RootState } from '@/redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Button } from '@/components/ui/button';
+import { Button, ButtonText } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
+import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
+import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
+import {router} from 'expo-router';
 
 const { useState, useRef, useEffect } = React;
 
 const AuthScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const nameInputRef = useRef<HTMLInputElement>(null);
-  const emailInputRef = useRef<HTMLInputElement>(null);
-  const passwordInputRef = useRef<HTMLInputElement>(null);
+  const nameInputRef = useRef(null);
+  const [nameValue, setNameValue] = useState('');
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
   const finalRef = useRef(null);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
@@ -57,11 +50,18 @@ const AuthScreen = () => {
     setIsOpen(false);
   };
 
+  const handleState = () => {
+    setShowPassword((showState) => {
+      return !showState;
+    });
+  };
+
   const handleSelect = (selected: string) => {
     switch (selected) {
       case 'email':
         if (isOpen) setIsOpen(false);
-        navigation.navigate('Email');
+        // navigation.navigate('Email');
+        router.push('/email');
         break;
       case 'cancel':
         setIsOpen(false);
@@ -73,23 +73,24 @@ const AuthScreen = () => {
 
   const handleRegister = () => {
     setModalVisible(false);
-    const name = nameInputRef.current?.value;
-    const email = emailInputRef.current?.value;
-    const password = passwordInputRef.current?.value;
 
-    if (!email || !password) {
+    if (!emailValue || !passwordValue) {
       return;
     }
 
     dispatch(
       signIn({
         userInfo: {
-          name,
-          email,
-          password,
+          name: nameValue,
+          email: emailValue,
+          password: passwordValue,
         },
       }),
     );
+
+    setNameValue('');
+    setEmailValue('');
+    setPasswordValue('');
   };
 
   return (
@@ -97,7 +98,11 @@ const AuthScreen = () => {
       <VStack space="2.5" mt="4" padding={4}>
         <HStack justifyContent="space-between">
           <Heading>Introduction of the app</Heading>
-          {Platform.OS !== 'web' && <Button onPress={() => setModalVisible(!modalVisible)}>Register</Button>}
+          {Platform.OS !== 'web' && (
+            <Button onPress={() => setModalVisible(!modalVisible)}>
+              <ButtonText>Register</ButtonText>
+            </Button>
+          )}
         </HStack>
         <Box>
           {/* TODO: replace this text */}
@@ -105,7 +110,9 @@ const AuthScreen = () => {
         </Box>
         <Center bg="primary.100" _text={{ color: 'white', fontWeight: 'bold' }}></Center>
         <Container>
-          <Button onPress={handleClick}>Continue</Button>
+          <Button onPress={handleClick}>
+            <ButtonText>Continue</ButtonText>
+          </Button>
         </Container>
         <Actionsheet isOpen={isOpen} onClose={handleClose}>
           <Actionsheet.Content>
@@ -127,19 +134,37 @@ const AuthScreen = () => {
       >
         <Modal.Content>
           <Modal.CloseButton />
-          <Modal.Header>Contact Us</Modal.Header>
+          <Modal.Header>Register</Modal.Header>
           <Modal.Body>
             <FormControl>
               <FormControl.Label>Name</FormControl.Label>
-              <Input ref={nameInputRef} />
+              <Input variant="outline" size="md" isDisabled={false} isInvalid={false} isReadOnly={false}>
+                <InputField
+                  placeholder="Name"
+                  ref={nameInputRef}
+                  onChangeText={(v) => setNameValue(v)}
+                  value={nameValue}
+                />
+              </Input>
             </FormControl>
             <FormControl>
               <FormControl.Label>Email</FormControl.Label>
-              <Input ref={emailInputRef} />
+              <Input variant="outline" size="md" isDisabled={false} isInvalid={false} isReadOnly={false}>
+                <InputField placeholder="Email" onChangeText={(v) => setEmailValue(v)} value={emailValue} />
+              </Input>
             </FormControl>
             <FormControl mt="3">
               <FormControl.Label>Password</FormControl.Label>
-              <PasswordInput ref={passwordInputRef} />
+              <Input className="text-center">
+                <InputField
+                  type={showPassword ? 'text' : 'password'}
+                  onChangeText={(v) => setPasswordValue(v)}
+                  value={passwordValue}
+                />
+                <InputSlot className="pr-3" onPress={handleState}>
+                  <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
+                </InputSlot>
+              </Input>
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
@@ -149,9 +174,11 @@ const AuthScreen = () => {
                 setModalVisible(false);
               }}
             >
-              Cancel
+              <ButtonText>Cancel</ButtonText>
             </Button>
-            <Button onPress={handleRegister}>Save</Button>
+            <Button onPress={handleRegister}>
+              <ButtonText>Save</ButtonText>
+            </Button>
             {/* </Button.Group> */}
           </Modal.Footer>
         </Modal.Content>
