@@ -6081,6 +6081,7 @@ __metadata:
     expo-haptics: "npm:~14.0.0"
     expo-linking: "npm:~7.0.3"
     expo-router: "npm:~4.0.15"
+    expo-secure-store: "npm:14.0.0"
     expo-splash-screen: "npm:~0.29.18"
     expo-status-bar: "npm:~2.0.0"
     expo-symbols: "npm:0.2.0"
@@ -8715,6 +8716,15 @@ __metadata:
     react-native-reanimated:
       optional: true
   checksum: 10c0/3498a533b522a8f07e6d5128024052a3e3ae5670fd795b78fe1df46b2e0e4443bcb2a3c910cd4f920e6d480bd71275153b21400c15b6414cb659b23781296baf
+  languageName: node
+  linkType: hard
+
+"expo-secure-store@npm:14.0.0":
+  version: 14.0.0
+  resolution: "expo-secure-store@npm:14.0.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/439c6b3bd242e8a7e4cface3f0739b996395116df5f91374b5a00cff8d23aa8456b422878e4418b1da647f3b23f4b723392bc7ee32fbad11f17a3a4ea20af256
   languageName: node
   linkType: hard
 
