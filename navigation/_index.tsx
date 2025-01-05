@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Colors } from '@/constants/Colors';
 // import { useColorScheme } from '@/hooks/useColorScheme';
 import { ActivityScreen } from '@/app/(tabs)/activity';
-import { AuthScreen } from '@/app/auth';
+import { AuthScreen } from '@/app';
 import { ChooseServiceScreen } from '../screens/ChooseServiceScreen';
 import { CreateFlowScreen } from '../app/(tabs)/create';
 import { DeveloperScreen } from '../screens/developer/DeveloperScreen';
