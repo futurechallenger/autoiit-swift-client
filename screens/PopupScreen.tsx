@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text } from 'native-base';
 import { WebView } from 'react-native-webview';
-import { SERVER_URL } from '../Lib/config';
+import { SERVER_URL } from '../lib/config';
 import { useRoute } from '@react-navigation/native';
 
 export const PopupScreen = () => {

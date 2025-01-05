@@ -15,7 +15,7 @@ import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import { exploreService } from "../redux/gql/searchService";
 
-import { REQUEST_COUNT } from "../Lib/config";
+import { REQUEST_COUNT } from "../lib/config";
 import { ServiceCell } from "../components/ServiceCell";
 import { ServiceInfo } from "../redux/gql/chooseServices";
 

@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
-import { SERVER_URL } from '../Lib/config';
+import { SERVER_URL } from '../lib/config';
 
 let popup: Window | null = null;
 

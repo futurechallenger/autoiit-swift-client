@@ -1,4 +1,4 @@
-import { SERVER_URL } from '../Lib/config';
+import { SERVER_URL } from '@/lib/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { APIResponse } from '../types';
 

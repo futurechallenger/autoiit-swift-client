@@ -1,7 +1,7 @@
 import { GestureResponderEvent, ListRenderItem, ListRenderItemInfo, StyleSheet } from 'react-native';
 
-import { Text, View } from '../components/Themed';
-import { MainTabScreenProps } from '../types';
+import { Text, View } from '@/components/Themed';
+import { MainTabScreenProps } from '@/types';
 import {
   Spinner,
   Box,
@@ -12,29 +12,29 @@ import {
   Spacer,
   // Toast,
 } from 'native-base';
-import type { ServiceInfo } from '../redux/gql/chooseServices';
+import type { ServiceInfo } from '@/redux/gql/chooseServices';
 import React, { useContext, useEffect } from 'react';
-import { useRoute } from '@react-navigation/native';
-import { AuthContext } from '../navigation/AuthContext';
+// import { useRoute } from '@react-navigation/native';
+import { AuthContext } from '@/navigation/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getServiceInfo } from '../redux/gql/serviceInfoService';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { RootState } from '../redux/store';
-import { clearToken as clearLoginToken } from '../redux/gql/loginService';
-import { clearToken as clearSignInToken } from '../redux/gql/signInService';
-import { ServiceCell } from '../components/ServiceCell';
+import { getServiceInfo } from '@/redux/gql/serviceInfoService';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { RootState } from '@/redux/store';
+import { clearToken as clearLoginToken } from '@/redux/gql/loginService';
+import { clearToken as clearSignInToken } from '@/redux/gql/signInService';
+import { ServiceCell } from '@/components/ServiceCell';
 
 export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'>) {
   const { services, status, error } = useAppSelector((state: RootState) => state.serviceInfo);
   const dispatch = useAppDispatch();
   const authContext = useContext(AuthContext);
-  const route = useRoute();
+  // const route = useRoute();
 
-  const { refresh = false } = route?.params ?? {};
+  // const { refresh = false } = route?.params ?? {};
 
-  useEffect(() => {
-    dispatch(getServiceInfo({ type: 'RECOMMENDED' }));
-  }, [refresh]);
+  // useEffect(() => {
+  //   dispatch(getServiceInfo({ type: 'RECOMMENDED' }));
+  // }, [refresh]);
 
   const handleItemClick = (item: any) => {
     if (!item.connected) navigation.navigate('ServiceDetail', { service: item });
