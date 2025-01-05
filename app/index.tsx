@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Platform, TextInput } from 'react-native';
 import { Center, Text, VStack, Box, Container, Actionsheet, HStack, Modal, FormControl } from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { PasswordInput } from '@/components/PasswordInput';
 import { signIn } from '@/redux/gql/signInService';
@@ -12,11 +12,11 @@ import { Button, ButtonText } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
 import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
 import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
-import {router} from 'expo-router';
+import { router } from 'expo-router';
 
 const { useState, useRef, useEffect } = React;
 
-const AuthScreen = () => {
+export default function Auth() {
   const [isOpen, setIsOpen] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,7 +25,7 @@ const AuthScreen = () => {
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const finalRef = useRef(null);
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const dispatch = useAppDispatch();
 
   const { token, status, error } = useAppSelector((state: RootState) => state.signIn);
@@ -185,6 +185,4 @@ const AuthScreen = () => {
       </Modal>
     </SafeAreaView>
   );
-};
-
-export { AuthScreen };
+}

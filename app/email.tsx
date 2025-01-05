@@ -1,9 +1,21 @@
 import * as React from 'react';
-import { VStack, Box, useToast, Spinner, ZStack, Button, Heading, Input as TextInput, Row as  Snackbar, Text } from 'native-base';
+import {
+  VStack,
+  Box,
+  useToast,
+  Spinner,
+  ZStack,
+  Button,
+  Heading,
+  Input as TextInput,
+  Row as Snackbar,
+  Text,
+} from 'native-base';
 import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
+// import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { EmailScreenNavigationProp } from '../types';
+// import { EmailScreenNavigationProp } from '../types';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getUserInfo } from '../redux/gql/userInfoService';
 import { RootState } from '../redux/store';
@@ -20,10 +32,10 @@ const { useState, useEffect } = React;
  * If it is, show login in next screen.
  * If not, show `Create account` there
  */
-const EmailScreen = () => {
+export default function EmailScreen() {
   const dispatch = useAppDispatch();
   const { userInfo, status } = useAppSelector((state: RootState) => state.userInfo);
-  const navigation = useNavigation<EmailScreenNavigationProp>();
+  // const navigation = useNavigation<EmailScreenNavigationProp>();
   const [text, setText] = useState<string>('');
   const toast = useToast();
   const [email, setEmail] = useState('');
@@ -33,7 +45,8 @@ const EmailScreen = () => {
     if (status === 'succeeded') {
       console.log('Status value is succeeded');
 
-      navigation.navigate('Password', { exists: userInfo });
+      // navigation.navigate('Password', { exists: userInfo });
+      router.push('./passowrd', { exists: userInfo });
       return;
     }
   }, [email, status]);
@@ -81,15 +94,11 @@ const EmailScreen = () => {
           {status === 'loading' && <Spinner size="lg" />}
         </ZStack>
         <Box paddingBottom={10} paddingX="5">
-          <Button onPress={handleClick}>
-            Continue
-          </Button>
+          <Button onPress={handleClick}>Continue</Button>
         </Box>
       </VStack>
       {/* {status === 'failed' && <Toast />} */}
       <Toast />
     </View>
   );
-};
-
-export { EmailScreen };
+}
