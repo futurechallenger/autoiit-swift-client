@@ -15,6 +15,7 @@ import {
 import type { ServiceInfo } from '@/redux/gql/chooseServices';
 import React, { useContext, useEffect } from 'react';
 // import { useRoute } from '@react-navigation/native';
+import { Router } from 'expo-router';
 import { AuthContext } from '@/navigation/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getServiceInfo } from '@/redux/gql/serviceInfoService';

@@ -3,7 +3,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from '@/hooks/useCachedResources';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import Navigation from './navigation';
+import Navigation from './navigation/_index';
 import { Provider } from 'react-redux';
 import { NativeBaseProvider } from 'native-base';
 import { store } from './redux/store';

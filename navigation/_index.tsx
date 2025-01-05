@@ -16,19 +16,19 @@ import * as React from 'react';
 import { ColorSchemeName, Platform, Pressable } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Colors } from '@/../../constants/Colors';
-import { useColorScheme } from '@/../../hooks/useColorScheme';
-import { ActivityScreen } from '../screens/ActivityScreen';
-import { AuthScreen } from '../screens/AuthScreen';
+import { Colors } from '@/constants/Colors';
+// import { useColorScheme } from '@/hooks/useColorScheme';
+import { ActivityScreen } from '@/screens/ActivityScreen';
+import { AuthScreen } from '@/app/auth';
 import { ChooseServiceScreen } from '../screens/ChooseServiceScreen';
 import { CreateFlowScreen } from '../screens/CreateFlowScreen';
 import { DeveloperScreen } from '../screens/developer/DeveloperScreen';
 import { NewServiceScreen } from '../screens/developer/NewServiceScreen';
-import { EmailScreen } from '../screens/EmailScreen';
-import { ExploreScreen } from '../screens/ExploreScreen';
-import ModalScreen from '../screens/ModalScreen';
-import MyFlowScreen from '../screens/MyFlowScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
+import { EmailScreen } from '@/app/email';
+// import { ExploreScreen } from '@/screens/ExploreScreen';
+import ModalScreen from '@/screens/ModalScreen';
+// import MyFlowScreen from '@/screens/MyFlowScreen';
+import NotFoundScreen from '@/screens/NotFoundScreen';
 import { PasswordScreen } from '../screens/PasswordScreen';
 import { PopupScreen } from '../screens/PopupScreen';
 import { AccountScreen } from '../screens/Profile/AccountScreen';
@@ -167,16 +167,16 @@ export function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+  // const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
       initialRouteName="MyFlow"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}
+      // screenOptions={{
+      //   tabBarActiveTintColor: Colors[colorScheme].tint,
+      // }}
     >
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="MyFlow"
         component={MyFlowScreen}
         options={({ navigation }: MainTabScreenProps<'MyFlow'>) => ({
@@ -203,8 +203,8 @@ function BottomTabNavigator() {
             console.log('Tab pressed: ', navigation.getState());
           },
         })}
-      />
-      <BottomTab.Screen
+      /> */}
+      {/* <BottomTab.Screen
         name="Explore"
         component={ExploreScreen}
         options={{
@@ -216,7 +216,7 @@ function BottomTabNavigator() {
             console.log('Tab pressed: ', navigation.getState());
           },
         })}
-      />
+      /> */}
       <BottomTab.Screen
         name="Create" // Create flow
         component={CreateFlowScreen}

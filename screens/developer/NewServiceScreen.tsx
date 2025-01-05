@@ -5,7 +5,7 @@ import { TextInputDesc } from '../../components/TextInputDesc';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { addService, resetStatus } from '../../redux/gql/addServiceSlice';
 import { RootState } from '../../redux/store';
-import Navigation from '../../navigation';
+import Navigation from '../../navigation/_index';
 import { useNavigation } from '@react-navigation/native';
 
 const { useState, useEffect } = React;
