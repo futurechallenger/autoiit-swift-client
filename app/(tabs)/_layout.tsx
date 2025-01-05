@@ -25,8 +25,9 @@ export default function TabLayout() {
           },
           default: {},
         }),
-      }}>
-        <Tabs.Screen
+      }}
+    >
+      <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
@@ -34,12 +35,33 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="ExploreScreen"
+        name="explore"
         options={{
           title: 'Explore',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
         }}
       />
-      </Tabs>
+      <Tabs.Screen
+        name="create"
+        options={{
+          title: 'Create',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="add.circle.outline" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="activity"
+        options={{
+          title: 'Activity',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="list.ul" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person" color={color} />,
+        }}
+      />
+    </Tabs>
   );
 }
