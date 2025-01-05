@@ -1,16 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, Text, View } from 'native-base';
 import * as React from 'react';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { RootState } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { RootState } from '@/redux/store';
 import { useIsFocused } from '@react-navigation/native';
-import { removeAutoFlow } from '../redux/gql/removeAutoFlowSlice';
+import { removeAutoFlow } from '@/redux/gql/removeAutoFlowSlice';
 
 const VerticalDivider = () => {
   return <View width="2" h="16" bg="red.500" />;
 };
 
-export const CreateFlowScreen = () => {
+export default function CreateFlowScreen() {
   const dispatch = useAppDispatch();
 
   const isFocused = useIsFocused();
@@ -73,4 +73,4 @@ export const CreateFlowScreen = () => {
       </View>
     </View>
   );
-};
+}
