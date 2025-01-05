@@ -8,7 +8,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 const { useEffect, useState } = React;
 
-export const ChooseServiceScreen = () => {
+export default function ChooseServiceScreen() {
   const navigation = useNavigation();
   const route = useRoute();
   const { phrase } = route.params ?? {};
@@ -65,4 +65,4 @@ export const ChooseServiceScreen = () => {
       />
     </View>
   );
-};
+}
