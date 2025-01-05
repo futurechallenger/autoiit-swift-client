@@ -24,8 +24,10 @@ import { RootState } from '@/redux/store';
 import { clearToken as clearLoginToken } from '@/redux/gql/loginService';
 import { clearToken as clearSignInToken } from '@/redux/gql/signInService';
 import { ServiceCell } from '@/components/ServiceCell';
+import { useSession } from '@/hooks/ctx';
 
 export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'>) {
+  const { signOut } = useSession();
   const { services, status, error } = useAppSelector((state: RootState) => state.serviceInfo);
   const dispatch = useAppDispatch();
   const authContext = useContext(AuthContext);
@@ -48,7 +50,11 @@ export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'
   if (error) {
     // TODO: show error message
     // Toast.show({ description: error });
-    if (error === 'Signature has expired' || error === 'Signature verification failed' || error === 'Token expired') {
+    if (
+      error === 'Signature has expired' ||
+      error === 'Signature verification failed' ||
+      error === 'Token expired'
+    ) {
       AsyncStorage.setItem('@token', '');
       authContext.setAuthToken('');
       dispatch(clearSignInToken());
@@ -59,7 +65,7 @@ export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'
   return (
     <View style={styles.container}>
       <ZStack justifyContent="center" alignItems="center" bg="primary.100" w="full" h="full">
-        <FlatList
+        {/* <FlatList
           w="full"
           h="full"
           paddingX={5}
@@ -67,7 +73,15 @@ export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'
           ListHeaderComponent={<ListHeader />}
           ListFooterComponent={<ListFooter />}
           renderItem={renderItem}
-        />
+        /> */}
+        <Text
+          onPress={() => {
+            // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
+            signOut();
+          }}
+        >
+          Sign Out
+        </Text>
         {status === 'loading' && <Spinner size="lg" />}
         {error && console.error('ERROR', error)}
       </ZStack>
@@ -77,7 +91,13 @@ export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'
 
 const ListHeader = () => {
   return (
-    <Box minHeight="30" justifyContent="center" alignItems="flex-start" borderBottomWidth="1" borderColor="muted.500">
+    <Box
+      minHeight="30"
+      justifyContent="center"
+      alignItems="flex-start"
+      borderBottomWidth="1"
+      borderColor="muted.500"
+    >
       <Text>Introduction</Text>
     </Box>
   );
