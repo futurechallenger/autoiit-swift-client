@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
-import { View } from '../components/Themed';
+import { View } from '@/components/Themed';
 
 import { request, gql } from 'graphql-request';
 import { Actionsheet, Box, Text } from 'native-base';
-import { Button, ButtonText } from '@/app/components/ui/button';
-import { SERVER_URL } from '../Lib/config';
+import { Button, ButtonText } from '@/components/ui/button';
+import { SERVER_URL } from '../lib/config';
 
 const loginGql = gql`
   mutation login($userInfo: UserInfoInput!) {

@@ -5,14 +5,19 @@
  */
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { DarkTheme, DefaultTheme, NavigationContainer, NavigationContainerRefContext } from '@react-navigation/native';
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+  NavigationContainerRefContext,
+} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Platform, Pressable } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
+import { Colors } from '@/../../constants/Colors';
+import { useColorScheme } from '@/../../hooks/useColorScheme';
 import { ActivityScreen } from '../screens/ActivityScreen';
 import { AuthScreen } from '../screens/AuthScreen';
 import { ChooseServiceScreen } from '../screens/ChooseServiceScreen';
@@ -31,7 +36,12 @@ import { ProfileScreen } from '../screens/ProfileScreen';
 import { SearchScreen } from '../screens/SearchScreen';
 import { ServiceDetailScreen } from '../screens/ServiceDetailScreen';
 import { TriggersScreen } from '../screens/TriggersScreen';
-import { BottomStackParamList, MainTabScreenProps, RootTabParamList, StackNavigatorParamList } from '../types';
+import {
+  BottomStackParamList,
+  MainTabScreenProps,
+  RootTabParamList,
+  StackNavigatorParamList,
+} from '../types';
 import { AuthContext } from './AuthContext';
 import LinkingConfiguration from './LinkingConfiguration';
 import { ConnectionScreen } from '../screens/ConnectionScreen';
@@ -59,7 +69,11 @@ export const AuthNavigator = ({ isSignedIn }: { isSignedIn: boolean }) => {
         <>
           <NavStack.Screen name="Tabs" component={RootNavigator} options={{ headerShown: false }} />
           <NavStack.Screen name="Account" component={AccountScreen} />
-          <NavStack.Screen name="Search" component={SearchScreen} options={{ animation: 'fade', headerShown: false }} />
+          <NavStack.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{ animation: 'fade', headerShown: false }}
+          />
 
           <NavStack.Group
             screenOptions={{
@@ -118,7 +132,10 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 
   return (
     <AuthContext.Provider value={{ token: token ?? '', setAuthToken: (token) => setToken(token) }}>
-      <NavigationContainer linking={LinkingConfiguration} theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <NavigationContainer
+        linking={LinkingConfiguration}
+        theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+      >
         {renderNavigator(token)}
       </NavigationContainer>
     </AuthContext.Provider>
@@ -172,7 +189,12 @@ function BottomTabNavigator() {
                 opacity: pressed ? 0.5 : 1,
               })}
             >
-              <FontAwesome name="info-circle" size={25} color={Colors[colorScheme].text} style={{ marginRight: 15 }} />
+              <FontAwesome
+                name="info-circle"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
             </Pressable>
           ),
         })}

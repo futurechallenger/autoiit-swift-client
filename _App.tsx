@@ -1,14 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
+import useCachedResources from '@/hooks/useCachedResources';
+import { useColorScheme } from '@/hooks/useColorScheme';
 import Navigation from './navigation';
 import { Provider } from 'react-redux';
 import { NativeBaseProvider } from 'native-base';
 import { store } from './redux/store';
 import '../global.css';
-import { GluestackUIProvider } from './components/ui/gluestack-ui-provider';
+import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 // TODO: Theme
 // import { theme } from "./constants/theme";
 

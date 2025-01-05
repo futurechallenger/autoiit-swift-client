@@ -2276,6 +2276,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gluestack-ui/alert@npm:^0.1.16":
+  version: 0.1.16
+  resolution: "@gluestack-ui/alert@npm:0.1.16"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/351e4df5243cfe058547a84593f658e6388cc28c2c2b25b4ac3885111cc4fe0b73e10ff32250092ae12017ced9befbffd1f7ec6f946c504d0b2767604e36e806
+  languageName: node
+  linkType: hard
+
 "@gluestack-ui/button@npm:^1.0.8":
   version: 1.0.8
   resolution: "@gluestack-ui/button@npm:1.0.8"
@@ -6039,6 +6049,7 @@ __metadata:
     "@expo/html-elements": "npm:0.11.0"
     "@expo/vector-icons": "npm:^14.0.2"
     "@expo/webpack-config": "npm:~19.0.1"
+    "@gluestack-ui/alert": "npm:^0.1.16"
     "@gluestack-ui/button": "npm:^1.0.8"
     "@gluestack-ui/icon": "npm:0.1.25"
     "@gluestack-ui/input": "npm:^0.1.32"
@@ -6072,6 +6083,7 @@ __metadata:
     expo-router: "npm:~4.0.15"
     expo-splash-screen: "npm:~0.29.18"
     expo-status-bar: "npm:~2.0.0"
+    expo-symbols: "npm:0.2.0"
     expo-system-ui: "npm:~4.0.6"
     expo-web-browser: "npm:~14.0.1"
     graphql: "npm:^16.10.0"
@@ -8724,6 +8736,17 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10c0/d2d80f6ef86be7ac7270407ae6016e501fa99986bd517039c0fddd2628f0ae34655ca855a1cfd9e5e4a3da1229b08fc24834a4077f135276e7af84cb3368bfff
+  languageName: node
+  linkType: hard
+
+"expo-symbols@npm:0.2.0":
+  version: 0.2.0
+  resolution: "expo-symbols@npm:0.2.0"
+  dependencies:
+    sf-symbols-typescript: "npm:^2.0.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/1bcacaf3134276e88b419b78fbe660637a47221fa2ad323bdba88fb08173db2aa1905255e1ee1e144e415220d49a4e210d5b3855019dfa77ead09c993fa484a5
   languageName: node
   linkType: hard
 
@@ -15255,6 +15278,13 @@ __metadata:
   version: 1.2.0
   resolution: "setprototypeof@npm:1.2.0"
   checksum: 10c0/68733173026766fa0d9ecaeb07f0483f4c2dc70ca376b3b7c40b7cda909f94b0918f6c5ad5ce27a9160bdfb475efaa9d5e705a11d8eaae18f9835d20976028bc
+  languageName: node
+  linkType: hard
+
+"sf-symbols-typescript@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "sf-symbols-typescript@npm:2.1.0"
+  checksum: 10c0/b6e2482c2b3ba785aa00770013e343a2175475b9cb7c8703c30a2ec1da8b41acd982db2d953877afb35af32a3dfba337d0b29e703c399cd2138c3cf68685c9c2
   languageName: node
   linkType: hard
 

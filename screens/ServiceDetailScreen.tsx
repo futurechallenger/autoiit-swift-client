@@ -5,7 +5,7 @@ import { Box, Button, IconButton, Text, View } from 'native-base';
 import * as React from 'react';
 import { Platform, Share } from 'react-native';
 import { ServiceTab } from '../components/ServiceTab';
-import { SERVER_URL } from '../Lib/config';
+import { SERVER_URL } from '../lib/config';
 import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
 import { getServiceFullInfo } from '../redux/gql/serviceFullInfo';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';

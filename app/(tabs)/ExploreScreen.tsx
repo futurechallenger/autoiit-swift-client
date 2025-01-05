@@ -1,33 +1,19 @@
-import * as React from "react";
-import {
-  Box,
-  Button,
-  HStack,
-  View,
-  Text,
-  FlatList,
-  Spinner,
-  Input,
-} from "native-base";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { RootState } from "../redux/store";
-import {
-  exploreService,
-  getMostSearchedServices,
-} from "../redux/gql/searchService";
-import { ServiceCell } from "../components/ServiceCell";
-import { useNavigation } from "@react-navigation/native";
-import { REQUEST_COUNT } from "../Lib/config";
+import * as React from 'react';
+import { Box, Button, HStack, View, Text, FlatList, Spinner, Input } from 'native-base';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { RootState } from '@/redux/store';
+import { exploreService, getMostSearchedServices } from '@/redux/gql/searchService';
+import { ServiceCell } from '@/components/ServiceCell';
+// import { useNavigation } from '@react-navigation/native';
+import { REQUEST_COUNT } from '@/lib/config';
 
 const { useEffect, useState } = React;
 
-export const ExploreScreen = () => {
-  const [condition, setCondition] = useState("");
-  const navigation = useNavigation();
+export default function ExploreScreen() {
+  const [condition, setCondition] = useState('');
+  // const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  const { services, error, status } = useAppSelector(
-    (state: RootState) => state.exploreServices
-  );
+  const { services, error, status } = useAppSelector((state: RootState) => state.exploreServices);
   const {
     services: mostSearchedServices,
     error: mostSearchedError,
@@ -40,7 +26,7 @@ export const ExploreScreen = () => {
         sinceId: null,
         untilId: null,
         name: condition,
-      })
+      }),
     );
     dispatch(getMostSearchedServices());
   }, []);
@@ -48,7 +34,7 @@ export const ExploreScreen = () => {
   const handleItemClick = (item: any) => {};
 
   const handleFocus = () => {
-    navigation.navigate("Search");
+    // navigation.navigate('Search');
   };
 
   return (
@@ -58,15 +44,9 @@ export const ExploreScreen = () => {
         decelerationRate="fast"
         snapToInterval={20}
         data={services ?? []}
-        renderItem={({ item }) => (
-          <ServiceCell item={item} handleItemClick={handleItemClick} />
-        )}
+        renderItem={({ item }) => <ServiceCell item={item} handleItemClick={handleItemClick} />}
         ListHeaderComponent={<ListHeader onSearchFocus={handleFocus} />}
-        ListFooterComponent={
-          status === "loading" || mostSearchedStatus === "loading" ? (
-            <Spinner />
-          ) : null
-        }
+        ListFooterComponent={status === 'loading' || mostSearchedStatus === 'loading' ? <Spinner /> : null}
         onEndReached={
           () => {}
           // dispatch(
@@ -79,17 +59,15 @@ export const ExploreScreen = () => {
           // )
         }
       />
-      {status === "loading" && <Text>Loading...</Text>}
-      {(error || mostSearchedError) && (
-        <Text>{error || mostSearchedError}</Text>
-      )}
+      {status === 'loading' && <Text>Loading...</Text>}
+      {(error || mostSearchedError) && <Text>{error || mostSearchedError}</Text>}
     </View>
   );
-};
+}
 
 const ListHeader = ({ onSearchFocus }: { onSearchFocus: () => void }) => {
   const [searching, setSearching] = useState(false);
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
 
   // const handleInput = (newValue: string) => {
   //   if (newValue) {
