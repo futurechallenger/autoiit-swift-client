@@ -1,9 +1,9 @@
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 import { Button, Text, View } from 'native-base';
 import * as React from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
-import { useIsFocused } from '@react-navigation/native';
+// import { useIsFocused } from '@react-navigation/native';
 import { removeAutoFlow } from '@/redux/gql/removeAutoFlowSlice';
 
 const VerticalDivider = () => {
@@ -13,13 +13,13 @@ const VerticalDivider = () => {
 export default function CreateFlowScreen() {
   const dispatch = useAppDispatch();
 
-  const isFocused = useIsFocused();
-  const navigation = useNavigation();
+  // const isFocused = useIsFocused();
+  // const navigation = useNavigation();
   const { autoFlow, status, error } = useAppSelector((state: RootState) => state.addAutoFlow);
 
   const handleContinue = () => {
     // TODO: navigate to `Review and finish` screen
-    navigation.navigate('ReviewFinish');
+    // navigation.navigate('ReviewFinish');
   };
 
   const handleCancel = () => {
@@ -30,7 +30,8 @@ export default function CreateFlowScreen() {
 
   return (
     <View h="full" w="full" justifyContent="flex-start" alignItems="center">
-      <Text>{isFocused ? 'focused' : 'not focused'}</Text>
+      {/* <Text>{isFocused ? 'focused' : 'not focused'}</Text> */}
+      <Text>Not implemented</Text>
       <View
         bg="yellow.300"
         minW="50%"
@@ -44,7 +45,13 @@ export default function CreateFlowScreen() {
         <Text fontSize="60" marginRight="10" marginY="5">
           When
         </Text>
-        <Button onPress={() => navigation.navigate('ChooseService', { phrase: 'Trigger' })}>Add</Button>
+        <Button
+          onPress={() => {
+            // navigation.navigate('ChooseService', { phrase: 'Trigger' });
+          }}
+        >
+          Add
+        </Button>
       </View>
       <VerticalDivider />
       <View
@@ -62,7 +69,9 @@ export default function CreateFlowScreen() {
         <Button
           disabled={!autoFlow}
           bgColor={!autoFlow ? 'muted.500' : null}
-          onPress={() => navigation.navigate('ChooseService', { phrase: 'Action' })}
+          onPress={() => {
+            // navigation.navigate('ChooseService', { phrase: 'Action' })
+          }}
         >
           Add
         </Button>
