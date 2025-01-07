@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Stack } from 'expo-router';
 import { Platform, TextInput } from 'react-native';
 import { Center, Text, VStack, Box, Container, Actionsheet, HStack, Modal, FormControl } from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -95,6 +96,7 @@ export default function Auth() {
 
   return (
     <SafeAreaView>
+      <Stack.Screen options={{ headerShown: false }} />
       <VStack space="2.5" mt="4" padding={4}>
         <HStack justifyContent="space-between">
           <Heading>Introduction of the app</Heading>
@@ -169,7 +171,7 @@ export default function Auth() {
           </Modal.Body>
           <Modal.Footer>
             {/* <Button.Group space={2}> */}
-            <Button
+            <Button className='mr-5'
               onPress={() => {
                 setModalVisible(false);
               }}

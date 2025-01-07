@@ -9,18 +9,18 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useSession } from '@/hooks/ctx';
 
-import {Text} from 'react-native';
+import { Text } from 'react-native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const {session, isLoading} = useSession();
+  const { session, isLoading } = useSession();
 
-  if(isLoading){
-    return <Text>Loading...</Text>
+  if (isLoading) {
+    return <Text>Loading...</Text>;
   }
 
-  if(!session){
-    return <Redirect href="/sign-in" />;
+  if (!session) {
+    return <Redirect href="/auth" />;
   }
 
   return (

@@ -6,7 +6,6 @@ module.exports = {
   // NOTE: Update this to include the paths to all of your component files.
   content: [
     './app/**/*.{js,jsx,ts,tsx}',
-    './**/*.{html,js,jsx,ts,tsx}',
     './core-components/**/**/*.{html,js,jsx,ts,tsx}',
     './components/**/*.{html,js,jsx,ts,tsx,mdx}',
     './hooks/**/*.{html,js,jsx,ts,tsx,mdx}',
