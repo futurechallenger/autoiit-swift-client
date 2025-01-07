@@ -4,6 +4,7 @@ import { Modal, Button, View, Text, VStack, Box, Pressable, FlatList } from 'nat
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DefaultAvatar } from '@/components/DefaultAvatar';
 import { router } from 'expo-router';
+import { useSession } from '@/hooks/ctx';
 
 const profileItems = [
   'avatar',
@@ -22,6 +23,7 @@ const profileItems = [
 const { useState } = React;
 
 export default function ProfileScreen() {
+  const { signOut } = useSession();
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleItemPress = (param: string) => {
@@ -149,6 +151,7 @@ export default function ProfileScreen() {
               </Button>
               <Button
                 onPress={() => {
+                  signOut();
                   AsyncStorage.removeItem('@token');
                   AsyncStorage.removeItem('@email');
                   setModalVisible(false);

@@ -16,7 +16,7 @@ import type { ServiceInfo } from '@/redux/gql/chooseServices';
 import React, { useContext, useEffect } from 'react';
 // import { useRoute } from '@react-navigation/native';
 import { Router } from 'expo-router';
-import { AuthContext } from '@/navigation/AuthContext';
+// import { AuthContext } from '@/navigation/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getServiceInfo } from '@/redux/gql/serviceInfoService';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -26,11 +26,11 @@ import { clearToken as clearSignInToken } from '@/redux/gql/signInService';
 import { ServiceCell } from '@/components/ServiceCell';
 import { useSession } from '@/hooks/ctx';
 
-export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'>) {
+export default function MyFlowScreen() {
   const { signOut } = useSession();
   const { services, status, error } = useAppSelector((state: RootState) => state.serviceInfo);
   const dispatch = useAppDispatch();
-  const authContext = useContext(AuthContext);
+  // const authContext = useContext(AuthContext);
   // const route = useRoute();
 
   // const { refresh = false } = route?.params ?? {};
@@ -40,7 +40,7 @@ export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'
   // }, [refresh]);
 
   const handleItemClick = (item: any) => {
-    if (!item.connected) navigation.navigate('ServiceDetail', { service: item });
+    // if (!item.connected) navigation.navigate('ServiceDetail', { service: item });
   };
 
   const renderItem: ListRenderItem<ServiceInfo> = ({ item }: ListRenderItemInfo<ServiceInfo>) => {
@@ -55,17 +55,17 @@ export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'
       error === 'Signature verification failed' ||
       error === 'Token expired'
     ) {
-      AsyncStorage.setItem('@token', '');
-      authContext.setAuthToken('');
-      dispatch(clearSignInToken());
-      dispatch(clearLoginToken());
+      // AsyncStorage.setItem('@token', '');
+      // authContext.setAuthToken('');
+      // dispatch(clearSignInToken());
+      // dispatch(clearLoginToken());
     }
   }
 
   return (
     <View style={styles.container}>
       <ZStack justifyContent="center" alignItems="center" bg="primary.100" w="full" h="full">
-        {/* <FlatList
+        <FlatList
           w="full"
           h="full"
           paddingX={5}
@@ -73,15 +73,7 @@ export default function MyFlowScreen({ navigation }: MainTabScreenProps<'MyFlow'
           ListHeaderComponent={<ListHeader />}
           ListFooterComponent={<ListFooter />}
           renderItem={renderItem}
-        /> */}
-        <Text
-          onPress={() => {
-            // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
-            signOut();
-          }}
-        >
-          Sign Out
-        </Text>
+        />
         {status === 'loading' && <Spinner size="lg" />}
         {error && console.error('ERROR', error)}
       </ZStack>
