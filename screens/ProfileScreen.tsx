@@ -2,8 +2,8 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Modal, Button, View, Text, VStack, Box, Pressable, FlatList } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DefaultAvatar } from './DefaultAvatar';
-import { useNavigation } from '@react-navigation/native';
+import { DefaultAvatar } from '../components/DefaultAvatar';
+// import { useNavigation } from '@react-navigation/native';
 
 const profileItems = [
   'avatar',
@@ -22,7 +22,7 @@ const profileItems = [
 const { useState } = React;
 
 export const ProfileScreen = () => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleItemPress = (param: string) => {
@@ -31,11 +31,11 @@ export const ProfileScreen = () => {
 
       return;
     } else if (param === 'My Flows') {
-      navigation.navigate('FlowList');
+      // navigation.navigate('FlowList');
       return;
     }
 
-    navigation.navigate('Account');
+    // navigation.navigate('Account');
   };
 
   return (
@@ -144,7 +144,7 @@ export const ProfileScreen = () => {
                   AsyncStorage.removeItem('@token');
                   AsyncStorage.removeItem('@email');
                   setModalVisible(false);
-                  navigation.navigate('MyFlow', { refresh: true });
+                  // navigation.navigate('MyFlow', { refresh: true });
                 }}
               >
                 Save

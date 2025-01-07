@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, Text } from "react-native";
-import ProfileImage from "../../assets/images/profile.svg";
+import ProfileImage from "@/assets/images/profile.svg";
 
 export const DefaultAvatar = () => {
   return (
