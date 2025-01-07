@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Stack } from 'expo-router';
 import { Modal, Button, View, Text, VStack, Box, Pressable, FlatList } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DefaultAvatar } from '@/components/DefaultAvatar';
-// import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
 
 const profileItems = [
   'avatar',
@@ -22,7 +22,6 @@ const profileItems = [
 const { useState } = React;
 
 export default function ProfileScreen() {
-  // const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleItemPress = (param: string) => {
@@ -31,16 +30,17 @@ export default function ProfileScreen() {
 
       return;
     } else if (param === 'My Flows') {
-      // navigation.navigate('FlowList');
+      router.push('/flows');
       return;
     }
 
-    // navigation.navigate('Account');
+    router.push('/account');
   };
 
   return (
     <>
       <VStack w="100%" h="100%">
+        <Stack.Screen options={{ title: 'Profile' }} />
         <FlatList
           w="full"
           data={profileItems}
@@ -144,7 +144,7 @@ export default function ProfileScreen() {
                   AsyncStorage.removeItem('@token');
                   AsyncStorage.removeItem('@email');
                   setModalVisible(false);
-                  // navigation.navigate('MyFlow', { refresh: true });
+                  // router.push('/my-flow', { refresh: true });
                 }}
               >
                 Save

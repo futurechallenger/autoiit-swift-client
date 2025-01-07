@@ -1,6 +1,5 @@
-import { AutoFlow } from './../../../redux/types.generated';
 import * as React from 'react'
-import * as Types from '../../../redux/types.generated';
+import * as Types from '@/redux/types.generated';
 
 const {useEffect, useState} = React;
 
