@@ -39,7 +39,7 @@ export default function ProfileScreen() {
 
   return (
     <>
-      <VStack w="100%" h="100%">
+      <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'stretch' }}>
         <FlatList
           w="full"
           data={profileItems}
@@ -81,20 +81,29 @@ export default function ProfileScreen() {
             } else if (index === profileItems.length - 1) {
               return (
                 <View
-                  bg="red"
-                  w="full"
-                  h="50"
-                  flexDirection="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  paddingX={5}
+                  style={{
+                    flex: 1,
+                    justifyContent: 'flex-start',
+                    alignItems: 'stretch',
+                  }}
                 >
-                  <Pressable>
-                    <Text>Terms</Text>
-                  </Pressable>
-                  <View>
-                    <Text>v0.1.1</Text>
+                  <View
+                    bg="red"
+                    w="full"
+                    h="50"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    paddingX={5}
+                  >
+                    <Pressable>
+                      <Text>Terms</Text>
+                    </Pressable>
+                    <View>
+                      <Text>v0.1.1</Text>
+                    </View>
                   </View>
+                  <View style={{ height: 100 }} />
                 </View>
               );
             } else {
@@ -119,7 +128,7 @@ export default function ProfileScreen() {
             }
           }}
         />
-      </VStack>
+      </View>
       <Modal isOpen={modalVisible} onClose={setModalVisible} size={'md'}>
         <Modal.Content maxH="212">
           <Modal.CloseButton />
