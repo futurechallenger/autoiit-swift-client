@@ -40,7 +40,6 @@ export default function ProfileScreen() {
   return (
     <>
       <VStack w="100%" h="100%">
-        <Stack.Screen options={{ title: 'Profile' }} />
         <FlatList
           w="full"
           data={profileItems}
