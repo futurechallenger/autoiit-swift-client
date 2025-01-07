@@ -1,14 +1,14 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
+// import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { Box, Container, FlatList, Text, View, ZStack } from 'native-base';
 import * as React from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
-import { ThemedTitle } from '../../components/ThemedTitle';
-import { getAutoFlowListByUser } from '../../redux/gql/getAutoFlowListByUserSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { RootState } from '../../redux/store';
-import * as Types from '../../redux/types.generated';
-import { useFlowListCategory } from './hooks/useFlowListCategory';
+import { ThemedTitle } from '@/components/ThemedTitle';
+import { getAutoFlowListByUser } from '@/redux/gql/getAutoFlowListByUserSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { RootState } from '@/redux/store';
+import * as Types from '@/redux/types.generated';
+import { useFlowListCategory } from '@/hooks/useFlowListCategory';
 
 const { useEffect, useState } = React;
 
@@ -18,16 +18,15 @@ const Tab = createMaterialTopTabNavigator();
 const TEST_USER_ID = 5;
 
 export const FlowListScreen = () => {
-  const navigation = useNavigation();
   const dispatch = useAppDispatch();
 
-  const isFocused = useIsFocused();
+  // const isFocused = useIsFocused();
 
-  useEffect(() => {
-    if (isFocused) {
-      dispatch(getAutoFlowListByUser({ userId: TEST_USER_ID }));
-    }
-  }, [isFocused]);
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     dispatch(getAutoFlowListByUser({ userId: TEST_USER_ID }));
+  //   }
+  // }, [isFocused]);
 
   const renderActivityIndicator = () => {
     if (status === 'loading') {
@@ -90,7 +89,7 @@ const AllFlows = (params: any) => {
           return (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('FlowDetail', { flowId: item.id });
+                // navigation.navigate('FlowDetail', { flowId: item.id });
               }}
             >
               <Box
