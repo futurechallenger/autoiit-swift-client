@@ -14,10 +14,12 @@ import { Heading } from '@/components/ui/heading';
 import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
 import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
 import { router } from 'expo-router';
+import { useSession } from '@/hooks/ctx';
 
 const { useState, useRef, useEffect } = React;
 
 export default function Auth() {
+  const { signIn: signInSession } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,7 +36,9 @@ export default function Auth() {
   useEffect(() => {
     const storeItem = async () => {
       if (token?.signIn) {
-        await AsyncStorage.setItem('@token', token?.signIn);
+        // await AsyncStorage.setItem('@token', token?.signIn);
+        signInSession(token.signIn);
+        router.replace('/');
       }
     };
 
@@ -171,7 +175,8 @@ export default function Auth() {
           </Modal.Body>
           <Modal.Footer>
             {/* <Button.Group space={2}> */}
-            <Button className='mr-5'
+            <Button
+              className="mr-5"
               onPress={() => {
                 setModalVisible(false);
               }}
