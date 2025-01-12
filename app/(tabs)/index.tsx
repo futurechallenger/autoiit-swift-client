@@ -21,13 +21,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getServiceInfo } from '@/redux/gql/serviceInfoService';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
-import { clearToken as clearLoginToken } from '@/redux/gql/loginService';
-import { clearToken as clearSignInToken } from '@/redux/gql/signInService';
+import { clearToken as clearLoginToken } from '@/redux/gql/loginSlice';
+import { clearToken as clearSignInToken } from '@/redux/gql/signInSlice';
 import { ServiceCell } from '@/components/ServiceCell';
 import { useSession } from '@/hooks/ctx';
 
 export default function MyFlowScreen() {
-  const { signOut } = useSession();
   const { services, status, error } = useAppSelector((state: RootState) => state.serviceInfo);
   const dispatch = useAppDispatch();
   // const authContext = useContext(AuthContext);

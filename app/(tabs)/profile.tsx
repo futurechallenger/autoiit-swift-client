@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Stack } from 'expo-router';
 import { Modal, Button, View, Text, VStack, Box, Pressable, FlatList } from 'native-base';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DefaultAvatar } from '@/components/DefaultAvatar';
+import { removeToken } from '@/redux/gql/signInSlice';
 import { router } from 'expo-router';
-import { useSession } from '@/hooks/ctx';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+// import { useSession } from '@/hooks/ctx';
 
 const profileItems = [
   'avatar',
@@ -23,7 +23,10 @@ const profileItems = [
 const { useState } = React;
 
 export default function ProfileScreen() {
-  const { signOut } = useSession();
+  const dispatch = useAppDispatch();
+  const { status, error } = useAppSelector((state: any) => state.removeToken);
+
+  // const { signOut } = useSession();
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleItemPress = (param: string) => {
@@ -42,6 +45,7 @@ export default function ProfileScreen() {
   return (
     <>
       <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'stretch' }}>
+        <Text>{status === 'loading' ? 'Loading' : !!error ? error : 'placeholder'}</Text>
         <FlatList
           w="full"
           data={profileItems}
@@ -151,9 +155,11 @@ export default function ProfileScreen() {
               </Button>
               <Button
                 onPress={() => {
-                  signOut();
-                  AsyncStorage.removeItem('@token');
-                  AsyncStorage.removeItem('@email');
+                  dispatch(removeToken());
+                  // signOut();
+                  // TODO: refactor this to `signInService` file
+                  // AsyncStorage.removeItem('@token');
+                  // AsyncStorage.removeItem('@email');
                   setModalVisible(false);
                   // router.push('/my-flow', { refresh: true });
                 }}
