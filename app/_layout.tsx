@@ -14,7 +14,7 @@ import { store } from '@/redux/store';
 import '../global.css';
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import '@/global.css';
-import { SessionProvider } from '@/hooks/ctx';
+// import { SessionProvider } from '@/hooks/ctx';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -41,14 +41,14 @@ export default function RootLayout() {
         <NativeBaseProvider>
           <GluestackUIProvider>
             <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-              <SessionProvider>
+              {/* <SessionProvider> */}
                 <Stack>
                   {/* <Stack.Screen name="index" options={{ headerShown: false }} /> */}
                   <Stack.Screen name="(tabs)" options={{ headerShown: false, title: "Home" }} />
                   <Stack.Screen name="password" options={{ headerShown: false }} />
                   <Stack.Screen name="+not-found" />
                 </Stack>
-              </SessionProvider>
+              {/* </SessionProvider> */}
               <StatusBar style="auto" />
             </ThemeProvider>
           </GluestackUIProvider>

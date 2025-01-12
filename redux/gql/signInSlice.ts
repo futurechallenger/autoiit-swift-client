@@ -1,8 +1,10 @@
-import { loginSlice } from './loginService';
+import { loginSlice } from './loginSlice';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import * as Types from '../types.generated';
 import { sendRequest } from '../baseApi';
+import { Platform } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
 export type RegisterMutationVariables = Types.Exact<{
   userInfo: Types.UserInfoInput;
@@ -26,6 +28,12 @@ export const signIn = createAsyncThunk('signIn', async (variables: RegisterMutat
     variables,
   });
 });
+
+export interface SignServiceResult {
+  token: SignInReturnType;
+  status: string;
+  error: string;
+}
 
 const initialState: {
   token: SignInReturnType | undefined;
@@ -64,6 +72,44 @@ export const signInSlice = createSlice({
         }
       })
       .addCase(signIn.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+  },
+});
+
+const removeTokenInitialState: { error: string | undefined; status: string | undefined } = {
+  error: undefined,
+  status: undefined,
+};
+/**
+ * Sign out or logout by remove token from local storage
+ */
+export const removeToken = createAsyncThunk('removeToken', async () => {
+  if (Platform.OS === 'web') {
+    localStorage.removeItem('token');
+  } else {
+    await SecureStore.deleteItemAsync('token');
+  }
+});
+
+export const removeTokenSlice = createSlice({
+  name: 'signOut',
+  initialState: removeTokenInitialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder
+      .addCase(removeToken.pending, (state, action) => {
+        state.status = 'loading';
+        if (state.error) {
+          state.error = '';
+        }
+      })
+      .addCase(removeToken.fulfilled, (state, action) => {
+        state.error = '';
+        state.status = 'succeeded';
+      })
+      .addCase(removeToken.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

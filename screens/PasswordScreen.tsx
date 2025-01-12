@@ -5,8 +5,8 @@ import { Button, Heading, Input, Box, Icon, Spinner, Text, VStack, ZStack, useTo
 import * as React from 'react';
 import { Pressable } from 'react-native';
 import { AuthContext } from '../navigation/AuthContext';
-import { login } from '../redux/gql/loginService';
-import { signIn } from '../redux/gql/signInService';
+import { login } from '../redux/gql/loginSlice';
+import { signIn } from '../redux/gql/signInSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
 import { PasswordScreenRouteProp } from '../types';

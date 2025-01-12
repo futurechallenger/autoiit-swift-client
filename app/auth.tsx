@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 // import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { PasswordInput } from '@/components/PasswordInput';
-import { signIn } from '@/redux/gql/signInService';
+import { signIn, clearToken } from '@/redux/gql/signInSlice';
 import { RootState } from '@/redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button, ButtonText } from '@/components/ui/button';
@@ -28,7 +28,6 @@ export default function Auth() {
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const finalRef = useRef(null);
-  // const navigation = useNavigation();
   const dispatch = useAppDispatch();
 
   const { token, status, error } = useAppSelector((state: RootState) => state.signIn);
@@ -36,8 +35,8 @@ export default function Auth() {
   useEffect(() => {
     const storeItem = async () => {
       if (token?.signIn) {
-        // await AsyncStorage.setItem('@token', token?.signIn);
         signInSession(token.signIn);
+        dispatch(clearToken());
         router.replace('/');
       }
     };
