@@ -2300,7 +2300,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gluestack-ui/form-control@npm:^0.1.19":
+"@gluestack-ui/form-control@npm:0.1.19, @gluestack-ui/form-control@npm:^0.1.19":
   version: 0.1.19
   resolution: "@gluestack-ui/form-control@npm:0.1.19"
   dependencies:
@@ -6075,6 +6075,7 @@ __metadata:
     "@expo/webpack-config": "npm:~19.0.1"
     "@gluestack-ui/alert": "npm:^0.1.16"
     "@gluestack-ui/button": "npm:^1.0.8"
+    "@gluestack-ui/form-control": "npm:0.1.19"
     "@gluestack-ui/hstack": "npm:0.1.17"
     "@gluestack-ui/icon": "npm:0.1.25"
     "@gluestack-ui/input": "npm:^0.1.32"
