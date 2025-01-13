@@ -7,7 +7,6 @@ import { IconSymbol } from '@/components/IconSymbol';
 import TabBarBackground from '@/components/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-// import { useSession } from '@/hooks/ctx';
 
 import { Text } from 'react-native';
 import { useAppSelector } from '@/redux/hooks';
@@ -15,16 +14,7 @@ import { P } from '@expo/html-elements';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const {token, status, error} = useAppSelector(state => state.signIn);
-  // const { session, isLoading } = useSession();
-
-  // if (isLoading) {
-  //   return <Text>Loading...</Text>;
-  // }
-
-  // if (!session) {
-  //   return <Redirect href="/auth" />;
-  // }
+  const {token, isAuthenticated, status, error} = useAppSelector(state => state.signIn);
 
   if (status === 'loading') {
     return <Text>Loading...</Text>
@@ -34,7 +24,7 @@ export default function TabLayout() {
     return <Text>{error}</Text>;
   }
 
-  if (token === null) {
+  if (isAuthenticated === false) {
     return <Redirect href="/auth" />;
   }
 
