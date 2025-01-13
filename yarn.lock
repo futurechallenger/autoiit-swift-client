@@ -2323,6 +2323,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gluestack-ui/hstack@npm:0.1.17":
+  version: 0.1.17
+  resolution: "@gluestack-ui/hstack@npm:0.1.17"
+  dependencies:
+    "@gluestack-ui/utils": "npm:^0.1.14"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/51f97370fe45b9cebb5fbdcb8aac5c59081abce17cf8cc13fe81e2ab19f31b374272f088b878f26bd505a49ad59593ba2cf1bfc6d0d5b64d0f0a3ac8d3834287
+  languageName: node
+  linkType: hard
+
 "@gluestack-ui/icon@npm:0.1.25":
   version: 0.1.25
   resolution: "@gluestack-ui/icon@npm:0.1.25"
@@ -2464,6 +2476,18 @@ __metadata:
     react: ">=16"
     react-dom: ">=16"
   checksum: 10c0/b7f31a44b45f5404726b28362b613458713284492b0a4c33e5f0435fb73e1c8912a647bd5f2e53680338a2b55c1b8c2521401035a0d146e125194218c6832d7e
+  languageName: node
+  linkType: hard
+
+"@gluestack-ui/vstack@npm:0.1.16":
+  version: 0.1.16
+  resolution: "@gluestack-ui/vstack@npm:0.1.16"
+  dependencies:
+    "@gluestack-ui/utils": "npm:^0.1.14"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/2b130f66d57ff4459dac0dae2e8dec25e04a7d9a92902beaa4d06d229bb35af6c3e196046c95808b22b35913667bd05ddf9ea3aedc6623b69b6f1173730dc9aa
   languageName: node
   linkType: hard
 
@@ -6051,12 +6075,14 @@ __metadata:
     "@expo/webpack-config": "npm:~19.0.1"
     "@gluestack-ui/alert": "npm:^0.1.16"
     "@gluestack-ui/button": "npm:^1.0.8"
+    "@gluestack-ui/hstack": "npm:0.1.17"
     "@gluestack-ui/icon": "npm:0.1.25"
     "@gluestack-ui/input": "npm:^0.1.32"
     "@gluestack-ui/modal": "npm:^0.1.35"
     "@gluestack-ui/nativewind-utils": "npm:1.0.26"
     "@gluestack-ui/overlay": "npm:0.1.16"
     "@gluestack-ui/toast": "npm:1.0.8"
+    "@gluestack-ui/vstack": "npm:0.1.16"
     "@legendapp/motion": "npm:^2.4.0"
     "@react-native-async-storage/async-storage": "npm:1.23.1"
     "@react-native-picker/picker": "npm:2.9.0"

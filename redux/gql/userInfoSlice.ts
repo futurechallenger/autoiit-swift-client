@@ -36,7 +36,7 @@ export const userInfoSlice = createSlice({
           state.status = 'failed';
         } else {
           state.status = 'succeeded';
-          state.userInfo = payload.data;
+          state.userInfo = payload.data?.userInfo;
         }
       })
       .addCase(getUserInfo.rejected, (state, action) => {
