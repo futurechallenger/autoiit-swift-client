@@ -1,7 +1,8 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useNavigation, useRoute } from '@react-navigation/native';
-import { Button, Heading, Icon, Spinner, Text, useToast } from 'native-base';
+import { Heading, Icon, Spinner, Text, useToast } from 'native-base';
+import { Button, ButtonText } from '@/components/ui/button';
 import * as React from 'react';
 import { Pressable } from 'react-native';
 // import { AuthContext } from '../navigation/AuthContext';
@@ -104,36 +105,15 @@ export default function Password() {
   // const buttonTitle = exists?.userInfo ? 'Login' : 'SignIn';
 
   return (
-    <Box className="flex-1 justify-center items-center">
+    <Box className="flex-1 justify-start items-center ">
       <Stack.Screen
         options={{
           title: 'Password',
           headerShown: true,
         }}
       />
-      <VStack>
-        {/* <Heading>{headingText}</Heading> */}
-        <Box>
-          <Input
-            w={{
-              base: '75%',
-              md: '25%',
-            }}
-            type={show ? 'text' : 'password'}
-            InputRightElement={
-              <Pressable onPress={() => setShow(!show)}>
-                <Icon
-                  as={<MaterialIcons name={show ? 'visibility' : 'visibility-off'} />}
-                  size={5}
-                  mr="2"
-                  color="muted.400"
-                />
-              </Pressable>
-            }
-            placeholder="Password"
-          />
-        </Box>
-        <FormControl className="p-4 border rounded-lg border-outline-300">
+      <VStack className=" w-full pt-6 px-6">
+        <FormControl>
           <Input className="text-center">
             <InputField
               type={showPassword ? 'text' : 'password'}
@@ -145,11 +125,13 @@ export default function Password() {
             </InputSlot>
           </Input>
         </FormControl>
-        <Box>
-          {/* <Button onPress={handleClick}>{buttonTitle}</Button>
-          <Pressable onPress={handlePress} alignSelf="center" paddingY={2}>
+        <Box className="pt-8 ">
+          <Button onPress={handleClick}>
+            <ButtonText>OK</ButtonText>
+          </Button>
+          <Pressable onPress={handlePress} className="self-center py-2">
             <Text variant="labelSmall">Forget password?</Text>
-          </Pressable> */}
+          </Pressable>
         </Box>
       </VStack>
       {(signInStatus === 'loading' || loginStatus === 'loading') && <Spinner size="lg" />}
@@ -163,19 +145,19 @@ export default function Password() {
   );
 }
 
-const PasswordToggle = ({ show, toggleShow }: { show: boolean; toggleShow: () => void }) => {
-  const handlePress = () => {
-    toggleShow();
-  };
+// const PasswordToggle = ({ show, toggleShow }: { show: boolean; toggleShow: () => void }) => {
+//   const handlePress = () => {
+//     toggleShow();
+//   };
 
-  return (
-    <Pressable onPress={handlePress}>
-      <Icon
-        as={<MaterialIcons name={show ? 'visibility' : 'visibility-off'} />}
-        size={5}
-        mr={2}
-        color="muted.400"
-      />
-    </Pressable>
-  );
-};
+//   return (
+//     <Pressable onPress={handlePress}>
+//       <Icon
+//         as={<MaterialIcons name={show ? 'visibility' : 'visibility-off'} />}
+//         size={5}
+//         mr={2}
+//         color="muted.400"
+//       />
+//     </Pressable>
+//   );
+// };

@@ -1,6 +1,10 @@
 import * as React from 'react';
-import { VStack, Box, useToast, Spinner, ZStack, Button, Heading, Row as Snackbar, Text } from 'native-base';
+import { useToast, Spinner, Row as Snackbar, Text } from 'native-base';
+import { VStack } from '@/components/ui/vstack';
+import { Heading } from '@/components/ui/heading';
 import { Input, InputField } from '@/components/ui/input';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonText } from '@/components/ui/button';
 import { View } from 'react-native';
 import { router } from 'expo-router';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
@@ -57,32 +61,28 @@ export default function EmailScreen() {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        height: '100%',
-        width: '100%',
-      }}
-    >
-      <VStack flex="1">
-        <ZStack flex="1" flexDirection="column" justifyContent="center" alignItems="center">
-          <VStack paddingX="4" paddingTop={5} w="full" space="10" position="absolute" top="0">
-            <Heading>What's your email</Heading>
-            <Box>
-              <Input variant="outline">
-                <InputField placeholder="Email" onChangeText={handleChangeText} />
-              </Input>
-            </Box>
-          </VStack>
+    <Box className="flex-1 justify-start items-start">
+      <VStack className="flex-1 w-full p-6">
+        <Heading>What's your email</Heading>
+        <Box className='pt-3'>
+          <Input variant="outline">
+            <InputField placeholder="Email" onChangeText={handleChangeText} />
+          </Input>
+        </Box>
 
-          {status === 'loading' && <Spinner size="lg" />}
-        </ZStack>
-        <Box paddingBottom={10} paddingX="5">
-          <Button onPress={handleClick}>Continue</Button>
+        {status === 'loading' && (
+          <Box style={{ zIndex: 100, elevation: 100 }}>
+            <Spinner size="lg" />
+          </Box>
+        )}
+        <Box className="py-8">
+          <Button onPress={handleClick}>
+            <ButtonText>Continue</ButtonText>
+          </Button>
         </Box>
       </VStack>
       {/* {status === 'failed' && <Toast />} */}
       <Toast />
-    </View>
+    </Box>
   );
 }
