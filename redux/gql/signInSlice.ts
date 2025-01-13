@@ -1,10 +1,10 @@
-import { loginSlice } from './loginSlice';
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {} from '@reduxjs/toolkit';
 import * as Types from '../types.generated';
 import { sendRequest } from '../baseApi';
 import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+import { TOKEN_KEY } from '@/lib/config';
 
 export type RegisterMutationVariables = Types.Exact<{
   userInfo: Types.UserInfoInput;
@@ -22,31 +22,50 @@ mutation register($userInfo: UserInfoInput!) {
 }
 `;
 
-export const signIn = createAsyncThunk('signIn', async (variables: RegisterMutationVariables) => {
-  return sendRequest<SignInReturnType>({
+export const signIn = createAsyncThunk('auth/signIn', async (variables: RegisterMutationVariables) => {
+  const signInRet = await sendRequest<SignInReturnType>({
     query: RegisterDocument,
     variables,
   });
+
+  if (Platform.OS === 'web') {
+    localStorage.setItem(TOKEN_KEY, signInRet.data.signIn);
+  } else {
+    await SecureStore.setItemAsync(TOKEN_KEY, signInRet.data.signIn);
+  }
+
+  return signInRet;
+});
+
+export const signOut = createAsyncThunk('auth/signOut', async () => {
+  if (Platform.OS === 'web') {
+    localStorage.removeItem(TOKEN_KEY);
+  } else {
+    await SecureStore.deleteItemAsync(TOKEN_KEY);
+  }
 });
 
 export interface SignServiceResult {
   token: SignInReturnType;
+  isAuthenticated: boolean;
   status: string;
   error: string;
 }
 
 const initialState: {
   token: SignInReturnType | undefined;
+  isAuthenticated: boolean;
   status: string;
   error: string | undefined;
 } = {
+  isAuthenticated: false,
   token: undefined,
   status: '',
   error: '',
 };
 
 export const signInSlice = createSlice({
-  name: 'signIn',
+  name: 'auth',
   initialState,
   reducers: {
     clearToken: (state) => {
@@ -66,52 +85,37 @@ export const signInSlice = createSlice({
         if (payload?.errors) {
           state.status = 'failed';
           state.error = payload?.errors?.[0]?.message;
+          state.isAuthenticated = false;
         } else {
           state.status = 'succeeded';
           state.token = payload.data;
+          state.isAuthenticated = true;
         }
       })
       .addCase(signIn.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-      });
-  },
-});
-
-const removeTokenInitialState: { error: string | undefined; status: string | undefined } = {
-  error: undefined,
-  status: undefined,
-};
-/**
- * Sign out or logout by remove token from local storage
- */
-export const removeToken = createAsyncThunk('removeToken', async () => {
-  if (Platform.OS === 'web') {
-    localStorage.removeItem('token');
-  } else {
-    await SecureStore.deleteItemAsync('token');
-  }
-});
-
-export const removeTokenSlice = createSlice({
-  name: 'signOut',
-  initialState: removeTokenInitialState,
-  reducers: {},
-  extraReducers(builder) {
-    builder
-      .addCase(removeToken.pending, (state, action) => {
+        state.isAuthenticated = false;
+      })
+      .addCase(signOut.pending, (state, action) => {
+        console.log('signIn slice > pending');
         state.status = 'loading';
         if (state.error) {
-          state.error = '';
+          state.error = undefined;
         }
       })
-      .addCase(removeToken.fulfilled, (state, action) => {
-        state.error = '';
-        state.status = 'succeeded';
-      })
-      .addCase(removeToken.rejected, (state, action) => {
+      .addCase(signOut.rejected, (state, action) => {
+        console.log('signIn slice > rejected');
         state.status = 'failed';
         state.error = action.error.message;
+        state.isAuthenticated = false;
+      })
+      .addCase(signOut.fulfilled, (state, action) => {
+        console.log('signIn slice | fulfilled');
+
+        state.status = 'succeeded';
+        state.token = undefined;
+        state.isAuthenticated = false;
       });
   },
 });

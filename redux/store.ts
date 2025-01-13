@@ -16,7 +16,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { loginSlice } from './gql/loginSlice';
 import { searchServiceSlice, mostSearchedServicesSlice } from './gql/searchService';
 import { serviceInfoSlice } from './gql/serviceInfoService';
-import { signInSlice, removeTokenSlice } from './gql/signInSlice';
+import { signInSlice } from './gql/signInSlice';
 import { userInfoSlice } from './gql/userInfoService';
 import { getServiceByIdSlice } from './gql/serviceById';
 import { getServiceApisSlice } from './gql/getServiceApisSlice';
@@ -57,7 +57,6 @@ export const store = configureStore({
     login: loginSlice.reducer,
     serviceInfo: serviceInfoSlice.reducer,
     signIn: signInSlice.reducer,
-    removeToken: removeTokenSlice.reducer,
     userInfo: userInfoSlice.reducer,
     exploreServices: searchServiceSlice.reducer,
     actionOutputFieldList: getActionOutputFieldListSlice.reducer,

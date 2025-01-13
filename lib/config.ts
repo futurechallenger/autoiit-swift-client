@@ -9,5 +9,5 @@ const SERVER_URL = SERVER_HOST_URL; //'http://127.0.0.1:5051'; //"http://192.168
 // const SERVER_URL = 'http://192.168.31.182:5050';
 
 const REQUEST_COUNT = 10;
-const TOKEN_KEY = '@token';
+const TOKEN_KEY = '_token';
 export { SERVER_URL, REQUEST_COUNT, TOKEN_KEY };

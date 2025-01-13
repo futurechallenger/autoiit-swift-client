@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { Modal, Button, View, Text, VStack, Box, Pressable, FlatList } from 'native-base';
 import { DefaultAvatar } from '@/components/DefaultAvatar';
-import { removeToken } from '@/redux/gql/signInSlice';
+import { signOut } from '@/redux/gql/signInSlice';
 import { router } from 'expo-router';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-// import { useSession } from '@/hooks/ctx';
 
 const profileItems = [
   'avatar',
@@ -24,9 +23,7 @@ const { useState } = React;
 
 export default function ProfileScreen() {
   const dispatch = useAppDispatch();
-  const { status, error } = useAppSelector((state: any) => state.removeToken);
-
-  // const { signOut } = useSession();
+  const { status, error } = useAppSelector((state: any) => state.signIn);
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleItemPress = (param: string) => {
@@ -155,13 +152,8 @@ export default function ProfileScreen() {
               </Button>
               <Button
                 onPress={() => {
-                  dispatch(removeToken());
-                  // signOut();
-                  // TODO: refactor this to `signInService` file
-                  // AsyncStorage.removeItem('@token');
-                  // AsyncStorage.removeItem('@email');
+                  dispatch(signOut());
                   setModalVisible(false);
-                  // router.push('/my-flow', { refresh: true });
                 }}
               >
                 Save
