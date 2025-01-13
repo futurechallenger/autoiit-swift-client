@@ -1,23 +1,13 @@
 import * as React from 'react';
-import {
-  VStack,
-  Box,
-  useToast,
-  Spinner,
-  ZStack,
-  Button,
-  Heading,
-  Input as TextInput,
-  Row as Snackbar,
-  Text,
-} from 'native-base';
+import { VStack, Box, useToast, Spinner, ZStack, Button, Heading, Row as Snackbar, Text } from 'native-base';
+import { Input, InputField } from '@/components/ui/input';
 import { View } from 'react-native';
 import { router } from 'expo-router';
 // import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { EmailScreenNavigationProp } from '../types';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { getUserInfo } from '../redux/gql/userInfoService';
+import { getUserInfo } from '../redux/gql/userInfoSlice';
 import { RootState } from '../redux/store';
 import Toast from 'react-native-toast-message';
 
@@ -46,7 +36,7 @@ export default function EmailScreen() {
       console.log('Status value is succeeded');
 
       // navigation.navigate('Password', { exists: userInfo });
-      router.push('./passowrd', { exists: userInfo });
+      router.push('/passowrd', { exists: userInfo });
       return;
     }
   }, [email, status]);
@@ -57,7 +47,7 @@ export default function EmailScreen() {
     }
 
     try {
-      await AsyncStorage.setItem('@email', text ?? '');
+      // await AsyncStorage.setItem('@email', text ?? '');
       setEmail(text);
 
       dispatch(getUserInfo({ email: text }));
@@ -72,8 +62,6 @@ export default function EmailScreen() {
     setText(newText);
   };
 
-  const dismissHandler = () => {};
-
   return (
     <View
       style={{
@@ -87,7 +75,9 @@ export default function EmailScreen() {
           <VStack paddingX="4" paddingTop={5} w="full" space="10" position="absolute" top="0">
             <Heading>What's your email</Heading>
             <Box>
-              <TextInput placeholder="Your email" onChangeText={handleChangeText} />
+              <Input variant='outline'>
+                <InputField placeholder="Email" onChangeText={handleChangeText} />
+              </Input>
             </Box>
           </VStack>
 

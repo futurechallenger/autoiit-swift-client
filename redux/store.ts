@@ -17,7 +17,7 @@ import { loginSlice } from './gql/loginSlice';
 import { searchServiceSlice, mostSearchedServicesSlice } from './gql/searchService';
 import { serviceInfoSlice } from './gql/serviceInfoService';
 import { signInSlice } from './gql/signInSlice';
-import { userInfoSlice } from './gql/userInfoService';
+import { userInfoSlice } from './gql/userInfoSlice';
 import { getServiceByIdSlice } from './gql/serviceById';
 import { getServiceApisSlice } from './gql/getServiceApisSlice';
 import { addServiceAuthSlice } from './gql/addServiceAuthSlice';
