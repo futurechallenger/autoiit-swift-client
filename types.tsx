@@ -12,7 +12,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { FindUserQuery } from "./redux/gql/userInfoService";
+import { FindUserQuery } from "./redux/gql/userInfoSlice";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
 declare global {
