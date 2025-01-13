@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useNavigation, useRoute } from '@react-navigation/native';
-import { Button, Heading, Input, Icon, Spinner, Text, useToast } from 'native-base';
+import { Button, Heading, Icon, Spinner, Text, useToast } from 'native-base';
 import * as React from 'react';
 import { Pressable } from 'react-native';
 // import { AuthContext } from '../navigation/AuthContext';
@@ -9,11 +9,11 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
 import { useLocalSearchParams } from 'expo-router';
 import { Stack } from 'expo-router';
-import { InputField, InputSlot, InputIcon } from '@/components/ui/input';
+import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
 import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
 import { Box } from '@/components/ui/box';
 import { VStack } from '@/components/ui/vstack';
-import { HStack } from '@/components/ui/hstack';
+import { FormControl } from '@/components/ui/form-control';
 
 const { useState, useContext, useEffect } = React;
 
@@ -21,6 +21,7 @@ export default function Password() {
   const dispatch = useAppDispatch();
   const { exists } = useLocalSearchParams();
   const [showPassword, setShowPassword] = React.useState(false);
+  const [passwordValue, setPasswordValue] = useState('');
   const { token: signInToken, status: signInStatus } = useAppSelector((state: RootState) => state.signIn);
   const { token: loginToken, status: loginStatus } = useAppSelector((state: RootState) => state.login);
 
@@ -132,12 +133,18 @@ export default function Password() {
             placeholder="Password"
           />
         </Box>
-        <Input className="text-center" variant="outline">
-          <InputField type={showPassword ? 'text' : 'password'} />
-          <InputSlot className="pr-3" onPress={handleState}>
-            <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
-          </InputSlot>
-        </Input>
+        <FormControl className="p-4 border rounded-lg border-outline-300">
+          <Input className="text-center">
+            <InputField
+              type={showPassword ? 'text' : 'password'}
+              onChangeText={(v) => setPasswordValue(v)}
+              value={passwordValue}
+            />
+            <InputSlot className="pr-3" onPress={handleState}>
+              <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
+            </InputSlot>
+          </Input>
+        </FormControl>
         <Box>
           {/* <Button onPress={handleClick}>{buttonTitle}</Button>
           <Pressable onPress={handlePress} alignSelf="center" paddingY={2}>
@@ -149,11 +156,7 @@ export default function Password() {
       {signInStatus === 'error' &&
         toast.show({
           render: () => {
-            return (
-              <Box className="bg-primary-500 p-5">
-                Hello! Have a nice day
-              </Box>
-            );
+            return <Box className="bg-primary-500 p-5">Hello! Have a nice day</Box>;
           },
         })}
     </Box>
