@@ -2436,7 +2436,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gluestack-ui/toast@npm:1.0.8":
+"@gluestack-ui/toast@npm:^1.0.8":
   version: 1.0.8
   resolution: "@gluestack-ui/toast@npm:1.0.8"
   dependencies:
@@ -6082,7 +6082,7 @@ __metadata:
     "@gluestack-ui/modal": "npm:^0.1.35"
     "@gluestack-ui/nativewind-utils": "npm:1.0.26"
     "@gluestack-ui/overlay": "npm:0.1.16"
-    "@gluestack-ui/toast": "npm:1.0.8"
+    "@gluestack-ui/toast": "npm:^1.0.8"
     "@gluestack-ui/vstack": "npm:0.1.16"
     "@legendapp/motion": "npm:^2.4.0"
     "@react-native-async-storage/async-storage": "npm:1.23.1"

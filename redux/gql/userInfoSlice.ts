@@ -8,7 +8,7 @@ export const getUserInfo = createAsyncThunk('userInfo', async (variables: FindUs
 });
 
 const initialState: {
-  userInfo: any;
+  userInfo: Types.UserInfo;
   status: string;
   error: string | undefined;
 } = {

@@ -21,13 +21,13 @@ const { useState, useContext, useEffect } = React;
 
 export default function Password() {
   const dispatch = useAppDispatch();
-  const { exists } = useLocalSearchParams();
   const [showPassword, setShowPassword] = React.useState(false);
   const [passwordValue, setPasswordValue] = useState('');
   const { token: signInToken, status: signInStatus } = useAppSelector((state: RootState) => state.signIn);
   const { token: loginToken, status: loginStatus } = useAppSelector((state: RootState) => state.login);
+  const { userInfo } = useAppSelector((state: RootState) => state.userInfo);
 
-  console.log('>>>local search params', JSON.stringify(exists ?? {}));
+  console.log('>>>local search params', JSON.stringify(userInfo ?? {}));
 
   const [show, setShow] = useState(false);
   const [text, setText] = useState('');

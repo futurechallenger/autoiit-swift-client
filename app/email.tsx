@@ -16,8 +16,7 @@ const { useState, useEffect } = React;
 
 export default function EmailScreen() {
   const dispatch = useAppDispatch();
-  const { userInfo, status } = useAppSelector((state: RootState) => state.userInfo);
-  // const navigation = useNavigation<EmailScreenNavigationProp>();
+  const { status } = useAppSelector((state: RootState) => state.userInfo);
   const [text, setText] = useState<string>('');
   const toast = useToast();
   const [email, setEmail] = useState('');
@@ -27,7 +26,7 @@ export default function EmailScreen() {
     if (status === 'succeeded') {
       console.log('Status value is succeeded');
 
-      router.push({ pathname: '/password', params: { exists: userInfo } });
+      router.push({ pathname: '/password' });
       return;
     }
   }, [email, status]);
@@ -55,7 +54,7 @@ export default function EmailScreen() {
     <Box className="flex-1 justify-start items-start">
       <VStack className="flex-1 w-full p-6">
         <Heading>What's your email</Heading>
-        <Box className='pt-3'>
+        <Box className="pt-3">
           <Input variant="outline">
             <InputField placeholder="Email" onChangeText={handleChangeText} />
           </Input>
