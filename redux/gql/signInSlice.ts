@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {} from '@reduxjs/toolkit';
 import * as Types from '../types.generated';
 import { sendRequest } from '../baseApi';
 import { Platform } from 'react-native';
