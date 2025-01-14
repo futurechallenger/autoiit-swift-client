@@ -1,33 +1,40 @@
 import * as React from 'react';
-import { useToast, Spinner, Row as Snackbar, Text } from 'native-base';
 import { VStack } from '@/components/ui/vstack';
 import { Heading } from '@/components/ui/heading';
 import { Input, InputField } from '@/components/ui/input';
 import { Box } from '@/components/ui/box';
+import { Pressable } from '@/components/ui/pressable';
 import { Button, ButtonText } from '@/components/ui/button';
-import { View } from 'react-native';
+import { HStack } from '@/components/ui/hstack';
+import { Icon, HelpCircleIcon, CloseIcon } from '@/components/ui/icon';
 import { router } from 'expo-router';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getUserInfo } from '../redux/gql/userInfoSlice';
 import { RootState } from '../redux/store';
-import Toast from 'react-native-toast-message';
+import { Toast, useToast, ToastDescription, ToastTitle } from '@/components/ui/toast';
 
 const { useState, useEffect } = React;
+const EMAIL_TOAST_ID = 'auth/email';
 
 export default function EmailScreen() {
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector((state: RootState) => state.userInfo);
+  const { status, error } = useAppSelector((state: RootState) => state.userInfo);
   const [text, setText] = useState<string>('');
-  const toast = useToast();
   const [email, setEmail] = useState('');
+  const toast = useToast();
 
   useEffect(() => {
     if (!email || !status || status === 'loading') return;
     if (status === 'succeeded') {
       console.log('Status value is succeeded');
 
-      router.push({ pathname: '/password' });
+      router.push({ pathname: '/password', params: { email } });
       return;
+    }
+    if (error) {
+      if (!toast.isActive(EMAIL_TOAST_ID)) {
+        showNewToast();
+      }
     }
   }, [email, status]);
 
@@ -41,13 +48,43 @@ export default function EmailScreen() {
       dispatch(getUserInfo({ email: text }));
     } catch (e) {
       console.error('E:', e);
-      toast.show({ description: 'Error' });
+      // toast.show({ description: 'Error' });
     }
   };
 
   const handleChangeText = (newText: string) => {
     // TODO: check if it is a valid email address
     setText(newText);
+  };
+
+  const showNewToast = () => {
+    toast.show({
+      id: EMAIL_TOAST_ID,
+      placement: 'bottom',
+      duration: 3000,
+      render: ({ id }) => {
+        const uniqueToastId = 'toast-' + id;
+        return (
+          <Toast
+            action="error"
+            variant="outline"
+            nativeID={uniqueToastId}
+            className="p-4 gap-6 border-error-500 w-full shadow-hard-5 max-w-[443px] flex-row justify-between"
+          >
+            <HStack space="md">
+              <Icon as={HelpCircleIcon} className="stroke-error-500 mt-0.5" />
+              <VStack space="xs">
+                <ToastTitle className="font-semibold text-error-500">Error!</ToastTitle>
+                <ToastDescription size="sm">Something went wrong.</ToastDescription>
+              </VStack>
+            </HStack>
+            <Pressable onPress={() => toast.close(id)}>
+              <Icon as={CloseIcon} />
+            </Pressable>
+          </Toast>
+        );
+      },
+    });
   };
 
   return (
@@ -65,8 +102,6 @@ export default function EmailScreen() {
           </Button>
         </Box>
       </VStack>
-      {/* {status === 'failed' && <Toast />} */}
-      <Toast />
     </Box>
   );
 }

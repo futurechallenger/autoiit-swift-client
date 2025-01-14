@@ -1,12 +1,9 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { useNavigation, useRoute } from '@react-navigation/native';
-import { Icon, Spinner, Text, useToast } from 'native-base';
+import { router } from 'expo-router';
+import { Spinner, Text, useToast } from 'native-base';
 import { Heading } from '@/components/ui/heading';
 import { Button, ButtonText } from '@/components/ui/button';
 import * as React from 'react';
 import { Pressable } from 'react-native';
-// import { AuthContext } from '../navigation/AuthContext';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
 import { useLocalSearchParams } from 'expo-router';
@@ -16,18 +13,27 @@ import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
 import { Box } from '@/components/ui/box';
 import { VStack } from '@/components/ui/vstack';
 import { FormControl, FormControlLabelText, FormControlLabel } from '@/components/ui/form-control';
+import { signIn } from '@/redux/gql/signInSlice';
+import { login } from '@/redux/gql/loginSlice';
 
-const { useState, useContext, useEffect } = React;
+const { useState, useEffect } = React;
 
 export default function Password() {
   const dispatch = useAppDispatch();
+  const { email } = useLocalSearchParams<{ email: string }>();
   const [showPassword, setShowPassword] = React.useState(false);
   const [passwordValue, setPasswordValue] = useState('');
-  const { token: signInToken, status: signInStatus } = useAppSelector((state: RootState) => state.signIn);
-  const { token: loginToken, status: loginStatus } = useAppSelector((state: RootState) => state.login);
+  const {
+    token: signInToken,
+    status: signInStatus,
+    error: signInError,
+  } = useAppSelector((state: RootState) => state.signIn);
+  const {
+    token: loginToken,
+    status: loginStatus,
+    error: loginError,
+  } = useAppSelector((state: RootState) => state.login);
   const { userInfo } = useAppSelector((state: RootState) => state.userInfo);
-
-  console.log('>>>local search params', JSON.stringify(userInfo ?? {}));
 
   const [show, setShow] = useState(false);
   const [text, setText] = useState('');
@@ -41,19 +47,9 @@ export default function Password() {
   // const { exists } = route.params;
 
   useEffect(() => {
-    const storeItem = async () => {
-      const token = signInToken?.signIn || loginToken?.loginIn;
-      if (!token) {
-        return;
-      }
-
-      await AsyncStorage.setItem('@token', token);
-      // authContext.setAuthToken(token);
-
-      // navigation.replace('Tabs');
-    };
-
-    storeItem();
+    if (signInToken || loginToken) {
+      router.replace('/');
+    }
   }, [signInToken, loginToken]);
 
   const handleState = () => {
@@ -64,10 +60,10 @@ export default function Password() {
 
   const handleClick = async () => {
     try {
-      const email = await AsyncStorage.getItem('@email');
-      if (!email) {
-        return;
-      }
+      // const email = await AsyncStorage.getItem('@email');
+      // if (!email) {
+      //   return;
+      // }
 
       // if (!exists?.userInfo) {
       // res = await signIn({ userInfo: { email, password: text } }).unwrap();
@@ -77,16 +73,17 @@ export default function Password() {
       // dispatch(login({ userInfo: { email, password: text } }));
       // }
 
-      // const token = res?.signIn || res?.loginIn;
+      if (!userInfo) {
+        // signin
+        dispatch(signIn({ userInfo: { email, password: passwordValue } }));
+        return;
+      }
 
-      // if (!token) {
-      //   throw Error("Something's wrong when login");
-      // }
-
-      // AsyncStorage.setItem("@token", token);
-      // authContext.setAuthToken(token);
-
-      // navigation.reset("Tabs");
+      if (userInfo) {
+        // login
+        dispatch(login({ userInfo: { email, password: passwordValue } }));
+        return;
+      }
     } catch (e: any) {
       console.error('ERROR in login', e);
       // setShowError(true);
@@ -102,8 +99,8 @@ export default function Password() {
     // TODO: forget password
   };
 
-  // const headingText = exists?.userInfo ? "Welcome back! What's your password" : 'Create your password';
-  // const buttonTitle = exists?.userInfo ? 'Login' : 'SignIn';
+  const headingText = userInfo ? "Welcome back! What's your password" : 'Create your password';
+  const buttonTitle = userInfo ? 'Login' : 'SignIn';
 
   return (
     <Box className="flex-1 justify-start items-center ">
@@ -116,8 +113,7 @@ export default function Password() {
       <VStack className=" w-full pt-6 px-6">
         <FormControl>
           <FormControlLabel>
-            {/* <FormControlLabelText className='text-30 font-extrabold'>Enter Your Password</FormControlLabelText> */}
-            <Heading>Enter Your Password</Heading>
+            <Heading>{headingText}</Heading>
           </FormControlLabel>
           <Input className="text-center pt-3">
             <InputField
@@ -132,7 +128,7 @@ export default function Password() {
         </FormControl>
         <Box className="pt-8 ">
           <Button onPress={handleClick}>
-            <ButtonText>OK</ButtonText>
+            <ButtonText>{buttonTitle}</ButtonText>
           </Button>
           <Pressable onPress={handlePress} className="self-center py-2">
             <Text variant="labelSmall">Forget password?</Text>
