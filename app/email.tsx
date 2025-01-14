@@ -14,15 +14,6 @@ import Toast from 'react-native-toast-message';
 
 const { useState, useEffect } = React;
 
-/**
- * TODO:
- * 1. Only when the email address is valid
- * Enable the `Continue` button to
- * navigate the next page
- * 2. check if the email is registered.
- * If it is, show login in next screen.
- * If not, show `Create account` there
- */
 export default function EmailScreen() {
   const dispatch = useAppDispatch();
   const { userInfo, status } = useAppSelector((state: RootState) => state.userInfo);
@@ -69,12 +60,6 @@ export default function EmailScreen() {
             <InputField placeholder="Email" onChangeText={handleChangeText} />
           </Input>
         </Box>
-
-        {status === 'loading' && (
-          <Box style={{ zIndex: 100, elevation: 100 }}>
-            <Spinner size="lg" />
-          </Box>
-        )}
         <Box className="py-8">
           <Button onPress={handleClick}>
             <ButtonText>Continue</ButtonText>

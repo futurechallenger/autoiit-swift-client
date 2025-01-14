@@ -1,7 +1,8 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useNavigation, useRoute } from '@react-navigation/native';
-import { Heading, Icon, Spinner, Text, useToast } from 'native-base';
+import { Icon, Spinner, Text, useToast } from 'native-base';
+import { Heading } from '@/components/ui/heading';
 import { Button, ButtonText } from '@/components/ui/button';
 import * as React from 'react';
 import { Pressable } from 'react-native';
@@ -14,7 +15,7 @@ import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
 import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
 import { Box } from '@/components/ui/box';
 import { VStack } from '@/components/ui/vstack';
-import { FormControl } from '@/components/ui/form-control';
+import { FormControl, FormControlLabelText, FormControlLabel } from '@/components/ui/form-control';
 
 const { useState, useContext, useEffect } = React;
 
@@ -114,7 +115,11 @@ export default function Password() {
       />
       <VStack className=" w-full pt-6 px-6">
         <FormControl>
-          <Input className="text-center">
+          <FormControlLabel>
+            {/* <FormControlLabelText className='text-30 font-extrabold'>Enter Your Password</FormControlLabelText> */}
+            <Heading>Enter Your Password</Heading>
+          </FormControlLabel>
+          <Input className="text-center pt-3">
             <InputField
               type={showPassword ? 'text' : 'password'}
               onChangeText={(v) => setPasswordValue(v)}
