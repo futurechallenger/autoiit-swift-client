@@ -103,11 +103,6 @@ export default function Auth() {
       <VStack space="2.5" mt="4" padding={4}>
         <HStack justifyContent="space-between">
           <Heading>Introduction of the app</Heading>
-          {Platform.OS !== 'web' && (
-            <Button onPress={() => setModalVisible(!modalVisible)}>
-              <ButtonText>Register</ButtonText>
-            </Button>
-          )}
         </HStack>
         <Box>
           {/* TODO: replace this text */}
