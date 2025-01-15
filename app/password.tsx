@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { Spinner, Text, useToast } from 'native-base';
+import { Spinner, Text } from 'native-base';
 import { Heading } from '@/components/ui/heading';
 import { Button, ButtonText } from '@/components/ui/button';
 import * as React from 'react';
@@ -14,8 +14,12 @@ import { Box } from '@/components/ui/box';
 import { VStack } from '@/components/ui/vstack';
 import { FormControl, FormControlLabelText, FormControlLabel } from '@/components/ui/form-control';
 import { signIn, login } from '@/redux/gql/authSlice';
+import { useToast } from '@/components/ui/toast';
+import { showToast } from '@/components/showToast';
 
 const { useState, useEffect } = React;
+
+const PASSWORD_TOAST_ID = 'auth/password';
 
 export default function Password() {
   const dispatch = useAppDispatch();
@@ -24,22 +28,24 @@ export default function Password() {
   const [passwordValue, setPasswordValue] = useState('');
   const { token, isAuthenticated, status, error } = useAppSelector((state: RootState) => state.signIn);
   const { userInfo } = useAppSelector((state: RootState) => state.userInfo);
-  const [show, setShow] = useState(false);
   const [text, setText] = useState('');
-
-  // const navigation = useNavigation();
-  // const authContext = useContext(AuthContext);
-
   const toast = useToast();
 
-  // const route = useRoute<PasswordScreenRouteProp>();
-  // const { exists } = route.params;
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace('/');
+    }
 
-  // useEffect(() => {
-  //   if (signInToken || loginToken) {
-  //     router.replace('/');
-  //   }
-  // }, [signInToken, loginToken]);
+    if (error) {
+      if (!toast.isActive(PASSWORD_TOAST_ID)) {
+        showToast({
+          toast,
+          toastId: PASSWORD_TOAST_ID,
+          content: "Something's wrong, please try again later.",
+        });
+      }
+    }
+  }, [isAuthenticated, error]);
 
   const handleState = () => {
     setShowPassword((showState) => {
@@ -49,19 +55,6 @@ export default function Password() {
 
   const handleClick = async () => {
     try {
-      // const email = await AsyncStorage.getItem('@email');
-      // if (!email) {
-      //   return;
-      // }
-
-      // if (!exists?.userInfo) {
-      // res = await signIn({ userInfo: { email, password: text } }).unwrap();
-      // dispatch(signIn({ userInfo: { email, password: text } }));
-      // } else {
-      // res = await login({ userInfo: { email, password: text } }).unwrap();
-      // dispatch(login({ userInfo: { email, password: text } }));
-      // }
-
       if (!userInfo) {
         // signin
         dispatch(signIn({ userInfo: { email, password: passwordValue } }));
@@ -75,7 +68,6 @@ export default function Password() {
       }
     } catch (e: any) {
       console.error('ERROR in login', e);
-      // setShowError(true);
     }
   };
 
@@ -124,35 +116,6 @@ export default function Password() {
         </Box>
       </VStack>
       {status === 'loading' && <Spinner size="lg" />}
-      {error &&
-        // toast.show({
-        //   render: () => {
-        //     return (
-        //       <Box className="bg-primary-500 p-5">
-        //         <Text>Something's wrong, please try again!</Text>
-        //       </Box>
-        //     );
-        //   },
-        // })
-        <Text>{error}</Text>
-        }
     </Box>
   );
 }
-
-// const PasswordToggle = ({ show, toggleShow }: { show: boolean; toggleShow: () => void }) => {
-//   const handlePress = () => {
-//     toggleShow();
-//   };
-
-//   return (
-//     <Pressable onPress={handlePress}>
-//       <Icon
-//         as={<MaterialIcons name={show ? 'visibility' : 'visibility-off'} />}
-//         size={5}
-//         mr={2}
-//         color="muted.400"
-//       />
-//     </Pressable>
-//   );
-// };
