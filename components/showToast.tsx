@@ -5,6 +5,8 @@ import { Icon, HelpCircleIcon, CloseIcon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { InterfaceToastProps, ToastPlacement } from '@gluestack-ui/toast/lib/types';
 
+type ActionType = 'error' | 'muted' | 'warning' | 'success' | 'info';
+
 export const showToast = ({
   toast,
   toastId,
@@ -19,9 +21,9 @@ export const showToast = ({
     isActive: (id: string) => boolean;
   };
   toastId: string;
-  actionType: string;
   content: string;
-  position: ToastPlacement;
+  actionType?: ActionType;
+  position?: ToastPlacement;
 }) => {
   toast.show({
     id: toastId,
@@ -31,7 +33,7 @@ export const showToast = ({
       const uniqueToastId = 'toast-' + id;
       return (
         <Toast
-          action="error"
+          action={actionType}
           variant="outline"
           nativeID={uniqueToastId}
           className="p-4 gap-6 border-error-500 w-full shadow-hard-5 max-w-[443px] flex-row justify-between"
