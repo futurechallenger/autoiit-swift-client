@@ -1,42 +1,22 @@
 import { GestureResponderEvent, ListRenderItem, ListRenderItemInfo, StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
-import { MainTabScreenProps } from '@/types';
-import {
-  Spinner,
-  Box,
-  ZStack,
-  Pressable,
-  Button,
-  FlatList,
-  Spacer,
-  // Toast,
-} from 'native-base';
+import { Spinner, Box, ZStack, Button, FlatList } from 'native-base';
 import type { ServiceInfo } from '@/redux/gql/chooseServices';
-import React, { useContext, useEffect } from 'react';
-// import { useRoute } from '@react-navigation/native';
-import { Router } from 'expo-router';
-// import { AuthContext } from '@/navigation/AuthContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect } from 'react';
 import { getServiceInfo } from '@/redux/gql/serviceInfoService';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
-import { clearToken as clearLoginToken } from '@/redux/gql/loginSlice';
-import { clearToken as clearSignInToken } from '@/redux/gql/signInSlice';
 import { ServiceCell } from '@/components/ServiceCell';
-import { useSession } from '@/hooks/ctx';
+import { signOut } from '@/redux/gql/authSlice';
 
 export default function MyFlowScreen() {
   const { services, status, error } = useAppSelector((state: RootState) => state.serviceInfo);
   const dispatch = useAppDispatch();
-  // const authContext = useContext(AuthContext);
-  // const route = useRoute();
 
-  // const { refresh = false } = route?.params ?? {};
-
-  // useEffect(() => {
-  //   dispatch(getServiceInfo({ type: 'RECOMMENDED' }));
-  // }, [refresh]);
+  useEffect(() => {
+    dispatch(getServiceInfo({ type: 'RECOMMENDED' }));
+  }, []);
 
   const handleItemClick = (item: any) => {
     // if (!item.connected) navigation.navigate('ServiceDetail', { service: item });
@@ -54,10 +34,7 @@ export default function MyFlowScreen() {
       error === 'Signature verification failed' ||
       error === 'Token expired'
     ) {
-      // AsyncStorage.setItem('@token', '');
-      // authContext.setAuthToken('');
-      // dispatch(clearSignInToken());
-      // dispatch(clearLoginToken());
+      dispatch(signOut());
     }
   }
 

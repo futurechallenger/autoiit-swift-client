@@ -13,8 +13,7 @@ import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
 import { Box } from '@/components/ui/box';
 import { VStack } from '@/components/ui/vstack';
 import { FormControl, FormControlLabelText, FormControlLabel } from '@/components/ui/form-control';
-import { signIn } from '@/redux/gql/signInSlice';
-import { login } from '@/redux/gql/loginSlice';
+import { signIn, login } from '@/redux/gql/authSlice';
 
 const { useState, useEffect } = React;
 
@@ -23,21 +22,11 @@ export default function Password() {
   const { email } = useLocalSearchParams<{ email: string }>();
   const [showPassword, setShowPassword] = React.useState(false);
   const [passwordValue, setPasswordValue] = useState('');
-  const {
-    token: signInToken,
-    status: signInStatus,
-    error: signInError,
-  } = useAppSelector((state: RootState) => state.signIn);
-  const {
-    token: loginToken,
-    status: loginStatus,
-    error: loginError,
-  } = useAppSelector((state: RootState) => state.login);
+  const { token, isAuthenticated, status, error } = useAppSelector((state: RootState) => state.signIn);
   const { userInfo } = useAppSelector((state: RootState) => state.userInfo);
-
   const [show, setShow] = useState(false);
   const [text, setText] = useState('');
-  const [error, setError] = useState(null);
+
   // const navigation = useNavigation();
   // const authContext = useContext(AuthContext);
 
@@ -46,11 +35,11 @@ export default function Password() {
   // const route = useRoute<PasswordScreenRouteProp>();
   // const { exists } = route.params;
 
-  useEffect(() => {
-    if (signInToken || loginToken) {
-      router.replace('/');
-    }
-  }, [signInToken, loginToken]);
+  // useEffect(() => {
+  //   if (signInToken || loginToken) {
+  //     router.replace('/');
+  //   }
+  // }, [signInToken, loginToken]);
 
   const handleState = () => {
     setShowPassword((showState) => {
@@ -87,7 +76,6 @@ export default function Password() {
     } catch (e: any) {
       console.error('ERROR in login', e);
       // setShowError(true);
-      setError(e);
     }
   };
 
@@ -135,13 +123,19 @@ export default function Password() {
           </Pressable>
         </Box>
       </VStack>
-      {(signInStatus === 'loading' || loginStatus === 'loading') && <Spinner size="lg" />}
-      {signInStatus === 'error' &&
-        toast.show({
-          render: () => {
-            return <Box className="bg-primary-500 p-5">Hello! Have a nice day</Box>;
-          },
-        })}
+      {status === 'loading' && <Spinner size="lg" />}
+      {error &&
+        // toast.show({
+        //   render: () => {
+        //     return (
+        //       <Box className="bg-primary-500 p-5">
+        //         <Text>Something's wrong, please try again!</Text>
+        //       </Box>
+        //     );
+        //   },
+        // })
+        <Text>{error}</Text>
+        }
     </Box>
   );
 }

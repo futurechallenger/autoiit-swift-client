@@ -15,7 +15,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from '@reduxjs/toolkit';
 import { searchServiceSlice, mostSearchedServicesSlice } from './gql/searchService';
 import { serviceInfoSlice } from './gql/serviceInfoService';
-import { signInSlice } from './gql/signInSlice';
+import { signInSlice } from './gql/authSlice';
 import { userInfoSlice } from './gql/userInfoSlice';
 import { getServiceByIdSlice } from './gql/serviceById';
 import { getServiceApisSlice } from './gql/getServiceApisSlice';

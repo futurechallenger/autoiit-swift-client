@@ -1,7 +1,7 @@
 import { useContext, createContext, type PropsWithChildren } from 'react';
 import { useStorageState } from '@/hooks/useStorageState';
-import type { SignInReturnType } from '@/redux/gql/signInSlice';
-import { signIn, clearToken } from '@/redux/gql/signInSlice';
+import type { SignInReturnType } from '@/redux/gql/authSlice';
+import { signIn, clearToken } from '@/redux/gql/authSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
 const AuthContext = createContext<{

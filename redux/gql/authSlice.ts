@@ -34,7 +34,12 @@ export const login = createAsyncThunk('auth/login', async (variables: LoginMutat
   mutation login($userInfo: UserInfoInput!) {
     loginIn(userInfo: $userInfo)
   }`;
+
   const ret = await sendRequest<LoginReturnType>({ query, variables });
+  const token = ret?.data?.loginIn;
+  if (!token) {
+    throw new Error('Username or password is incorrect');
+  }
   if (Platform.OS === 'web') {
     localStorage.setItem(TOKEN_KEY, ret.data.loginIn);
   } else {
@@ -49,6 +54,11 @@ export const signIn = createAsyncThunk('auth/signIn', async (variables: Register
     query: RegisterDocument,
     variables,
   });
+
+  const token = signInRet?.data?.signIn;
+  if (!token) {
+    throw new Error('Username or password is incorrect');
+  }
 
   if (Platform.OS === 'web') {
     localStorage.setItem(TOKEN_KEY, signInRet.data.signIn);

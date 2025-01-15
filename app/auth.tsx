@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 // import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { PasswordInput } from '@/components/PasswordInput';
-import { signIn, clearToken } from '@/redux/gql/signInSlice';
+import { signIn, clearToken } from '@/redux/gql/authSlice';
 import { RootState } from '@/redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button, ButtonText } from '@/components/ui/button';
