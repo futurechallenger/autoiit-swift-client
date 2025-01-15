@@ -31,11 +31,13 @@ export const login = createAsyncThunk('login', async (variables: LoginMutationVa
 type InitStateType = {
   status: string;
   token: LoginReturnType | undefined;
+  isAuthenticated: boolean;
   error: string | undefined;
 };
 
 const initState: InitStateType = {
   status: '',
+  isAuthenticated: false,
   token: undefined,
   error: undefined,
 };
@@ -61,14 +63,17 @@ export const loginSlice = createSlice({
         if (payload?.errors) {
           state.status = 'failed';
           state.error = payload?.errors?.[0]?.message;
+          state.isAuthenticated = false;
         } else {
           state.status = 'succeeded';
           state.token = payload?.data;
+          state.isAuthenticated = true;
         }
       })
       .addCase(login.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+        state.isAuthenticated = false;
       });
   },
 });

@@ -13,6 +13,14 @@ export type SignInReturnType = {
   signIn: string;
 };
 
+export type LoginMutationVariables = Types.Exact<{
+  userInfo: Types.UserInfoInput;
+}>;
+
+type LoginReturnType = {
+  loginIn: string;
+};
+
 export type RegisterMutation = { __typename?: 'Mutation'; signIn: string };
 
 export const RegisterDocument = `
@@ -20,6 +28,21 @@ mutation register($userInfo: UserInfoInput!) {
   signIn(userInfo: $userInfo)
 }
 `;
+
+export const login = createAsyncThunk('auth/login', async (variables: LoginMutationVariables) => {
+  const query = `
+  mutation login($userInfo: UserInfoInput!) {
+    loginIn(userInfo: $userInfo)
+  }`;
+  const ret = await sendRequest<LoginReturnType>({ query, variables });
+  if (Platform.OS === 'web') {
+    localStorage.setItem(TOKEN_KEY, ret.data.loginIn);
+  } else {
+    await SecureStore.setItemAsync(TOKEN_KEY, ret.data.loginIn);
+  }
+
+  return ret;
+});
 
 export const signIn = createAsyncThunk('auth/signIn', async (variables: RegisterMutationVariables) => {
   const signInRet = await sendRequest<SignInReturnType>({
@@ -52,7 +75,7 @@ export interface SignServiceResult {
 }
 
 const initialState: {
-  token: SignInReturnType | undefined;
+  token: string | undefined;
   isAuthenticated: boolean;
   status: string;
   error: string | undefined;
@@ -87,11 +110,34 @@ export const signInSlice = createSlice({
           state.isAuthenticated = false;
         } else {
           state.status = 'succeeded';
-          state.token = payload.data;
+          state.token = payload.data?.signIn;
           state.isAuthenticated = true;
         }
       })
       .addCase(signIn.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+        state.isAuthenticated = false;
+      })
+      .addCase(login.pending, (state, action) => {
+        state.status = 'loading';
+        if (state.error) {
+          state.error = undefined;
+        }
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        const payload = action.payload;
+        if (payload?.errors) {
+          state.status = 'failed';
+          state.error = payload?.errors?.[0]?.message;
+          state.isAuthenticated = false;
+        } else {
+          state.status = 'succeeded';
+          state.token = payload?.data.loginIn;
+          state.isAuthenticated = true;
+        }
+      })
+      .addCase(login.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
         state.isAuthenticated = false;
