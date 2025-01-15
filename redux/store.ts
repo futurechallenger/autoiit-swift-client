@@ -13,7 +13,6 @@ import { getServiceFullInfoSlice } from './gql/serviceFullInfo';
 import { getServicesSlice } from './gql/chooseServices';
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from '@reduxjs/toolkit';
-import { loginSlice } from './gql/loginSlice';
 import { searchServiceSlice, mostSearchedServicesSlice } from './gql/searchService';
 import { serviceInfoSlice } from './gql/serviceInfoService';
 import { signInSlice } from './gql/signInSlice';
@@ -54,7 +53,6 @@ import { getAutoFlowListByUserSlice } from './gql/getAutoFlowListByUserSlice';
 
 export const store = configureStore({
   reducer: combineReducers({
-    login: loginSlice.reducer,
     serviceInfo: serviceInfoSlice.reducer,
     signIn: signInSlice.reducer,
     userInfo: userInfoSlice.reducer,
