@@ -27,6 +27,7 @@
         <data android:scheme="myapp"/>
         <data android:scheme="com.autoiit.client"/>
         <data android:scheme="exp+autoiit-client"/>
+        <data android:scheme="autoiit-app"/>
       </intent-filter>
     </activity>
   </application>

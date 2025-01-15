@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Modal, Button, View, Text, VStack, Box, Pressable, FlatList } from 'native-base';
 import { DefaultAvatar } from '@/components/DefaultAvatar';
-import { signOut } from '@/redux/gql/signInSlice';
+import { signOut } from '@/redux/gql/authSlice';
 import { router } from 'expo-router';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 

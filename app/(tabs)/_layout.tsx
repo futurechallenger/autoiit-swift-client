@@ -15,7 +15,6 @@ import { P } from '@expo/html-elements';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const {token, isAuthenticated, status, error} = useAppSelector(state => state.signIn);
-  const { isAuthenticated: isLogined, status: loginStatus, error: loginError} = useAppSelector(state => state.login);
 
   if (status === 'loading') {
     return <Text>Loading...</Text>

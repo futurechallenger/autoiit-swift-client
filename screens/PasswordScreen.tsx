@@ -6,7 +6,7 @@ import * as React from 'react';
 import { Pressable } from 'react-native';
 import { AuthContext } from '../navigation/AuthContext';
 import { login } from '../redux/gql/loginSlice';
-import { signIn } from '../redux/gql/signInSlice';
+import { signIn } from '../redux/gql/authSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
 import { PasswordScreenRouteProp } from '../types';
