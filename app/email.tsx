@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getUserInfo } from '../redux/gql/userInfoSlice';
 import { RootState } from '../redux/store';
 import { Toast, useToast, ToastDescription, ToastTitle } from '@/components/ui/toast';
+import { showToast } from '@/components/showToast';
 
 const { useState, useEffect } = React;
 const EMAIL_TOAST_ID = 'auth/email';
@@ -33,7 +34,7 @@ export default function EmailScreen() {
     }
     if (error) {
       if (!toast.isActive(EMAIL_TOAST_ID)) {
-        showNewToast();
+        showToast({ toast, toastId: EMAIL_TOAST_ID, content: "Something's wrong, please try again later." });
       }
     }
   }, [email, status]);
