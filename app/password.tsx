@@ -12,7 +12,7 @@ import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
 import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
 import { Box } from '@/components/ui/box';
 import { VStack } from '@/components/ui/vstack';
-import { FormControl, FormControlLabelText, FormControlLabel } from '@/components/ui/form-control';
+import { FormControl, FormControlLabel } from '@/components/ui/form-control';
 import { signIn, login } from '@/redux/gql/authSlice';
 import { useToast } from '@/components/ui/toast';
 import { showToast } from '@/components/showToast';
