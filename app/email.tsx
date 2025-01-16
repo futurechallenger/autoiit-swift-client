@@ -8,9 +8,9 @@ import { Button, ButtonText } from '@/components/ui/button';
 import { HStack } from '@/components/ui/hstack';
 import { Icon, HelpCircleIcon, CloseIcon } from '@/components/ui/icon';
 import { router } from 'expo-router';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { getUserInfo } from '../redux/gql/userInfoSlice';
-import { RootState } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { getUserInfo } from '@/redux/gql/userInfoSlice';
+import { RootState } from '@/redux/store';
 import { Toast, useToast, ToastDescription, ToastTitle } from '@/components/ui/toast';
 import { showToast } from '@/components/showToast';
 
