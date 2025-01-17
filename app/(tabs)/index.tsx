@@ -1,4 +1,4 @@
-import { GestureResponderEvent, ListRenderItem, ListRenderItemInfo, StyleSheet } from 'react-native';
+import { ListRenderItem, ListRenderItemInfo, StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
 import { Spinner, Box, ZStack, Button, FlatList } from 'native-base';
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
 import { ServiceCell } from '@/components/ServiceCell';
 import { signOut } from '@/redux/gql/authSlice';
+import { Stack } from 'expo-router';
 
 export default function MyFlowScreen() {
   const { services, status, error } = useAppSelector((state: RootState) => state.serviceInfo);
@@ -17,6 +18,11 @@ export default function MyFlowScreen() {
   useEffect(() => {
     dispatch(getServiceInfo({ type: 'RECOMMENDED' }));
   }, []);
+
+  useEffect(() => {
+    if (!error) return;
+    console.error('>>>>>>Get flows error', error);
+  }, [error]);
 
   const handleItemClick = (item: any) => {
     // if (!item.connected) navigation.navigate('ServiceDetail', { service: item });
@@ -39,7 +45,13 @@ export default function MyFlowScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View className='flex-1 justify-center items-center p-4'>
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          title: 'Flows',
+        }}
+      />
       <ZStack justifyContent="center" alignItems="center" bg="primary.100" w="full" h="full">
         <FlatList
           w="full"
