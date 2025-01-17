@@ -1,5 +1,5 @@
 import { ListRenderItem, ListRenderItemInfo, StyleSheet } from 'react-native';
-
+import { router } from 'expo-router';
 import { Text, View } from '@/components/Themed';
 import { Spinner, Box, ZStack, Button, FlatList } from 'native-base';
 import type { ServiceInfo } from '@/redux/gql/chooseServices';
@@ -45,7 +45,7 @@ export default function MyFlowScreen() {
   }
 
   return (
-    <View className='flex-1 justify-center items-center p-4'>
+    <View className="flex-1 justify-center items-center p-4">
       <Stack.Screen
         options={{
           headerShown: true,
@@ -59,7 +59,13 @@ export default function MyFlowScreen() {
           paddingX={5}
           data={services ?? []}
           ListHeaderComponent={<ListHeader />}
-          ListFooterComponent={<ListFooter />}
+          ListFooterComponent={
+            <ListFooter
+              pressHandler={() => {
+                router.push('/create');
+              }}
+            />
+          }
           renderItem={renderItem}
         />
         {status === 'loading' && <Spinner size="lg" />}
@@ -83,27 +89,10 @@ const ListHeader = () => {
   );
 };
 
-const ListFooter = () => {
+const ListFooter = ({ pressHandler }: { pressHandler: () => void }) => {
   return (
     <Box justifyContent="center" h="60" maxWidth="120" w="full" alignSelf="center">
-      <Button onPress={() => console.warn('Not implemented!!!')}>Create</Button>
+      <Button onPress={pressHandler}>Create</Button>
     </Box>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
