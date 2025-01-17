@@ -1,10 +1,16 @@
 // import { useNavigation } from '@react-navigation/native';
-import { Button, Text, View } from 'native-base';
+import { Text, View } from 'native-base';
+import { ScrollView } from 'react-native';
+import { Button, ButtonText } from '@/components/ui/button';
 import * as React from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
 // import { useIsFocused } from '@react-navigation/native';
 import { removeAutoFlow } from '@/redux/gql/removeAutoFlowSlice';
+import { Stack } from 'expo-router';
+import { FontAwesome } from '@expo/vector-icons';
+import { Pressable } from 'react-native';
+import { RoundedButton } from '@/components/RoundedButton';
 
 const VerticalDivider = () => {
   return <View width="2" h="16" bg="red.500" />;
@@ -29,9 +35,24 @@ export default function CreateFlowScreen() {
   };
 
   return (
-    <View h="full" w="full" justifyContent="flex-start" alignItems="center">
+    <ScrollView contentContainerStyle={{ justifyContent: 'flex-start', alignItems: 'center' }}>
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          title: 'Create',
+          headerRight: () => (
+            <Pressable
+              onPress={() => {
+                console.log('help icon pressed');
+              }}
+            >
+              <FontAwesome size={30} name="question-circle" />
+            </Pressable>
+          ),
+        }}
+      />
+
       {/* <Text>{isFocused ? 'focused' : 'not focused'}</Text> */}
-      <Text>Not implemented</Text>
       <View
         bg="yellow.300"
         minW="50%"
@@ -42,16 +63,16 @@ export default function CreateFlowScreen() {
         borderRadius="10"
         marginTop="10"
       >
-        <Text fontSize="60" marginRight="10" marginY="5">
+        <Text fontSize="40" marginRight="10" marginY="5">
           When
         </Text>
-        <Button
+        <RoundedButton
           onPress={() => {
             // navigation.navigate('ChooseService', { phrase: 'Trigger' });
           }}
         >
           Add
-        </Button>
+        </RoundedButton>
       </View>
       <VerticalDivider />
       <View
@@ -63,23 +84,18 @@ export default function CreateFlowScreen() {
         alignItems="center"
         borderRadius="10"
       >
-        <Text fontSize="60" marginRight="10" marginY="5">
+        <Text fontSize="40" marginRight="10" marginY="5">
           Then
         </Text>
-        <Button
-          disabled={!autoFlow}
-          bgColor={!autoFlow ? 'muted.500' : null}
-          onPress={() => {
-            // navigation.navigate('ChooseService', { phrase: 'Action' })
-          }}
-        >
-          Add
+      </View>
+      <View className="flex-1 flex-row mt-20 justify-around items-start w-full p-5 bg-amber-200">
+        <Button onPress={handleCancel}>
+          <ButtonText>Cancel</ButtonText>
+        </Button>
+        <Button onPress={handleContinue}>
+          <ButtonText>Continue</ButtonText>
         </Button>
       </View>
-      <View marginTop={36}>
-        <Button onPress={handleCancel}>Cancel</Button>
-        <Button onPress={handleContinue}>Continue</Button>
-      </View>
-    </View>
+    </ScrollView>
   );
 }

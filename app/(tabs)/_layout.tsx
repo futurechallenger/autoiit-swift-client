@@ -10,7 +10,6 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 import { Text } from 'react-native';
 import { useAppSelector } from '@/redux/hooks';
-import { P } from '@expo/html-elements';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
