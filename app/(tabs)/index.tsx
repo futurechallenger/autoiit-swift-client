@@ -1,5 +1,5 @@
 import { ListRenderItem, ListRenderItemInfo, StyleSheet } from 'react-native';
-import { router } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { Text, View } from '@/components/Themed';
 import { Spinner, Box, ZStack, Button, FlatList } from 'native-base';
 import type { ServiceInfo } from '@/redux/gql/chooseServices';
@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
 import { ServiceCell } from '@/components/ServiceCell';
 import { signOut } from '@/redux/gql/authSlice';
-import { Stack } from 'expo-router';
 
 export default function MyFlowScreen() {
   const { services, status, error } = useAppSelector((state: RootState) => state.serviceInfo);

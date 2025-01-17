@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Stack } from 'expo-router';
 import { Box, Button, HStack, View, Text, FlatList, Spinner, Input } from 'native-base';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
@@ -39,6 +40,7 @@ export default function ExploreScreen() {
 
   return (
     <View paddingX="5">
+      <Stack.Screen options={{ headerShown: true, title: 'Explore' }} />
       <FlatList
         snapToAlignment="start"
         decelerationRate="fast"
