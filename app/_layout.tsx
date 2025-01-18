@@ -42,12 +42,17 @@ export default function RootLayout() {
           <GluestackUIProvider>
             <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
               {/* <SessionProvider> */}
-                <Stack>
-                  {/* <Stack.Screen name="index" options={{ headerShown: false }} /> */}
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false, title: "Home" }} />
-                  <Stack.Screen name="password" options={{ headerShown: false }} />
-                  <Stack.Screen name="+not-found" />
-                </Stack>
+              <Stack>
+                {/* <Stack.Screen name="index" options={{ headerShown: false }} /> */}
+                <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'Home' }} />
+                <Stack.Screen name="password" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="choose-services"
+                  options={{ presentation: 'transparentModal' }}
+                />
+
+                <Stack.Screen name="+not-found" />
+              </Stack>
               {/* </SessionProvider> */}
               <StatusBar style="auto" />
             </ThemeProvider>
