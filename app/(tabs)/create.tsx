@@ -1,11 +1,10 @@
-// import { useNavigation } from '@react-navigation/native';
 import { Text, View } from 'native-base';
-import { ScrollView } from 'react-native';
+import { router } from 'expo-router';
+import { Modal, ScrollView } from 'react-native';
 import { Button, ButtonText } from '@/components/ui/button';
 import * as React from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
-// import { useIsFocused } from '@react-navigation/native';
 import { removeAutoFlow } from '@/redux/gql/removeAutoFlowSlice';
 import { Stack } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
@@ -19,13 +18,12 @@ const VerticalDivider = () => {
 export default function CreateFlowScreen() {
   const dispatch = useAppDispatch();
 
-  // const isFocused = useIsFocused();
-  // const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = React.useState(false);
+
   const { autoFlow, status, error } = useAppSelector((state: RootState) => state.addAutoFlow);
 
   const handleContinue = () => {
     // TODO: navigate to `Review and finish` screen
-    // navigation.navigate('ReviewFinish');
   };
 
   const handleCancel = () => {
@@ -51,7 +49,6 @@ export default function CreateFlowScreen() {
           ),
         }}
       />
-
       {/* <Text>{isFocused ? 'focused' : 'not focused'}</Text> */}
       <View
         bg="yellow.300"
@@ -68,7 +65,7 @@ export default function CreateFlowScreen() {
         </Text>
         <RoundedButton
           onPress={() => {
-            // navigation.navigate('ChooseService', { phrase: 'Trigger' });
+            router.push('/choose-service');
           }}
         >
           Add
