@@ -57,13 +57,13 @@ export default function Password() {
     try {
       if (!userInfo) {
         // signin
-        dispatch(signIn({ userInfo: { email, password: passwordValue } }));
+        dispatch(signIn({ username: null, email, password: passwordValue }));
         return;
       }
 
       if (userInfo) {
         // login
-        dispatch(login({ userInfo: { email, password: passwordValue } }));
+        dispatch(login({ email, password: passwordValue }));
         return;
       }
     } catch (e: any) {
