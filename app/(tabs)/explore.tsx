@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Stack } from 'expo-router';
-import { Box, Button, HStack, View, Text, FlatList, Spinner, Input } from 'native-base';
+import { Box, Button, HStack, View, Text, FlatList, Spinner } from 'native-base';
+import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
 import { exploreService, getMostSearchedServices } from '@/redux/gql/searchService';
@@ -91,7 +92,9 @@ const ListHeader = ({ onSearchFocus }: { onSearchFocus: () => void }) => {
     <View>
       <HStack padding={5} justifyContent="center" alignItems="center">
         <Box flex={1} paddingRight="5">
-          <Input placeholder="Search" onFocus={handleSearchFocus} />
+        <Input className='text-center pt-3'>
+          <InputField />
+        </Input>
         </Box>
         {searching && <Button onPress={handleClick}>Cancel</Button>}
       </HStack>
