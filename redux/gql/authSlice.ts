@@ -6,44 +6,54 @@ import * as SecureStore from 'expo-secure-store';
 import { TOKEN_KEY } from '@/lib/config';
 
 export type RegisterMutationVariables = Types.Exact<{
-  userInfo: Types.UserInfoInput;
+  username: Types.Maybe<Types.Scalars['String']>;
+  email: Types.Scalars['String'];
+  password: Types.Scalars['String'];
 }>;
 
 export type SignInReturnType = {
-  signIn: string;
+  token: string;
 };
 
 export type LoginMutationVariables = Types.Exact<{
-  userInfo: Types.UserInfoInput;
+  email: Types.Scalars['String'];
+  password: Types.Scalars['String'];
 }>;
 
 type LoginReturnType = {
-  loginIn: string;
+  loginIn:{
+    token: string;
+  }
 };
 
 export type RegisterMutation = { __typename?: 'Mutation'; signIn: string };
 
 export const RegisterDocument = `
-mutation register($userInfo: UserInfoInput!) {
-  signIn(userInfo: $userInfo)
+mutation register($username: String, $email: String!, $password: String!) {
+  signUp(username: $username, email: $email, password: $password) {
+    token
+  }
 }
 `;
 
+// signUp(username:String, email:String!, password: String!): TokenRes
 export const login = createAsyncThunk('auth/login', async (variables: LoginMutationVariables) => {
   const query = `
-  mutation login($userInfo: UserInfoInput!) {
-    loginIn(userInfo: $userInfo)
+  mutation login($email:String!, $password: String!) {
+    loginIn(email: $email, password: $password) {
+      token
+    }
   }`;
 
   const ret = await sendRequest<LoginReturnType>({ query, variables });
-  const token = ret?.data?.loginIn;
+  const token = ret?.data?.loginIn?.token;
   if (!token) {
     throw new Error('Username or password is incorrect');
   }
   if (Platform.OS === 'web') {
-    localStorage.setItem(TOKEN_KEY, ret.data.loginIn);
+    localStorage.setItem(TOKEN_KEY, ret.data.loginIn.token);
   } else {
-    await SecureStore.setItemAsync(TOKEN_KEY, ret.data.loginIn);
+    await SecureStore.setItemAsync(TOKEN_KEY, ret.data.loginIn.token);
   }
 
   return ret;
@@ -55,15 +65,15 @@ export const signIn = createAsyncThunk('auth/signIn', async (variables: Register
     variables,
   });
 
-  const token = signInRet?.data?.signIn;
+  const token = signInRet?.data?.token;
   if (!token) {
     throw new Error('Username or password is incorrect');
   }
 
   if (Platform.OS === 'web') {
-    localStorage.setItem(TOKEN_KEY, signInRet.data.signIn);
+    localStorage.setItem(TOKEN_KEY, signInRet.data.token);
   } else {
-    await SecureStore.setItemAsync(TOKEN_KEY, signInRet.data.signIn);
+    await SecureStore.setItemAsync(TOKEN_KEY, signInRet.data.token);
   }
 
   return signInRet;
@@ -120,7 +130,7 @@ export const signInSlice = createSlice({
           state.isAuthenticated = false;
         } else {
           state.status = 'succeeded';
-          state.token = payload.data?.signIn;
+          state.token = payload.data?.token;
           state.isAuthenticated = true;
         }
       })
@@ -143,7 +153,7 @@ export const signInSlice = createSlice({
           state.isAuthenticated = false;
         } else {
           state.status = 'succeeded';
-          state.token = payload?.data.loginIn;
+          state.token = payload?.data.loginIn.token;
           state.isAuthenticated = true;
         }
       })
