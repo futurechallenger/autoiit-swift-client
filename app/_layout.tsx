@@ -46,11 +46,7 @@ export default function RootLayout() {
                 {/* <Stack.Screen name="index" options={{ headerShown: false }} /> */}
                 <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'Home' }} />
                 <Stack.Screen name="password" options={{ headerShown: false }} />
-                <Stack.Screen
-                  name="choose-services"
-                  options={{ presentation: 'transparentModal' }}
-                />
-
+                <Stack.Screen name="choose-service" options={{ presentation: 'modal' }} />
                 <Stack.Screen name="+not-found" />
               </Stack>
               {/* </SessionProvider> */}

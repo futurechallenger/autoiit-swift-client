@@ -2024,12 +2024,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/metro-runtime@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@expo/metro-runtime@npm:4.0.0"
+"@expo/metro-runtime@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@expo/metro-runtime@npm:4.0.1"
   peerDependencies:
     react-native: "*"
-  checksum: 10c0/837c9a0b6694465ff372f6cd89e33d0a655258b13e0f2ab0726d38dfae65ecb5787865f7eefc56c14f1da9814ff04cb8c26af67bd4ca6913ab65b6f2ce7f5a50
+  checksum: 10c0/bb50ce6143c153f9aa54185017366a3476f910867372271a29f7012355f9859576e128ac379924e7e86415ae4b5fac0687f751e0fbf85e201f00aed30671c29d
   languageName: node
   linkType: hard
 
@@ -2115,15 +2115,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/server@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "@expo/server@npm:0.5.0"
+"@expo/server@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@expo/server@npm:0.5.1"
   dependencies:
     "@remix-run/node": "npm:^2.12.0"
     abort-controller: "npm:^3.0.0"
     debug: "npm:^4.3.4"
     source-map-support: "npm:~0.5.21"
-  checksum: 10c0/d7368c88a61afda9902373d64850e9700ece18f8c842c569d48267760c16ffd000fb9a64d7473bf2af0bcdcafa37015bf447c673e238dfde4a243347d345bc8a
+  checksum: 10c0/bb842b010bc4efb6f972aed41dedf5a26c06268a3ec7468edf411b20fd42273e31f34d3ed4935e766e492b260076ccdc0d4546fd86fa3a04682d45e1b8b8b791
   languageName: node
   linkType: hard
 
@@ -6122,7 +6122,7 @@ __metadata:
     expo-font: "npm:~13.0.2"
     expo-haptics: "npm:~14.0.0"
     expo-linking: "npm:~7.0.3"
-    expo-router: "npm:~4.0.15"
+    expo-router: "npm:^4.0.17"
     expo-secure-store: "npm:14.0.0"
     expo-splash-screen: "npm:~0.29.18"
     expo-status-bar: "npm:~2.0.0"
@@ -8725,12 +8725,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-router@npm:~4.0.15":
-  version: 4.0.15
-  resolution: "expo-router@npm:4.0.15"
+"expo-router@npm:^4.0.17":
+  version: 4.0.17
+  resolution: "expo-router@npm:4.0.17"
   dependencies:
-    "@expo/metro-runtime": "npm:4.0.0"
-    "@expo/server": "npm:^0.5.0"
+    "@expo/metro-runtime": "npm:4.0.1"
+    "@expo/server": "npm:^0.5.1"
     "@radix-ui/react-slot": "npm:1.0.1"
     "@react-navigation/bottom-tabs": "npm:^7.2.0"
     "@react-navigation/native": "npm:^7.0.14"
@@ -8757,7 +8757,7 @@ __metadata:
       optional: true
     react-native-reanimated:
       optional: true
-  checksum: 10c0/3498a533b522a8f07e6d5128024052a3e3ae5670fd795b78fe1df46b2e0e4443bcb2a3c910cd4f920e6d480bd71275153b21400c15b6414cb659b23781296baf
+  checksum: 10c0/2d58f6c55b23a6b3f000bb3b9a7a2f474dc5fd62edbcc6f6b8982751664b3e657065176fba73112f135911413f75c4d64af7f8c0cd2b7bfc6d25f4f7f87384bc
   languageName: node
   linkType: hard
 
