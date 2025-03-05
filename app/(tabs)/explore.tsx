@@ -1,7 +1,10 @@
 import * as React from 'react';
+import { Pressable, TouchableOpacity } from 'react-native';
+import { useRouter, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { Stack } from 'expo-router';
 import { Box, Button, HStack, View, Text, FlatList, Spinner } from 'native-base';
 import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
+import { Modal } from '@/components/ui/modal';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
 import { exploreService, getMostSearchedServices } from '@/redux/gql/searchService';
@@ -21,6 +24,7 @@ export default function ExploreScreen() {
     error: mostSearchedError,
     status: mostSearchedStatus,
   } = useAppSelector((state: RootState) => state.mostSearchedServices);
+
   useEffect(() => {
     dispatch(
       exploreService({
@@ -68,36 +72,28 @@ export default function ExploreScreen() {
   );
 }
 
-const ListHeader = ({ onSearchFocus }: { onSearchFocus: () => void }) => {
-  const [searching, setSearching] = useState(false);
-  const [text, setText] = useState('');
+const ListHeader = ({ onSearchFocus }: { onSearchFocus: any }) => {
+  const params = useLocalSearchParams<{ selectedService: string }>();
+  const router = useRouter();
+  const [selectedService, setSelectedService] = useState<string>('All');
 
-  // const handleInput = (newValue: string) => {
-  //   if (newValue) {
-  //     if (!searching) setSearching(true);
-
-  //     setText(newValue);
-  //   }
-  // };
-
-  const handleSearchFocus = () => {
-    if (onSearchFocus) onSearchFocus();
-  };
-
-  const handleClick = () => {
-    if (searching) setSearching(false);
-  };
+  useEffect(() => {
+    setSelectedService(params.selectedService || 'All');
+  }, [params]);
 
   return (
-    <View>
-      <HStack padding={5} justifyContent="center" alignItems="center">
-        <Box flex={1} paddingRight="5">
-        <Input className='text-center pt-3'>
-          <InputField />
-        </Input>
-        </Box>
-        {searching && <Button onPress={handleClick}>Cancel</Button>}
-      </HStack>
+    <View className="px-4 pb-2 bg-white">
+      {/* 搜索框 */}
+      <Input onFocus={onSearchFocus} className="border rounded-lg p-2" placeholder="Search services..." />
+
+      {/* 服务类型选择按钮 */}
+      <Pressable
+        onPress={() => router.push('/choose-service')}
+        className="mt-2 border rounded-lg p-2 flex-row justify-between items-center bg-white"
+      >
+        <Text className="text-gray-600">{selectedService}</Text>
+        {/* <MaterialIcons name="arrow-drop-down" size={24} color="#6b7280" /> */}
+      </Pressable>
     </View>
   );
 };

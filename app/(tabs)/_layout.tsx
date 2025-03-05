@@ -20,7 +20,8 @@ export default function TabLayout() {
   }
 
   if (status === 'error') {
-    return <Text>{error}</Text>;
+    return <Text>{error}r</Text>;
+
   }
 
   if (isAuthenticated === false) {
