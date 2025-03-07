@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { SectionList } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { View, Text, FlatList, Pressable } from 'native-base';
 import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
@@ -10,6 +11,28 @@ import { getServices, getServicesSlice } from '@/redux/gql/chooseServices';
 import { SearchIcon } from '@/components/ui/icon';
 
 const { useEffect, useState } = React;
+
+const sections = [
+  {
+    title: 'Filters',
+    data: [
+      { id: 'filter_all', name: 'All' },
+      { id: 'filter_new', name: 'New' },
+      { id: 'filter_popular', name: 'Popular' },
+    ],
+    type: 'filters',
+  },
+  {
+    title: 'Services',
+    data: [
+      { id: 'service_1', name: 'Business Tools', category: 'Business' },
+      { id: 'service_2', name: 'Contacts Sync', category: 'Communication' },
+      { id: 'service_3', name: 'API Integrations', category: 'Developer' },
+      { id: 'service_4', name: 'Analytics', category: 'Analytics' },
+    ],
+    type: 'services',
+  },
+];
 
 export default function ChooseServiceScreen() {
   const { services, error, status } = useAppSelector((state: RootState) => state.services);
@@ -48,14 +71,18 @@ export default function ChooseServiceScreen() {
           <ButtonText>OK</ButtonText>
         </Button>
       </HStack>
-      <View  className='h-20 w-full bg-sky-100' />
-      <FlatList
-        w="full"
-        data={services ?? []}
-        renderItem={({ item }) => (
-          <Pressable onPress={() => handleNav(/*item*/)}>
-            <View w="full" h={60} bg="pink.100" justifyContent="center" alignItems="center">
-              <Text>{item.name}</Text>
+      <View className="h-20 w-full bg-sky-100" />
+      <SectionList
+        className="w-full"
+        sections={sections}
+        keyExtractor={(item, index) => item.id || index.toString()}
+        renderSectionHeader={({ section }) => (
+          <Text className="text-lg font-bold text-gray-800 mb-2 mt-4 px-2">{section.title}</Text>
+        )}
+        renderItem={({ item, section }) => (
+          <Pressable onPress={() => handleNav(/*item*/)} className="mb-2">
+            <View className="w-full h-16 bg-pink-100 rounded-lg justify-center items-center">
+              <Text className="text-gray-800">{item.name}</Text>
             </View>
           </Pressable>
         )}
