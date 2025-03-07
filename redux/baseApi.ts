@@ -13,40 +13,44 @@ async function sendRequest<DataType>({
   variables = undefined,
   operationName = undefined,
 }: RequestParam): Promise<APIResponse<DataType>> {
-  const token = await AsyncStorage.getItem('@token');
+  try {
+    const token = await AsyncStorage.getItem('@token');
+    const headers: { [index: string]: string } = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    };
 
-  const headers: { [index: string]: string } = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  };
+    if (token) {
+      headers['authorization'] = token;
+    }
 
-  if (token) {
-    headers['authorization'] = token;
+    const body: { [index: string]: string } = {};
+
+    body['query'] = query;
+    if (operationName) {
+      body['operationName'] = operationName;
+    }
+    if (variables) {
+      body['variables'] = variables;
+    }
+
+    console.log(`Start requesting ${SERVER_URL}`);
+    console.log(`Query / mutation is: ${query}`);
+    console.log(`Variables is: ${JSON.stringify(variables ?? {}, null, 2)}`);
+
+    const res = await fetch(`${SERVER_URL}/graphql`, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: { ...headers },
+      body: JSON.stringify(body),
+    });
+
+    return res.json();
+  } catch (error) {
+    console.error('ERROR >', error);
+    throw error;
   }
-
-  const body: { [index: string]: string } = {};
-
-  body['query'] = query;
-  if (operationName) {
-    body['operationName'] = operationName;
-  }
-  if (variables) {
-    body['variables'] = variables;
-  }
-
-  console.log(`Start requesting ${SERVER_URL}`);
-  console.log(`Query / mutation is: ${query}`);
-  console.log(`Variables is: ${JSON.stringify(variables ?? {}, null, 2)}`);
-
-  const res = await fetch(`${SERVER_URL}/graphql`, {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    headers: { ...headers },
-    body: JSON.stringify(body),
-  });
-
-  return res.json();
 }
 
 export { sendRequest };
