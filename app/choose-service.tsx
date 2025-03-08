@@ -55,7 +55,7 @@ export default function ChooseServiceScreen() {
   return (
     <View className="h-full w-full flex-1 justify-start items-center bg-white p-4">
       <Stack.Screen options={{ headerShown: true, title: 'Choose Service' }} />
-      <HStack className="w-full p-x-4 bg-emerald-100">
+      {/* <HStack className="w-full p-x-4 bg-emerald-100">
         <Input className="flex-1 pr-2">
           <InputField placeholder="Search" />
           <InputSlot>
@@ -70,8 +70,7 @@ export default function ChooseServiceScreen() {
         >
           <ButtonText>OK</ButtonText>
         </Button>
-      </HStack>
-      <View className="h-20 w-full bg-sky-100" />
+      </HStack> */}
       <SectionList
         className="w-full"
         sections={sections}
