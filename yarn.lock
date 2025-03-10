@@ -6136,6 +6136,7 @@ __metadata:
     native-base: "npm:^3.4.28"
     nativewind: "npm:4.1.23"
     normalize-css-color: "npm:^1.0.2"
+    normalizr: "npm:^3.6.2"
     prettier: "npm:^2.8.3"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
@@ -12778,6 +12779,13 @@ __metadata:
   version: 6.1.0
   resolution: "normalize-url@npm:6.1.0"
   checksum: 10c0/95d948f9bdd2cfde91aa786d1816ae40f8262946e13700bf6628105994fe0ff361662c20af3961161c38a119dc977adeb41fc0b41b1745eb77edaaf9cb22db23
+  languageName: node
+  linkType: hard
+
+"normalizr@npm:^3.6.2":
+  version: 3.6.2
+  resolution: "normalizr@npm:3.6.2"
+  checksum: 10c0/43074b0aed2709fcc96638a3dc377edc9b76ac072d22a0608a3adf1b045df0e964e92beaf1c4011c07539a12c77e72e913a70fc940ba5528b352232049f5c908
   languageName: node
   linkType: hard
 

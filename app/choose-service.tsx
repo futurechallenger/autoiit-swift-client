@@ -44,7 +44,9 @@ export default function ChooseServiceScreen() {
 
   const [inputText, setInputText] = useState('');
 
-  const handleNav = (/*item*/) => {
+  const handleNav = (item: { id: string; name: string }) => {
+    console.log('Item pressed:', item);
+
     // if (phrase === 'Action') {
     //   navigation.navigate('Actions', { item, phrase });
     //   return;
@@ -55,22 +57,6 @@ export default function ChooseServiceScreen() {
   return (
     <View className="h-full w-full flex-1 justify-start items-center bg-white p-4">
       <Stack.Screen options={{ headerShown: true, title: 'Choose Service' }} />
-      {/* <HStack className="w-full p-x-4 bg-emerald-100">
-        <Input className="flex-1 pr-2">
-          <InputField placeholder="Search" />
-          <InputSlot>
-            <InputIcon as={SearchIcon} />
-          </InputSlot>
-        </Input>
-        <Button
-          className="ml-2"
-          onPress={() => {
-            dispatch(getServicesSlice.actions.searchByName(inputText));
-          }}
-        >
-          <ButtonText>OK</ButtonText>
-        </Button>
-      </HStack> */}
       <SectionList
         className="w-full"
         sections={sections}
@@ -79,7 +65,7 @@ export default function ChooseServiceScreen() {
           <Text className="text-lg font-bold text-gray-800 mb-2 mt-4 px-2">{section.title}</Text>
         )}
         renderItem={({ item, section }) => (
-          <Pressable onPress={() => handleNav(/*item*/)} className="mb-2">
+          <Pressable onPress={() => handleNav(item)} className="mb-2">
             <View className="w-full h-16 bg-pink-100 rounded-lg justify-center items-center">
               <Text className="text-gray-800">{item.name}</Text>
             </View>
