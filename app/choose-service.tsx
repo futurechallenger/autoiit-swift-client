@@ -12,6 +12,8 @@ import { SearchIcon } from '@/components/ui/icon';
 
 const { useEffect, useState } = React;
 
+type ServiceType = { id: string; name: string };
+
 const sections = [
   {
     title: 'Filters',
@@ -51,7 +53,9 @@ export default function ChooseServiceScreen() {
     //   navigation.navigate('Actions', { item, phrase });
     //   return;
     // }
-    // navigation.navigate('Triggers', { item, phrase });
+    // navigation.navigate('Triggers', { item, phrase o);
+    router.back();
+    router.setParams(item);
   };
 
   return (
