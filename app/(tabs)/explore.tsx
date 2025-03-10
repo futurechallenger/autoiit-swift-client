@@ -16,6 +16,7 @@ const { useEffect, useState } = React;
 
 export default function ExploreScreen() {
   const [condition, setCondition] = useState('');
+  const params = useLocalSearchParams();
   // const navigation = useNavigation();
   const dispatch = useAppDispatch();
   const { services, error, status } = useAppSelector((state: RootState) => state.exploreServices);
@@ -42,6 +43,8 @@ export default function ExploreScreen() {
   const handleFocus = () => {
     // navigation.navigate('Search');
   };
+
+  console.log('>>>>params', params);
 
   return (
     <View paddingX="5">
