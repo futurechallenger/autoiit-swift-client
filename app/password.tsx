@@ -80,7 +80,7 @@ export default function Password() {
   };
 
   const headingText = userInfo ? "Welcome back! What's your password" : 'Create your password';
-  const buttonTitle = userInfo ? 'Login' : 'SignIn';
+  const buttonTitle = userInfo ? 'Login' : 'Register';
 
   return (
     <Box className="flex-1 justify-start items-center ">

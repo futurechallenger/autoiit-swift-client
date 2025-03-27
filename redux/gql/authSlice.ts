@@ -21,15 +21,15 @@ export type LoginMutationVariables = Types.Exact<{
 }>;
 
 type LoginReturnType = {
-  loginIn:{
+  loginIn: {
     token: string;
-  }
+  };
 };
 
 export type RegisterMutation = { __typename?: 'Mutation'; signIn: string };
 
 export const RegisterDocument = `
-mutation register($username: String, $email: String!, $password: String!) {
+mutation Register($username: String, $email: String!, $password: String!) {
   signUp(username: $username, email: $email, password: $password) {
     token
   }
@@ -39,7 +39,7 @@ mutation register($username: String, $email: String!, $password: String!) {
 // signUp(username:String, email:String!, password: String!): TokenRes
 export const login = createAsyncThunk('auth/login', async (variables: LoginMutationVariables) => {
   const query = `
-  mutation login($email:String!, $password: String!) {
+  mutation Login($email:String!, $password: String!) {
     loginIn(email: $email, password: $password) {
       token
     }

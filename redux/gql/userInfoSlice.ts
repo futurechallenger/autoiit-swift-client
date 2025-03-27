@@ -56,7 +56,7 @@ export type FindUserQuery = {
 };
 
 export const FindUserDocument = `
-query findUser($email: String!) {
+query FindUser($email: String!) {
   userInfo(email: $email) {
     name
   }
