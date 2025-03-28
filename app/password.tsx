@@ -90,12 +90,10 @@ export default function Password() {
           headerShown: true,
         }}
       />
-      <VStack className=" w-full pt-6 px-6">
-        <FormControl>
-          <FormControlLabel>
-            <Heading>{headingText}</Heading>
-          </FormControlLabel>
-          <Input className="text-center pt-3">
+      <VStack className="w-full pt-6 px-6">
+        <Heading>{headingText}</Heading>
+        <Box className="pt-3">
+          <Input variant="outline">
             <InputField
               type={showPassword ? 'text' : 'password'}
               onChangeText={(v) => setPasswordValue(v)}
@@ -105,7 +103,7 @@ export default function Password() {
               <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
             </InputSlot>
           </Input>
-        </FormControl>
+        </Box>
         <Box className="pt-8 ">
           <Button onPress={handleClick}>
             <ButtonText>{buttonTitle}</ButtonText>
