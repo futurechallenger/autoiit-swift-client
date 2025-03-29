@@ -44,8 +44,6 @@ export default function ExploreScreen() {
     // navigation.navigate('Search');
   };
 
-  console.log('>>>>params', params);
-
   return (
     <View paddingX="5">
       <Stack.Screen options={{ headerShown: true, title: 'Explore' }} />
@@ -76,12 +74,12 @@ export default function ExploreScreen() {
 }
 
 const ListHeader = ({ onSearchFocus }: { onSearchFocus: any }) => {
-  const params = useLocalSearchParams<{ selectedService: string }>();
+  const params = useLocalSearchParams<{ name: string }>();
   const router = useRouter();
   const [selectedService, setSelectedService] = useState<string>('All');
 
   useEffect(() => {
-    setSelectedService(params.selectedService || 'All');
+    setSelectedService(params.name || 'All');
   }, [params]);
 
   return (
