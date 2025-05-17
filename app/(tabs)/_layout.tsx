@@ -13,15 +13,14 @@ import { useAppSelector } from '@/redux/hooks';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const {token, isAuthenticated, status, error} = useAppSelector(state => state.signIn);
+  const { token, isAuthenticated, status, error } = useAppSelector((state) => state.signIn);
 
   if (status === 'loading') {
-    return <Text>Loading...</Text>
+    return <Text>Loading...</Text>;
   }
 
   if (status === 'error') {
     return <Text>{error}r</Text>;
-
   }
 
   if (isAuthenticated === false) {
