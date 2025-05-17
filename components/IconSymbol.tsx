@@ -1,4 +1,3 @@
-
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { SymbolWeight } from 'expo-symbols';
 import React from 'react';
@@ -11,12 +10,9 @@ const MAPPING = {
   'paperplane.fill': 'send',
   'add.circle.outline': 'add-circle-outline',
   'list.ul': 'list',
-  'person': 'person',
+  person: 'person',
 } as Partial<
-  Record<
-    import('expo-symbols').SymbolViewProps['name'],
-    React.ComponentProps<typeof MaterialIcons>['name']
-  >
+  Record<import('expo-symbols').SymbolViewProps['name'], React.ComponentProps<typeof MaterialIcons>['name']>
 >;
 
 export type IconSymbolName = keyof typeof MAPPING;
