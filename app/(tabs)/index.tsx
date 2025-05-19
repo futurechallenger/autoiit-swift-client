@@ -1,7 +1,8 @@
 import { ListRenderItem, ListRenderItemInfo, StyleSheet } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { Text, View } from '@/components/Themed';
-import { Spinner, Box, ZStack, Button, FlatList } from 'native-base';
+import { Spinner, Box, ZStack, FlatList } from 'native-base';
+import { Button } from 'react-native';
 import type { ServiceInfo } from '@/redux/gql/chooseServices';
 import React, { useEffect } from 'react';
 import { getServiceInfo } from '@/redux/gql/serviceInfoService';
@@ -91,7 +92,7 @@ const ListHeader = () => {
 const ListFooter = ({ pressHandler }: { pressHandler: () => void }) => {
   return (
     <Box justifyContent="center" h="60" maxWidth="120" w="full" alignSelf="center">
-      <Button onPress={pressHandler}>Create</Button>
+      <Button onPress={pressHandler} title="Create" />
     </Box>
   );
 };

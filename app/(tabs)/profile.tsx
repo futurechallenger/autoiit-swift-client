@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Modal, Button, View, Text, VStack, Box, Pressable, FlatList } from 'native-base';
+import { Button } from 'react-native';
+import { Modal, View, Text, VStack, Box, Pressable, FlatList } from 'native-base';
 import { DefaultAvatar } from '@/components/DefaultAvatar';
 import { signOut } from '@/redux/gql/authSlice';
 import { router } from 'expo-router';
@@ -140,25 +141,20 @@ export default function ProfileScreen() {
             <Text>You will logout your account!</Text>
           </Modal.Body>
           <Modal.Footer>
-            <Button.Group space={2}>
-              <Button
-                variant="ghost"
-                colorScheme="blueGray"
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                onPress={() => {
-                  dispatch(signOut());
-                  setModalVisible(false);
-                }}
-              >
-                Save
-              </Button>
-            </Button.Group>
+            <Button
+              color="blueGray"
+              onPress={() => {
+                setModalVisible(false);
+              }}
+              title="Cancel"
+            />
+            <Button
+              onPress={() => {
+                dispatch(signOut());
+                setModalVisible(false);
+              }}
+              title="Save"
+            />
           </Modal.Footer>
         </Modal.Content>
       </Modal>
