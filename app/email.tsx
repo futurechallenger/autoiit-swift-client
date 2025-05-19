@@ -1,10 +1,10 @@
 import * as React from 'react';
+import { Button } from 'react-native';
 import { VStack } from '@/components/ui/vstack';
 import { Heading } from '@/components/ui/heading';
 import { Input, InputField } from '@/components/ui/input';
 import { Box } from '@/components/ui/box';
 import { Pressable } from '@/components/ui/pressable';
-import { Button, ButtonText } from '@/components/ui/button';
 import { HStack } from '@/components/ui/hstack';
 import { Icon, HelpCircleIcon, CloseIcon } from '@/components/ui/icon';
 import { router } from 'expo-router';
@@ -98,9 +98,7 @@ export default function EmailScreen() {
           </Input>
         </Box>
         <Box className="py-8">
-          <Button onPress={handleClick}>
-            <ButtonText>Continue</ButtonText>
-          </Button>
+          <Button onPress={handleClick} title="Continue" />
         </Box>
       </VStack>
     </Box>

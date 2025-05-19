@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Button } from 'react-native';
 import { Stack } from 'expo-router';
 import { Platform, TextInput } from 'react-native';
 import { Center, Text, VStack, Box, Container, Actionsheet, HStack, Modal, FormControl } from 'native-base';
@@ -9,7 +10,6 @@ import { PasswordInput } from '@/components/PasswordInput';
 import { signIn, clearToken } from '@/redux/gql/authSlice';
 import { RootState } from '@/redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Button, ButtonText } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
 import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
 import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
@@ -110,9 +110,7 @@ export default function Auth() {
         </Box>
         <Center bg="primary.100" _text={{ color: 'white', fontWeight: 'bold' }}></Center>
         <Container>
-          <Button onPress={handleClick}>
-            <ButtonText>Continue</ButtonText>
-          </Button>
+          <Button onPress={handleClick} title="Continue" />
         </Container>
         <Actionsheet isOpen={isOpen} onClose={handleClose}>
           <Actionsheet.Content>
@@ -168,19 +166,13 @@ export default function Auth() {
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
-            {/* <Button.Group space={2}> */}
             <Button
-              className="mr-5"
               onPress={() => {
                 setModalVisible(false);
               }}
-            >
-              <ButtonText>Cancel</ButtonText>
-            </Button>
-            <Button onPress={handleRegister}>
-              <ButtonText>Save</ButtonText>
-            </Button>
-            {/* </Button.Group> */}
+              title="Cancel"
+            />
+            <Button onPress={handleRegister} title="Save" />
           </Modal.Footer>
         </Modal.Content>
       </Modal>
