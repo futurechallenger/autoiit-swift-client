@@ -24,10 +24,9 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="myapp"/>
+        <data android:scheme="autoiit-app"/>
         <data android:scheme="com.autoiit.client"/>
         <data android:scheme="exp+autoiit-client"/>
-        <data android:scheme="autoiit-app"/>
       </intent-filter>
     </activity>
   </application>
