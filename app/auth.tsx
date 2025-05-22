@@ -6,12 +6,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { signIn, clearToken } from '@/redux/gql/authSlice';
 import { RootState } from '@/redux/store';
-<<<<<<< HEAD
-=======
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
 import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
->>>>>>> 4693395 (input password is replaced by rn components)
 import { router } from 'expo-router';
 import { useSession } from '@/hooks/ctx';
 import { ThemedPasswordInput } from '@/components/ThemedPasswordInput';
