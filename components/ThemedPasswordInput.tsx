@@ -1,5 +1,9 @@
 import React from 'react';
 import { TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
+<<<<<<< HEAD
+=======
+import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
+>>>>>>> 4693395 (input password is replaced by rn components)
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export const ThemedPasswordInput = ({
