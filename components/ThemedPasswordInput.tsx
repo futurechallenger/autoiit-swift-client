@@ -1,6 +1,5 @@
 import React from 'react';
 import { TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
-import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export const ThemedPasswordInput = ({
