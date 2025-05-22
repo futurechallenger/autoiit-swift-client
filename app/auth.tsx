@@ -6,15 +6,14 @@ import { Center, Text, VStack, Box, Container, Actionsheet, HStack, Modal, FormC
 import { SafeAreaView } from 'react-native-safe-area-context';
 // import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { PasswordInput } from '@/components/PasswordInput';
 import { signIn, clearToken } from '@/redux/gql/authSlice';
 import { RootState } from '@/redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Heading } from '@/components/ui/heading';
 import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
 import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
 import { router } from 'expo-router';
 import { useSession } from '@/hooks/ctx';
+import { ThemedPasswordInput } from '@/components/ThemedPasswordInput';
 
 const { useState, useRef, useEffect } = React;
 
@@ -102,7 +101,7 @@ export default function Auth() {
       <Stack.Screen options={{ headerShown: false }} />
       <VStack space="2.5" mt="4" padding={4}>
         <HStack justifyContent="space-between">
-          <Heading>Introduction of the app</Heading>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Introduction of the app</Text>
         </HStack>
         <Box>
           {/* TODO: replace this text */}
@@ -153,7 +152,7 @@ export default function Auth() {
             </FormControl>
             <FormControl mt="3">
               <FormControl.Label>Password</FormControl.Label>
-              <Input className="text-center">
+              {/* <Input className="text-center">
                 <InputField
                   type={showPassword ? 'text' : 'password'}
                   onChangeText={(v) => setPasswordValue(v)}
@@ -162,7 +161,8 @@ export default function Auth() {
                 <InputSlot className="pr-3" onPress={handleState}>
                   <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
                 </InputSlot>
-              </Input>
+              </Input> */}
+              <ThemedPasswordInput value={passwordValue} onChangeText={(v: string) => setPasswordValue(v)} />
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
