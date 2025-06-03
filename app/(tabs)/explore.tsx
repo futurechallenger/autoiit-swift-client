@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { Pressable, TouchableOpacity, useWindowDimensions } from 'react-native';
-import { useRouter, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { Pressable, useWindowDimensions } from 'react-native';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Stack } from 'expo-router';
-import { Box, Button, HStack, View, Text, FlatList, Spinner } from 'native-base';
-import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
-import { Modal } from '@/components/ui/modal';
+import { HStack, View, Text, FlatList, Spinner } from 'native-base';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
 import { exploreService, getMostSearchedServices } from '@/redux/gql/searchService';
@@ -13,8 +11,6 @@ import { ServiceCell } from '@/components/ServiceCell';
 import { REQUEST_COUNT } from '@/lib/config';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
-import { Link } from 'expo-router';
-import SearchService from '@/components/search-service';
 
 const { useEffect, useState } = React;
 

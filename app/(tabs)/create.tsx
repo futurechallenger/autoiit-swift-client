@@ -1,7 +1,7 @@
 import { Text, View } from 'native-base';
 import { router } from 'expo-router';
 import { Modal, ScrollView } from 'react-native';
-import { Button, ButtonText } from '@/components/ui/button';
+import { Button } from 'react-native';
 import * as React from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
@@ -86,12 +86,8 @@ export default function CreateFlowScreen() {
         </Text>
       </View>
       <View className="flex-1 flex-row mt-20 justify-around items-start w-full p-5 bg-amber-200">
-        <Button onPress={handleCancel}>
-          <ButtonText>Cancel</ButtonText>
-        </Button>
-        <Button onPress={handleContinue}>
-          <ButtonText>Continue</ButtonText>
-        </Button>
+        <Button onPress={handleCancel} title="Cancel" />
+        <Button onPress={handleContinue} title="Continue" />
       </View>
     </ScrollView>
   );

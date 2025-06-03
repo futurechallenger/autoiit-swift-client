@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
+import { Button } from 'react-native';
 import { Spinner, Text } from 'native-base';
 import { Heading } from '@/components/ui/heading';
-import { Button, ButtonText } from '@/components/ui/button';
 import * as React from 'react';
 import { Pressable } from 'react-native';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -105,9 +105,7 @@ export default function Password() {
           </Input>
         </Box>
         <Box className="pt-8 ">
-          <Button onPress={handleClick}>
-            <ButtonText>{buttonTitle}</ButtonText>
-          </Button>
+          <Button onPress={handleClick} title={buttonTitle} />
           <Pressable onPress={handlePress} className="self-center py-2">
             <Text variant="labelSmall">Forget password?</Text>
           </Pressable>

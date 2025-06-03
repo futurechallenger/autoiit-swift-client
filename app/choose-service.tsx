@@ -2,13 +2,10 @@ import * as React from 'react';
 import { SectionList } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { View, Text, FlatList, Pressable } from 'native-base';
-import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
-import { Button, ButtonText } from '@/components/ui/button';
 import { HStack } from '@/components/ui/hstack';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
 import { getServices, getServicesSlice } from '@/redux/gql/chooseServices';
-import { SearchIcon } from '@/components/ui/icon';
 
 const { useEffect, useState } = React;
 

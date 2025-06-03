@@ -1,20 +1,16 @@
 import * as React from 'react';
+import { Button, TextInput } from 'react-native';
 import { Stack } from 'expo-router';
-import { Platform, TextInput } from 'react-native';
 import { Center, Text, VStack, Box, Container, Actionsheet, HStack, Modal, FormControl } from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
 // import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { PasswordInput } from '@/components/PasswordInput';
 import { signIn, clearToken } from '@/redux/gql/authSlice';
 import { RootState } from '@/redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Button, ButtonText } from '@/components/ui/button';
-import { Heading } from '@/components/ui/heading';
-import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
-import { EyeIcon, EyeOffIcon } from '@/components/ui/icon';
 import { router } from 'expo-router';
 import { useSession } from '@/hooks/ctx';
+import { ThemedPasswordInput } from '@/components/ThemedPasswordInput';
 
 const { useState, useRef, useEffect } = React;
 
@@ -102,7 +98,7 @@ export default function Auth() {
       <Stack.Screen options={{ headerShown: false }} />
       <VStack space="2.5" mt="4" padding={4}>
         <HStack justifyContent="space-between">
-          <Heading>Introduction of the app</Heading>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Introduction of the app</Text>
         </HStack>
         <Box>
           {/* TODO: replace this text */}
@@ -110,9 +106,7 @@ export default function Auth() {
         </Box>
         <Center bg="primary.100" _text={{ color: 'white', fontWeight: 'bold' }}></Center>
         <Container>
-          <Button onPress={handleClick}>
-            <ButtonText>Continue</ButtonText>
-          </Button>
+          <Button onPress={handleClick} title="Continue" />
         </Container>
         <Actionsheet isOpen={isOpen} onClose={handleClose}>
           <Actionsheet.Content>
@@ -136,51 +130,35 @@ export default function Auth() {
           <Modal.CloseButton />
           <Modal.Header>Register</Modal.Header>
           <Modal.Body>
-            <FormControl>
-              <FormControl.Label>Name</FormControl.Label>
-              <Input variant="outline" size="md" isDisabled={false} isInvalid={false} isReadOnly={false}>
-                <InputField
-                  placeholder="Name"
-                  ref={nameInputRef}
-                  onChangeText={(v) => setNameValue(v)}
-                  value={nameValue}
-                />
-              </Input>
-            </FormControl>
+            <FormControl></FormControl>
             <FormControl>
               <FormControl.Label>Email</FormControl.Label>
-              <Input variant="outline" size="md" isDisabled={false} isInvalid={false} isReadOnly={false}>
-                <InputField placeholder="Email" onChangeText={(v) => setEmailValue(v)} value={emailValue} />
-              </Input>
+              <TextInput
+                placeholder="Name"
+                ref={nameInputRef}
+                onChangeText={(v) => setNameValue(v)}
+                value={nameValue}
+                style={{
+                  height: '100%',
+                  fontSize: 16,
+                  color: '#1f2937',
+                }}
+                placeholderTextColor="#9ca3af"
+              />
             </FormControl>
             <FormControl mt="3">
               <FormControl.Label>Password</FormControl.Label>
-              <Input className="text-center">
-                <InputField
-                  type={showPassword ? 'text' : 'password'}
-                  onChangeText={(v) => setPasswordValue(v)}
-                  value={passwordValue}
-                />
-                <InputSlot className="pr-3" onPress={handleState}>
-                  <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
-                </InputSlot>
-              </Input>
+              <ThemedPasswordInput value={passwordValue} onChangeText={(v: string) => setPasswordValue(v)} />
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
-            {/* <Button.Group space={2}> */}
             <Button
-              className="mr-5"
               onPress={() => {
                 setModalVisible(false);
               }}
-            >
-              <ButtonText>Cancel</ButtonText>
-            </Button>
-            <Button onPress={handleRegister}>
-              <ButtonText>Save</ButtonText>
-            </Button>
-            {/* </Button.Group> */}
+              title="Cancel"
+            />
+            <Button onPress={handleRegister} title="Save" />
           </Modal.Footer>
         </Modal.Content>
       </Modal>
