@@ -30,7 +30,7 @@ export type RegisterMutation = { __typename?: 'Mutation'; signIn: string };
 
 export const RegisterDocument = `
 mutation Register($username: String, $email: String!, $password: String!) {
-  signUp(username: $username, email: $email, password: $password) {
+  register(username: $username, email: $email, password: $password) {
     token
   }
 }
