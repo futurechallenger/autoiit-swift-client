@@ -7,6 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Provider } from 'react-redux';
@@ -55,7 +56,7 @@ export default function RootLayout() {
                     headerLeft: () => {
                       return (
                         <TouchableOpacity onPress={() => router.dismiss()}>
-                          <Text>X</Text>
+                          <AntDesign name="close" size={24} color="black" />
                         </TouchableOpacity>
                       );
                     },
