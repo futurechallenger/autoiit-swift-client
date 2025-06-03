@@ -3,11 +3,9 @@ import { Button, TextInput } from 'react-native';
 import { Stack } from 'expo-router';
 import { Center, Text, VStack, Box, Container, Actionsheet, HStack, Modal, FormControl } from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
-// import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { signIn, clearToken } from '@/redux/gql/authSlice';
 import { RootState } from '@/redux/store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { useSession } from '@/hooks/ctx';
 import { ThemedPasswordInput } from '@/components/ThemedPasswordInput';
@@ -30,8 +28,8 @@ export default function Auth() {
 
   useEffect(() => {
     const storeItem = async () => {
-      if (token?.signIn) {
-        signInSession(token.signIn);
+      if (token) {
+        signInSession(token);
         dispatch(clearToken());
         router.replace('/');
       }
@@ -80,11 +78,9 @@ export default function Auth() {
 
     dispatch(
       signIn({
-        userInfo: {
-          name: nameValue,
-          email: emailValue,
-          password: passwordValue,
-        },
+        username: nameValue,
+        email: emailValue,
+        password: passwordValue,
       }),
     );
 
