@@ -40,11 +40,12 @@ export default function CreateFlowScreen() {
           title: 'Create',
           headerRight: () => (
             <Pressable
+              style={{ marginRight: 10 }}
               onPress={() => {
                 console.log('help icon pressed');
               }}
             >
-              <FontAwesome size={30} name="question-circle" />
+              <FontAwesome name="question-circle-o" size={24} color="black" />
             </Pressable>
           ),
         }}
