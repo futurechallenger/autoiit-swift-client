@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useFonts } from 'expo-font';
+import * as Fonts from 'expo-font';
 import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -16,25 +17,36 @@ import { store } from '@/redux/store';
 import '../global.css';
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import '@/global.css';
-// import { SessionProvider } from '@/hooks/ctx';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    const prepare = async () => {
+      try {
+        await Fonts.loadAsync({
+          SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+        });
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.error('Preparing app error: ', e);
+      } finally {
+        console.log('Preparing app done');
+        setAppIsReady(true);
+      }
+    };
 
-  if (!loaded) {
+    prepare();
+  }, []);
+
+  if (!appIsReady) {
     return null;
+  } else {
+    SplashScreen.hide();
   }
 
   return (
