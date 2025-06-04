@@ -6,10 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { signIn, clearToken } from '@/redux/gql/authSlice';
 import { RootState } from '@/redux/store';
-<<<<<<< HEAD
-=======
-import AsyncStorage from '@react-native-async-storage/async-storage';
->>>>>>> 4fcb897 (Fix/fix register (#197))
 import { router } from 'expo-router';
 import { useSession } from '@/hooks/ctx';
 import { ThemedPasswordInput } from '@/components/ThemedPasswordInput';
