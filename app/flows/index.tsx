@@ -1,4 +1,5 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { StyleSheet } from 'react-native';
 import { Stack } from 'expo-router';
 // import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { Box, Container, FlatList, Text, View, ZStack } from 'native-base';
@@ -82,7 +83,7 @@ const AllFlows = (params: any) => {
   const data = useFlowListCategory(cat, autoFlowList);
 
   return (
-    <Container width="full" flex={1} alignSelf="center">
+    <View style={styles.allFlowContainer}>
       <FlatList
         bgColor="yellow.100"
         marginTop={5}
@@ -98,7 +99,7 @@ const AllFlows = (params: any) => {
                 router.push({ pathname: `/flow/${item.id}` });
               }}
             >
-              <Box
+              <View
                 height={50}
                 borderBottomWidth={1}
                 justifyContent="center"
@@ -106,12 +107,22 @@ const AllFlows = (params: any) => {
                 _dark={{ borderColor: 'muted.100' }}
               >
                 <Text>{item?.title ?? ''}</Text>{' '}
-              </Box>
+              </View>
             </TouchableOpacity>
           );
         }}
         ListEmptyComponent={renderEmpty}
       />
-    </Container>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  allFlowContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+  },
+});
