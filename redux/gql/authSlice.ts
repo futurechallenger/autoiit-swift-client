@@ -12,7 +12,9 @@ export type RegisterMutationVariables = Types.Exact<{
 }>;
 
 export type SignInReturnType = {
-  token: string;
+  register: {
+    token: string;
+  }
 };
 
 export type LoginMutationVariables = Types.Exact<{
@@ -65,15 +67,15 @@ export const signIn = createAsyncThunk('auth/signIn', async (variables: Register
     variables,
   });
 
-  const token = signInRet?.data?.token;
+  const token = signInRet?.data?.register.token;
   if (!token) {
     throw new Error('Username or password is incorrect');
   }
 
   if (Platform.OS === 'web') {
-    localStorage.setItem(TOKEN_KEY, signInRet.data.token);
+    localStorage.setItem(TOKEN_KEY, signInRet.data.register.token);
   } else {
-    await SecureStore.setItemAsync(TOKEN_KEY, signInRet.data.token);
+    await SecureStore.setItemAsync(TOKEN_KEY, signInRet.data.register.token);
   }
 
   return signInRet;
@@ -130,7 +132,7 @@ export const signInSlice = createSlice({
           state.isAuthenticated = false;
         } else {
           state.status = 'succeeded';
-          state.token = payload.data?.token;
+          state.token = payload.data?.register.token;
           state.isAuthenticated = true;
         }
       })
