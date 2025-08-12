@@ -1,5 +1,5 @@
 import { Text, View } from 'native-base';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Modal, ScrollView } from 'react-native';
 import { Button } from 'react-native';
 import * as React from 'react';
@@ -17,6 +17,9 @@ const VerticalDivider = () => {
 
 export default function CreateFlowScreen() {
   const dispatch = useAppDispatch();
+  const prevParam = useLocalSearchParams();
+
+  console.log('>>>Router, prev param', prevParam);
 
   const [modalVisible, setModalVisible] = React.useState(false);
 
