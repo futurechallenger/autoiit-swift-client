@@ -44,8 +44,7 @@ export default function ChooseServiceScreen() {
 
   const handleNav = (item: { id: string; name: string }) => {
     console.log('Item pressed:', item);
-    router.back();
-    router.setParams(item);
+    router.push(`/services/triggers/${item.id}`);
   };
 
   const renderServiceItem = ({ item }: { item: ServiceType }) => (
