@@ -2,13 +2,14 @@ import * as React from 'react';
 
 import { View, Text, Spinner, FlatList } from 'native-base';
 import { useRoute } from '@react-navigation/native';
-import { useAppSelector, useAppDispatch } from '../redux/hooks';
-import { RootState } from '../redux/store';
-import { TriggerList } from '../components/TriggerList';
+import { useAppSelector, useAppDispatch } from '@/redux/hooks';
+import { RootState } from '@/redux/store';
+import { TriggerList } from '@/components/TriggerList';
 import { useNavigation } from '@react-navigation/native';
-import * as Types from '../redux/types.generated';
-import { getServiceTriggers } from '../redux/gql/getTriggersSlice';
-import { getServiceAuth } from '../redux/gql/getServiceAuthBySlice';
+import * as Types from '@/redux/types.generated';
+import { getServiceTriggers } from '@/redux/gql/getTriggersSlice';
+import { getServiceAuth } from '@/redux/gql/getServiceAuthBySlice';
+import { useRouter } from 'expo-router';
 
 const { useEffect } = React;
 
@@ -16,8 +17,10 @@ const { useEffect } = React;
  * TODO: refactor with `ActionsScreen` use custom hooks
  */
 
-export const TriggersScreen = () => {
+export default function TriggersScreen() {
   const route = useRoute();
+  const router = useRouter();
+
   const { item: service } = route?.params ?? {};
 
   const dispatch = useAppDispatch();
@@ -53,7 +56,7 @@ export const TriggersScreen = () => {
   return (
     <View w="full" h="full">
       <View>
-        <Text>Service {service.name}</Text>
+        <Text>Service {service?.name ?? 'An unknown service'}</Text>
       </View>
       <View w="full" h="full" bg="green.50">
         {status === 'loading' ? (
@@ -64,4 +67,4 @@ export const TriggersScreen = () => {
       </View>
     </View>
   );
-};
+}
