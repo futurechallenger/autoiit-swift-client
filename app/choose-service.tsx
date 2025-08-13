@@ -44,6 +44,7 @@ export default function ChooseServiceScreen() {
 
   const handleNav = (item: { id: string; name: string }) => {
     console.log('Item pressed:', item);
+    // TODO: put service basic info together pass to next screen. Query server for more into in the destination screen.
     router.push(`/services/triggers/${item.id}`);
   };
 

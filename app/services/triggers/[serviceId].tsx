@@ -10,6 +10,7 @@ import * as Types from '@/redux/types.generated';
 import { getServiceTriggers } from '@/redux/gql/getTriggersSlice';
 import { getServiceAuth } from '@/redux/gql/getServiceAuthBySlice';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { useEffect } = React;
 
@@ -18,6 +19,9 @@ const { useEffect } = React;
  */
 
 export default function TriggersScreen() {
+  const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
+
   const route = useRoute();
   const router = useRouter();
 
@@ -38,27 +42,44 @@ export default function TriggersScreen() {
     }
   }, []);
 
-  const navigation = useNavigation();
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: 'Choose a trigger',
+    });
+  }, [navigation]);
 
   const handleItemClick = (item: Types.ServiceTrigger) => {
     // TODO: Deal with auth completed scenario
-    if (!serviceAuth || serviceAuth.category === 1) {
-      navigation.navigate('Connection', { item, service, phrase: 'Trigger' });
-    } else {
-      navigation.navigate('CompleteTrigger', {
-        item,
-        service,
-        phrase: 'Trigger',
-      });
-    }
+    // if (!serviceAuth || serviceAuth.category === 1) {
+    //   navigation.navigate('Connection', { item, service, phrase: 'Trigger' });
+    // } else {
+    //   navigation.navigate('CompleteTrigger', {
+    //     item,
+    //     service,
+    //     phrase: 'Trigger',
+    //   });
+    // }
   };
 
   return (
-    <View w="full" h="full">
-      <View>
-        <Text>Service {service?.name ?? 'An unknown service'}</Text>
+    <View w="full" h="full" p={4} paddingBottom={insets.bottom}>
+      {/* Top Section: Service Info and Icon */}
+      <View h="1/3" justifyContent="center" alignItems="center">
+        <View w="2/3" h="2/3" bg="blue.100" justifyContent="center" alignItems="center" borderRadius="md">
+          <Text fontSize="xl" fontWeight="bold">
+            {service?.name ?? 'An unknown service'}
+          </Text>
+        </View>
+        {/* Middle Section: Service Description */}
+        <View h="1/3" p={4} justifyContent="center">
+          <Text fontSize="md" color="gray.600">
+            {service?.description ?? 'No description available.'}
+          </Text>
+        </View>
       </View>
-      <View w="full" h="full" bg="green.50">
+
+      {/* Bottom Section: Trigger List */}
+      <View className="flex-1" bg="green.50" borderRadius="md" p={4}>
         {status === 'loading' ? (
           <Spinner size="lg" />
         ) : (
