@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as Types from '@/redux/types.generated';
 import { getServiceTriggers } from '@/redux/gql/getTriggersSlice';
 import { getServiceAuth } from '@/redux/gql/getServiceAuthBySlice';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { useEffect } = React;
@@ -25,7 +25,8 @@ export default function TriggersScreen() {
   const route = useRoute();
   const router = useRouter();
 
-  const { item: service } = route?.params ?? {};
+  const service = useLocalSearchParams();
+  console.log('>>>>>Trigger Screen Service Params:', service);
 
   const dispatch = useAppDispatch();
   const { triggers, error, status } = useAppSelector((state: RootState) => state.serviceTriggers);
