@@ -1,12 +1,10 @@
 import { Platform } from 'react-native';
 import { SERVER_HOST_URL } from '@env';
-// const SERVER_URL =
-//   Platform.OS === "web"
-//     ? "http://127.0.0.1:5050"
-//     : "http://192.168.31.182:5050";
 
-const SERVER_URL = SERVER_HOST_URL; //'http://127.0.0.1:5051'; //"http://192.168.31.182:5050";
-// const SERVER_URL = 'http://192.168.31.182:5050';
+// TODO: for production const SERVER_URL = SERVER_HOST_URL;
+const SERVER_URL = "http://localhost:5051"; // TODO: for dev
+
+console.log(`>>>SERVER_URL:${SERVER_URL}`);
 
 const REQUEST_COUNT = 10;
 const TOKEN_KEY = '_token';

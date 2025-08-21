@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
 import { ServiceCell } from '@/components/ServiceCell';
 import { signOut } from '@/redux/gql/authSlice';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function MyFlowScreen() {
   const { services, status, error } = useAppSelector((state: RootState) => state.serviceInfo);
